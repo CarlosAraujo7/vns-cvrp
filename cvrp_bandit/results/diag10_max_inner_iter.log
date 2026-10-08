@@ -1,0 +1,103 @@
+=== Diagnóstico 10: teto de iterações internas (max_inner_iter) ===
+
+--- A-n32-k5 (conjunto A, artigo HG-UCB=0.19%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  5.48%
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  5.48%
+  alpha=5.0 / max_inner_iter=80         gap_medio=  5.48%
+  alpha=5.0 / max_inner_iter=160        gap_medio=  5.48%
+  alpha=0.5 / max_inner_iter=20         gap_medio=  5.48%
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  5.48%
+  alpha=0.5 / max_inner_iter=80         gap_medio=  5.15%
+  alpha=0.5 / max_inner_iter=160        gap_medio=  5.48%
+
+--- A-n34-k5 (conjunto A, artigo HG-UCB=0.14%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  2.90%
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  3.06%
+  alpha=5.0 / max_inner_iter=80         gap_medio=  2.65%
+  alpha=5.0 / max_inner_iter=160        gap_medio=  1.80%
+  alpha=0.5 / max_inner_iter=20         gap_medio=  2.83%
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  2.13%
+  alpha=0.5 / max_inner_iter=80         gap_medio=  2.67%
+  alpha=0.5 / max_inner_iter=160        gap_medio=  1.72%
+
+--- A-n38-k5 (conjunto A, artigo HG-UCB=0.68%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  2.33%
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  2.33%
+  alpha=5.0 / max_inner_iter=80         gap_medio=  2.55%
+  alpha=5.0 / max_inner_iter=160        gap_medio=  2.33%
+  alpha=0.5 / max_inner_iter=20         gap_medio=  2.47%
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  2.38%
+  alpha=0.5 / max_inner_iter=80         gap_medio=  2.33%
+  alpha=0.5 / max_inner_iter=160        gap_medio=  2.22%
+
+--- A-n55-k9 (conjunto A, artigo HG-UCB=1.27%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  3.11%
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  2.89%
+  alpha=5.0 / max_inner_iter=80         gap_medio=  2.05%
+  alpha=5.0 / max_inner_iter=160        gap_medio=  2.37%
+  alpha=0.5 / max_inner_iter=20         gap_medio=  2.76%
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  2.27%
+  alpha=0.5 / max_inner_iter=80         gap_medio=  2.50%
+  alpha=0.5 / max_inner_iter=160        gap_medio=  2.14%
+
+--- A-n64-k9 (conjunto A, artigo HG-UCB=4.09%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  3.51%
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  3.70%
+  alpha=5.0 / max_inner_iter=80         gap_medio=  3.74%
+  alpha=5.0 / max_inner_iter=160        gap_medio=  3.41%
+  alpha=0.5 / max_inner_iter=20         gap_medio=  3.73%
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  3.61%
+  alpha=0.5 / max_inner_iter=80         gap_medio=  3.55%
+  alpha=0.5 / max_inner_iter=160        gap_medio=  3.60%
+
+--- B-n41-k6 (conjunto B, artigo HG-UCB=0.90%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  4.20%
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  4.22%
+  alpha=5.0 / max_inner_iter=80         gap_medio=  4.00%
+  alpha=5.0 / max_inner_iter=160        gap_medio=  4.13%
+  alpha=0.5 / max_inner_iter=20         gap_medio=  4.10%
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  4.00%
+  alpha=0.5 / max_inner_iter=80         gap_medio=  4.05%
+  alpha=0.5 / max_inner_iter=160        gap_medio=  4.05%
+
+--- B-n63-k10 (conjunto B, artigo HG-UCB=4.08%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  4.57%
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  4.02%
+  alpha=5.0 / max_inner_iter=80         gap_medio=  3.94%
+  alpha=5.0 / max_inner_iter=160        gap_medio=  3.61%
+  alpha=0.5 / max_inner_iter=20         gap_medio=  4.41%
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  4.34%
+  alpha=0.5 / max_inner_iter=80         gap_medio=  3.98%
+  alpha=0.5 / max_inner_iter=160        gap_medio=  4.52%
+
+--- X-n101-k25 (conjunto X, artigo HG-UCB=3.54%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  3.48%
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  3.43%
+  alpha=5.0 / max_inner_iter=80         gap_medio=  3.69%
+  alpha=5.0 / max_inner_iter=160        gap_medio=  2.90%
+  alpha=0.5 / max_inner_iter=20         gap_medio=  3.13%
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  2.87%
+  alpha=0.5 / max_inner_iter=80         gap_medio=  3.69%
+  alpha=0.5 / max_inner_iter=160        gap_medio=  3.16%
+
+Tempo total de execução: 509.0s
+
+=== Resumo GERAL (média sobre as 8 instâncias, todos os 3 conjuntos) ===
+  alpha=5.0 / max_inner_iter=20         gap_medio=  3.70%  inner_iter_medio_por_passo= 20.00  tempo=   19.2s
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  3.64%  inner_iter_medio_por_passo= 40.00  tempo=   36.5s
+  alpha=5.0 / max_inner_iter=80         gap_medio=  3.51%  inner_iter_medio_por_passo= 80.00  tempo=   71.6s
+  alpha=5.0 / max_inner_iter=160        gap_medio=  3.25%  inner_iter_medio_por_passo=160.00  tempo=  132.8s
+  alpha=0.5 / max_inner_iter=20         gap_medio=  3.61%  inner_iter_medio_por_passo= 20.00  tempo=   16.4s
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  3.39%  inner_iter_medio_por_passo= 40.00  tempo=   32.8s
+  alpha=0.5 / max_inner_iter=80         gap_medio=  3.49%  inner_iter_medio_por_passo= 80.00  tempo=   65.7s
+  alpha=0.5 / max_inner_iter=160        gap_medio=  3.36%  inner_iter_medio_por_passo=160.00  tempo=  129.1s
+
+=== Resumo POR CONJUNTO (A vs. B vs. X) ===
+  alpha=5.0 / max_inner_iter=20         A= 3.47%  B= 4.39%  X= 3.48%
+  alpha=5.0 / max_inner_iter=40 (baseline)  A= 3.49%  B= 4.12%  X= 3.43%
+  alpha=5.0 / max_inner_iter=80         A= 3.29%  B= 3.97%  X= 3.69%
+  alpha=5.0 / max_inner_iter=160        A= 3.08%  B= 3.87%  X= 2.90%
+  alpha=0.5 / max_inner_iter=20         A= 3.45%  B= 4.26%  X= 3.13%
+  alpha=0.5 / max_inner_iter=40 (baseline)  A= 3.18%  B= 4.17%  X= 2.87%
+  alpha=0.5 / max_inner_iter=80         A= 3.24%  B= 4.02%  X= 3.69%
+  alpha=0.5 / max_inner_iter=160        A= 3.03%  B= 4.29%  X= 3.16%

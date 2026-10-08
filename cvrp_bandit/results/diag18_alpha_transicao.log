@@ -1,0 +1,47 @@
+=== Diagnóstico 18: mapeando a transição alpha=0,5 -> 5,0 do efeito do drift-reset ===
+
+--- A-n32-k5 (conjunto A) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- A-n34-k5 (conjunto A) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- A-n38-k5 (conjunto A) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- A-n55-k9 (conjunto A) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- A-n64-k9 (conjunto A) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- B-n41-k6 (conjunto B) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- B-n63-k10 (conjunto B) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- X-n101-k25 (conjunto X) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- A-n69-k9 (conjunto A) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- B-n31-k5 (conjunto B) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- B-n50-k8 (conjunto B) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- B-n78-k10 (conjunto B) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- CMT1 (conjunto CMT) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- X-n106-k14 (conjunto X) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- X-n134-k13 (conjunto X) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+--- X-n157-k13 (conjunto X) ---
+  (16 instancias x 10 configs x 5 seeds processadas)
+
+Tempo total de execução: 1324.1s (22.1min)
+
+CSV salvo em: /home/claude/edp_consolidation/cvrp_bandit/results/diag18_alpha_transicao.csv
+
+=== Curva alpha -> efeito do drift-reset (diff = completo - sem_drift, média bruta sobre 16 instâncias) ===
+  alpha=0.5 (Diagnostico 16, ja medido): diff=+0.008pp, NAO significativo, drift_sinalizado~0.05%
+  alpha= 1.0  gap_completo= 3.485%  gap_sem_drift= 3.489%  diff=-0.0031pp  drift_sinalizado= 0.033%  vitorias_sem_drift=2/16
+  alpha= 1.5  gap_completo= 3.449%  gap_sem_drift= 3.447%  diff=+0.0018pp  drift_sinalizado= 0.025%  vitorias_sem_drift=2/16
+  alpha= 2.0  gap_completo= 3.543%  gap_sem_drift= 3.542%  diff=+0.0007pp  drift_sinalizado= 0.031%  vitorias_sem_drift=2/16
+  alpha= 3.0  gap_completo= 3.525%  gap_sem_drift= 3.591%  diff=-0.0656pp  drift_sinalizado= 0.053%  vitorias_sem_drift=0/16
+  alpha= 4.0  gap_completo= 3.522%  gap_sem_drift= 3.873%  diff=-0.3507pp  drift_sinalizado= 0.388%  vitorias_sem_drift=2/16
+  alpha=5.0 (Diagnostico 16, ja medido): diff=+0.431pp, p<0.0001, drift_sinalizado~0.69%

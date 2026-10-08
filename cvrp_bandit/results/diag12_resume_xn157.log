@@ -1,0 +1,12 @@
+=== Retomada diag12 (só a instância interrompida): X-n157-k13 (conjunto X, artigo HG-UCB=3.66%) ===
+
+  alpha=5.0 / max_inner_iter=20         gap_medio=  4.23%  pct_colapso_desta_instancia= 17.6%  pct_drift_desta_instancia= 0.70%  (n=2000)
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  4.13%  pct_colapso_desta_instancia=  9.8%  pct_drift_desta_instancia= 0.78%  (n=4000)
+  alpha=5.0 / max_inner_iter=80         gap_medio=  4.34%  pct_colapso_desta_instancia=  6.2%  pct_drift_desta_instancia= 0.54%  (n=8000)
+  alpha=5.0 / max_inner_iter=160        gap_medio=  4.24%  pct_colapso_desta_instancia=  1.9%  pct_drift_desta_instancia= 0.32%  (n=16000)
+  alpha=0.5 / max_inner_iter=20         gap_medio=  4.28%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.25%  (n=2000)
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  4.08%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.12%  (n=4000)
+  alpha=0.5 / max_inner_iter=80         gap_medio=  4.11%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.06%  (n=8000)
+  alpha=0.5 / max_inner_iter=160        gap_medio=  4.25%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.04%  (n=16000)
+
+Tempo total de execução (só X-n157-k13, 8 configs x 5 seeds = 40 execuções): 917.1s

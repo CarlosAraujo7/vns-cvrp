@@ -1,0 +1,86 @@
+=== Avaliação do(s) modelo(s) Kool fine-tunado(s) nas 74 instâncias reais ===
+  tamanho  10: pré-treinado original (sem fine-tuning encontrado) -- /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/external/attention-learn-to-route/pretrained/cvrp_10/epoch-99.pt
+  tamanho  20: pré-treinado original (sem fine-tuning encontrado) -- /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/external/attention-learn-to-route/pretrained/cvrp_20/epoch-99.pt
+  tamanho  50: pré-treinado original (sem fine-tuning encontrado) -- /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/external/attention-learn-to-route/pretrained/cvrp_50/epoch-99.pt
+  tamanho 100: pré-treinado original (sem fine-tuning encontrado) -- /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/external/attention-learn-to-route/pretrained/cvrp_100/epoch-99.pt
+
+  A-n32-k5         n= 31 ckpt= 20   rotas=  5(exige 5)  gap=   1.28%  OK
+  A-n33-k5         n= 32 ckpt= 20   rotas=  5(exige 5)  gap=   8.32%  OK
+  A-n33-k6         n= 32 ckpt= 20   rotas=  7(exige 6)  gap=  14.69%  (sem-K ok)
+  A-n34-k5         n= 33 ckpt= 20   rotas=  5(exige 5)  gap=   6.56%  OK
+  A-n36-k5         n= 35 ckpt= 20   rotas=  5(exige 5)  gap=   4.01%  OK
+  A-n37-k5         n= 36 ckpt= 50   rotas=  5(exige 5)  gap=   7.77%  OK
+  A-n37-k6         n= 36 ckpt= 50   rotas=  7(exige 6)  gap=  10.54%  (sem-K ok)
+  A-n38-k5         n= 37 ckpt= 50   rotas=  5(exige 5)  gap=   3.97%  OK
+  A-n39-k5         n= 38 ckpt= 50   rotas=  5(exige 5)  gap=   1.70%  OK
+  A-n39-k6         n= 38 ckpt= 50   rotas=  6(exige 6)  gap=   3.13%  OK
+  A-n44-k6         n= 43 ckpt= 50   rotas=  7(exige 6)  gap=   6.19%  (sem-K ok)
+  A-n45-k6         n= 44 ckpt= 50   rotas=  7(exige 6)  gap=   7.31%  (sem-K ok)
+  A-n45-k7         n= 44 ckpt= 50   rotas=  7(exige 7)  gap=   1.83%  OK
+  A-n46-k7         n= 45 ckpt= 50   rotas=  7(exige 7)  gap=   8.86%  OK
+  A-n48-k7         n= 47 ckpt= 50   rotas=  7(exige 7)  gap=   7.55%  OK
+  A-n53-k7         n= 52 ckpt= 50   rotas=  8(exige 7)  gap=  10.59%  (sem-K ok)
+  A-n54-k7         n= 53 ckpt= 50   rotas=  7(exige 7)  gap=   6.51%  OK
+  A-n55-k9         n= 54 ckpt= 50   rotas=  9(exige 9)  gap=  10.62%  OK
+  A-n60-k9         n= 59 ckpt= 50   rotas=  9(exige 9)  gap=   8.49%  OK
+  A-n61-k9         n= 60 ckpt= 50   rotas= 10(exige 9)  gap=  12.09%  (sem-K ok)
+  A-n62-k8         n= 61 ckpt= 50   rotas=  8(exige 8)  gap=   6.29%  OK
+  A-n63-k10        n= 62 ckpt= 50   rotas= 10(exige 10)  gap=   3.88%  OK
+  A-n63-k9         n= 62 ckpt= 50   rotas=  9(exige 9)  gap=   6.87%  OK
+  A-n64-k9         n= 63 ckpt= 50   rotas=  9(exige 9)  gap=   6.35%  OK
+  A-n65-k9         n= 64 ckpt= 50   rotas= 10(exige 9)  gap=   8.60%  (sem-K ok)
+  A-n69-k9         n= 68 ckpt= 50   rotas=  9(exige 9)  gap=   6.38%  OK
+  B-n31-k5         n= 30 ckpt= 20   rotas=  5(exige 5)  gap=   5.95%  OK
+  B-n34-k5         n= 33 ckpt= 20   rotas=  5(exige 5)  gap=   3.43%  OK
+  B-n35-k5         n= 34 ckpt= 20   rotas=  5(exige 5)  gap=   2.72%  OK
+  B-n38-k6         n= 37 ckpt= 50   rotas=  6(exige 6)  gap=   2.73%  OK
+  B-n39-k5         n= 38 ckpt= 50   rotas=  5(exige 5)  gap=  13.66%  OK
+  B-n41-k6         n= 40 ckpt= 50   rotas=  7(exige 6)  gap=   5.19%  (sem-K ok)
+  B-n43-k6         n= 42 ckpt= 50   rotas=  6(exige 6)  gap=   2.29%  OK
+  B-n44-k7         n= 43 ckpt= 50   rotas=  7(exige 7)  gap=   3.08%  OK
+  B-n45-k5         n= 44 ckpt= 50   rotas=  6(exige 5)  gap=   6.26%  (sem-K ok)
+  B-n45-k6         n= 44 ckpt= 50   rotas=  7(exige 6)  gap=   8.55%  (sem-K ok)
+  B-n50-k7         n= 49 ckpt= 50   rotas=  7(exige 7)  gap=   7.96%  OK
+  B-n50-k8         n= 49 ckpt= 50   rotas=  8(exige 8)  gap=   3.12%  OK
+  B-n51-k7         n= 50 ckpt= 50   rotas=  8(exige 7)  gap=  13.47%  (sem-K ok)
+  B-n52-k7         n= 51 ckpt= 50   rotas=  8(exige 7)  gap=  12.45%  (sem-K ok)
+  B-n56-k7         n= 55 ckpt= 50   rotas=  7(exige 7)  gap=  12.16%  OK
+  B-n57-k7         n= 56 ckpt= 50   rotas=  8(exige 7)  gap=   6.68%  (sem-K ok)
+  B-n57-k9         n= 56 ckpt= 50   rotas=  9(exige 9)  gap=   6.38%  OK
+  B-n63-k10        n= 62 ckpt= 50   rotas= 10(exige 10)  gap=   5.15%  OK
+  B-n64-k9         n= 63 ckpt= 50   rotas= 11(exige 9)  gap=  11.03%  (sem-K ok)
+  B-n66-k9         n= 65 ckpt= 50   rotas= 10(exige 9)  gap=   4.86%  (sem-K ok)
+  B-n67-k10        n= 66 ckpt= 50   rotas= 10(exige 10)  gap=   6.88%  OK
+  B-n68-k9         n= 67 ckpt= 50   rotas= 10(exige 9)  gap=   7.23%  (sem-K ok)
+  B-n78-k10        n= 77 ckpt=100   rotas= 10(exige 10)  gap=  12.20%  OK
+  X-n101-k25       n=100 ckpt=100   rotas= 28(exige 26)  gap=  12.99%  OK
+  X-n106-k14       n=105 ckpt=100   rotas= 14(exige 14)  gap=   7.53%  OK
+  X-n110-k13       n=109 ckpt=100   rotas= 13(exige 13)  gap=   6.48%  OK
+  X-n115-k10       n=114 ckpt=100   rotas= 10(exige 10)  gap=  11.35%  OK
+  X-n120-k6        n=119 ckpt=100   rotas=  6(exige 6)  gap=   7.67%  OK
+  X-n125-k30       n=124 ckpt=100   rotas= 33(exige 30)  gap=   9.38%  OK
+  X-n129-k18       n=128 ckpt=100   rotas= 19(exige 18)  gap=   7.48%  OK
+  X-n134-k13       n=133 ckpt=100   rotas= 15(exige 13)  gap=  18.08%  OK
+  X-n139-k10       n=138 ckpt=100   rotas= 11(exige 10)  gap=   7.79%  OK
+  X-n143-k7        n=142 ckpt=100   rotas=  7(exige 7)  gap=  15.61%  OK
+  X-n148-k46       n=147 ckpt=100   rotas= 56(exige 47)  gap=  17.37%  OK
+  X-n153-k22       n=152 ckpt=100   rotas= 33(exige 23)  gap=  41.49%  OK
+  X-n157-k13       n=156 ckpt=100   rotas= 14(exige 13)  gap=   9.04%  OK
+  X-n162-k11       n=161 ckpt=100   rotas= 11(exige 11)  gap=   8.47%  OK
+  X-n167-k10       n=166 ckpt=100   rotas= 10(exige 10)  gap=  12.71%  OK
+  X-n172-k51       n=171 ckpt=100   rotas= 57(exige 53)  gap=  11.91%  OK
+  X-n176-k26       n=175 ckpt=100   rotas= 30(exige 26)  gap=  17.64%  OK
+  X-n181-k23       n=180 ckpt=100   rotas= 23(exige 23)  gap=   5.34%  OK
+  X-n186-k15       n=185 ckpt=100   rotas= 15(exige 15)  gap=   7.46%  OK
+  X-n190-k8        n=189 ckpt=100   rotas= 11(exige 8)  gap=  52.69%  OK
+  X-n195-k51       n=194 ckpt=100   rotas= 62(exige 53)  gap=  23.87%  OK
+  CMT1             n= 50 ckpt= 50   rotas=  6(exige 5)  gap=   6.70%  OK
+  CMT11            n=120 ckpt=100   rotas=  7(exige 7)  gap=  20.99%  OK
+  CMT2             n= 75 ckpt= 50   rotas= 11(exige 10)  gap=   8.87%  OK
+  CMT3             n=100 ckpt=100   rotas=  8(exige 8)  gap=   4.93%  OK
+
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/kool_zeroshot_74.csv
+
+Viáveis (critério estrito, com restrição de K): 58/74
+Viáveis (ignorando K -- só capacidade+cobertura): 74/74
+Gap médio entre as viáveis (sem restrição de K): 9.43%

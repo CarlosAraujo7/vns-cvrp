@@ -1,0 +1,9 @@
+=== iniciando graph_size=10: Tue Sep 15 01:21:17 -03 2026 ===
+=== terminou graph_size=10: Tue Sep 15 01:24:09 -03 2026 (exit code 0) ===
+=== iniciando graph_size=20: Tue Sep 15 01:24:09 -03 2026 ===
+=== terminou graph_size=20: Tue Sep 15 01:28:51 -03 2026 (exit code 0) ===
+=== iniciando graph_size=50: Tue Sep 15 01:28:51 -03 2026 ===
+=== terminou graph_size=50: Tue Sep 15 01:38:25 -03 2026 (exit code 0) ===
+=== iniciando graph_size=100: Tue Sep 15 01:38:25 -03 2026 ===
+=== terminou graph_size=100: Tue Sep 15 01:56:42 -03 2026 (exit code 0) ===
+=== TUDO CONCLUIDO: Tue Sep 15 01:56:42 -03 2026 ===

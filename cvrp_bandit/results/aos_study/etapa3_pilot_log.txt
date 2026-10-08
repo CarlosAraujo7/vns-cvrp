@@ -1,0 +1,4 @@
+112 tarefas, 0 ja feitas, 112 pendentes, 11 workers
+  50/112  0.6 min (ETA enganoso: tarefas de custo desigual)
+  100/112  0.9 min (ETA enganoso: tarefas de custo desigual)
+Concluido em 1.0 min -> /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/aos_study/etapa3_pilot.csv

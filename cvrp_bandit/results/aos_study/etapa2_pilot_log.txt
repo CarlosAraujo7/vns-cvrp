@@ -1,0 +1,3 @@
+80 tarefas, 0 ja feitas, 80 pendentes, 2 workers
+  50/80  6.2 min (ETA enganoso: tarefas de custo desigual)
+Concluido em 7.2 min -> /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/aos_study/etapa2_pilot.csv

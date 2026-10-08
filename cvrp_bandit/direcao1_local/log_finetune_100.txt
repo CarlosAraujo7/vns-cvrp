@@ -1,0 +1,184 @@
+=== kool_finetune_runner: fine-tuning Kool et al. em dados sintéticos estilo Uchoa ===
+  graph_size=100  baseline=exponential  resume=não (carregando epoch-99.pt)
+  GPU: usando NVIDIA GeForce RTX 2050
+  args finais passados ao Kool et al.: --problem cvrp --graph_size 100 --n_epochs 15 --epoch_size 3200 --batch_size 32 --val_size 200 --eval_batch_size 200 --checkpoint_epochs 1 --baseline exponential --seed 2026 --load_path /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/external/attention-learn-to-route/pretrained/cvrp_100/epoch-99.pt --no_tensorboard --no_progress_bar --output_dir /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/kool_finetuned --run_name uchoa_ft_100
+
+  [aplicar_monkeypatches] VRPDataset.__init__ substituído por geração Uchoa-style (seed=2026, baseline_rollout_mantido=False).
+{'baseline': 'exponential',
+ 'batch_size': 32,
+ 'bl_alpha': 0.05,
+ 'bl_warmup_epochs': 0,
+ 'checkpoint_encoder': False,
+ 'checkpoint_epochs': 1,
+ 'data_distribution': None,
+ 'embedding_dim': 128,
+ 'epoch_size': 3200,
+ 'epoch_start': 0,
+ 'eval_batch_size': 200,
+ 'eval_only': False,
+ 'exp_beta': 0.8,
+ 'graph_size': 100,
+ 'hidden_dim': 128,
+ 'load_path': '/mnt/c/Pesquisas/learnheuristica/cvrp_bandit/external/attention-learn-to-route/pretrained/cvrp_100/epoch-99.pt',
+ 'log_dir': 'logs',
+ 'log_step': 50,
+ 'lr_critic': 0.0001,
+ 'lr_decay': 1.0,
+ 'lr_model': 0.0001,
+ 'max_grad_norm': 1.0,
+ 'model': 'attention',
+ 'n_encode_layers': 3,
+ 'n_epochs': 15,
+ 'no_cuda': False,
+ 'no_progress_bar': True,
+ 'no_tensorboard': True,
+ 'normalization': 'batch',
+ 'output_dir': '/mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/kool_finetuned',
+ 'problem': 'cvrp',
+ 'resume': None,
+ 'run_name': 'uchoa_ft_100_20260915T013846',
+ 'save_dir': '/mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/kool_finetuned/cvrp_100/uchoa_ft_100_20260915T013846',
+ 'seed': 2026,
+ 'shrink_size': None,
+ 'tanh_clipping': 10.0,
+ 'use_cuda': True,
+ 'val_dataset': None,
+ 'val_size': 200}
+  [*] Loading data from /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/external/attention-learn-to-route/pretrained/cvrp_100/epoch-99.pt
+Start train epoch 0, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 0, train_batch_id: 0, avg_cost: 31.380565643310547
+grad_norm: 1408.7401123046875, clipped: 1.0
+epoch: 0, train_batch_id: 50, avg_cost: 19.467105865478516
+grad_norm: 1513.302490234375, clipped: 1.0
+Finished epoch 0, took 00:01:11 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 19.943147659301758 +- 0.8538309335708618
+Start train epoch 1, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 1, train_batch_id: 0, avg_cost: 29.56835174560547
+grad_norm: 2178.962646484375, clipped: 1.0
+epoch: 1, train_batch_id: 50, avg_cost: 27.518678665161133
+grad_norm: 2023.8291015625, clipped: 1.0
+Finished epoch 1, took 00:01:12 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 22.7740478515625 +- 1.240136742591858
+Start train epoch 2, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 2, train_batch_id: 0, avg_cost: 30.570011138916016
+grad_norm: 1938.3050537109375, clipped: 1.0
+epoch: 2, train_batch_id: 50, avg_cost: 23.228984832763672
+grad_norm: 1078.6878662109375, clipped: 1.0
+Finished epoch 2, took 00:01:11 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 21.40411949157715 +- 1.138710379600525
+Start train epoch 3, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 3, train_batch_id: 0, avg_cost: 26.08831024169922
+grad_norm: 1532.166015625, clipped: 1.0
+epoch: 3, train_batch_id: 50, avg_cost: 19.12106704711914
+grad_norm: 1178.9853515625, clipped: 1.0
+Finished epoch 3, took 00:01:10 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 20.587278366088867 +- 0.9016330242156982
+Start train epoch 4, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 4, train_batch_id: 0, avg_cost: 24.19327163696289
+grad_norm: 1959.139404296875, clipped: 1.0
+epoch: 4, train_batch_id: 50, avg_cost: 23.007823944091797
+grad_norm: 1644.966552734375, clipped: 1.0
+Finished epoch 4, took 00:01:11 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 21.14885711669922 +- 1.016559362411499
+Start train epoch 5, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 5, train_batch_id: 0, avg_cost: 22.880205154418945
+grad_norm: 2221.9228515625, clipped: 1.0
+epoch: 5, train_batch_id: 50, avg_cost: 24.104976654052734
+grad_norm: 1581.631103515625, clipped: 1.0
+Finished epoch 5, took 00:01:11 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 20.76993179321289 +- 0.9473634362220764
+Start train epoch 6, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 6, train_batch_id: 0, avg_cost: 29.26865005493164
+grad_norm: 2456.451171875, clipped: 1.0
+epoch: 6, train_batch_id: 50, avg_cost: 22.11343765258789
+grad_norm: 1001.6305541992188, clipped: 1.0
+Finished epoch 6, took 00:01:11 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 24.915298461914062 +- 1.5810630321502686
+Start train epoch 7, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 7, train_batch_id: 0, avg_cost: 24.32894515991211
+grad_norm: 1990.9288330078125, clipped: 1.0
+epoch: 7, train_batch_id: 50, avg_cost: 29.271337509155273
+grad_norm: 1861.4627685546875, clipped: 1.0
+Finished epoch 7, took 00:01:12 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 23.51812171936035 +- 1.2424581050872803
+Start train epoch 8, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 8, train_batch_id: 0, avg_cost: 26.197402954101562
+grad_norm: 1811.574951171875, clipped: 1.0
+epoch: 8, train_batch_id: 50, avg_cost: 29.235599517822266
+grad_norm: 1615.5244140625, clipped: 1.0
+Finished epoch 8, took 00:01:09 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 24.707120895385742 +- 1.3339282274246216
+Start train epoch 9, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 9, train_batch_id: 0, avg_cost: 31.467565536499023
+grad_norm: 2477.509521484375, clipped: 1.0
+epoch: 9, train_batch_id: 50, avg_cost: 25.863086700439453
+grad_norm: 1469.24755859375, clipped: 1.0
+Finished epoch 9, took 00:01:10 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 25.95465087890625 +- 1.6855770349502563
+Start train epoch 10, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 10, train_batch_id: 0, avg_cost: 26.938316345214844
+grad_norm: 1127.633544921875, clipped: 1.0
+epoch: 10, train_batch_id: 50, avg_cost: 28.950435638427734
+grad_norm: 1291.4176025390625, clipped: 1.0
+Finished epoch 10, took 00:01:09 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 23.801353454589844 +- 1.4874814748764038
+Start train epoch 11, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 11, train_batch_id: 0, avg_cost: 27.108047485351562
+grad_norm: 1794.4449462890625, clipped: 1.0
+epoch: 11, train_batch_id: 50, avg_cost: 25.502540588378906
+grad_norm: 1176.71044921875, clipped: 1.0
+Finished epoch 11, took 00:01:11 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 25.13576889038086 +- 1.751523733139038
+Start train epoch 12, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 12, train_batch_id: 0, avg_cost: 28.596296310424805
+grad_norm: 1208.0777587890625, clipped: 1.0
+epoch: 12, train_batch_id: 50, avg_cost: 23.557703018188477
+grad_norm: 1084.1695556640625, clipped: 1.0
+Finished epoch 12, took 00:01:09 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 25.371522903442383 +- 1.6600781679153442
+Start train epoch 13, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 13, train_batch_id: 0, avg_cost: 27.69013023376465
+grad_norm: 1249.26318359375, clipped: 1.0
+epoch: 13, train_batch_id: 50, avg_cost: 26.791366577148438
+grad_norm: 1337.511474609375, clipped: 1.0
+Finished epoch 13, took 00:01:02 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 29.517751693725586 +- 2.176938533782959
+Start train epoch 14, lr=0.0001 for run uchoa_ft_100_20260915T013846
+epoch: 14, train_batch_id: 0, avg_cost: 27.930294036865234
+grad_norm: 1044.02197265625, clipped: 1.0
+epoch: 14, train_batch_id: 50, avg_cost: 32.09597396850586
+grad_norm: 1356.36328125, clipped: 1.0
+Finished epoch 14, took 00:01:02 s
+Saving model and state...
+Validating...
+Validation overall avg_cost: 33.452423095703125 +- 2.378551959991455
+
+=== fine-tuning concluído em 1074.1s (17.9min) -- checkpoints em /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/kool_finetuned/cvrp_100/uchoa_ft_100_20260915T013846 ===

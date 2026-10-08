@@ -1,0 +1,279 @@
+% Referencias VERIFICADAS contra fonte primaria em 05-08/10/2026 (Crossref via DOI ou busca bibliografica;
+% arXiv; pagina da CVRPLIB; indices secundarios onde indicado). Nenhuma entrada pode ser adicionada sem
+% verificacao (LEI_GERAL_PESQUISA.md, Parte I.1). Ver paper/RASTREIO_NUMEROS.md, secao "Referencias".
+
+% ---------------- Metodo reproduzido, benchmark e solvers ----------------
+@article{kalatzantonakis2023,
+  author  = {Kalatzantonakis, Panagiotis and Sifaleras, Angelo and Samaras, Nikolaos},
+  title   = {A reinforcement learning-Variable neighborhood search method for the capacitated Vehicle Routing Problem},
+  journal = {Expert Systems with Applications},
+  year    = {2023}, volume = {213}, pages = {118812},
+  doi     = {10.1016/j.eswa.2022.118812}
+}
+@article{uchoa2017,
+  author  = {Uchoa, Eduardo and Pecin, Diego and Pessoa, Artur and Poggi, Marcus and Vidal, Thibaut and Subramanian, Anand},
+  title   = {New benchmark instances for the Capacitated Vehicle Routing Problem},
+  journal = {European Journal of Operational Research},
+  year    = {2017}, volume = {257}, number = {3}, pages = {845--858},
+  doi     = {10.1016/j.ejor.2016.08.012}
+}
+@article{vidal2022,
+  author  = {Vidal, Thibaut},
+  title   = {Hybrid genetic search for the {CVRP}: Open-source implementation and {SWAP*} neighborhood},
+  journal = {Computers \& Operations Research},
+  year    = {2022}, volume = {140}, pages = {105643},
+  doi     = {10.1016/j.cor.2021.105643}
+}
+@article{accorsi2021,
+  author  = {Accorsi, Luca and Vigo, Daniele},
+  title   = {A fast and scalable heuristic for the solution of large-scale capacitated vehicle routing problems},
+  journal = {Transportation Science},
+  year    = {2021}, volume = {55}, number = {4}, pages = {832--856},
+  doi     = {10.1287/trsc.2021.1059}
+}
+@misc{cvrplib,
+  title        = {{CVRPLIB}: Capacitated Vehicle Routing Problem Library},
+  howpublished = {\url{https://galgos.inf.puc-rio.br/cvrplib/}},
+  note         = {Instance sets A and B attributed to Augerat et al.\ (1995); CMT to Christofides et al.\ (1979); X to Uchoa et al.\ (2017). Accessed 2026-10-08}
+}
+% Attribuicao A/B/CMT confirmada na pagina da CVRPLIB (acessada 08/10/2026); os relatorios originais nao estao acessiveis online.
+@techreport{augerat1995,
+  author      = {Augerat, Philippe and Belenguer, Jos{\'e} Manuel and Benavent, Enrique and Corber{\'a}n, Angel and Naddef, Denis and Rinaldi, Giovanni},
+  title       = {Computational results with a branch and cut code for the capacitated vehicle routing problem},
+  institution = {Universit{\'e} Joseph Fourier, Grenoble},
+  year        = {1995},
+  number      = {949-M},
+  note        = {As cited by CVRPLIB; bibliographic details not independently verified}
+}
+@incollection{christofides1979,
+  author    = {Christofides, Nicos and Mingozzi, Aristide and Toth, Paolo},
+  title     = {The vehicle routing problem},
+  booktitle = {Combinatorial Optimization},
+  publisher = {Wiley},
+  year      = {1979},
+  pages     = {315--338},
+  note      = {As cited by CVRPLIB; bibliographic details not independently verified}
+}
+
+% ---------------- VNS, bandits, AOS, hiper-heuristicas ----------------
+@article{mladenovic1997,
+  author  = {Mladenovi{\'c}, Nenad and Hansen, Pierre},
+  title   = {Variable neighborhood search},
+  journal = {Computers \& Operations Research},
+  year    = {1997}, volume = {24}, number = {11}, pages = {1097--1100},
+  doi     = {10.1016/S0305-0548(97)00031-2}
+}
+@article{hansen2001,
+  author  = {Hansen, Pierre and Mladenovi{\'c}, Nenad},
+  title   = {Variable neighborhood search: Principles and applications},
+  journal = {European Journal of Operational Research},
+  year    = {2001}, volume = {130}, number = {3}, pages = {449--467},
+  doi     = {10.1016/S0377-2217(00)00100-4}
+}
+@article{auer2002,
+  author  = {Auer, Peter and Cesa-Bianchi, Nicol{\`o} and Fischer, Paul},
+  title   = {Finite-time analysis of the multiarmed bandit problem},
+  journal = {Machine Learning},
+  year    = {2002}, volume = {47}, number = {2--3}, pages = {235--256},
+  doi     = {10.1023/A:1013689704352}
+}
+@book{suttonbarto2018,
+  author    = {Sutton, Richard S. and Barto, Andrew G.},
+  title     = {Reinforcement Learning: An Introduction},
+  edition   = {2nd},
+  publisher = {MIT Press},
+  year      = {2018},
+  note      = {ISBN 9780262039246}
+}
+@inproceedings{bifet2007,
+  author    = {Bifet, Albert and Gavald{\`a}, Ricard},
+  title     = {Learning from time-changing data with adaptive windowing},
+  booktitle = {Proceedings of the 2007 SIAM International Conference on Data Mining},
+  year      = {2007}, pages = {443--448},
+  doi       = {10.1137/1.9781611972771.42}
+}
+@inproceedings{thierens2005,
+  author    = {Thierens, Dirk},
+  title     = {An adaptive pursuit strategy for allocating operator probabilities},
+  booktitle = {Proceedings of the 7th Annual Conference on Genetic and Evolutionary Computation (GECCO)},
+  year      = {2005}, pages = {1539--1546},
+  doi       = {10.1145/1068009.1068251}
+}
+@inproceedings{dacosta2008,
+  author    = {DaCosta, Luis and Fialho, {\'A}lvaro and Schoenauer, Marc and Sebag, Mich{\`e}le},
+  title     = {Adaptive operator selection with dynamic multi-armed bandits},
+  booktitle = {Proceedings of the 10th Annual Conference on Genetic and Evolutionary Computation (GECCO)},
+  year      = {2008}, pages = {913--920},
+  doi       = {10.1145/1389095.1389272}
+}
+@article{fialho2010,
+  author  = {Fialho, {\'A}lvaro and Da Costa, Luis and Schoenauer, Marc and Sebag, Mich{\`e}le},
+  title   = {Analyzing bandit-based adaptive operator selection mechanisms},
+  journal = {Annals of Mathematics and Artificial Intelligence},
+  year    = {2010}, volume = {60}, number = {1--2}, pages = {25--64},
+  doi     = {10.1007/s10472-010-9213-y}
+}
+@article{ropke2006,
+  author  = {Ropke, Stefan and Pisinger, David},
+  title   = {An adaptive large neighborhood search heuristic for the pickup and delivery problem with time windows},
+  journal = {Transportation Science},
+  year    = {2006}, volume = {40}, number = {4}, pages = {455--472},
+  doi     = {10.1287/trsc.1050.0135}
+}
+@article{turkes2021,
+  author  = {Turke{\v{s}}, Renata and S{\"o}rensen, Kenneth and Hvattum, Lars Magnus},
+  title   = {Meta-analysis of metaheuristics: Quantifying the effect of adaptiveness in adaptive large neighborhood search},
+  journal = {European Journal of Operational Research},
+  year    = {2021}, volume = {292}, number = {2}, pages = {423--442},
+  doi     = {10.1016/j.ejor.2020.10.045}
+}
+@article{burke2013,
+  author  = {Burke, Edmund K. and Gendreau, Michel and Hyde, Matthew and Kendall, Graham and Ochoa, Gabriela and {\"O}zcan, Ender and Qu, Rong},
+  title   = {Hyper-heuristics: a survey of the state of the art},
+  journal = {Journal of the Operational Research Society},
+  year    = {2013}, volume = {64}, number = {12}, pages = {1695--1724},
+  doi     = {10.1057/jors.2013.71}
+}
+@article{lagos2024,
+  author  = {Lagos, Felipe and Pereira, Jordi},
+  title   = {Multi-armed bandit-based hyper-heuristics for combinatorial optimization problems},
+  journal = {European Journal of Operational Research},
+  year    = {2024}, volume = {312}, number = {1}, pages = {70--91},
+  doi     = {10.1016/j.ejor.2023.06.016}
+}
+@article{karimimamaghan2022,
+  author  = {Karimi-Mamaghan, Maryam and Mohammadi, Mehrdad and Meyer, Patrick and Karimi-Mamaghan, Amir Mohammad and Talbi, El-Ghazali},
+  title   = {Machine learning at the service of meta-heuristics for solving combinatorial optimization problems: A state-of-the-art},
+  journal = {European Journal of Operational Research},
+  year    = {2022}, volume = {296}, number = {2}, pages = {393--422},
+  doi     = {10.1016/j.ejor.2021.04.032}
+}
+@article{karimimamaghan2023,
+  author  = {Karimi-Mamaghan, Maryam and Mohammadi, Mehrdad and Pasdeloup, Bastien and Meyer, Patrick},
+  title   = {Learning to select operators in meta-heuristics: An integration of {Q}-learning into the iterated greedy algorithm for the permutation flowshop scheduling problem},
+  journal = {European Journal of Operational Research},
+  year    = {2023}, volume = {304}, number = {3}, pages = {1296--1330},
+  doi     = {10.1016/j.ejor.2022.03.054}
+}
+@article{voigt2025,
+  author  = {Voigt, Stefan},
+  title   = {A review and ranking of operators in adaptive large neighborhood search for vehicle routing problems},
+  journal = {European Journal of Operational Research},
+  year    = {2025}, volume = {322}, number = {2}, pages = {357--375},
+  doi     = {10.1016/j.ejor.2024.05.033}
+}
+@misc{pei2023,
+  author        = {Pei, Jiyuan and Tong, Hao and Liu, Jialin and Mei, Yi and Yao, Xin},
+  title         = {Local optima correlation assisted adaptive operator selection},
+  year          = {2023},
+  eprint        = {2305.02805},
+  archivePrefix = {arXiv}
+}
+
+% ---------------- Aprendizagem para roteamento ----------------
+@article{bengio2021,
+  author  = {Bengio, Yoshua and Lodi, Andrea and Prouvost, Antoine},
+  title   = {Machine learning for combinatorial optimization: A methodological tour d'horizon},
+  journal = {European Journal of Operational Research},
+  year    = {2021}, volume = {290}, number = {2}, pages = {405--421},
+  doi     = {10.1016/j.ejor.2020.07.063}
+}
+@inproceedings{kool2019,
+  author    = {Kool, Wouter and van Hoof, Herke and Welling, Max},
+  title     = {Attention, learn to solve routing problems!},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2019}, note = {arXiv:1803.08475}
+}
+@misc{nazari2018,
+  author        = {Nazari, Mohammadreza and Oroojlooy, Afshin and Snyder, Lawrence V. and Tak{\'a}{\v{c}}, Martin},
+  title         = {Reinforcement learning for solving the vehicle routing problem},
+  year          = {2018}, eprint = {1802.04240}, archivePrefix = {arXiv}
+}
+@inproceedings{kwon2020,
+  author    = {Kwon, Yeong-Dae and Choo, Jinho and Kim, Byoungjip and Yoon, Iljoo and Gwon, Youngjune and Min, Seungjai},
+  title     = {{POMO}: Policy optimization with multiple optima for reinforcement learning},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2020}, note = {arXiv:2010.16011}
+}
+@inproceedings{hottung2020,
+  author    = {Hottung, Andr{\'e} and Tierney, Kevin},
+  title     = {Neural large neighborhood search for the capacitated vehicle routing problem},
+  booktitle = {ECAI 2020},
+  year      = {2020}, pages = {443--450}, note = {arXiv:1911.09539}
+}
+@misc{xu2025,
+  author        = {Xu, Kuan and Cao, Zhiguang and Zheng, Chenlong and Liu, Linong},
+  title         = {Learning to search for vehicle routing with multiple time windows},
+  year          = {2025}, eprint = {2505.23098}, archivePrefix = {arXiv}
+}
+@article{romera2024,
+  author  = {Romera-Paredes, Bernardino and Barekatain, Mohammadamin and Novikov, Alexander and Balog, Matej and Kumar, M. Pawan and Dupont, Emilien and Ruiz, Francisco J. R. and Ellenberg, Jordan S. and Wang, Pengming and Fawzi, Omar and Kohli, Pushmeet and Fawzi, Alhussein},
+  title   = {Mathematical discoveries from program search with large language models},
+  journal = {Nature},
+  year    = {2024}, volume = {625}, pages = {468--475},
+  doi     = {10.1038/s41586-023-06924-6}
+}
+@misc{liu2024eoh,
+  author        = {Liu, Fei and Tong, Xialiang and Yuan, Mingxuan and Lin, Xi and Luo, Fu and Wang, Zhenkun and Lu, Zhichao and Zhang, Qingfu},
+  title         = {Evolution of heuristics: Towards efficient automatic algorithm design using large language model},
+  year          = {2024}, eprint = {2401.02051}, archivePrefix = {arXiv}
+}
+
+% ---------------- Metodologia experimental e estatistica ----------------
+@article{hooker1995,
+  author  = {Hooker, J. N.},
+  title   = {Testing heuristics: We have it all wrong},
+  journal = {Journal of Heuristics},
+  year    = {1995}, volume = {1}, number = {1}, pages = {33--42},
+  doi     = {10.1007/BF02430364}
+}
+@article{barr1995,
+  author  = {Barr, Richard S. and Golden, Bruce L. and Kelly, James P. and Resende, Mauricio G. C. and Stewart, Jr., William R.},
+  title   = {Designing and reporting on computational experiments with heuristic methods},
+  journal = {Journal of Heuristics},
+  year    = {1995}, volume = {1}, number = {1}, pages = {9--32},
+  doi     = {10.1007/BF02430363}
+}
+@article{sorensen2015,
+  author  = {S{\"o}rensen, Kenneth},
+  title   = {Metaheuristics---the metaphor exposed},
+  journal = {International Transactions in Operational Research},
+  year    = {2015}, volume = {22}, number = {1}, pages = {3--18},
+  doi     = {10.1111/itor.12001}
+}
+@article{lopezibanez2016,
+  author  = {L{\'o}pez-Ib{\'a}{\~n}ez, Manuel and Dubois-Lacoste, J{\'e}r{\'e}mie and P{\'e}rez C{\'a}ceres, Leslie and Birattari, Mauro and St{\"u}tzle, Thomas},
+  title   = {The irace package: Iterated racing for automatic algorithm configuration},
+  journal = {Operations Research Perspectives},
+  year    = {2016}, volume = {3}, pages = {43--58},
+  doi     = {10.1016/j.orp.2016.09.002}
+}
+@article{derrac2011,
+  author  = {Derrac, Joaqu{\'i}n and Garc{\'i}a, Salvador and Molina, Daniel and Herrera, Francisco},
+  title   = {A practical tutorial on the use of nonparametric statistical tests as a methodology for comparing evolutionary and swarm intelligence algorithms},
+  journal = {Swarm and Evolutionary Computation},
+  year    = {2011}, volume = {1}, number = {1}, pages = {3--18},
+  doi     = {10.1016/j.swevo.2011.02.002}
+}
+@article{lakens2017,
+  author  = {Lakens, Dani{\"e}l},
+  title   = {Equivalence tests: A practical primer for t tests, correlations, and meta-analyses},
+  journal = {Social Psychological and Personality Science},
+  year    = {2017}, volume = {8}, number = {4}, pages = {355--362},
+  doi     = {10.1177/1948550617697177}
+}
+@article{wilcoxon1945,
+  author  = {Wilcoxon, Frank},
+  title   = {Individual comparisons by ranking methods},
+  journal = {Biometrics Bulletin},
+  year    = {1945}, volume = {1}, number = {6}, pages = {80--83},
+  doi     = {10.2307/3001968}
+}
+% Holm 1979: DOI confirmado por indices independentes (Semantic Scholar, resultado de busca); o Crossref nao o retornou.
+@article{holm1979,
+  author  = {Holm, Sture},
+  title   = {A simple sequentially rejective multiple test procedure},
+  journal = {Scandinavian Journal of Statistics},
+  year    = {1979}, volume = {6}, number = {2}, pages = {65--70},
+  doi     = {10.2307/4615733}
+}

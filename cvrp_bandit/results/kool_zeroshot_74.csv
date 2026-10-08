@@ -1,0 +1,75 @@
+conjunto,instancia,n_customers,tamanho_checkpoint_usado,checkpoint_fine_tunado,n_rotas_produzidas,n_vehicles_ref,vehicles_exact,custo,otimo,gap_pct,viavel_estrito,motivo_estrito,viavel_sem_restricao_k,motivo_sem_k
+A,A-n32-k5,31,20,False,5,5,True,794,784.0,1.2755102040816326,True,ok,True,ok
+A,A-n33-k5,32,20,False,5,5,True,716,661.0,8.32072617246596,True,ok,True,ok
+A,A-n33-k6,32,20,False,7,6,True,851,742.0,14.690026954177897,False,"numero de veiculos incorreto: 7 rotas, instancia exige exatamente 6",True,ok
+A,A-n34-k5,33,20,False,5,5,True,829,778.0,6.5552699228791775,True,ok,True,ok
+A,A-n36-k5,35,20,False,5,5,True,831,799.0,4.005006257822278,True,ok,True,ok
+A,A-n37-k5,36,50,False,5,5,True,721,669.0,7.772795216741405,True,ok,True,ok
+A,A-n37-k6,36,50,False,7,6,True,1049,949.0,10.53740779768177,False,"numero de veiculos incorreto: 7 rotas, instancia exige exatamente 6",True,ok
+A,A-n38-k5,37,50,False,5,5,True,759,730.0,3.9726027397260273,True,ok,True,ok
+A,A-n39-k5,38,50,False,5,5,True,836,822.0,1.70316301703163,True,ok,True,ok
+A,A-n39-k6,38,50,False,6,6,True,857,831.0,3.1287605294825513,True,ok,True,ok
+A,A-n44-k6,43,50,False,7,6,True,995,937.0,6.189967982924227,False,"numero de veiculos incorreto: 7 rotas, instancia exige exatamente 6",True,ok
+A,A-n45-k6,44,50,False,7,6,True,1013,944.0,7.309322033898305,False,"numero de veiculos incorreto: 7 rotas, instancia exige exatamente 6",True,ok
+A,A-n45-k7,44,50,False,7,7,True,1167,1146.0,1.8324607329842932,True,ok,True,ok
+A,A-n46-k7,45,50,False,7,7,True,995,914.0,8.86214442013129,True,ok,True,ok
+A,A-n48-k7,47,50,False,7,7,True,1154,1073.0,7.548928238583411,True,ok,True,ok
+A,A-n53-k7,52,50,False,8,7,True,1117,1010.0,10.594059405940595,False,"numero de veiculos incorreto: 8 rotas, instancia exige exatamente 7",True,ok
+A,A-n54-k7,53,50,False,7,7,True,1243,1167.0,6.512425021422451,True,ok,True,ok
+A,A-n55-k9,54,50,False,9,9,True,1187,1073.0,10.624417520969246,True,ok,True,ok
+A,A-n60-k9,59,50,False,9,9,True,1469,1354.0,8.493353028064993,True,ok,True,ok
+A,A-n61-k9,60,50,False,10,9,True,1159,1034.0,12.088974854932301,False,"numero de veiculos incorreto: 10 rotas, instancia exige exatamente 9",True,ok
+A,A-n62-k8,61,50,False,8,8,True,1369,1288.0,6.288819875776397,True,ok,True,ok
+A,A-n63-k10,62,50,False,10,10,True,1365,1314.0,3.8812785388127855,True,ok,True,ok
+A,A-n63-k9,62,50,False,9,9,True,1727,1616.0,6.868811881188119,True,ok,True,ok
+A,A-n64-k9,63,50,False,9,9,True,1490,1401.0,6.352605281941471,True,ok,True,ok
+A,A-n65-k9,64,50,False,10,9,True,1275,1174.0,8.603066439522998,False,"numero de veiculos incorreto: 10 rotas, instancia exige exatamente 9",True,ok
+A,A-n69-k9,68,50,False,9,9,True,1233,1159.0,6.384814495254529,True,ok,True,ok
+B,B-n31-k5,30,20,False,5,5,True,712,672.0,5.9523809523809526,True,ok,True,ok
+B,B-n34-k5,33,20,False,5,5,True,815,788.0,3.4263959390862944,True,ok,True,ok
+B,B-n35-k5,34,20,False,5,5,True,981,955.0,2.722513089005236,True,ok,True,ok
+B,B-n38-k6,37,50,False,6,6,True,827,805.0,2.732919254658385,True,ok,True,ok
+B,B-n39-k5,38,50,False,5,5,True,624,549.0,13.66120218579235,True,ok,True,ok
+B,B-n41-k6,40,50,False,7,6,True,872,829.0,5.186972255729795,False,"numero de veiculos incorreto: 7 rotas, instancia exige exatamente 6",True,ok
+B,B-n43-k6,42,50,False,6,6,True,759,742.0,2.2911051212938007,True,ok,True,ok
+B,B-n44-k7,43,50,False,7,7,True,937,909.0,3.08030803080308,True,ok,True,ok
+B,B-n45-k5,44,50,False,6,5,True,798,751.0,6.25832223701731,False,"numero de veiculos incorreto: 6 rotas, instancia exige exatamente 5",True,ok
+B,B-n45-k6,44,50,False,7,6,True,736,678.0,8.55457227138643,False,"numero de veiculos incorreto: 7 rotas, instancia exige exatamente 6",True,ok
+B,B-n50-k7,49,50,False,7,7,True,800,741.0,7.96221322537112,True,ok,True,ok
+B,B-n50-k8,49,50,False,8,8,True,1353,1312.0,3.125,True,ok,True,ok
+B,B-n51-k7,50,50,False,8,7,True,1171,1032.0,13.468992248062015,False,"numero de veiculos incorreto: 8 rotas, instancia exige exatamente 7",True,ok
+B,B-n52-k7,51,50,False,8,7,True,840,747.0,12.449799196787149,False,"numero de veiculos incorreto: 8 rotas, instancia exige exatamente 7",True,ok
+B,B-n56-k7,55,50,False,7,7,True,793,707.0,12.164073550212164,True,ok,True,ok
+B,B-n57-k7,56,50,False,8,7,True,1230,1153.0,6.678230702515178,False,"numero de veiculos incorreto: 8 rotas, instancia exige exatamente 7",True,ok
+B,B-n57-k9,56,50,False,9,9,True,1700,1598.0,6.382978723404255,True,ok,True,ok
+B,B-n63-k10,62,50,False,10,10,True,1573,1496.0,5.147058823529412,True,ok,True,ok
+B,B-n64-k9,63,50,False,11,9,True,956,861.0,11.033681765389083,False,"numero de veiculos incorreto: 11 rotas, instancia exige exatamente 9",True,ok
+B,B-n66-k9,65,50,False,10,9,True,1380,1316.0,4.86322188449848,False,"numero de veiculos incorreto: 10 rotas, instancia exige exatamente 9",True,ok
+B,B-n67-k10,66,50,False,10,10,True,1103,1032.0,6.87984496124031,True,ok,True,ok
+B,B-n68-k9,67,50,False,10,9,True,1364,1272.0,7.232704402515723,False,"numero de veiculos incorreto: 10 rotas, instancia exige exatamente 9",True,ok
+B,B-n78-k10,77,100,False,10,10,True,1370,1221.0,12.203112203112203,True,ok,True,ok
+X,X-n101-k25,100,100,False,28,26,False,31175,27591.0,12.989743032148164,True,ok,True,ok
+X,X-n106-k14,105,100,False,14,14,False,28348,26362.0,7.533571049237539,True,ok,True,ok
+X,X-n110-k13,109,100,False,13,13,False,15941,14971.0,6.479193106672901,True,ok,True,ok
+X,X-n115-k10,114,100,False,10,10,False,14194,12747.0,11.351690593865223,True,ok,True,ok
+X,X-n120-k6,119,100,False,6,6,False,14355,13332.0,7.673267326732673,True,ok,True,ok
+X,X-n125-k30,124,100,False,33,30,False,60748,55539.0,9.378994940492266,True,ok,True,ok
+X,X-n129-k18,128,100,False,19,18,False,31106,28940.0,7.484450587422253,True,ok,True,ok
+X,X-n134-k13,133,100,False,15,13,False,12890,10916.0,18.083547086844998,True,ok,True,ok
+X,X-n139-k10,138,100,False,11,10,False,14648,13590.0,7.7851361295069905,True,ok,True,ok
+X,X-n143-k7,142,100,False,7,7,False,18151,15700.0,15.611464968152866,True,ok,True,ok
+X,X-n148-k46,147,100,False,56,47,False,50997,43448.0,17.374792855827657,True,ok,True,ok
+X,X-n153-k22,152,100,False,33,23,False,30025,21220.0,41.49387370405278,True,ok,True,ok
+X,X-n157-k13,156,100,False,14,13,False,18401,16876.0,9.036501540649443,True,ok,True,ok
+X,X-n162-k11,161,100,False,11,11,False,15335,14138.0,8.466544065638704,True,ok,True,ok
+X,X-n167-k10,166,100,False,10,10,False,23170,20557.0,12.710998686578781,True,ok,True,ok
+X,X-n172-k51,171,100,False,57,53,False,51040,45607.0,11.912644988707873,True,ok,True,ok
+X,X-n176-k26,175,100,False,30,26,False,56248,47812.0,17.64410608215511,True,ok,True,ok
+X,X-n181-k23,180,100,False,23,23,False,26934,25569.0,5.338495834799953,True,ok,True,ok
+X,X-n186-k15,185,100,False,15,15,False,25946,24145.0,7.459101263201491,True,ok,True,ok
+X,X-n190-k8,189,100,False,11,8,False,25927,16980.0,52.69140164899882,True,ok,True,ok
+X,X-n195-k51,194,100,False,62,53,False,54782,44225.0,23.87111362351611,True,ok,True,ok
+CMT,CMT1,50,50,False,6,5,False,559.750746093516,524.611,6.698248053036633,True,ok,True,ok
+CMT,CMT11,120,100,False,7,7,False,1260.8837831354497,1042.12,20.992187381054947,True,ok,True,ok
+CMT,CMT2,75,50,False,11,10,False,909.3430105050892,835.262,8.869194397098065,True,ok,True,ok
+CMT,CMT3,100,100,False,8,8,False,866.8475481300519,826.137,4.9278204619877775,True,ok,True,ok

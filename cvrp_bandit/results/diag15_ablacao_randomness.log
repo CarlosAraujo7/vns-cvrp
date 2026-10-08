@@ -1,0 +1,209 @@
+=== Diagnóstico 15: ablação dos 3 mecanismos de aleatoriedade do HG-UCB (Direção 2) ===
+
+--- A-n32-k5 (conjunto A, artigo HG-UCB=0.19%) ---
+  [gvns_classico      ] gap_medio=  5.48%
+  [hgucb_completo     ] gap_medio=  5.48%
+  [sem_cold_start     ] gap_medio=  5.59%
+  [sem_epsilon_greedy ] gap_medio=  5.15%
+  [sem_drift_reset    ] gap_medio=  5.48%
+  [sem_nenhum         ] gap_medio=  5.56%
+  [hgucb_completo_a5  ] gap_medio=  5.48%
+  [sem_drift_reset_a5 ] gap_medio=  5.48%
+
+--- A-n34-k5 (conjunto A, artigo HG-UCB=0.14%) ---
+  [gvns_classico      ] gap_medio=  3.47%
+  [hgucb_completo     ] gap_medio=  2.13%
+  [sem_cold_start     ] gap_medio=  2.16%
+  [sem_epsilon_greedy ] gap_medio=  1.77%
+  [sem_drift_reset    ] gap_medio=  2.19%
+  [sem_nenhum         ] gap_medio=  2.90%
+  [hgucb_completo_a5  ] gap_medio=  3.06%
+  [sem_drift_reset_a5 ] gap_medio=  4.86%
+
+--- A-n38-k5 (conjunto A, artigo HG-UCB=0.68%) ---
+  [gvns_classico      ] gap_medio=  3.23%
+  [hgucb_completo     ] gap_medio=  2.38%
+  [sem_cold_start     ] gap_medio=  2.93%
+  [sem_epsilon_greedy ] gap_medio=  2.47%
+  [sem_drift_reset    ] gap_medio=  2.44%
+  [sem_nenhum         ] gap_medio=  2.99%
+  [hgucb_completo_a5  ] gap_medio=  2.33%
+  [sem_drift_reset_a5 ] gap_medio=  2.93%
+
+--- A-n55-k9 (conjunto A, artigo HG-UCB=1.27%) ---
+  [gvns_classico      ] gap_medio=  2.27%
+  [hgucb_completo     ] gap_medio=  2.27%
+  [sem_cold_start     ] gap_medio=  2.78%
+  [sem_epsilon_greedy ] gap_medio=  2.22%
+  [sem_drift_reset    ] gap_medio=  2.27%
+  [sem_nenhum         ] gap_medio=  1.71%
+  [hgucb_completo_a5  ] gap_medio=  2.89%
+  [sem_drift_reset_a5 ] gap_medio=  3.36%
+
+--- A-n64-k9 (conjunto A, artigo HG-UCB=4.09%) ---
+  [gvns_classico      ] gap_medio=  3.73%
+  [hgucb_completo     ] gap_medio=  3.61%
+  [sem_cold_start     ] gap_medio=  3.70%
+  [sem_epsilon_greedy ] gap_medio=  3.41%
+  [sem_drift_reset    ] gap_medio=  3.64%
+  [sem_nenhum         ] gap_medio=  3.73%
+  [hgucb_completo_a5  ] gap_medio=  3.70%
+  [sem_drift_reset_a5 ] gap_medio=  4.05%
+
+--- B-n41-k6 (conjunto B, artigo HG-UCB=0.90%) ---
+  [gvns_classico      ] gap_medio=  4.99%
+  [hgucb_completo     ] gap_medio=  4.00%
+  [sem_cold_start     ] gap_medio=  4.46%
+  [sem_epsilon_greedy ] gap_medio=  4.03%
+  [sem_drift_reset    ] gap_medio=  4.03%
+  [sem_nenhum         ] gap_medio=  4.68%
+  [hgucb_completo_a5  ] gap_medio=  4.22%
+  [sem_drift_reset_a5 ] gap_medio=  7.53%
+
+--- B-n63-k10 (conjunto B, artigo HG-UCB=4.08%) ---
+  [gvns_classico      ] gap_medio=  4.25%
+  [hgucb_completo     ] gap_medio=  4.34%
+  [sem_cold_start     ] gap_medio=  4.67%
+  [sem_epsilon_greedy ] gap_medio=  4.00%
+  [sem_drift_reset    ] gap_medio=  4.34%
+  [sem_nenhum         ] gap_medio=  4.77%
+  [hgucb_completo_a5  ] gap_medio=  4.02%
+  [sem_drift_reset_a5 ] gap_medio=  4.49%
+
+--- X-n101-k25 (conjunto X, artigo HG-UCB=3.54%) ---
+  [gvns_classico      ] gap_medio=  2.97%
+  [hgucb_completo     ] gap_medio=  2.87%
+  [sem_cold_start     ] gap_medio=  3.22%
+  [sem_epsilon_greedy ] gap_medio=  3.30%
+  [sem_drift_reset    ] gap_medio=  3.12%
+  [sem_nenhum         ] gap_medio=  3.39%
+  [hgucb_completo_a5  ] gap_medio=  3.43%
+  [sem_drift_reset_a5 ] gap_medio=  3.65%
+
+--- A-n69-k9 (conjunto A, artigo HG-UCB=3.45%) ---
+  [gvns_classico      ] gap_medio=  1.45%
+  [hgucb_completo     ] gap_medio=  1.42%
+  [sem_cold_start     ] gap_medio=  1.69%
+  [sem_epsilon_greedy ] gap_medio=  1.35%
+  [sem_drift_reset    ] gap_medio=  1.42%
+  [sem_nenhum         ] gap_medio=  1.29%
+  [hgucb_completo_a5  ] gap_medio=  1.48%
+  [sem_drift_reset_a5 ] gap_medio=  1.73%
+
+--- B-n31-k5 (conjunto B, artigo HG-UCB=0.26%) ---
+  [gvns_classico      ] gap_medio=  0.45%
+  [hgucb_completo     ] gap_medio=  0.68%
+  [sem_cold_start     ] gap_medio=  0.60%
+  [sem_epsilon_greedy ] gap_medio=  0.62%
+  [sem_drift_reset    ] gap_medio=  0.68%
+  [sem_nenhum         ] gap_medio=  0.60%
+  [hgucb_completo_a5  ] gap_medio=  0.48%
+  [sem_drift_reset_a5 ] gap_medio=  0.74%
+
+--- B-n50-k8 (conjunto B, artigo HG-UCB=1.12%) ---
+  [gvns_classico      ] gap_medio=  1.42%
+  [hgucb_completo     ] gap_medio=  1.54%
+  [sem_cold_start     ] gap_medio=  2.06%
+  [sem_epsilon_greedy ] gap_medio=  1.62%
+  [sem_drift_reset    ] gap_medio=  1.54%
+  [sem_nenhum         ] gap_medio=  2.07%
+  [hgucb_completo_a5  ] gap_medio=  1.89%
+  [sem_drift_reset_a5 ] gap_medio=  2.35%
+
+--- B-n78-k10 (conjunto B, artigo HG-UCB=6.00%) ---
+  [gvns_classico      ] gap_medio=  2.62%
+  [hgucb_completo     ] gap_medio=  2.82%
+  [sem_cold_start     ] gap_medio=  2.88%
+  [sem_epsilon_greedy ] gap_medio=  2.74%
+  [sem_drift_reset    ] gap_medio=  2.82%
+  [sem_nenhum         ] gap_medio=  2.80%
+  [hgucb_completo_a5  ] gap_medio=  2.67%
+  [sem_drift_reset_a5 ] gap_medio=  2.83%
+
+--- CMT1 (conjunto CMT, artigo HG-UCB=0.00%) ---
+  [gvns_classico      ] gap_medio=  7.37%
+  [hgucb_completo     ] gap_medio=  6.79%
+  [sem_cold_start     ] gap_medio=  6.35%
+  [sem_epsilon_greedy ] gap_medio=  6.63%
+  [sem_drift_reset    ] gap_medio=  6.79%
+  [sem_nenhum         ] gap_medio=  6.90%
+  [hgucb_completo_a5  ] gap_medio=  6.17%
+  [sem_drift_reset_a5 ] gap_medio=  7.92%
+
+--- X-n106-k14 (conjunto X, artigo HG-UCB=2.55%) ---
+  [gvns_classico      ] gap_medio=  2.65%
+  [hgucb_completo     ] gap_medio=  2.90%
+  [sem_cold_start     ] gap_medio=  2.37%
+  [sem_epsilon_greedy ] gap_medio=  2.79%
+  [sem_drift_reset    ] gap_medio=  2.66%
+  [sem_nenhum         ] gap_medio=  2.86%
+  [hgucb_completo_a5  ] gap_medio=  2.79%
+  [sem_drift_reset_a5 ] gap_medio=  2.93%
+
+--- X-n134-k13 (conjunto X, artigo HG-UCB=7.38%) ---
+  [gvns_classico      ] gap_medio=  5.34%
+  [hgucb_completo     ] gap_medio=  6.39%
+  [sem_cold_start     ] gap_medio=  5.86%
+  [sem_epsilon_greedy ] gap_medio=  6.03%
+  [sem_drift_reset    ] gap_medio=  6.22%
+  [sem_nenhum         ] gap_medio=  5.89%
+  [hgucb_completo_a5  ] gap_medio=  6.05%
+  [sem_drift_reset_a5 ] gap_medio=  6.48%
+
+--- X-n157-k13 (conjunto X, artigo HG-UCB=3.66%) ---
+  [gvns_classico      ] gap_medio=  4.21%
+  [hgucb_completo     ] gap_medio=  4.08%
+  [sem_cold_start     ] gap_medio=  4.20%
+  [sem_epsilon_greedy ] gap_medio=  4.37%
+  [sem_drift_reset    ] gap_medio=  4.31%
+  [sem_nenhum         ] gap_medio=  4.27%
+  [hgucb_completo_a5  ] gap_medio=  4.13%
+  [sem_drift_reset_a5 ] gap_medio=  4.31%
+
+Tempo total de execução: 1046.2s
+
+=== Resumo GERAL — passada principal (alpha=0,5, média sobre as 16 instâncias) ===
+  gvns_classico        gap_medio=  3.49%
+  hgucb_completo       gap_medio=  3.36%
+  sem_cold_start       gap_medio=  3.47%
+  sem_epsilon_greedy   gap_medio=  3.28%
+  sem_drift_reset      gap_medio=  3.37%
+  sem_nenhum           gap_medio=  3.53%
+
+=== Resumo POR CONJUNTO (A/B/CMT/X) — passada principal ===
+  gvns_classico        A= 3.27%  B= 2.75%  CMT= 7.37%  X= 3.79%
+  hgucb_completo       A= 2.88%  B= 2.68%  CMT= 6.79%  X= 4.06%
+  sem_cold_start       A= 3.14%  B= 2.93%  CMT= 6.35%  X= 3.91%
+  sem_epsilon_greedy   A= 2.73%  B= 2.60%  CMT= 6.63%  X= 4.12%
+  sem_drift_reset      A= 2.91%  B= 2.68%  CMT= 6.79%  X= 4.08%
+  sem_nenhum           A= 3.03%  B= 2.98%  CMT= 6.90%  X= 4.10%
+
+=== Diagnóstico dos mecanismos — passada principal (alpha=0,5) ===
+  gvns_classico        (sem bandit -- sem diagnóstico de mecanismo)
+  hgucb_completo       colapso= 0.00%  drift_sinalizado= 0.036%  drift_reagido(resets)= 0.036%  media_operadores_nunca_testados=0.00  (n_iter=64000, n_execucoes=80)
+  sem_cold_start       colapso= 0.00%  drift_sinalizado= 0.061%  drift_reagido(resets)= 0.061%  media_operadores_nunca_testados=0.00  (n_iter=64000, n_execucoes=80)
+  sem_epsilon_greedy   colapso= 0.00%  drift_sinalizado= 0.034%  drift_reagido(resets)= 0.034%  media_operadores_nunca_testados=0.00  (n_iter=64000, n_execucoes=80)
+  sem_drift_reset      colapso= 0.00%  drift_sinalizado= 0.036%  drift_reagido(resets)= 0.000%  media_operadores_nunca_testados=0.00  (n_iter=64000, n_execucoes=80)
+  sem_nenhum           colapso= 0.00%  drift_sinalizado= 0.052%  drift_reagido(resets)= 0.000%  media_operadores_nunca_testados=0.00  (n_iter=64000, n_execucoes=80)
+
+=== Passada secundária — stress-test drift-reset (alpha=5,0, mesma amostra) ===
+  hgucb_completo_a5    gap_medio=  3.42%  drift_sinalizado= 0.709%  drift_reagido(resets)= 0.709%  (n_iter=64000)
+  sem_drift_reset_a5   gap_medio=  4.10%  drift_sinalizado= 0.266%  drift_reagido(resets)= 0.000%  (n_iter=64000)
+
+=== gap% POR INSTÂNCIA (todas as 16, todos os 8 braços) ===
+  A-n32-k5      gvns_classico= 5.48%  hgucb_completo= 5.48%  sem_cold_start= 5.59%  sem_epsilon_greedy= 5.15%  sem_drift_reset= 5.48%  sem_nenhum= 5.56%  hgucb_completo_a5= 5.48%  sem_drift_reset_a5= 5.48%
+  A-n34-k5      gvns_classico= 3.47%  hgucb_completo= 2.13%  sem_cold_start= 2.16%  sem_epsilon_greedy= 1.77%  sem_drift_reset= 2.19%  sem_nenhum= 2.90%  hgucb_completo_a5= 3.06%  sem_drift_reset_a5= 4.86%
+  A-n38-k5      gvns_classico= 3.23%  hgucb_completo= 2.38%  sem_cold_start= 2.93%  sem_epsilon_greedy= 2.47%  sem_drift_reset= 2.44%  sem_nenhum= 2.99%  hgucb_completo_a5= 2.33%  sem_drift_reset_a5= 2.93%
+  A-n55-k9      gvns_classico= 2.27%  hgucb_completo= 2.27%  sem_cold_start= 2.78%  sem_epsilon_greedy= 2.22%  sem_drift_reset= 2.27%  sem_nenhum= 1.71%  hgucb_completo_a5= 2.89%  sem_drift_reset_a5= 3.36%
+  A-n64-k9      gvns_classico= 3.73%  hgucb_completo= 3.61%  sem_cold_start= 3.70%  sem_epsilon_greedy= 3.41%  sem_drift_reset= 3.64%  sem_nenhum= 3.73%  hgucb_completo_a5= 3.70%  sem_drift_reset_a5= 4.05%
+  B-n41-k6      gvns_classico= 4.99%  hgucb_completo= 4.00%  sem_cold_start= 4.46%  sem_epsilon_greedy= 4.03%  sem_drift_reset= 4.03%  sem_nenhum= 4.68%  hgucb_completo_a5= 4.22%  sem_drift_reset_a5= 7.53%
+  B-n63-k10     gvns_classico= 4.25%  hgucb_completo= 4.34%  sem_cold_start= 4.67%  sem_epsilon_greedy= 4.00%  sem_drift_reset= 4.34%  sem_nenhum= 4.77%  hgucb_completo_a5= 4.02%  sem_drift_reset_a5= 4.49%
+  X-n101-k25    gvns_classico= 2.97%  hgucb_completo= 2.87%  sem_cold_start= 3.22%  sem_epsilon_greedy= 3.30%  sem_drift_reset= 3.12%  sem_nenhum= 3.39%  hgucb_completo_a5= 3.43%  sem_drift_reset_a5= 3.65%
+  A-n69-k9      gvns_classico= 1.45%  hgucb_completo= 1.42%  sem_cold_start= 1.69%  sem_epsilon_greedy= 1.35%  sem_drift_reset= 1.42%  sem_nenhum= 1.29%  hgucb_completo_a5= 1.48%  sem_drift_reset_a5= 1.73%
+  B-n31-k5      gvns_classico= 0.45%  hgucb_completo= 0.68%  sem_cold_start= 0.60%  sem_epsilon_greedy= 0.62%  sem_drift_reset= 0.68%  sem_nenhum= 0.60%  hgucb_completo_a5= 0.48%  sem_drift_reset_a5= 0.74%
+  B-n50-k8      gvns_classico= 1.42%  hgucb_completo= 1.54%  sem_cold_start= 2.06%  sem_epsilon_greedy= 1.62%  sem_drift_reset= 1.54%  sem_nenhum= 2.07%  hgucb_completo_a5= 1.89%  sem_drift_reset_a5= 2.35%
+  B-n78-k10     gvns_classico= 2.62%  hgucb_completo= 2.82%  sem_cold_start= 2.88%  sem_epsilon_greedy= 2.74%  sem_drift_reset= 2.82%  sem_nenhum= 2.80%  hgucb_completo_a5= 2.67%  sem_drift_reset_a5= 2.83%
+  CMT1          gvns_classico= 7.37%  hgucb_completo= 6.79%  sem_cold_start= 6.35%  sem_epsilon_greedy= 6.63%  sem_drift_reset= 6.79%  sem_nenhum= 6.90%  hgucb_completo_a5= 6.17%  sem_drift_reset_a5= 7.92%
+  X-n106-k14    gvns_classico= 2.65%  hgucb_completo= 2.90%  sem_cold_start= 2.37%  sem_epsilon_greedy= 2.79%  sem_drift_reset= 2.66%  sem_nenhum= 2.86%  hgucb_completo_a5= 2.79%  sem_drift_reset_a5= 2.93%
+  X-n134-k13    gvns_classico= 5.34%  hgucb_completo= 6.39%  sem_cold_start= 5.86%  sem_epsilon_greedy= 6.03%  sem_drift_reset= 6.22%  sem_nenhum= 5.89%  hgucb_completo_a5= 6.05%  sem_drift_reset_a5= 6.48%
+  X-n157-k13    gvns_classico= 4.21%  hgucb_completo= 4.08%  sem_cold_start= 4.20%  sem_epsilon_greedy= 4.37%  sem_drift_reset= 4.31%  sem_nenhum= 4.27%  hgucb_completo_a5= 4.13%  sem_drift_reset_a5= 4.31%

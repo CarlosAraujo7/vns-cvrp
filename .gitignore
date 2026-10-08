@@ -1,0 +1,14 @@
+# Projeto arquivado e material de terceiros / grande (nao versionar)
+_arquivo_edp_2026-08-29/
+_sync_tmp/
+_to_delete/
+Estilo do CEC/
+literatura/
+cvrp_bandit/external/
+cvrp_bandit/direcao1_local/venv/
+cvrp_bandit/results/kool_finetuned/
+cvrp_bandit/results/superseded/
+**/__pycache__/
+*.pyc
+*.pt
+*.bak

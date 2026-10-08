@@ -1,0 +1,123 @@
+=== Diagnóstico 9: reescala da recompensa positiva normalizada (achado real #9) ===
+
+--- A-n32-k5 (conjunto A, artigo HG-UCB=0.19%) ---
+  alpha=5.0 / scale=1x(baseline)  gap_medio=  5.48%
+  alpha=5.0 / scale=10x         gap_medio=  5.54%
+  alpha=5.0 / scale=50x         gap_medio=  5.92%
+  alpha=5.0 / scale=100x        gap_medio=  6.25%
+  alpha=5.0 / scale=200x        gap_medio=  6.25%
+  alpha=0.5 / scale=1x(baseline)  gap_medio=  5.48%
+  alpha=0.5 / scale=10x         gap_medio=  5.48%
+  alpha=0.5 / scale=50x         gap_medio=  5.48%
+  alpha=0.5 / scale=100x        gap_medio=  5.48%
+  alpha=0.5 / scale=200x        gap_medio=  5.82%
+
+--- A-n34-k5 (conjunto A, artigo HG-UCB=0.14%) ---
+  alpha=5.0 / scale=1x(baseline)  gap_medio=  3.06%
+  alpha=5.0 / scale=10x         gap_medio=  4.04%
+  alpha=5.0 / scale=50x         gap_medio=  5.86%
+  alpha=5.0 / scale=100x        gap_medio=  5.06%
+  alpha=5.0 / scale=200x        gap_medio=  4.68%
+  alpha=0.5 / scale=1x(baseline)  gap_medio=  2.13%
+  alpha=0.5 / scale=10x         gap_medio=  2.49%
+  alpha=0.5 / scale=50x         gap_medio=  3.42%
+  alpha=0.5 / scale=100x        gap_medio=  4.19%
+  alpha=0.5 / scale=200x        gap_medio=  3.86%
+
+--- A-n38-k5 (conjunto A, artigo HG-UCB=0.68%) ---
+  alpha=5.0 / scale=1x(baseline)  gap_medio=  2.33%
+  alpha=5.0 / scale=10x         gap_medio=  2.47%
+  alpha=5.0 / scale=50x         gap_medio=  3.40%
+  alpha=5.0 / scale=100x        gap_medio=  3.23%
+  alpha=5.0 / scale=200x        gap_medio=  3.67%
+  alpha=0.5 / scale=1x(baseline)  gap_medio=  2.38%
+  alpha=0.5 / scale=10x         gap_medio=  2.58%
+  alpha=0.5 / scale=50x         gap_medio=  2.33%
+  alpha=0.5 / scale=100x        gap_medio=  2.33%
+  alpha=0.5 / scale=200x        gap_medio=  2.77%
+
+--- A-n55-k9 (conjunto A, artigo HG-UCB=1.27%) ---
+  alpha=5.0 / scale=1x(baseline)  gap_medio=  2.89%
+  alpha=5.0 / scale=10x         gap_medio=  2.65%
+  alpha=5.0 / scale=50x         gap_medio=  2.96%
+  alpha=5.0 / scale=100x        gap_medio=  3.36%
+  alpha=5.0 / scale=200x        gap_medio=  3.36%
+  alpha=0.5 / scale=1x(baseline)  gap_medio=  2.27%
+  alpha=0.5 / scale=10x         gap_medio=  2.98%
+  alpha=0.5 / scale=50x         gap_medio=  3.17%
+  alpha=0.5 / scale=100x        gap_medio=  2.61%
+  alpha=0.5 / scale=200x        gap_medio=  3.19%
+
+--- A-n64-k9 (conjunto A, artigo HG-UCB=4.09%) ---
+  alpha=5.0 / scale=1x(baseline)  gap_medio=  3.70%
+  alpha=5.0 / scale=10x         gap_medio=  3.93%
+  alpha=5.0 / scale=50x         gap_medio=  4.07%
+  alpha=5.0 / scale=100x        gap_medio=  6.07%
+  alpha=5.0 / scale=200x        gap_medio=  6.24%
+  alpha=0.5 / scale=1x(baseline)  gap_medio=  3.61%
+  alpha=0.5 / scale=10x         gap_medio=  3.53%
+  alpha=0.5 / scale=50x         gap_medio=  3.73%
+  alpha=0.5 / scale=100x        gap_medio=  3.77%
+  alpha=0.5 / scale=200x        gap_medio=  3.95%
+
+--- B-n41-k6 (conjunto B, artigo HG-UCB=0.90%) ---
+  alpha=5.0 / scale=1x(baseline)  gap_medio=  4.22%
+  alpha=5.0 / scale=10x         gap_medio=  6.15%
+  alpha=5.0 / scale=50x         gap_medio=  9.02%
+  alpha=5.0 / scale=100x        gap_medio= 10.01%
+  alpha=5.0 / scale=200x        gap_medio= 10.01%
+  alpha=0.5 / scale=1x(baseline)  gap_medio=  4.00%
+  alpha=0.5 / scale=10x         gap_medio=  4.00%
+  alpha=0.5 / scale=50x         gap_medio=  5.57%
+  alpha=0.5 / scale=100x        gap_medio=  6.08%
+  alpha=0.5 / scale=200x        gap_medio=  6.22%
+
+--- B-n63-k10 (conjunto B, artigo HG-UCB=4.08%) ---
+  alpha=5.0 / scale=1x(baseline)  gap_medio=  4.02%
+  alpha=5.0 / scale=10x         gap_medio=  4.56%
+  alpha=5.0 / scale=50x         gap_medio=  4.95%
+  alpha=5.0 / scale=100x        gap_medio=  5.49%
+  alpha=5.0 / scale=200x        gap_medio=  4.83%
+  alpha=0.5 / scale=1x(baseline)  gap_medio=  4.34%
+  alpha=0.5 / scale=10x         gap_medio=  4.22%
+  alpha=0.5 / scale=50x         gap_medio=  4.41%
+  alpha=0.5 / scale=100x        gap_medio=  4.65%
+  alpha=0.5 / scale=200x        gap_medio=  4.32%
+
+--- X-n101-k25 (conjunto X, artigo HG-UCB=3.54%) ---
+  alpha=5.0 / scale=1x(baseline)  gap_medio=  3.43%
+  alpha=5.0 / scale=10x         gap_medio=  2.92%
+  alpha=5.0 / scale=50x         gap_medio=  3.54%
+  alpha=5.0 / scale=100x        gap_medio=  4.06%
+  alpha=5.0 / scale=200x        gap_medio=  3.96%
+  alpha=0.5 / scale=1x(baseline)  gap_medio=  2.87%
+  alpha=0.5 / scale=10x         gap_medio=  3.20%
+  alpha=0.5 / scale=50x         gap_medio=  3.36%
+  alpha=0.5 / scale=100x        gap_medio=  3.42%
+  alpha=0.5 / scale=200x        gap_medio=  3.26%
+
+Tempo total de execução: 355.5s
+
+=== Resumo GERAL (média sobre as 8 instâncias, todos os 3 conjuntos) ===
+  alpha=5.0 / scale=1x(baseline)  gap_medio=  3.64%  colapso= 12.5%  drift= 0.69%  R+_media=   0.0154  R-_media=  -1.8361  |R-|/R+= 119.37x  (n+=2138 n-=29862)
+  alpha=5.0 / scale=10x         gap_medio=  4.03%  colapso= 40.2%  drift= 0.55%  R+_media=   0.1529  R-_media=  -2.1039  |R-|/R+=  13.76x  (n+=1854 n-=30146)
+  alpha=5.0 / scale=50x         gap_medio=  4.96%  colapso= 77.5%  drift= 0.26%  R+_media=   0.8936  R-_media=  -2.3582  |R-|/R+=   2.64x  (n+=1530 n-=30470)
+  alpha=5.0 / scale=100x        gap_medio=  5.44%  colapso= 91.8%  drift= 0.19%  R+_media=   1.8190  R-_media=  -2.4384  |R-|/R+=   1.34x  (n+=1553 n-=30447)
+  alpha=5.0 / scale=200x        gap_medio=  5.37%  colapso= 92.1%  drift= 0.16%  R+_media=   3.9590  R-_media=  -2.4405  |R-|/R+=   0.62x  (n+=1400 n-=30600)
+  alpha=0.5 / scale=1x(baseline)  gap_medio=  3.39%  colapso=  0.0%  drift= 0.04%  R+_media=   0.0168  R-_media=  -0.9341  |R-|/R+=  55.50x  (n+=2309 n-=29691)
+  alpha=0.5 / scale=10x         gap_medio=  3.56%  colapso=  0.0%  drift= 0.04%  R+_media=   0.1654  R-_media=  -0.9491  |R-|/R+=   5.74x  (n+=2404 n-=29596)
+  alpha=0.5 / scale=50x         gap_medio=  3.93%  colapso=  0.4%  drift= 0.07%  R+_media=   0.8510  R-_media=  -1.0634  |R-|/R+=   1.25x  (n+=2232 n-=29768)
+  alpha=0.5 / scale=100x        gap_medio=  4.07%  colapso=  5.3%  drift= 0.20%  R+_media=   1.6273  R-_media=  -1.3974  |R-|/R+=   0.86x  (n+=2074 n-=29926)
+  alpha=0.5 / scale=200x        gap_medio=  4.17%  colapso= 40.4%  drift= 0.25%  R+_media=   3.6646  R-_media=  -1.8500  |R-|/R+=   0.50x  (n+=1826 n-=30174)
+
+=== Resumo POR CONJUNTO (A vs. B vs. X) ===
+  alpha=5.0 / scale=1x(baseline)  A= 3.49%  B= 4.12%  X= 3.43%
+  alpha=5.0 / scale=10x         A= 3.72%  B= 5.36%  X= 2.92%
+  alpha=5.0 / scale=50x         A= 4.44%  B= 6.98%  X= 3.54%
+  alpha=5.0 / scale=100x        A= 4.79%  B= 7.75%  X= 4.06%
+  alpha=5.0 / scale=200x        A= 4.84%  B= 7.42%  X= 3.96%
+  alpha=0.5 / scale=1x(baseline)  A= 3.18%  B= 4.17%  X= 2.87%
+  alpha=0.5 / scale=10x         A= 3.41%  B= 4.11%  X= 3.20%
+  alpha=0.5 / scale=50x         A= 3.63%  B= 4.99%  X= 3.36%
+  alpha=0.5 / scale=100x        A= 3.68%  B= 5.37%  X= 3.42%
+  alpha=0.5 / scale=200x        A= 3.92%  B= 5.27%  X= 3.26%

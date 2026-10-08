@@ -1,0 +1,56 @@
+SYN_TUNE: 24 instancias escritas; rodando HGS de referencia...
+  X-synt01-n51       n= 50 comb=(2, 1, 4, 6) cap= 1583 ref=6028 K=2
+  X-synt02-n51       n= 50 comb=(2, 2, 6, 6) cap= 1467 ref=4257 K=2
+  X-synt03-n51       n= 50 comb=(1, 1, 3, 1) cap=   34 ref=16927 K=12
+  X-synt04-n51       n= 50 comb=(2, 1, 7, 2) cap=  131 ref=11960 K=12
+  X-synt05-n51       n= 50 comb=(2, 2, 5, 1) cap=  243 ref=9976 K=17
+  X-synt06-n51       n= 50 comb=(3, 2, 2, 5) cap=  108 ref=7364 K=3
+  X-synt07-n51       n= 50 comb=(3, 3, 4, 5) cap=  786 ref=7147 K=3
+  X-synt08-n51       n= 50 comb=(3, 1, 4, 6) cap= 1299 ref=6730 K=2
+  X-synt09-n101      n=100 comb=(1, 2, 6, 1) cap=  124 ref=29491 K=23
+  X-synt10-n101      n=100 comb=(2, 1, 3, 6) cap=  302 ref=8489 K=3
+  X-synt11-n101      n=100 comb=(1, 1, 6, 1) cap=  234 ref=28404 K=22
+  X-synt12-n101      n=100 comb=(2, 2, 5, 2) cap=  374 ref=20753 K=20
+  X-synt13-n101      n=100 comb=(2, 1, 2, 5) cap=  116 ref=9384 K=5
+  X-synt14-n101      n=100 comb=(1, 2, 6, 5) cap=  975 ref=8818 K=6
+  X-synt15-n101      n=100 comb=(2, 1, 3, 3) cap=   73 ref=13238 K=11
+  X-synt16-n101      n=100 comb=(1, 3, 4, 4) cap=  696 ref=11118 K=8
+  X-synt17-n151      n=150 comb=(3, 2, 7, 1) cap=  124 ref=72288 K=40
+  X-synt18-n151      n=150 comb=(3, 2, 7, 6) cap=  362 ref=7917 K=4
+  X-synt19-n151      n=150 comb=(2, 2, 2, 3) cap=   68 ref=10933 K=13
+  X-synt20-n151      n=150 comb=(2, 3, 1, 2) cap=    7 ref=20049 K=22
+  X-synt21-n151      n=150 comb=(1, 1, 4, 2) cap=  394 ref=27703 K=20
+  X-synt22-n151      n=150 comb=(3, 3, 3, 1) cap=   35 ref=42017 K=33
+  X-synt23-n151      n=150 comb=(1, 1, 4, 3) cap=  467 ref=24598 K=16
+  X-synt24-n151      n=150 comb=(1, 1, 2, 6) cap=  172 ref=11977 K=5
+SYN_VAL: 30 instancias escritas; rodando HGS de referencia...
+  X-synv01-n101      n=100 comb=(3, 3, 1, 6) cap=   45 ref=8552 K=3
+  X-synv02-n101      n=100 comb=(1, 2, 2, 4) cap=   78 ref=9673 K=8
+  X-synv03-n101      n=100 comb=(3, 2, 1, 1) cap=    4 ref=45449 K=25
+  X-synv04-n101      n=100 comb=(3, 3, 6, 2) cap=  337 ref=27228 K=16
+  X-synv05-n101      n=100 comb=(3, 3, 5, 2) cap=  529 ref=28165 K=15
+  X-synv06-n101      n=100 comb=(1, 1, 5, 1) cap=  357 ref=29139 K=22
+  X-synv07-n101      n=100 comb=(3, 1, 5, 3) cap=  641 ref=23508 K=12
+  X-synv08-n101      n=100 comb=(2, 3, 1, 3) cap=    8 ref=12754 K=13
+  X-synv09-n101      n=100 comb=(1, 1, 1, 1) cap=    3 ref=31660 K=34
+  X-synv10-n101      n=100 comb=(3, 3, 6, 3) cap=  468 ref=21811 K=11
+  X-synv11-n201      n=200 comb=(3, 3, 6, 4) cap=  768 ref=24898 K=13
+  X-synv12-n201      n=200 comb=(3, 2, 7, 3) cap=  153 ref=34976 K=21
+  X-synv13-n201      n=200 comb=(1, 2, 1, 2) cap=    5 ref=56397 K=40
+  X-synv14-n201      n=200 comb=(1, 1, 6, 3) cap=  619 ref=21172 K=18
+  X-synv15-n201      n=200 comb=(2, 2, 2, 2) cap=   27 ref=29285 K=40
+  X-synv16-n201      n=200 comb=(2, 3, 1, 3) cap=    8 ref=26645 K=25
+  X-synv17-n201      n=200 comb=(1, 3, 7, 4) cap=  176 ref=20184 K=15
+  X-synv18-n201      n=200 comb=(3, 2, 4, 2) cap=  416 ref=38440 K=26
+  X-synv19-n201      n=200 comb=(3, 2, 7, 6) cap=  267 ref=8428 K=7
+  X-synv20-n201      n=200 comb=(1, 1, 3, 4) cap=   95 ref=22497 K=16
+  X-synv21-n301      n=300 comb=(3, 3, 1, 5) cap=   16 ref=37698 K=19
+  X-synv22-n301      n=300 comb=(2, 2, 4, 3) cap=  527 ref=26692 K=28
+  X-synv23-n301      n=300 comb=(2, 3, 1, 1) cap=    3 ref=82806 K=100
+  X-synv24-n301      n=300 comb=(2, 2, 6, 6) cap= 2243 ref=12180 K=8
+  X-synv25-n301      n=300 comb=(3, 2, 2, 2) cap=   31 ref=79285 K=55
+  X-synv26-n301      n=300 comb=(2, 1, 5, 1) cap=  327 ref=61477 K=70
+  X-synv27-n301      n=300 comb=(1, 1, 5, 6) cap= 2779 ref=16790 K=9
+  X-synv28-n301      n=300 comb=(2, 2, 5, 2) cap=  569 ref=31456 K=40
+  X-synv29-n301      n=300 comb=(2, 1, 5, 1) cap=  270 ref=72959 K=88
+  X-synv30-n301      n=300 comb=(2, 3, 6, 5) cap= 1210 ref=19509 K=14

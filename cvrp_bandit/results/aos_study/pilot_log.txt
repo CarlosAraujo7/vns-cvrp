@@ -1,0 +1,3 @@
+64 tarefas, 0 ja feitas, 64 pendentes, 11 workers
+  50/64  0.2 min  (ETA 0 min)
+Concluido em 0.3 min -> /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/aos_study/pilot.csv

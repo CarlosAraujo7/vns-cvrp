@@ -1,0 +1,8 @@
+330 tarefas, 0 ja feitas, 330 pendentes, 11 workers
+  50/330  58.5 min  (ETA 328 min)
+  100/330  81.6 min  (ETA 188 min)
+  150/330  91.5 min  (ETA 110 min)
+  200/330  103.6 min  (ETA 67 min)
+  250/330  108.3 min  (ETA 35 min)
+  300/330  111.0 min  (ETA 11 min)
+Concluido em 112.3 min -> /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/aos_study/exploratorio_b20000.csv

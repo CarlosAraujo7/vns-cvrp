@@ -1,0 +1,53 @@
+=== Diagnóstico 13: CMT2/CMT3/CMT11 (segue Entrada 21, achado #13) ===
+
+--- CMT2 (conjunto CMT, artigo HG-UCB=2.33%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  6.99%  pct_colapso_desta_instancia= 13.4%  pct_drift_desta_instancia= 0.55%  (n=2000)
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  7.21%  pct_colapso_desta_instancia=  8.6%  pct_drift_desta_instancia= 0.62%  (n=4000)
+  alpha=5.0 / max_inner_iter=80         gap_medio=  6.13%  pct_colapso_desta_instancia=  2.6%  pct_drift_desta_instancia= 0.45%  (n=8000)
+  alpha=5.0 / max_inner_iter=160        gap_medio=  6.34%  pct_colapso_desta_instancia=  0.9%  pct_drift_desta_instancia= 0.17%  (n=16000)
+  alpha=0.5 / max_inner_iter=20         gap_medio=  6.35%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.00%  (n=2000)
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  6.85%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.00%  (n=4000)
+  alpha=0.5 / max_inner_iter=80         gap_medio=  7.12%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.00%  (n=8000)
+  alpha=0.5 / max_inner_iter=160        gap_medio=  5.65%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.00%  (n=16000)
+  (tempo desta instância: 125.6s)
+
+--- CMT3 (conjunto CMT, artigo HG-UCB=2.96%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  5.05%  pct_colapso_desta_instancia= 30.0%  pct_drift_desta_instancia= 0.55%  (n=2000)
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  4.78%  pct_colapso_desta_instancia= 14.9%  pct_drift_desta_instancia= 0.55%  (n=4000)
+  alpha=5.0 / max_inner_iter=80         gap_medio=  5.20%  pct_colapso_desta_instancia= 10.0%  pct_drift_desta_instancia= 0.68%  (n=8000)
+  alpha=5.0 / max_inner_iter=160        gap_medio=  5.25%  pct_colapso_desta_instancia=  1.0%  pct_drift_desta_instancia= 0.37%  (n=16000)
+  alpha=0.5 / max_inner_iter=20         gap_medio=  5.45%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.15%  (n=2000)
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  4.66%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.07%  (n=4000)
+  alpha=0.5 / max_inner_iter=80         gap_medio=  5.68%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.04%  (n=8000)
+  alpha=0.5 / max_inner_iter=160        gap_medio=  4.34%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.04%  (n=16000)
+  (tempo desta instância: 275.6s)
+
+--- CMT11 (conjunto CMT, artigo HG-UCB=11.72%) ---
+  alpha=5.0 / max_inner_iter=20         gap_medio=  0.46%  pct_colapso_desta_instancia= 26.4%  pct_drift_desta_instancia= 0.70%  (n=2000)
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  0.46%  pct_colapso_desta_instancia= 24.9%  pct_drift_desta_instancia= 0.57%  (n=4000)
+  alpha=5.0 / max_inner_iter=80         gap_medio=  0.46%  pct_colapso_desta_instancia=  3.0%  pct_drift_desta_instancia= 0.42%  (n=8000)
+  alpha=5.0 / max_inner_iter=160        gap_medio=  0.46%  pct_colapso_desta_instancia= 19.3%  pct_drift_desta_instancia= 0.31%  (n=16000)
+  alpha=0.5 / max_inner_iter=20         gap_medio=  0.46%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.10%  (n=2000)
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  0.46%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.03%  (n=4000)
+  alpha=0.5 / max_inner_iter=80         gap_medio=  0.46%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.05%  (n=8000)
+  alpha=0.5 / max_inner_iter=160        gap_medio=  0.46%  pct_colapso_desta_instancia=  0.0%  pct_drift_desta_instancia= 0.03%  (n=16000)
+  (tempo desta instância: 367.8s)
+
+Tempo total de execução: 769.0s
+
+=== Resumo GERAL (média sobre CMT2+CMT3+CMT11, as 3 novas) ===
+  alpha=5.0 / max_inner_iter=20         gap_medio=  4.17%  colapso_medio= 23.3%
+  alpha=5.0 / max_inner_iter=40 (baseline)  gap_medio=  4.15%  colapso_medio= 16.1%
+  alpha=5.0 / max_inner_iter=80         gap_medio=  3.93%  colapso_medio=  5.2%
+  alpha=5.0 / max_inner_iter=160        gap_medio=  4.02%  colapso_medio=  7.1%
+  alpha=0.5 / max_inner_iter=20         gap_medio=  4.09%  colapso_medio=  0.0%
+  alpha=0.5 / max_inner_iter=40 (baseline)  gap_medio=  3.99%  colapso_medio=  0.0%
+  alpha=0.5 / max_inner_iter=80         gap_medio=  4.42%  colapso_medio=  0.0%
+  alpha=0.5 / max_inner_iter=160        gap_medio=  3.49%  colapso_medio=  0.0%
+
+=== alpha=5,0/mii=160 vs alpha=0,5/mii=160, TODAS as 4 instancias CMT ===
+  CMT1 (já conhecida, Entrada 21)   a5.0= 7.03%  a0.5= 4.83%  diff=+2.20pp
+  CMT2                              a5.0= 6.34%  a0.5= 5.65%  diff=+0.68pp
+  CMT3                              a5.0= 5.25%  a0.5= 4.34%  diff=+0.90pp
+  CMT11                             a5.0= 0.46%  a0.5= 0.46%  diff=+0.00pp
+  MEDIA DAS 4 INSTANCIAS CMT:        a5.0= 4.77%  a0.5= 3.82%  diff=+0.95pp

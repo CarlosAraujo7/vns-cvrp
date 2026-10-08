@@ -1,0 +1,88 @@
+% =====================================================================================
+% Manuscrito para o European Journal of Operational Research (EJOR) -- classe elsarticle.
+% STATUS (08/10/2026): rascunho NAO COMPILADO (sem LaTeX na maquina). Todo numero tem rastro em
+% ../RASTREIO_NUMEROS.md. Itens "\pend{...}" bloqueiam a submissao.
+% Autoria/declaracoes: preenchimento GENERICO (o pesquisador editara).
+% =====================================================================================
+\documentclass[preprint,12pt,authoryear]{elsarticle}
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+
+\newcommand{\pend}[1]{\textcolor{red}{[PENDING: #1]}}   % marca bloqueadores de submissao
+\newcommand{\pp}{\,pp}
+\newcommand{\gap}{\mathrm{gap}}
+
+\journal{European Journal of Operational Research}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Does adaptive operator selection help? A controlled, pre-specified study of bandit-guided variable neighborhood search for the capacitated vehicle routing problem}
+
+% ---- AUTORIA GENERICA: substituir ----
+\author[inst1]{First Author\corref{cor1}}
+\ead{first.author@example.org}
+\author[inst1]{Second Author}
+\cortext[cor1]{Corresponding author}
+\affiliation[inst1]{organization={Department of [Department], [University]},
+            city={[City]}, country={[Country]}}
+
+\begin{abstract}
+Machine-learning components are increasingly embedded in metaheuristics to select search operators, but their contribution is rarely separated from the search structure they are embedded in, and negative or null results are seldom reported with the same care as positive ones. We reproduce a recently published bandit-guided Variable Neighborhood Search (VNS) for the Capacitated Vehicle Routing Problem (CVRP), whose policy (HG-UCB) is reported to improve on plain VNS by 0.29 percentage points (pp), and test its learning component in four controlled studies on 74 CVRPLIB instances and 54 synthetic instances, under equal budgets, with hyperparameters tuned by one protocol for all policies, equivalence tests and a state-of-the-art reference. The published improvement is not reproduced: the faithful variant is about 0.9~pp worse than plain VNS, and our best variant ties with it. The cause we isolate is the reward scale: expressed in raw cost units, the reward saturates the policy's softmax, and normalizing it by solution cost removes a loss of 1.0--1.3~pp. With the reward corrected, no adaptive policy tested (HG-UCB, UCB1, $\varepsilon$-greedy, probability matching) beats uniform random selection, and benefits above about 0.16~pp are excluded by the data. What does improve results is search structure---stopping the inner loop at a local optimum (0.5--0.6~pp) and randomizing operator order (0.3--0.5~pp)---and the operator pool: adding five operators, including SWAP*, gains a further 0.5~pp. \pend{one sentence with the Study~4 results (tuned policies, tuned static mixture, synthetic validation).} A hybrid genetic search reference reaches a mean gap of 0.01--0.04\% on the same instances, so our conclusions concern the relative value of learning, not competitiveness. We provide the protocol, raw results and code to support similar audits of learning-guided heuristics.
+\end{abstract}
+
+\begin{highlights}
+\item Published gain of bandit-guided VNS over plain VNS is not reproduced on CVRPLIB
+\item Reward scale decides: raw-cost reward loses 1.0-1.3 pp to a normalized one
+\item Adaptive selection never beats uniform random selection, in four controlled studies
+\item Search structure and operator pool, not learning, drive gains of 0.3-0.8 pp
+\item Open protocol: matched budgets, equivalence tests, HGS-CVRP and tuned baselines
+\end{highlights}
+
+\begin{keyword}
+Routing \sep Metaheuristics \sep Variable neighborhood search \sep Adaptive operator selection \sep Multi-armed bandits \sep Reproducibility
+\end{keyword}
+
+\end{frontmatter}
+
+\input{sec_intro}
+\input{sec_related}
+\input{sec_method}
+\input{sec_design}
+\input{sec_results}
+\input{sec_discussion}
+
+% ------------------------------- Declarations (GENERICAS) -------------------------------
+\section*{CRediT authorship contribution statement}
+\textbf{First Author:} Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Visualization. \textbf{Second Author:} Conceptualization, Supervision, Writing -- review \& editing. \pend{confirm the contributions of each author.}
+
+\section*{Declaration of generative AI and AI-assisted technologies in the writing process}
+During the preparation of this work the authors used Claude (Anthropic) for code development, scripting of statistical analyses, verification of references against primary sources, and drafting and editing of text, and Gemini (Google) for independent second opinions on ambiguous readings of the reproduced method. After using these tools, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication. \pend{authors to confirm the extent of their own supervision and edit this statement.}
+
+\section*{Declaration of competing interest}
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper. \pend{confirm.}
+
+\section*{Funding}
+\pend{funding sources, or an explicit statement that there were none.}
+
+\section*{Data and code availability}
+The protocol (pre-specification entries), instances (CVRPLIB subsets and the synthetic sets with their HGS-CVRP reference solutions), raw per-run results, analysis scripts and the research log are available at \pend{persistent repository DOI, to be minted at submission (Zenodo or equivalent)}. Third-party code (HGS-CVRP) is available from its authors under the MIT license.
+
+\section*{Acknowledgements}
+\pend{acknowledgements, if any.}
+
+\appendix
+\input{sec_appendix}
+
+\bibliographystyle{elsarticle-harv}
+\bibliography{../refs}
+
+\end{document}

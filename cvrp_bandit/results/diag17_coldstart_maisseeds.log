@@ -1,0 +1,302 @@
+=== Diagnóstico 17: 10 seeds novos (1005-1014) para hgucb_completo vs. sem_cold_start, 74 instâncias ===
+
+--- A-n32-k5 (conjunto A, artigo HG-UCB=0.19%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.52%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.56%
+
+--- A-n33-k5 (conjunto A, artigo HG-UCB=0.02%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  4.80%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.77%
+
+--- A-n33-k6 (conjunto A, artigo HG-UCB=0.04%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  4.07%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.30%
+
+--- A-n34-k5 (conjunto A, artigo HG-UCB=0.14%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  3.44%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  3.06%
+
+--- A-n36-k5 (conjunto A, artigo HG-UCB=1.66%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.00%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  0.68%
+
+--- A-n37-k5 (conjunto A, artigo HG-UCB=0.08%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  3.00%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  1.82%
+
+--- A-n37-k6 (conjunto A, artigo HG-UCB=0.58%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.17%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.26%
+
+--- A-n38-k5 (conjunto A, artigo HG-UCB=0.68%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.36%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.49%
+
+--- A-n39-k5 (conjunto A, artigo HG-UCB=0.61%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  7.47%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  7.86%
+
+--- A-n39-k6 (conjunto A, artigo HG-UCB=0.85%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.91%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  1.62%
+
+--- A-n44-k6 (conjunto A, artigo HG-UCB=1.57%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.37%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.60%
+
+--- A-n45-k6 (conjunto A, artigo HG-UCB=2.36%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.34%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.33%
+
+--- A-n45-k7 (conjunto A, artigo HG-UCB=1.36%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  3.80%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.27%
+
+--- A-n46-k7 (conjunto A, artigo HG-UCB=0.85%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  0.82%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  0.88%
+
+--- A-n48-k7 (conjunto A, artigo HG-UCB=2.57%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.26%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.58%
+
+--- A-n53-k7 (conjunto A, artigo HG-UCB=2.26%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.55%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.24%
+
+--- A-n54-k7 (conjunto A, artigo HG-UCB=1.45%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.21%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  1.20%
+
+--- A-n55-k9 (conjunto A, artigo HG-UCB=1.27%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.62%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.41%
+
+--- A-n60-k9 (conjunto A, artigo HG-UCB=2.54%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.97%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  3.61%
+
+--- A-n61-k9 (conjunto A, artigo HG-UCB=2.22%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  3.83%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.56%
+
+--- A-n62-k8 (conjunto A, artigo HG-UCB=3.26%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.68%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.40%
+
+--- A-n63-k10 (conjunto A, artigo HG-UCB=2.62%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.80%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  1.65%
+
+--- A-n63-k9 (conjunto A, artigo HG-UCB=2.49%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.25%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.25%
+
+--- A-n64-k9 (conjunto A, artigo HG-UCB=4.09%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  3.80%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.10%
+
+--- A-n65-k9 (conjunto A, artigo HG-UCB=2.81%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.19%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  0.24%
+
+--- A-n69-k9 (conjunto A, artigo HG-UCB=3.45%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.54%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  1.52%
+
+--- B-n31-k5 (conjunto B, artigo HG-UCB=0.26%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  0.64%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  0.58%
+
+--- B-n34-k5 (conjunto B, artigo HG-UCB=0.14%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  0.03%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  0.08%
+
+--- B-n35-k5 (conjunto B, artigo HG-UCB=0.46%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.57%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  1.38%
+
+--- B-n38-k6 (conjunto B, artigo HG-UCB=0.30%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.71%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  1.52%
+
+--- B-n39-k5 (conjunto B, artigo HG-UCB=0.66%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.86%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.17%
+
+--- B-n41-k6 (conjunto B, artigo HG-UCB=0.90%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  4.90%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.60%
+
+--- B-n43-k6 (conjunto B, artigo HG-UCB=0.79%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.45%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  3.07%
+
+--- B-n44-k7 (conjunto B, artigo HG-UCB=1.27%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.55%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.46%
+
+--- B-n45-k5 (conjunto B, artigo HG-UCB=0.72%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  0.00%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  0.00%
+
+--- B-n45-k6 (conjunto B, artigo HG-UCB=3.91%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.96%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  3.13%
+
+--- B-n50-k7 (conjunto B, artigo HG-UCB=0.17%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  0.19%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  0.16%
+
+--- B-n50-k8 (conjunto B, artigo HG-UCB=1.12%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.50%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  1.59%
+
+--- B-n51-k7 (conjunto B, artigo HG-UCB=0.00%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.09%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.12%
+
+--- B-n52-k7 (conjunto B, artigo HG-UCB=1.31%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.02%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  0.99%
+
+--- B-n56-k7 (conjunto B, artigo HG-UCB=1.09%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.73%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  1.61%
+
+--- B-n57-k7 (conjunto B, artigo HG-UCB=0.00%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  0.68%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  0.52%
+
+--- B-n57-k9 (conjunto B, artigo HG-UCB=1.60%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.60%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.65%
+
+--- B-n63-k10 (conjunto B, artigo HG-UCB=4.08%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  4.28%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.44%
+
+--- B-n64-k9 (conjunto B, artigo HG-UCB=3.76%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  4.00%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  3.04%
+
+--- B-n66-k9 (conjunto B, artigo HG-UCB=2.35%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  1.66%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  1.57%
+
+--- B-n67-k10 (conjunto B, artigo HG-UCB=4.12%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.47%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.80%
+
+--- B-n68-k9 (conjunto B, artigo HG-UCB=3.08%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.72%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.84%
+
+--- B-n78-k10 (conjunto B, artigo HG-UCB=6.00%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.81%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.69%
+
+--- X-n101-k25 (conjunto X, artigo HG-UCB=3.54%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  3.28%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  3.45%
+
+--- X-n106-k14 (conjunto X, artigo HG-UCB=2.55%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.86%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.74%
+
+--- X-n110-k13 (conjunto X, artigo HG-UCB=4.45%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.72%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.91%
+
+--- X-n115-k10 (conjunto X, artigo HG-UCB=6.57%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  4.41%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.05%
+
+--- X-n120-k6 (conjunto X, artigo HG-UCB=6.10%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.88%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.67%
+
+--- X-n125-k30 (conjunto X, artigo HG-UCB=3.47%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  6.32%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  6.04%
+
+--- X-n129-k18 (conjunto X, artigo HG-UCB=7.21%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  4.02%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.15%
+
+--- X-n134-k13 (conjunto X, artigo HG-UCB=7.38%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  6.39%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.77%
+
+--- X-n139-k10 (conjunto X, artigo HG-UCB=9.18%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.18%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.34%
+
+--- X-n143-k7 (conjunto X, artigo HG-UCB=11.32%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  9.29%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  9.37%
+
+--- X-n148-k46 (conjunto X, artigo HG-UCB=3.51%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.99%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.72%
+
+--- X-n153-k22 (conjunto X, artigo HG-UCB=4.16%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.78%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.79%
+
+--- X-n157-k13 (conjunto X, artigo HG-UCB=3.66%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  4.24%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.31%
+
+--- X-n162-k11 (conjunto X, artigo HG-UCB=9.18%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  6.89%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  6.43%
+
+--- X-n167-k10 (conjunto X, artigo HG-UCB=10.64%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.15%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.21%
+
+--- X-n172-k51 (conjunto X, artigo HG-UCB=3.88%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  4.07%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.15%
+
+--- X-n176-k26 (conjunto X, artigo HG-UCB=5.26%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  9.43%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  9.12%
+
+--- X-n181-k23 (conjunto X, artigo HG-UCB=3.39%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  2.01%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  2.13%
+
+--- X-n186-k15 (conjunto X, artigo HG-UCB=9.56%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  4.94%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  5.13%
+
+--- X-n190-k8 (conjunto X, artigo HG-UCB=6.50%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.33%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.77%
+
+--- X-n195-k51 (conjunto X, artigo HG-UCB=4.97%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  3.04%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  3.06%
+
+--- CMT1 (conjunto CMT, artigo HG-UCB=0.00%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  6.31%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  6.32%
+
+--- CMT11 (conjunto CMT, artigo HG-UCB=11.72%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  0.61%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  0.46%
+
+--- CMT2 (conjunto CMT, artigo HG-UCB=2.33%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  6.94%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  6.42%
+
+--- CMT3 (conjunto CMT, artigo HG-UCB=2.96%) ---
+  [hgucb_completo ] gap_medio_10_seeds_novos=  5.15%
+  [sem_cold_start ] gap_medio_10_seeds_novos=  4.87%
+
+Tempo total de execução: 6174.0s (102.9min)
+
+CSV salvo em: /home/claude/edp_consolidation/cvrp_bandit/results/diag17_coldstart_maisseeds.csv
+(a análise combinando com os 5 seeds do Diagnóstico 16 -- total 15 -- é feita à parte, lendo os dois CSVs)
