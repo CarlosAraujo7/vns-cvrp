@@ -99,6 +99,35 @@ def main():
     print(f"Eficiencia: fracao no braco de maior ganho por custo: {m:.2f} {'OK' if m > 0.35 else 'FALHOU'}")
     if m <= 0.35:
         falhas.append("Eficiencia-custo")
+    # contextual: o operador 3 so tem sucesso alto logo apos um SUCESSO do operador 1 (dependencia sequencial)
+    from aos_policies_ext import ContextualThompsonPolitica
+    for nome, kw in (("Contextual TS", dict(eficiencia=False)), ("Contextual TS eficiencia", dict(eficiencia=True))):
+        fr_ctx, fr_base = [], []
+        for seed in range(5):
+            for contextual in (True, False):
+                rng = random.Random(seed)
+                pol = (ContextualThompsonPolitica(K, rng=random.Random(300 + seed), **kw) if contextual
+                       else ThompsonPolitica(K, rng=random.Random(300 + seed)))
+                prev, apos, tres = (-1, False), 0, 0
+                for _ in range(6000):
+                    j = pol.select_masked(list(range(K)))
+                    p = 0.70 if (j == 3 and prev == (1, True)) else (0.05 if j == 3 else 0.15)
+                    ok = rng.random() < p
+                    if prev == (1, True):
+                        apos += 1
+                        tres += j == 3
+                    if getattr(pol, "usa_custo", False):
+                        pol.update_custo(j, 0.01 if ok else 0.0, 100)
+                    else:
+                        pol.update(j, 0.01 if ok else 0.0)
+                    prev = (j, ok)
+                (fr_ctx if contextual else fr_base).append(tres / max(apos, 1))
+        mc, mb = sum(fr_ctx) / len(fr_ctx), sum(fr_base) / len(fr_base)
+        ok = mc > 0.40 and mc > mb + 0.15
+        print(f"{nome:26s} P(operador 3 | apos sucesso do 1): contextual {mc:.2f} vs nao contextual {mb:.2f} "
+              f"{'OK' if ok else 'FALHOU'}")
+        if not ok:
+            falhas.append(nome)
     print("TESTES:", "OK" if not falhas else f"FALHAS {falhas}")
     sys.exit(1 if falhas else 0)
 

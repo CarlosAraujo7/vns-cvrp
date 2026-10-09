@@ -31,7 +31,7 @@ from bandit import HGUCBBandit, reward_positive_normalized, reward_negative
 from aos_policies import (UniformePolitica, UCB1Politica, EpsGreedyPolitica,
                           ProbMatchingPolitica, reward_relativa)
 from aos_policies_ext import (Exp3Politica, ThompsonPolitica, SWUCBPolitica, AdaptivePursuitPolitica,
-                              EficienciaUCBPolitica)
+                              EficienciaUCBPolitica, ContextualThompsonPolitica)
 
 
 class OrdemFixaPolitica:
@@ -218,6 +218,8 @@ def construir_politica(nome, k, rng, custo=False, ordem=None, params=None):
                                         p_min=params.get("p_min", 0.05), rng=rng), "rel")
     if nome == "eff":
         return EficienciaUCBPolitica(k, C=params.get("C", 1.0), rng=rng), "rel"
+    if nome in ("ctx_ts", "ctx_eff"):
+        return ContextualThompsonPolitica(k, k0=params.get("k0", 5.0), eficiencia=(nome == "ctx_eff"), rng=rng), "rel"
     raise ValueError(nome)
 
 

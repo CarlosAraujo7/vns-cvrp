@@ -36,7 +36,10 @@ ARMS = {"s6_R5_exp3": ("exp3", {"gamma": 0.1}),
         "s6_R5_swucb": ("swucb", {"window": 200, "xi": 0.6}),
         "s6_R5_ap": ("ap", {"alpha": 0.1, "beta": 0.1, "p_min": 0.05}),
         "s6_R5_eff": ("eff", {"C": 1.0}),
-        "s6_R5_eff2": ("eff", {"C": 2.0})}
+        "s6_R5_eff2": ("eff", {"C": 2.0}),
+        # extensao do pre-registro (Entrada 93, antes de qualquer dado): politicas contextuais
+        "s6_R5_ctxts": ("ctx_ts", {"k0": 5.0}),
+        "s6_R5_ctxeff": ("ctx_eff", {"k0": 5.0})}
 
 
 def specs():

@@ -242,3 +242,67 @@ class EficienciaUCBPolitica(_Base):
 
     def update(self, chosen, reward):          # sem custo disponivel: trata como 1 avaliacao
         return self.update_custo(chosen, reward, 1)
+
+
+class ContextualThompsonPolitica(_Base):
+    """Thompson sampling CONTEXTUAL: o contexto e (operador da aplicacao anterior, se melhorou). Cada contexto tem
+    contagens proprias de sucesso/falha por operador, encolhidas para a taxa global do operador (forca do prior `k0`):
+    theta_cj ~ Beta(1 + s_cj + k0 p_j, 1 + f_cj + k0 (1 - p_j)), p_j = (s_j + 1)/(n_j + 2) global.
+
+    Com `eficiencia=False` o indice e theta (apenas taxa de sucesso, cego a custo). Com `eficiencia=True` o indice e
+    theta x ganho medio por sucesso do operador / custo medio por aplicacao (esperanca do ganho por avaliacao de
+    distancia com a taxa de sucesso condicionada ao contexto); precisa do custo de cada aplicacao (`usa_custo`)."""
+
+    def __init__(self, n_operators, k0=5.0, eficiencia=False, rng=None):
+        self.k0 = k0
+        self.eficiencia = eficiencia
+        self.usa_custo = eficiencia
+        super().__init__(n_operators, rng)
+
+    def reset_drift(self):
+        super().reset_drift()
+        self._suc, self._n_op = [0] * self.k, [0] * self.k
+        self._ctx_s, self._ctx_f = {}, {}
+        self._ctx = (-1, 0)
+        self._ganho, self._calls = [0.0] * self.k, [0.0] * self.k
+
+    def select_masked(self, allowed):
+        self.s += 1
+        nunca = [j for j in allowed if self._n_op[j] == 0]
+        if nunca:
+            return self.rng.choice(nunca)
+        tot_s = sum(self._suc)
+        m_all = (sum(self._ganho) / tot_s) if tot_s > 0 else 0.01
+        val = {}
+        for j in allowed:
+            pg = (self._suc[j] + 1.0) / (self._n_op[j] + 2.0)
+            s = self._ctx_s.get((self._ctx, j), 0)
+            f = self._ctx_f.get((self._ctx, j), 0)
+            th = self.rng.betavariate(1.0 + s + self.k0 * pg, 1.0 + f + self.k0 * (1.0 - pg))
+            if self.eficiencia:
+                gm = (self._ganho[j] + m_all) / (self._suc[j] + 1.0)
+                th = th * gm / max(self._calls[j] / self._n_op[j], 1.0)
+            val[j] = th
+        melhor = max(val.values())
+        return self.rng.choice([j for j in allowed if val[j] == melhor])
+
+    def _registrar(self, chosen, reward, calls):
+        ok = reward > 0
+        chave = (self._ctx, chosen)
+        if ok:
+            self._ctx_s[chave] = self._ctx_s.get(chave, 0) + 1
+            self._suc[chosen] += 1
+            self._ganho[chosen] += reward
+        else:
+            self._ctx_f[chave] = self._ctx_f.get(chave, 0) + 1
+        self._n_op[chosen] += 1
+        self._calls[chosen] += max(calls, 1)
+        self._ctx = (chosen, 1 if ok else 0)
+        self.n[chosen] += 1
+        return False
+
+    def update(self, chosen, reward):
+        return self._registrar(chosen, reward, 1)
+
+    def update_custo(self, chosen, reward, calls):
+        return self._registrar(chosen, reward, calls)

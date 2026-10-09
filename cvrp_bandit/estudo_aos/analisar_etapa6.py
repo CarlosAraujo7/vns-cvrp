@@ -5,9 +5,9 @@ analisar_etapa6.py
 Analise da Etapa 6 conforme o PRE-REGISTRO (diario, Entrada 91). So o que la
 esta fixado e confirmatorio; o resto e EXPLORATORIO.
 
-Confirmatorio nas 74 (E1 e E2; Holm m=12 = 6 bracos x 2 niveis):
-  W{i}: s6_R5_{exp3, ts, swucb, ap, eff, eff2}  vs  s3_R5_U
-  Omnibus: Friedman em {U + 6 bracos} por nivel.
+Confirmatorio nas 74 (E1 e E2; Holm m=16 = 8 bracos x 2 niveis; 6 do pre-registro (Entrada 91) + 2 contextuais da extensao (Entrada 93)):
+  W{i}: s6_R5_{exp3, ts, swucb, ap, eff, eff2, ctxts, ctxeff}  vs  s3_R5_U
+  Omnibus: Friedman em {U + 8 bracos} por nivel.
 Exploratorio: contrastes contra a mistura estatica ajustada (s4_R5_static) e contra o UCB1 padrao
 (s3_R5_ucb1c); equivalencia (IC90% em +-0,10pp); fracao das avaliacoes de distancia por operador;
 replicacao em SYN_VAL (etapa6_val.csv, 30 instancias, E1, 5 seeds; sem familia de testes).
@@ -24,8 +24,8 @@ from scipy import stats
 AQUI = Path(__file__).resolve().parent
 RES = AQUI.parent / "results" / "aos_study"
 N_BOOT = 10000
-NOVOS = ["s6_R5_exp3", "s6_R5_ts", "s6_R5_swucb", "s6_R5_ap", "s6_R5_eff", "s6_R5_eff2"]
-M_FAMILIA = 12
+NOVOS = ["s6_R5_exp3", "s6_R5_ts", "s6_R5_swucb", "s6_R5_ap", "s6_R5_eff", "s6_R5_eff2", "s6_R5_ctxts", "s6_R5_ctxeff"]
+M_FAMILIA = 16     # 8 bracos x 2 niveis (6 do pre-registro da Entrada 91 + 2 contextuais da extensao da Entrada 93)
 OPS = ["2-Opt", "Move(1)", "Swap(1,1)", "Reloc(1,0)", "Reloc(2,0)", "2-opt*", "Or-opt", "Swap-intra", "CROSS", "SWAP*"]
 
 
@@ -70,7 +70,7 @@ def main():
         print(t.mean().round(3).sort_values().to_string())
         cj = ["s3_R5_U"] + NOVOS
         fr = stats.friedmanchisquare(*[t[c].values for c in cj])
-        print(f"Friedman (U + 6 bracos): chi2={fr.statistic:.2f} p={fr.pvalue:.3g}")
+        print(f"Friedman (U + 8 bracos): chi2={fr.statistic:.2f} p={fr.pvalue:.3g}")
         for i, a in enumerate(NOVOS, 1):
             l = contraste(t, f"W{i}", a, "s3_R5_U", rng, "confirmatorio")
             l["nivel"] = nv
@@ -85,7 +85,7 @@ def main():
     r.loc[conf, "p_holm"] = holm(r.loc[conf, "p_bruto"].values, M_FAMILIA)
     r["signif_005"] = r.p_holm < 0.05
     pd.set_option("display.width", 230)
-    print("\n=== CONFIRMATORIO (dif = gap(a) - gap(b); Holm m=12) ===")
+    print("\n=== CONFIRMATORIO (dif = gap(a) - gap(b); Holm m=16) ===")
     print(r[conf].drop(columns=["grupo"]).round(4).to_string(index=False))
     print(f"\nSignificativos: {int(r[conf].signif_005.sum())} de {int(conf.sum())}")
     print("\n=== EXPLORATORIO: contra a mistura estatica e contra o UCB1 padrao (sem correcao) ===")
