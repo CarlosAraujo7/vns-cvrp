@@ -89,7 +89,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from instance import load_instance  # noqa: E402
-from construction import clarke_wright_savings, repair_route_count  # noqa: E402
+from construction import clarke_wright_savings, repair_route_count  # noqa: E402,F401
+from solucao_inicial import obter_inicial  # noqa: E402
 from vns import bandit_vns  # noqa: E402
 from bandit import HGUCBBandit, reward_positive_normalized  # noqa: E402
 
@@ -164,7 +165,7 @@ def rodar_conjunto(set_name, progressive=False, config_recompensa="original",
     for vrp_path in vrp_files:
         inst = load_instance(vrp_path)
         t0_reparo = time.perf_counter()
-        cws = repair_route_count(inst, clarke_wright_savings(inst))
+        cws = obter_inicial(inst)   # solucao inicial FIXADA (diario, Entrada 88, achado F1)
         dt_reparo = time.perf_counter() - t0_reparo
 
         erros = []

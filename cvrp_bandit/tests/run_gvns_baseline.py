@@ -32,7 +32,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from instance import load_instance  # noqa: E402
-from construction import clarke_wright_savings, repair_route_count  # noqa: E402
+from construction import clarke_wright_savings, repair_route_count  # noqa: E402,F401
+from solucao_inicial import obter_inicial  # noqa: E402
 from vns import gvns  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -76,7 +77,10 @@ def main():
         # o que re-resolvia o fallback CP-SAT (ate' 60s) 5x por instancia
         # desnecessariamente para as instancias que precisam dele.
         t0_reparo = time.perf_counter()
-        cws = repair_route_count(inst, clarke_wright_savings(inst))
+        # CORRECAO (diario, Entrada 88, achado F1): o comentario acima estava ERRADO -- o reparo
+        # com fallback CP-SAT (limite de tempo, varios threads) NAO e deterministico em 11
+        # instancias A/B. A solucao inicial agora e FIXADA em disco (src/solucao_inicial.py).
+        cws = obter_inicial(inst)
         dt_reparo = time.perf_counter() - t0_reparo
         erros = []
         tempos = []

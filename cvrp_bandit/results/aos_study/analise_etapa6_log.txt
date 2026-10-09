@@ -1,0 +1,125 @@
+etapa6_full: 11840 execucoes, inviaveis 0
+
+=== E1: 74 instancias completas; gap medio ===
+braco
+s4_R5_static    2.060
+s3_R5_ucb1c     2.104
+s6_R5_swucb     2.132
+s3_R5_U         2.186
+s6_R5_eff2      2.191
+s6_R5_exp3      2.192
+s6_R5_ctxeff    2.213
+s6_R5_ctxts     2.294
+s6_R5_ts        2.321
+s6_R5_ap        2.337
+s6_R5_eff       2.475
+Friedman (U + 8 bracos): chi2=89.74 p=5.25e-16
+
+=== E5: 74 instancias completas; gap medio ===
+braco
+s3_R5_ucb1c     1.328
+s3_R5_U         1.361
+s4_R5_static    1.365
+s6_R5_swucb     1.380
+s6_R5_exp3      1.395
+s6_R5_ctxts     1.541
+s6_R5_ap        1.549
+s6_R5_ctxeff    1.552
+s6_R5_ts        1.610
+s6_R5_eff2      1.771
+s6_R5_eff       2.232
+Friedman (U + 8 bracos): chi2=236.58 p=1.2e-46
+
+=== CONFIRMATORIO (dif = gap(a) - gap(b); Holm m=16) ===
+id            a       b  dif_pp   ic_lo  ic_hi  vit_a  der_a  emp  p_bruto  equiv_010  mde_pp  nivel  p_holm  signif_005
+W1   s6_R5_exp3 s3_R5_U  0.0064 -0.0844 0.0891     36     33    5   0.4749       True  0.1277      1  1.0000       False
+W2     s6_R5_ts s3_R5_U  0.1358  0.0465 0.2199     21     50    3   0.0000      False  0.1235      1  0.0002        True
+W3  s6_R5_swucb s3_R5_U -0.0541 -0.1359 0.0233     36     34    4   0.4210      False  0.1142      1  1.0000       False
+W4     s6_R5_ap s3_R5_U  0.1511  0.0467 0.2528     20     49    5   0.0002      False  0.1471      1  0.0014        True
+W5    s6_R5_eff s3_R5_U  0.2896  0.1860 0.3961     14     57    3   0.0000      False  0.1518      1  0.0000        True
+W6   s6_R5_eff2 s3_R5_U  0.0057 -0.1180 0.1118     28     44    2   0.0543       True  0.1639      1  0.3255       False
+W7  s6_R5_ctxts s3_R5_U  0.1083  0.0169 0.2040     27     43    4   0.0088      False  0.1334      1  0.0618       False
+W8 s6_R5_ctxeff s3_R5_U  0.0271 -0.1327 0.1756     30     42    2   0.1355      False  0.2243      1  0.6776       False
+W1   s6_R5_exp3 s3_R5_U  0.0334 -0.0265 0.0945     29     37    8   0.2236       True  0.0846      5  0.8945       False
+W2     s6_R5_ts s3_R5_U  0.2494  0.1585 0.3454     16     53    5   0.0000      False  0.1338      5  0.0000        True
+W3  s6_R5_swucb s3_R5_U  0.0189 -0.0385 0.0760     31     34    9   0.5455       True  0.0812      5  1.0000       False
+W4     s6_R5_ap s3_R5_U  0.1877  0.1139 0.2651     16     54    4   0.0000      False  0.1084      5  0.0001        True
+W5    s6_R5_eff s3_R5_U  0.8709  0.6939 1.0616      0     70    4   0.0000      False  0.2631      5  0.0000        True
+W6   s6_R5_eff2 s3_R5_U  0.4095  0.3103 0.5153      8     60    6   0.0000      False  0.1480      5  0.0000        True
+W7  s6_R5_ctxts s3_R5_U  0.1795  0.1051 0.2548     19     48    7   0.0000      False  0.1065      5  0.0001        True
+W8 s6_R5_ctxeff s3_R5_U  0.1908  0.0680 0.3270     26     42    6   0.0048      False  0.1854      5  0.0381        True
+
+Significativos: 9 de 16
+
+=== EXPLORATORIO: contra a mistura estatica e contra o UCB1 padrao (sem correcao) ===
+            id            a            b  dif_pp   ic_lo  ic_hi  vit_a  der_a  emp  p_bruto  equiv_010  mde_pp  nivel
+expl_vs_static   s6_R5_exp3 s4_R5_static  0.1325  0.0092 0.2652     32     40    2   0.1385      False  0.1846      1
+  expl_vs_ucb1   s6_R5_exp3  s3_R5_ucb1c  0.0882  0.0197 0.1586     22     45    7   0.0075      False  0.0999      1
+expl_vs_static     s6_R5_ts s4_R5_static  0.2619  0.1285 0.4085     22     50    2   0.0003      False  0.2007      1
+  expl_vs_ucb1     s6_R5_ts  s3_R5_ucb1c  0.2176  0.1312 0.3094     14     56    4   0.0000      False  0.1307      1
+expl_vs_static  s6_R5_swucb s4_R5_static  0.0721 -0.0322 0.1824     40     31    3   0.6674      False  0.1550      1
+  expl_vs_ucb1  s6_R5_swucb  s3_R5_ucb1c  0.0277 -0.0263 0.0873     35     35    4   0.8492       True  0.0815      1
+expl_vs_static     s6_R5_ap s4_R5_static  0.2772  0.1420 0.4216     25     46    3   0.0002      False  0.2038      1
+  expl_vs_ucb1     s6_R5_ap  s3_R5_ucb1c  0.2329  0.1506 0.3216     14     56    4   0.0000      False  0.1227      1
+expl_vs_static    s6_R5_eff s4_R5_static  0.4158  0.2933 0.5479     14     59    1   0.0000      False  0.1843      1
+  expl_vs_ucb1    s6_R5_eff  s3_R5_ucb1c  0.3714  0.2620 0.4952      7     64    3   0.0000      False  0.1656      1
+expl_vs_static   s6_R5_eff2 s4_R5_static  0.1319  0.0280 0.2354     26     47    1   0.0045      False  0.1511      1
+  expl_vs_ucb1   s6_R5_eff2  s3_R5_ucb1c  0.0875 -0.0128 0.1843     26     45    3   0.0066      False  0.1424      1
+expl_vs_static  s6_R5_ctxts s4_R5_static  0.2345  0.1061 0.3769     23     48    3   0.0022      False  0.1968      1
+  expl_vs_ucb1  s6_R5_ctxts  s3_R5_ucb1c  0.1901  0.1124 0.2795     20     51    3   0.0000      False  0.1198      1
+expl_vs_static s6_R5_ctxeff s4_R5_static  0.1532  0.0570 0.2508     21     51    2   0.0003      False  0.1394      1
+  expl_vs_ucb1 s6_R5_ctxeff  s3_R5_ucb1c  0.1089 -0.0205 0.2334     26     43    5   0.0255      False  0.1843      1
+expl_vs_static   s6_R5_exp3 s4_R5_static  0.0296 -0.0673 0.1264     35     34    5   0.6303      False  0.1404      5
+  expl_vs_ucb1   s6_R5_exp3  s3_R5_ucb1c  0.0666 -0.0079 0.1374     24     43    7   0.0134      False  0.1041      5
+expl_vs_static     s6_R5_ts s4_R5_static  0.2456  0.1248 0.3812     22     49    3   0.0001      False  0.1861      5
+  expl_vs_ucb1     s6_R5_ts  s3_R5_ucb1c  0.2826  0.1709 0.3925     13     57    4   0.0000      False  0.1581      5
+expl_vs_static  s6_R5_swucb s4_R5_static  0.0151 -0.0718 0.1013     35     31    8   0.9975       True  0.1244      5
+  expl_vs_ucb1  s6_R5_swucb  s3_R5_ucb1c  0.0521 -0.0044 0.1056     31     37    6   0.0677       True  0.0799      5
+expl_vs_static     s6_R5_ap s4_R5_static  0.1839  0.0706 0.3077     27     43    4   0.0039      False  0.1704      5
+  expl_vs_ucb1     s6_R5_ap  s3_R5_ucb1c  0.2209  0.1398 0.3073     15     56    3   0.0000      False  0.1197      5
+expl_vs_static    s6_R5_eff s4_R5_static  0.8671  0.6907 1.0607      2     68    4   0.0000      False  0.2670      5
+  expl_vs_ucb1    s6_R5_eff  s3_R5_ucb1c  0.9042  0.7393 1.0836      0     70    4   0.0000      False  0.2496      5
+expl_vs_static   s6_R5_eff2 s4_R5_static  0.4057  0.3080 0.5074      9     62    3   0.0000      False  0.1434      5
+  expl_vs_ucb1   s6_R5_eff2  s3_R5_ucb1c  0.4427  0.3408 0.5480      7     61    6   0.0000      False  0.1494      5
+expl_vs_static  s6_R5_ctxts s4_R5_static  0.1757  0.0678 0.2938     26     44    4   0.0076      False  0.1638      5
+  expl_vs_ucb1  s6_R5_ctxts  s3_R5_ucb1c  0.2127  0.1297 0.3007     13     53    8   0.0000      False  0.1223      5
+expl_vs_static s6_R5_ctxeff s4_R5_static  0.1870  0.0878 0.3006     23     47    4   0.0003      False  0.1541      5
+  expl_vs_ucb1 s6_R5_ctxeff  s3_R5_ucb1c  0.2240  0.1031 0.3518     18     50    6   0.0002      False  0.1770      5
+
+[exploratorio] % das avaliacoes de distancia por operador (E1/E2):
+  s6_R5_ap       E1:   0.7   1.3  10.8   3.6   1.8   1.3   3.7   1.0  15.4  60.3
+  s6_R5_ap       E5:   0.7   1.2  10.1   3.5   1.8   1.2   3.4   0.9  13.0  64.3
+  s6_R5_ctxeff   E1:  42.4   6.6   0.5   6.7   3.8  32.8   0.8   3.3   0.7   2.4
+  s6_R5_ctxeff   E5:  49.3   4.1   0.1   5.4   1.9  37.1   0.2   1.3   0.1   0.5
+  s6_R5_ctxts    E1:   0.8   1.4   9.5   4.3   1.1   1.0   3.6   1.1  10.6  66.6
+  s6_R5_ctxts    E5:   0.8   1.5   8.0   4.5   0.9   1.0   3.6   1.0   9.0  69.6
+  s6_R5_eff      E1:  18.9   4.2   6.5   6.8   2.4  17.4   2.9   3.6   9.0  28.4
+  s6_R5_eff      E5:  39.0   3.5   2.0   5.2   0.7  33.6   1.1   2.9   2.8   9.1
+  s6_R5_eff2     E1:   5.3   2.8  11.3   5.1   3.2   6.2   3.9   2.6  14.9  44.8
+  s6_R5_eff2     E5:  24.4   2.3   6.3   5.3   2.1  18.4   2.6   2.1   8.7  27.8
+  s6_R5_exp3     E1:   0.8   1.3  13.4   3.2   2.6   1.3   3.7   1.4  18.2  54.0
+  s6_R5_exp3     E5:   0.8   1.3  13.1   3.3   2.3   1.3   3.7   1.3  16.6  56.3
+  s6_R5_swucb    E1:   0.8   1.3  13.1   3.2   2.5   1.3   3.6   1.3  16.9  56.1
+  s6_R5_swucb    E5:   0.8   1.3  13.6   3.2   2.4   1.3   3.6   1.3  17.1  55.3
+  s6_R5_ts       E1:   0.8   1.6   8.8   4.6   1.0   0.9   3.8   1.1   9.5  67.9
+  s6_R5_ts       E5:   1.0   1.7   5.6   5.3   0.6   0.8   3.8   0.8   6.4  74.0
+
+=== SYN_VAL (exploratorio; 30 instancias): gap medio ===
+braco
+s6_R5_swucb     3.238
+s3_R5_U         3.359
+s6_R5_eff2      3.374
+s6_R5_exp3      3.436
+s6_R5_ctxts     3.573
+s6_R5_eff       3.575
+s6_R5_ap        3.593
+s6_R5_ts        3.602
+s6_R5_ctxeff    3.811
+  s6_R5_exp3 - U: +0.076pp [-0.027, +0.194] p=0.271
+  s6_R5_ts - U: +0.243pp [+0.069, +0.431] p=0.00814
+  s6_R5_swucb - U: -0.121pp [-0.220, -0.026] p=0.0248
+  s6_R5_ap - U: +0.233pp [+0.033, +0.483] p=0.109
+  s6_R5_eff - U: +0.215pp [+0.100, +0.325] p=0.00046
+  s6_R5_eff2 - U: +0.015pp [-0.084, +0.141] p=0.792
+  s6_R5_ctxts - U: +0.214pp [+0.086, +0.346] p=0.00073
+  s6_R5_ctxeff - U: +0.452pp [-0.015, +0.835] p=2.08e-05

@@ -47,12 +47,13 @@ def testes(piv, pares, rng, rotulo, m):
     for cid, a, b in pares:
         x, y = piv[a].values, piv[b].values
         dif = x - y
+        dif = np.where(np.abs(dif) < 1e-9, 0.0, dif)   # empates: diferencas de ponto flutuante (~1e-15) nao sao vitorias/derrotas
         idx = rng.integers(0, len(dif), size=(N_BOOT, len(dif)))
         lo, hi = np.percentile(dif[idx].mean(axis=1), [2.5, 97.5])
         lo90, hi90 = np.percentile(dif[idx].mean(axis=1), [5, 95])
         linhas.append(dict(grupo=rotulo, id=cid, a=a, b=b, dif_pp=dif.mean(), ic_lo=lo, ic_hi=hi,
                            vit_a=int((dif < 0).sum()), der_a=int((dif > 0).sum()), emp=int((dif == 0).sum()),
-                           p_bruto=stats.wilcoxon(x, y).pvalue, equiv_010=bool(lo90 > -0.1 and hi90 < 0.1)))
+                           p_bruto=stats.wilcoxon(dif).pvalue, equiv_010=bool(lo90 > -0.1 and hi90 < 0.1)))
     return linhas
 
 

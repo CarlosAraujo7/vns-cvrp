@@ -1,0 +1,23 @@
+\begin{table}[t]
+\caption{Study 3: mean rank over 74 instances (1 = best; ten arms) and mean wall-clock time per run (s; eleven processes in parallel, so descriptive only).}\label{tab:ranks}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+Arm & Rank $E_1$ & Rank $E_2$ & Time $E_1$ & Time $E_2$ \\
+\midrule
+R5, UCB1 (cost-aware) & 4.01 & 3.72 & 3.6 & 13.1 \\
+R5, uniform & 5.10 & 4.61 & 3.8 & 13.0 \\
+R5, probability matching (cost-aware) & 5.40 & 4.45 & 3.7 & 13.1 \\
+LO, uniform & 5.56 & 4.66 & 3.5 & 12.1 \\
+LO, probability matching (cost-aware) & 5.78 & 5.09 & 3.5 & 11.9 \\
+LO, UCB1 (cost-aware) & 5.90 & 5.24 & 4.5 & 14.0 \\
+LO, HG-UCB (cost-aware) & 6.61 & 6.53 & 3.6 & 12.4 \\
+R5, HG-UCB (cost-aware) & 4.82 & 6.72 & 3.5 & 12.7 \\
+LO, fixed order by cost & 7.08 & 7.11 & 5.0 & 14.9 \\
+R5, fixed order by cost & 4.74 & 6.88 & 3.9 & 13.6 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

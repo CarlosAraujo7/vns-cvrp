@@ -1,0 +1,23 @@
+\begin{table}[h]
+\caption{Studies 1--2: mean gap (\%) by instance set.}\label{tab:s2set}
+\centering\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccccccc}
+\toprule
+Arm & \multicolumn{4}{c}{$B=800$} & \multicolumn{4}{c}{$B=4000$} \\
+ & A & B & CMT & X & A & B & CMT & X \\
+\midrule
+Random/best/LO & 2.19 & 1.68 & 3.04 & 4.26 & 1.45 & 1.24 & 2.35 & 3.16 \\
+Random/shaken/LO & 2.43 & 1.77 & 3.32 & 4.57 & 1.38 & 1.30 & 2.41 & 3.79 \\
+Fixed/best/LO (GVNS) & 2.59 & 1.84 & 3.64 & 4.66 & 1.80 & 1.62 & 2.58 & 3.59 \\
+Fixed/shaken/LO & 2.67 & 2.00 & 3.82 & 4.99 & 1.82 & 1.70 & 3.25 & 4.33 \\
+Random/best/F40 & 3.05 & 2.01 & 4.34 & 4.90 & 2.07 & 1.62 & 2.78 & 4.03 \\
+Random/shaken/F40 (orig.) & 3.12 & 2.06 & 4.46 & 5.05 & 2.24 & 1.62 & 3.41 & 4.39 \\
+UCB1 in VND & 2.25 & 1.67 & 3.39 & 4.23 & 1.54 & 1.40 & 2.51 & 3.14 \\
+Prob.\ matching in VND & 2.41 & 1.70 & 3.23 & 4.26 & 1.59 & 1.33 & 2.31 & 3.11 \\
+HG-UCB in VND & 2.44 & 1.77 & 3.60 & 4.35 & 1.57 & 1.44 & 2.55 & 3.26 \\
+$\varepsilon$-greedy in VND & 2.52 & 1.85 & 3.81 & 4.32 & 1.67 & 1.50 & 2.52 & 3.26 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

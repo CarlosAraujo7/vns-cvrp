@@ -105,10 +105,15 @@ def main():
         tv = v.groupby(["braco", "instancia"]).gap_pct.mean().unstack(0)
         print(f"\n=== SYN_VAL (exploratorio; {tv.dropna().shape[0]} instancias): gap medio ===")
         print(tv.mean().round(3).sort_values().to_string())
-        for a in NOVOS:
+        linhas_val = []
+        for i, a in enumerate(NOVOS, 1):
             if a in tv:
-                l = contraste(tv.dropna(), "VAL", a, "s3_R5_U", rng, "val")
+                l = contraste(tv.dropna(), f"VAL{i}", a, "s3_R5_U", rng, "val")
+                l["nivel"] = float("nan")          # linha de validacao sintetica (sem nivel), como nas Etapas 4
+                linhas_val.append(l)
                 print(f"  {a} - U: {l['dif_pp']:+.3f}pp [{l['ic_lo']:+.3f}, {l['ic_hi']:+.3f}] p={l['p_bruto']:.3g}")
+        if len(tv.dropna()) == 30 and linhas_val:        # so grava com a validacao completa (30 instancias)
+            pd.DataFrame(linhas_val).to_csv(RES / "analise_etapa6_val.csv", index=False)
 
 
 if __name__ == "__main__":

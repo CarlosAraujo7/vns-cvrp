@@ -1,0 +1,18 @@
+\begin{table}[h]
+\caption{Overview of the studies. Budgets: $B$ operator applications; $E_1,E_2$ distance evaluations. Pools: P5, the five original operators; P10, ten operators.}\label{tab:studies}
+\centering\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.5cm}>{\raggedright\arraybackslash}p{4.1cm}>{\raggedright\arraybackslash}p{3.7cm}>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{1.8cm}}
+\toprule
+ & Question & Structure and pool & Budget; instances; seeds & Tests (Holm) \\
+\midrule
+1 & Does the bandit beat chance? & Original loop (F40); P5 & $B\in\{800,4000\}$; 74; 10 & 12 \\
+2 & Where do differences come from? AOS inside VND? & Order $\times$ acceptance $\times$ termination; P5 & $B\in\{800,4000\}$; 74; 10 & 28 \\
+3 & Does a heterogeneous pool change it? & LO and R5; P10 & $E_1,E_2$; 74; 10 & 34 \\
+4 & Tuned policies, tuned static mixture, new instances? & R5; P10 & $E_1,E_2$; 74 and 30 synthetic; 10 and 5 & 14 and 6 \\
+5 & Which operators explain the pool effect? & Uniform; subsets of P10; LO and R5 & $E_1,E_2$; 74; 10 & 20 \\
+6 & Other policy families, a gain-per-evaluation policy and contextual policies? & R5; P10 & $E_1,E_2$; 74; 10 & 16 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

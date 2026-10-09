@@ -1,0 +1,26 @@
+\begin{table}[t]
+\caption{Study 3: mean gap (\%) over 74 instances (budgets $E_1$ and $E_2$); the last two rows use the original five operators with the same budget.}\label{tab:s3}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcc}
+\toprule
+Arm & $E_1$ & $E_2$ \\
+\midrule
+R5, UCB1 (cost-aware) & 2.10 & 1.33 \\
+R5, uniform & 2.19 & 1.36 \\
+R5, probability matching (cost-aware) & 2.19 & 1.40 \\
+LO, uniform & 2.23 & 1.42 \\
+LO, probability matching (cost-aware) & 2.25 & 1.43 \\
+LO, UCB1 (cost-aware) & 2.26 & 1.45 \\
+LO, HG-UCB (cost-aware) & 2.34 & 1.56 \\
+R5, HG-UCB (cost-aware) & 2.15 & 1.56 \\
+LO, fixed order by cost & 2.37 & 1.62 \\
+\addlinespace
+R5, fixed order by cost & 2.16 & 1.63 \\
+Five operators, LO, uniform & 2.74 & 1.96 \\
+Five operators, LO, fixed order & 2.99 & 2.30 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

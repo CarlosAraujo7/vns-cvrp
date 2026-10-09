@@ -1,0 +1,23 @@
+\begin{table}[t]
+\caption{Efficiency of each operator under uniform selection (R5, ten operators, $E_1$, 74 instances, 10 seeds): success rate per application, mean relative gain per success, mean cost per application (thousand distance evaluations) and relative gain (\%) per thousand distance evaluations, sorted by the last column.}\label{tab:eff}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+Operator & Success (\%) & Gain/success (\%) & Cost (k eval.) & Gain per 1k eval. (\%) \\
+\midrule
+2-Opt & 37.3 & 1.10 & 1.1 & 0.364 \\
+Move(1) & 38.7 & 1.06 & 1.9 & 0.219 \\
+2-opt* & 24.3 & 1.45 & 1.8 & 0.192 \\
+Swap-intra & 30.3 & 1.07 & 2.0 & 0.166 \\
+Reloc(1,0) & 33.4 & 1.50 & 4.5 & 0.111 \\
+Or-opt(2-3) & 37.2 & 1.23 & 5.2 & 0.088 \\
+Reloc(2,0) & 10.6 & 2.34 & 3.8 & 0.065 \\
+Swap(1,1) & 24.4 & 1.51 & 18.9 & 0.019 \\
+CROSS & 21.5 & 1.48 & 24.7 & 0.013 \\
+SWAP* & 40.0 & 1.55 & 70.9 & 0.009 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

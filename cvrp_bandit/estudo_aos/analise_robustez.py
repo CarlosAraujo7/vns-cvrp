@@ -46,13 +46,21 @@ def carregar():
     d3 = pd.read_csv(RES / "etapa3_full.csv").rename(columns={"braco": "arm"})
     d3["estudo"] = "E3"
     cols = ["estudo", "arm", "nivel", "instancia", "seed", "gap_pct", "viavel"]
-    d = pd.concat([d1[cols], d2[cols], d3[cols]], ignore_index=True)
+    quadros = [d1[cols], d2[cols], d3[cols]]
+    for est, arq in (("E4", "etapa4_eval74.csv"), ("E6", "etapa6_full.csv")):     # Estudos 4 e 6 (se existirem)
+        if (RES / arq).exists():
+            dx = pd.read_csv(RES / arq).rename(columns={"braco": "arm"})
+            dx["estudo"] = est
+            quadros.append(dx[cols])
+    d = pd.concat(quadros, ignore_index=True)
     return d[d.viavel]
 
 
 def matriz(d, estudo, nivel, arm):
     """(74, 10): gap por instancia x seed, ordenado."""
-    sub = d[(d.estudo == estudo) & (d.nivel == nivel) & (d.arm == arm)]
+    sub = d[(d.nivel == nivel) & (d.arm == arm)]          # os nomes dos bracos sao unicos entre estudos
+    if sub.empty:
+        return pd.DataFrame()
     piv = sub.pivot(index="instancia", columns="seed", values="gap_pct")
     return piv.sort_index()[SEEDS]
 
@@ -72,6 +80,12 @@ def contrastes():
                 c.append(("E3", nv, f"s3_{t}_{o}", f"s3_{t}_U"))
         c.append(("E3", nv, "s3_R5_hgucbc", "s3_R5_hgucb_cego"))
         c.append(("E3", nv, "s3_R5_U", "s3_LO_U"))
+    for nv in (1, 5):                                       # Etapa 4 (politicas ajustadas e mistura estatica vs uniforme)
+        for o in ("ucb1t", "pmt", "hgucbt", "static"):
+            c.append(("E4", nv, f"s4_R5_{o}", "s3_R5_U"))
+    for nv in (1, 5):                                       # Etapa 6 (familias adicionais vs uniforme)
+        for o in ("exp3", "ts", "swucb", "ap", "eff", "eff2", "ctxts", "ctxeff"):
+            c.append(("E6", nv, f"s6_R5_{o}", "s3_R5_U"))
     return c
 
 
@@ -79,6 +93,7 @@ def analisar(dif_runs, rng):
     """dif_runs: (n_inst, n_seed) diferenca a-b por execucao pareada."""
     n_i, n_s = dif_runs.shape
     dif = dif_runs.mean(axis=1)
+    dif = np.where(np.abs(dif) < 1e-9, 0.0, dif)   # empates: diferencas de ponto flutuante nao contam
     media = dif.mean()
     sd = dif.std(ddof=1)
     # IC por bootstrap de instancias

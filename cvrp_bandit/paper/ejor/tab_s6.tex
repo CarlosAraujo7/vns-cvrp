@@ -1,0 +1,22 @@
+\begin{table}[t]
+\caption{Study 6: other policy families (R5 structure, ten operators, no tuning): mean gap (\%), mean paired difference from uniform selection in pp [95\% CI] and Holm-adjusted $p$ over 16 tests.}\label{tab:s6}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccccc}
+\toprule
+ & \multicolumn{3}{c}{$E_1$} & \multicolumn{3}{c}{$E_2$} \\ Policy & Gap & Difference & $p$ & Gap & Difference & $p$ \\
+\midrule
+Uniform selection (reference) & 2.19 & & & 1.36 & &  \\
+EXP3 & 2.19 & $+$0.01 [$-$0.08, 0.09] & 1.0 & 1.39 & $+$0.03 [$-$0.03, 0.09] & 0.89 \\
+Thompson sampling & 2.32 & $+$0.14 [0.05, 0.22] & 0.0002 & 1.61 & $+$0.25 [0.16, 0.35] & \ensuremath{<10^{-4}} \\
+Sliding-window UCB & 2.13 & $-$0.05 [$-$0.14, 0.02] & 1.0 & 1.38 & $+$0.02 [$-$0.04, 0.08] & 1.0 \\
+Adaptive pursuit & 2.34 & $+$0.15 [0.05, 0.25] & 0.001 & 1.55 & $+$0.19 [0.11, 0.27] & 0.0001 \\
+Efficiency UCB ($C=1$) & 2.48 & $+$0.29 [0.19, 0.40] & \ensuremath{<10^{-4}} & 2.23 & $+$0.87 [0.69, 1.06] & \ensuremath{<10^{-4}} \\
+Efficiency UCB ($C=2$) & 2.19 & $+$0.01 [$-$0.12, 0.11] & 0.33 & 1.77 & $+$0.41 [0.31, 0.52] & \ensuremath{<10^{-4}} \\
+Contextual Thompson sampling & 2.29 & $+$0.11 [0.02, 0.20] & 0.062 & 1.54 & $+$0.18 [0.11, 0.25] & 0.0001 \\
+Contextual Thompson, gain per evaluation & 2.21 & $+$0.03 [$-$0.13, 0.18] & 0.68 & 1.55 & $+$0.19 [0.07, 0.33] & 0.038 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

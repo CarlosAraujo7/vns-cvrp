@@ -1,0 +1,21 @@
+\begin{table}[t]
+\caption{Study 6: confirmatory contrasts against uniform selection (mean paired difference in pp [95\% CI]; Holm-adjusted $p$ over 16 tests).}\label{tab:s6tests}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcc}
+\toprule
+Contrast & $E_1$ & $E_2$ \\
+\midrule
+EXP3 $-$ uniform & $+$0.01 [$-$0.08, $+$0.09]; 1.0 & $+$0.03 [$-$0.03, $+$0.09]; 0.89 \\
+Thompson sampling $-$ uniform & $+$0.14 [$+$0.05, $+$0.22]; 0.0002 & $+$0.25 [$+$0.16, $+$0.35]; \ensuremath{<10^{-4}} \\
+Sliding-window UCB $-$ uniform & $-$0.05 [$-$0.14, $+$0.02]; 1.0 & $+$0.02 [$-$0.04, $+$0.08]; 1.0 \\
+Adaptive pursuit $-$ uniform & $+$0.15 [$+$0.05, $+$0.25]; 0.001 & $+$0.19 [$+$0.11, $+$0.27]; 0.0001 \\
+Efficiency UCB ($C=1$) $-$ uniform & $+$0.29 [$+$0.19, $+$0.40]; \ensuremath{<10^{-4}} & $+$0.87 [$+$0.69, $+$1.06]; \ensuremath{<10^{-4}} \\
+Efficiency UCB ($C=2$) $-$ uniform & $+$0.01 [$-$0.12, $+$0.11]; 0.33 & $+$0.41 [$+$0.31, $+$0.52]; \ensuremath{<10^{-4}} \\
+Contextual Thompson sampling $-$ uniform & $+$0.11 [$+$0.02, $+$0.20]; 0.062 & $+$0.18 [$+$0.11, $+$0.25]; 0.0001 \\
+Contextual Thompson, gain per evaluation $-$ uniform & $+$0.03 [$-$0.13, $+$0.18]; 0.68 & $+$0.19 [$+$0.07, $+$0.33]; 0.038 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

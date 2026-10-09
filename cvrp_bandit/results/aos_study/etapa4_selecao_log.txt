@@ -1,0 +1,6 @@
+U (referencia, SYN_TUNE): 3.1436
+ucb1: escolhida {"C": 0.1}  gap_tune=2.6146  (padrao 2.8260; pior config 3.0139)
+pm: escolhida {"gamma": 0.1, "p_min": 0.02}  gap_tune=2.9171  (padrao 2.9906; pior config 3.0331)
+hgucb: escolhida {"C": 4.0, "alpha": 0.5}  gap_tune=2.8874  (padrao 2.9809; pior config 3.2119)
+static: melhor gen09c1 gap_tune=2.2601; pesos=[0.273, 0.019, 0.02, 0.067, 0.1, 0.363, 0.123, 0.021, 0.005, 0.01]
+gravado etapa4_tuning_escolhidas.json

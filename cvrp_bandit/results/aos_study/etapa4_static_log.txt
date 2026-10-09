@@ -1,0 +1,78 @@
+    100/120  0.3 min
+gen 0: gap 2.9244
+    100/120  0.3 min
+    100/120  0.3 min
+    100/120  0.4 min
+    100/120  0.3 min
+gen 1: melhor filho 2.8647  atual 2.8647  sigma 0.500
+    100/120  0.2 min
+    100/120  0.4 min
+    100/120  0.3 min
+    100/120  0.7 min
+gen 2: melhor filho 2.7293  atual 2.7293  sigma 0.500
+    100/120  0.6 min
+    100/120  0.5 min
+    100/120  0.5 min
+    100/120  0.4 min
+gen 3: melhor filho 2.8519  atual 2.7293  sigma 0.450
+    100/120  0.4 min
+    100/120  0.5 min
+    100/120  0.5 min
+    100/120  0.5 min
+gen 4: melhor filho 2.7368  atual 2.7293  sigma 0.405
+    100/120  0.4 min
+    100/120  0.4 min
+    100/120  0.5 min
+    100/120  0.4 min
+gen 5: melhor filho 2.7112  atual 2.7112  sigma 0.405
+    100/120  0.4 min
+    100/120  0.3 min
+    100/120  0.4 min
+    100/120  0.4 min
+gen 6: melhor filho 2.7231  atual 2.7112  sigma 0.365
+    100/120  0.4 min
+    100/120  0.5 min
+    100/120  0.4 min
+    100/120  0.4 min
+gen 7: melhor filho 2.6142  atual 2.6142  sigma 0.365
+    100/120  0.5 min
+    100/120  0.5 min
+    100/120  0.5 min
+    100/120  0.6 min
+gen 8: melhor filho 2.5012  atual 2.5012  sigma 0.365
+    100/120  0.5 min
+    100/120  0.3 min
+    100/120  0.2 min
+    100/120  0.2 min
+gen 9: melhor filho 2.2601  atual 2.2601  sigma 0.365
+    100/120  0.3 min
+    100/120  0.3 min
+    100/120  0.3 min
+    100/120  0.3 min
+gen 10: melhor filho 2.4214  atual 2.2601  sigma 0.328
+    100/120  0.3 min
+    100/120  0.2 min
+    100/120  0.3 min
+    100/120  0.2 min
+gen 11: melhor filho 2.4133  atual 2.2601  sigma 0.295
+    100/120  0.3 min
+    100/120  0.3 min
+    100/120  0.4 min
+    100/120  0.3 min
+gen 12: melhor filho 2.3786  atual 2.2601  sigma 0.266
+    100/120  0.3 min
+    100/120  0.3 min
+    100/120  0.4 min
+    100/120  0.4 min
+gen 13: melhor filho 2.3169  atual 2.2601  sigma 0.239
+    100/120  0.7 min
+    100/120  0.6 min
+    100/120  0.8 min
+    100/120  0.7 min
+gen 14: melhor filho 2.4041  atual 2.2601  sigma 0.215
+    100/120  0.7 min
+    100/120  0.7 min
+    100/120  0.3 min
+    100/120  0.3 min
+gen 15: melhor filho 2.4114  atual 2.2601  sigma 0.194
+busca estatica concluida

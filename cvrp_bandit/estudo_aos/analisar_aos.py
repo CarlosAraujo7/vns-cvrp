@@ -35,7 +35,10 @@ CONFIRM = ["gvns_classico", "uniforme", "ucb1", "eps_greedy", "prob_matching",
            "hgucb_literal", "hgucb_norm"]
 PARES = [("hgucb_norm", o) for o in ["gvns_classico", "uniforme", "ucb1", "eps_greedy", "prob_matching"]] \
         + [("hgucb_literal", "hgucb_norm")]
-M_FAMILIA = 18
+# Familia confirmatoria FINAL = 12 testes (6 por orcamento x B=800 e 4000): a familia nominal de 18 do
+# pre-registro (Entrada 64) foi reduzida a 12 ao cancelar B=20000 (declarado nas Entradas 67 e 69, antes
+# da analise de B=4000). Resultados com m=18 (mais conservador) estao no diario, Entradas 66 e 68.
+M_FAMILIA = 12
 N_BOOT = 10000
 
 
@@ -98,7 +101,8 @@ def main():
         for a, b in PARES:
             x, y = piv[a].values, piv[b].values
             dif = x - y
-            w = stats.wilcoxon(x, y)
+            dif = np.where(np.abs(dif) < 1e-9, 0.0, dif)   # empates: diferencas de ponto flutuante (~1e-15) nao sao vitorias/derrotas
+            w = stats.wilcoxon(dif)
             lo, hi = boot_ic(dif, rng)
             linhas.append(dict(B=B, a=a, b=b, dif_media_pp=dif.mean(), ic_lo=lo, ic_hi=hi,
                                vit_a=int((dif < 0).sum()), der_a=int((dif > 0).sum()),

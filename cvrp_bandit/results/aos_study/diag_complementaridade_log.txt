@@ -1,0 +1,14 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+  20/222
+  40/222
+  60/222
+  80/222
+  100/222
+  120/222
+  140/222
+  160/222
+  180/222
+  200/222
+  220/222
+gravado /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/aos_study/diag_complementaridade.csv

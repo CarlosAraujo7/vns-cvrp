@@ -1,0 +1,76 @@
+etapa5: 10360 execucoes, inviaveis 0
+
+=== LO, E1: gap medio (74 inst.) ===
+braco
+s3_LO_U       2.235
+s5_LO_P7e     2.276
+s5_LO_P8c     2.400
+s5_LO_P7c     2.484
+s3_P5_LO_U    2.739
+Friedman: chi2=54.53 p=4.08e-11
+
+=== R5, E1: gap medio (74 inst.) ===
+braco
+s3_R5_U      2.186
+s5_R5_P7e    2.259
+s5_R5_P8c    2.460
+s5_R5_P7c    2.593
+s5_R5_P5     2.914
+Friedman: chi2=88.01 p=3.48e-18
+
+=== LO, E5: gap medio (74 inst.) ===
+braco
+s3_LO_U       1.419
+s5_LO_P7e     1.437
+s5_LO_P8c     1.515
+s5_LO_P7c     1.643
+s3_P5_LO_U    1.960
+Friedman: chi2=55.55 p=2.49e-11
+
+=== R5, E5: gap medio (74 inst.) ===
+braco
+s3_R5_U      1.361
+s5_R5_P7e    1.521
+s5_R5_P8c    1.599
+s5_R5_P7c    1.769
+s5_R5_P5     2.106
+Friedman: chi2=101.87 p=3.94e-21
+
+=== CONFIRMATORIO (dif = gap(a) - gap(b)) ===
+estrutura  nivel id         a          b  dif_pp   ic_lo   ic_hi  vit_a  der_a  emp  p_bruto  equiv_010  p_holm  signif_005
+       LO      1 A1 s5_LO_P8c s3_P5_LO_U -0.3391 -0.4961 -0.1977     51     20    3   0.0000      False  0.0003        True
+       LO      1 A2 s5_LO_P7e s3_P5_LO_U -0.4632 -0.6166 -0.3142     60     12    2   0.0000      False  0.0000        True
+       LO      1 A3   s3_LO_U  s5_LO_P8c -0.1655 -0.3063 -0.0245     46     25    3   0.0133      False  0.0399        True
+       LO      1 A4 s5_LO_P7c    s3_LO_U  0.2488  0.0449  0.4405     20     52    2   0.0009      False  0.0043        True
+       LO      1 A5 s5_LO_P7c  s5_LO_P8c  0.0833 -0.0231  0.1868     27     44    3   0.0521      False  0.0684       False
+       R5      1 A1 s5_R5_P8c   s5_R5_P5 -0.4538 -0.6223 -0.2980     56     15    3   0.0000      False  0.0000        True
+       R5      1 A2 s5_R5_P7e   s5_R5_P5 -0.6551 -0.8590 -0.4680     59     12    3   0.0000      False  0.0000        True
+       R5      1 A3   s3_R5_U  s5_R5_P8c -0.2743 -0.4166 -0.1347     49     20    5   0.0000      False  0.0004        True
+       R5      1 A4 s5_R5_P7c    s3_R5_U  0.4076  0.2321  0.5970     15     57    2   0.0000      False  0.0000        True
+       R5      1 A5 s5_R5_P7c  s5_R5_P8c  0.1334  0.0413  0.2274     21     50    3   0.0007      False  0.0043        True
+       LO      5 A1 s5_LO_P8c s3_P5_LO_U -0.4447 -0.6046 -0.2980     53     18    3   0.0000      False  0.0000        True
+       LO      5 A2 s5_LO_P7e s3_P5_LO_U -0.5231 -0.7024 -0.3593     57     14    3   0.0000      False  0.0000        True
+       LO      5 A3   s3_LO_U  s5_LO_P8c -0.0966 -0.2208  0.0318     44     23    7   0.0342      False  0.0684       False
+       LO      5 A4 s5_LO_P7c    s3_LO_U  0.2240  0.0601  0.3757     21     49    4   0.0003      False  0.0018        True
+       LO      5 A5 s5_LO_P7c  s5_LO_P8c  0.1274  0.0319  0.2219     23     44    7   0.0029      False  0.0115        True
+       R5      5 A1 s5_R5_P8c   s5_R5_P5 -0.5076 -0.6801 -0.3567     62      9    3   0.0000      False  0.0000        True
+       R5      5 A2 s5_R5_P7e   s5_R5_P5 -0.5851 -0.7767 -0.4103     60     10    4   0.0000      False  0.0000        True
+       R5      5 A3   s3_R5_U  s5_R5_P8c -0.2377 -0.3478 -0.1346     47     21    6   0.0000      False  0.0004        True
+       R5      5 A4 s5_R5_P7c    s3_R5_U  0.4079  0.2786  0.5434     10     58    6   0.0000      False  0.0000        True
+       R5      5 A5 s5_R5_P7c  s5_R5_P8c  0.1702  0.0943  0.2530     23     47    4   0.0001      False  0.0007        True
+
+[exploratorio] fracao das avaliacoes de distancia por operador (indices do pool de cada braco) e shakes:
+  s5_LO_P7c    E1: shakes= 117.3    5.5   9.3  22.2  16.9   9.8  26.5   9.7
+  s5_LO_P7c    E5: shakes= 617.5    5.7   9.6  21.6  16.6   9.5  26.9  10.0
+  s5_LO_P7e    E1: shakes=  22.5    0.9   1.5  14.3   3.6   2.7  18.3  58.7
+  s5_LO_P7e    E5: shakes= 120.7    0.9   1.6  14.7   3.5   2.7  18.4  58.1
+  s5_LO_P8c    E1: shakes=  62.2    2.8   4.8  49.7  10.7   9.3   4.2  13.5   5.0
+  s5_LO_P8c    E5: shakes= 323.9    2.9   4.8  50.2  10.4   8.9   4.0  13.7   5.1
+  s5_R5_P5     E1: shakes=  84.1    4.0   6.5  62.8  13.6  13.1
+  s5_R5_P5     E5: shakes= 428.3    4.0   6.6  63.7  13.3  12.4
+  s5_R5_P7c    E1: shakes= 160.9    5.6   9.2  21.0  18.0   9.5  26.8   9.9
+  s5_R5_P7c    E5: shakes= 838.5    5.7   9.6  20.9  17.3   9.3  27.1  10.1
+  s5_R5_P7e    E1: shakes=  31.3    0.9   1.5  14.4   3.6   2.8  18.9  57.8
+  s5_R5_P7e    E5: shakes= 166.9    0.9   1.5  15.1   3.4   2.8  19.4  56.9
+  s5_R5_P8c    E1: shakes=  92.5    3.0   4.7  49.1  10.5   9.6   4.3  13.5   5.3
+  s5_R5_P8c    E5: shakes= 477.0    2.9   4.8  49.7  10.2   9.3   4.1  13.8   5.2

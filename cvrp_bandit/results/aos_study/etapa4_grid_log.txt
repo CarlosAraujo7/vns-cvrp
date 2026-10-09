@@ -19,3 +19,12 @@ grade: 24 configuracoes, 2880 execucoes
     1800/2880  14.2 min
     1900/2880  14.6 min
     2000/2880  15.3 min
+    2100/2880  15.8 min
+    2200/2880  16.2 min
+    2300/2880  16.7 min
+    2400/2880  17.1 min
+    2500/2880  17.4 min
+    2600/2880  17.7 min
+    2700/2880  18.4 min
+    2800/2880  18.8 min
+grade concluida (2880 execucoes novas)

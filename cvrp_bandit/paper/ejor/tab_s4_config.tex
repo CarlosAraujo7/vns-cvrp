@@ -1,0 +1,17 @@
+\begin{table}[t]
+\caption{Study 4: parameters selected on the tuning set and mean gap (\%) as ``tuned / reference'': on the tuning set the reference is the default (static mixture: uniform); on the 74 CVRPLIB instances it is the default policy (static: uniform selection).}\label{tab:s4config}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lllcc}
+\toprule
+Policy & Selected & Tuning set & CVRPLIB $E_1$ & CVRPLIB $E_2$ \\
+\midrule
+UCB1 & $C$=0.1 & 2.61 / 2.83 & 2.14 / 2.10 & 1.41 / 1.33 \\
+Prob. matching & $\gamma$=0.1, $p_{\min}$=0.02 & 2.92 / 2.99 & 2.22 / 2.19 & 1.38 / 1.40 \\
+HG-UCB & $C$=4, $\alpha$=0.5 & 2.89 / 2.98 & 2.16 / 2.15 & 1.50 / 1.56 \\
+Static mixture & Table~\stab{tab:s4pesos} & 2.26 / 3.14 & 2.06 / 2.19 & 1.36 / 1.36 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

@@ -1,0 +1,113 @@
+Execucoes lidas: 11850
+Inviaveis: 0 (nenhuma)
+Orcamentos completos (74 inst x 10 seeds x 7 politicas): [np.int64(800), np.int64(4000)]  -> ANALISE PARCIAL
+
+=== B = 800 ===
+Gap medio por politica (media sobre 74 instancias de gap medio por instancia):
+politica
+gvns_classico    3.003
+uniforme         3.411
+ucb1             3.391
+eps_greedy       3.498
+prob_matching    3.475
+hgucb_literal    4.429
+hgucb_norm       3.474
+hgucb_norm_a5    3.569
+Friedman (7 politicas, n=74): chi2=230.70  p=5.43e-47
+
+=== B = 4000 ===
+Gap medio por politica (media sobre 74 instancias de gap medio por instancia):
+politica
+gvns_classico    2.294
+uniforme         2.724
+ucb1             2.728
+eps_greedy       2.863
+prob_matching    2.795
+hgucb_literal    4.144
+hgucb_norm       2.826
+hgucb_norm_a5    3.137
+Friedman (7 politicas, n=74): chi2=223.45  p=1.91e-45
+
+=== CONFIRMATORIO (PARCIAL: Holm com m=18 mas so testes disponiveis) ===
+dif_media_pp = gap(a) - gap(b); negativo = a melhor.
+   B             a             b  dif_media_pp   ic_lo  ic_hi  vit_a  der_a  emp  p_bruto  p_holm  signif_holm_005
+ 800    hgucb_norm gvns_classico        0.4707  0.3523 0.5938      8     64    2   0.0000  0.0000             True
+ 800    hgucb_norm      uniforme        0.0622 -0.0113 0.1430     32     39    3   0.3869  1.0000            False
+ 800    hgucb_norm          ucb1        0.0827  0.0019 0.1721     34     36    4   0.2052  1.0000            False
+ 800    hgucb_norm    eps_greedy       -0.0240 -0.1052 0.0573     39     32    3   0.3105  1.0000            False
+ 800    hgucb_norm prob_matching       -0.0011 -0.0633 0.0615     34     37    3   0.8838  1.0000            False
+ 800 hgucb_literal    hgucb_norm        0.9558  0.7526 1.1751      0     74    0   0.0000  0.0000             True
+4000    hgucb_norm gvns_classico        0.5323  0.3682 0.6953      9     63    2   0.0000  0.0000             True
+4000    hgucb_norm      uniforme        0.1025  0.0155 0.1906     28     44    2   0.0153  0.1074            False
+4000    hgucb_norm          ucb1        0.0979 -0.0091 0.2019     25     46    3   0.0121  0.0967            False
+4000    hgucb_norm    eps_greedy       -0.0369 -0.1335 0.0624     37     34    3   0.4028  1.0000            False
+4000    hgucb_norm prob_matching        0.0313 -0.0532 0.1191     35     36    3   0.7011  1.0000            False
+4000 hgucb_literal    hgucb_norm        1.3173  1.0787 1.5724      0     74    0   0.0000  0.0000             True
+
+######## EXPLORATORIO (nao confirmatorio) ########
+
+-- B=800: gap medio por conjunto --
+conjunto           A      B    CMT      X
+politica                                 
+eps_greedy     3.185  2.178  4.936  5.056
+gvns_classico  2.592  1.840  3.643  4.663
+hgucb_literal  4.245  3.001  6.241  5.877
+hgucb_norm     3.183  2.131  4.585  5.092
+hgucb_norm_a5  3.391  2.145  4.898  5.097
+prob_matching  3.211  2.160  4.340  5.077
+ucb1           3.101  2.063  4.625  4.969
+uniforme       3.120  2.064  4.460  5.049
+
+-- B=4000: gap medio por conjunto --
+conjunto           A      B    CMT      X
+politica                                 
+eps_greedy     2.381  1.856  3.681  4.407
+gvns_classico  1.798  1.623  2.581  3.589
+hgucb_literal  3.975  2.761  5.428  5.622
+hgucb_norm     2.311  1.783  3.387  4.501
+hgucb_norm_a5  2.831  1.944  4.297  4.600
+prob_matching  2.331  1.772  3.331  4.388
+ucb1           2.222  1.663  3.831  4.311
+uniforme       2.245  1.625  3.411  4.390
+
+-- B=20000: gap medio por conjunto --
+conjunto           X
+politica            
+gvns_classico  2.244
+uniforme       2.919
+
+-- B=800: isolando a normalizacao (hgucb_literal vs hgucb_norm_a5) e alpha (hgucb_norm_a5 vs hgucb_norm) --
+  hgucb_literal - hgucb_norm_a5: dif media +0.860pp  wilcoxon p=2.22e-13
+  hgucb_norm_a5 - hgucb_norm: dif media +0.095pp  wilcoxon p=0.0194
+
+-- B=800: sensibilidade 5 vs 10 seeds (hgucb_norm vs uniforme) --
+  5 seeds: dif media +0.0393pp  p=0.595
+  10 seeds: dif media +0.0622pp  p=0.387
+
+-- B=4000: isolando a normalizacao (hgucb_literal vs hgucb_norm_a5) e alpha (hgucb_norm_a5 vs hgucb_norm) --
+  hgucb_literal - hgucb_norm_a5: dif media +1.007pp  wilcoxon p=7.73e-14
+  hgucb_norm_a5 - hgucb_norm: dif media +0.310pp  wilcoxon p=4.2e-06
+
+-- B=4000: sensibilidade 5 vs 10 seeds (hgucb_norm vs uniforme) --
+  5 seeds: dif media +0.0119pp  p=0.758
+  10 seeds: dif media +0.1025pp  p=0.0153
+
+-- Uso medio de operadores (% das aplicacoes; ordem: 2-Opt|Move(1)|Swap(1,1)|Reloc(1,0)|Reloc(2,0)) --
+  eps_greedy     B=   800:  20.4  22.1  16.8  30.0  10.7
+  eps_greedy     B=  4000:  17.9  17.5  16.4  39.4   8.7
+  gvns_classico  B=   800:  39.6  20.4  19.3  12.6   8.1
+  gvns_classico  B=  4000:  39.4  20.2  19.3  12.7   8.5
+  gvns_classico  B= 20000:  33.7  21.4  21.1  14.3   9.6
+  hgucb_literal  B=   800:  21.6  29.2  13.9  21.0  14.3
+  hgucb_literal  B=  4000:  21.7  28.8  16.0  22.0  11.6
+  hgucb_norm     B=   800:  21.5  21.3  20.0  21.3  15.7
+  hgucb_norm     B=  4000:  22.3  22.0  20.3  21.9  13.4
+  hgucb_norm_a5  B=   800:  22.7  23.4  18.6  22.7  12.7
+  hgucb_norm_a5  B=  4000:  28.3  27.0  13.3  21.5   9.9
+  prob_matching  B=   800:  23.9  22.1  17.4  24.5  12.2
+  prob_matching  B=  4000:  23.4  22.6  17.7  24.5  11.7
+  ucb1           B=   800:  20.1  20.1  19.9  20.3  19.6
+  ucb1           B=  4000:  20.0  20.0  20.0  20.5  19.5
+  uniforme       B=   800:  19.9  19.6  19.8  20.2  20.5
+  uniforme       B=  4000:  20.1  20.2  19.9  20.1  19.7
+  uniforme       B= 20000:  20.1  20.0  20.0  19.8  20.2

@@ -71,7 +71,10 @@ def executar4(sp, nivel, set_name, nome_inst, seed):
     inst, cws = _instancia(set_name, nome_inst)
     proxy = _proxy(set_name, nome_inst)
     proxy.chamadas = 0
-    pool = POOL_P10 if sp["pool"] == "P10" else POOL_P5
+    if isinstance(sp["pool"], list):          # Etapa 5: subconjunto do pool de 10 por indices
+        pool = [POOL_P10[i] for i in sp["pool"]]
+    else:
+        pool = POOL_P10 if sp["pool"] == "P10" else POOL_P5
     k = len(pool)
     uso, calls_op, maximo = [0] * k, [0] * k, [0]
     suc, gan = [0] * k, [0.0] * k

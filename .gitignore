@@ -12,3 +12,9 @@ cvrp_bandit/results/superseded/
 *.pyc
 *.pt
 *.bak
+
+# Binario do compilador (Linux, 26 MB) e artefatos de compilacao
+cvrp_bandit/ferramentas/
+cvrp_bandit/paper/ejor/build/
+*.aux
+*.log

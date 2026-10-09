@@ -1,0 +1,90 @@
+eval74: 6660 execucoes, inviaveis 0
+CONTROLE U instrumentado vs s3_R5_U (E1): 740/740 identicos
+
+=== 74 CVRPLIB, E1: gap medio ===
+braco
+s4_R5_static    2.060
+s3_R5_ucb1c     2.104
+s4_R5_ucb1t     2.137
+s3_R5_hgucbc    2.148
+s4_R5_hgucbt    2.160
+s3_R5_U         2.186
+s3_R5_pmc       2.194
+s4_R5_pmt       2.220
+Friedman (U, ucb1t, pmt, hgucbt, static): chi2=10.30 p=0.0357
+  [exploratorio] ajustada - padrao (mesma familia):
+    s4_R5_ucb1t - s3_R5_ucb1c: +0.033pp  p=0.559
+    s4_R5_pmt - s3_R5_pmc: +0.026pp  p=0.783
+    s4_R5_hgucbt - s3_R5_hgucbc: +0.012pp  p=0.881
+
+=== 74 CVRPLIB, E5: gap medio ===
+braco
+s3_R5_ucb1c     1.328
+s3_R5_U         1.361
+s4_R5_static    1.365
+s4_R5_pmt       1.378
+s3_R5_pmc       1.399
+s4_R5_ucb1t     1.410
+s4_R5_hgucbt    1.499
+s3_R5_hgucbc    1.557
+Friedman (U, ucb1t, pmt, hgucbt, static): chi2=14.32 p=0.00633
+  [exploratorio] ajustada - padrao (mesma familia):
+    s4_R5_ucb1t - s3_R5_ucb1c: +0.082pp  p=0.0023
+    s4_R5_pmt - s3_R5_pmc: -0.020pp  p=0.671
+    s4_R5_hgucbt - s3_R5_hgucbc: -0.058pp  p=0.0752
+
+=== SYN_VAL (30 inst., 5 seeds, E1): gap medio ===
+braco
+s4_R5_static    3.149
+s3_R5_FOC       3.195
+s4_R5_ucb1t     3.280
+s3_R5_ucb1c     3.330
+s3_LO_U         3.352
+s3_R5_U         3.359
+s4_R5_hgucbt    3.371
+s3_R5_hgucbc    3.416
+s3_R5_pmc       3.427
+s4_R5_pmt       3.488
+s3_P5_LO_U      4.140
+
+=== CONFIRMATORIO (dif = gap(a) - gap(b)) ===
+id            a            b  dif_pp   ic_lo   ic_hi  vit_a  der_a  emp  p_bruto  equiv_010  nivel  p_holm  signif_005
+V1  s4_R5_ucb1t      s3_R5_U -0.0484 -0.1312  0.0274     40     31    3   0.3838      False    1.0  1.0000       False
+V2    s4_R5_pmt      s3_R5_U  0.0341 -0.0567  0.1240     29     40    5   0.1522      False    1.0  1.0000       False
+V3 s4_R5_hgucbt      s3_R5_U -0.0259 -0.0909  0.0368     36     35    3   0.5941       True    1.0  1.0000       False
+V4 s4_R5_static      s3_R5_U -0.1262 -0.2512 -0.0162     39     33    2   0.1085      False    1.0  1.0000       False
+V5  s4_R5_ucb1t s4_R5_static  0.0778 -0.0202  0.1791     32     37    5   0.1976      False    1.0  1.0000       False
+V6    s4_R5_pmt s4_R5_static  0.1603  0.0644  0.2661     24     45    5   0.0027      False    1.0  0.0346        True
+V7 s4_R5_hgucbt s4_R5_static  0.1002 -0.0057  0.2087     29     42    3   0.1178      False    1.0  1.0000       False
+V1  s4_R5_ucb1t      s3_R5_U  0.0489 -0.0295  0.1297     27     39    8   0.4491      False    5.0  1.0000       False
+V2    s4_R5_pmt      s3_R5_U  0.0174 -0.0455  0.0825     30     37    7   0.6350       True    5.0  1.0000       False
+V3 s4_R5_hgucbt      s3_R5_U  0.1381  0.0697  0.2072     21     47    6   0.0003      False    5.0  0.0036        True
+V4 s4_R5_static      s3_R5_U  0.0038 -0.0834  0.0895     33     37    4   0.9045       True    5.0  1.0000       False
+V5  s4_R5_ucb1t s4_R5_static  0.0450 -0.0349  0.1248     32     38    4   0.2337      False    5.0  1.0000       False
+V6    s4_R5_pmt s4_R5_static  0.0135 -0.0612  0.0826     32     36    6   0.2635       True    5.0  1.0000       False
+V7 s4_R5_hgucbt s4_R5_static  0.1342  0.0337  0.2393     30     40    4   0.0155      False    5.0  0.1863       False
+W1      s3_LO_U   s3_P5_LO_U -0.7880 -1.0830 -0.5367     28      2    0   0.0000      False    NaN  0.0000        True
+W2    s3_R5_FOC      s3_R5_U -0.1642 -0.4046  0.0312     18     12    0   0.2449      False    NaN  0.9798       False
+W3  s4_R5_ucb1t      s3_R5_U -0.0796 -0.1867  0.0246     18     12    0   0.1004      False    NaN  0.5020       False
+W4    s4_R5_pmt      s3_R5_U  0.1281 -0.0180  0.3176     16     14    0   0.5158      False    NaN  1.0000       False
+W5 s4_R5_hgucbt      s3_R5_U  0.0117 -0.1018  0.1213     15     15    0   0.7303      False    NaN  1.0000       False
+W6 s4_R5_static      s3_R5_U -0.2106 -0.4912  0.0158     16     14    0   0.5561      False    NaN  1.0000       False
+
+[exploratorio] configuracoes escolhidas no ajuste (SYN_TUNE):
+  ucb1: gap_tune=2.6146 {'C': 0.1}
+  pm: gap_tune=2.9171 {'gamma': 0.1, 'p_min': 0.02}
+  hgucb: gap_tune=2.8874 {'C': 4.0, 'alpha': 0.5}
+  static: gap_tune=2.2601 pesos=[0.273, 0.019, 0.02, 0.067, 0.1, 0.363, 0.123, 0.021, 0.005, 0.01]
+
+[exploratorio] eficiencia por operador (U, R5, P10, E1, 74 inst. x 10 seeds):
+  operador        aplic.  sucesso%  ganho/sucesso(%)  ganho/1000 dist
+  2-Opt            29387     37.30            1.0992          0.36352
+  Move(1)          27883     38.74            1.0622          0.21902
+  Swap(1,1)        27938     24.39            1.5081          0.01948
+  Reloc(1,0)       28057     33.43            1.5003          0.11102
+  Reloc(2,0)       27591     10.64            2.3425          0.06547
+  2-opt*           27645     24.27            1.4496          0.19227
+  Or-opt           27611     37.18            1.2284          0.08782
+  Swap-intra       29345     30.33            1.0696          0.16555
+  CROSS            30291     21.47            1.4808          0.01285
+  SWAP*            27427     40.01            1.5482          0.00874

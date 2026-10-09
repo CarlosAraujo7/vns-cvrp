@@ -1,0 +1,25 @@
+\begin{table}[t]
+\caption{Reproduction fidelity: mean error (\%) over the instances of each set (mean of per-instance means over five seeds). Published values from the original study \citep{kalatzantonakis2023}. ``Literal'' uses the raw-cost reward and $\alpha=5$; ``normalized'' uses the dimensionless reward. Last column: unweighted mean of the three sets, as in the original.}\label{tab:repro}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+ & A & B & X & Mean of sets \\
+\midrule
+Published VNS & 2.040 & 1.832 & 6.291 & 3.388 \\
+Published HG-UCB & 1.610 & 1.655 & 6.023 & 3.096 \\
+\addlinespace
+Ours: classical GVNS & 3.181 & 2.001 & 4.869 & 3.351 \\
+Ours: HG-UCB literal, fixed $x'$ & 5.764 & 3.639 & 6.337 & 5.247 \\
+Ours: HG-UCB literal, progressive $x'$ & 4.210 & 2.868 & 5.777 & 4.285 \\
+Ours: HG-UCB normalized, $\alpha=5$ & 3.325 & 2.098 & 5.069 & 3.497 \\
+Ours: HG-UCB normalized, $\alpha=0.5$ & 3.132 & 2.016 & 5.020 & 3.390 \\
+\midrule
+Published: HG-UCB $-$ VNS & $-$0.430 & $-$0.177 & $-$0.268 & $-$0.292 \\
+Ours: literal (progressive) $-$ GVNS & $+$1.028 & $+$0.867 & $+$0.908 & $+$0.934 \\
+Ours: normalized $\alpha=0.5$ $-$ GVNS & $-$0.049 & $+$0.015 & $+$0.151 & $+$0.039 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

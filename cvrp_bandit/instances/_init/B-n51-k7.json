@@ -1,0 +1,1 @@
+{"instancia": "B-n51-k7", "n_rotas": 7, "custo": 1188, "origem": "cws+reparo com FALLBACK CP-SAT (nao deterministico; esta e a solucao fixada)", "rotas": [[26, 47, 23, 25, 31, 51, 24, 46, 48], [14, 15, 29, 8, 27, 44, 7], [43, 37, 41, 17, 35, 39, 3, 11, 18], [50, 10, 2, 16, 22, 21, 45], [9, 13, 38, 33, 32, 28, 42], [19, 30, 40, 6, 5], [36, 12, 49, 4, 20, 34]]}

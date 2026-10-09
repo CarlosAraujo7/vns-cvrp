@@ -1,21 +1,29 @@
 % =====================================================================================
 % Manuscrito para o European Journal of Operational Research (EJOR) -- classe elsarticle.
 % STATUS (08/10/2026): rascunho NAO COMPILADO (sem LaTeX na maquina). Todo numero tem rastro em
-% ../RASTREIO_NUMEROS.md. Itens "\pend{...}" bloqueiam a submissao.
+% ../RASTREIO_NUMEROS.md. Pendencias cientificas aparecem em vermelho (comando de pendencia), de autoria em azul.
 % Autoria/declaracoes: preenchimento GENERICO (o pesquisador editara).
 % =====================================================================================
-\documentclass[preprint,12pt,authoryear]{elsarticle}
+\documentclass[preprint,11pt,authoryear]{elsarticle}
 
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{array}
 \usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{setspace}
+\onehalfspacing   % EJOR: 1.5 line spacing, 11pt, <= 35 pages
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
 
-\newcommand{\pend}[1]{\textcolor{red}{[PENDING: #1]}}   % marca bloqueadores de submissao
+\input{numeros}   % macros de numeros geradas por gerar_tabelas.py (nao editar)
+\input{suptab}    % numeracao das tabelas do suplemento online (\stab{label})
+\newcommand{\pend}[1]{\textcolor{red}{[PENDING: #1]}}   % marca bloqueadores de submissao (conteudo cientifico)
+\newcommand{\inputopt}[1]{\IfFileExists{#1.tex}{\input{#1}}{\textcolor{red}{[missing \detokenize{#1}]}}}
+\newcommand{\authorpend}[1]{\textcolor{blue}{[AUTHORS: #1]}}   % decisoes de autoria/declaracoes: preenchimento generico, o pesquisador edita
 \newcommand{\pp}{\,pp}
 \newcommand{\gap}{\mathrm{gap}}
 
@@ -36,19 +44,14 @@
             city={[City]}, country={[Country]}}
 
 \begin{abstract}
-Machine-learning components are increasingly embedded in metaheuristics to select search operators, but their contribution is rarely separated from the search structure they are embedded in, and negative or null results are seldom reported with the same care as positive ones. We reproduce a recently published bandit-guided Variable Neighborhood Search (VNS) for the Capacitated Vehicle Routing Problem (CVRP), whose policy (HG-UCB) is reported to improve on plain VNS by 0.29 percentage points (pp), and test its learning component in four controlled studies on 74 CVRPLIB instances and 54 synthetic instances, under equal budgets, with hyperparameters tuned by one protocol for all policies, equivalence tests and a state-of-the-art reference. The published improvement is not reproduced: the faithful variant is about 0.9~pp worse than plain VNS, and our best variant ties with it. The cause we isolate is the reward scale: expressed in raw cost units, the reward saturates the policy's softmax, and normalizing it by solution cost removes a loss of 1.0--1.3~pp. With the reward corrected, no adaptive policy tested (HG-UCB, UCB1, $\varepsilon$-greedy, probability matching) beats uniform random selection, and benefits above about 0.16~pp are excluded by the data. What does improve results is search structure---stopping the inner loop at a local optimum (0.5--0.6~pp) and randomizing operator order (0.3--0.5~pp)---and the operator pool: adding five operators, including SWAP*, gains a further 0.5~pp. \pend{one sentence with the Study~4 results (tuned policies, tuned static mixture, synthetic validation).} A hybrid genetic search reference reaches a mean gap of 0.01--0.04\% on the same instances, so our conclusions concern the relative value of learning, not competitiveness. We provide the protocol, raw results and code to support similar audits of learning-guided heuristics.
+Machine-learning components are increasingly embedded in metaheuristics to select search operators, but their contribution is rarely separated from the search structure around them. We audit a recent bandit-guided variable neighborhood search for the capacitated vehicle routing problem, whose learning policy is reported to improve on plain search by 0.29 percentage points, in six pre-specified studies on 74 benchmark and 54 synthetic instances with equal budgets, common tuning and equivalence tests. The published improvement is not reproduced: the closest variant is \num{rep_da_lit_prog_m} points worse than plain search and, with a corrected reward, ties with it under the published protocol, but is 0.5 points worse at equal numbers of operator applications. The cause we isolate is a reward in raw cost units that saturates the policy's softmax; normalizing it removes a loss of about one point. With the reward corrected, none of ten adaptive policy families, including tuned, cost-aware and contextual ones, beats uniform random selection; gains above about \num{eq_best_lo90} points are excluded, and a tuned static operator mixture shows little headroom. What improves results is the search structure (stopping the inner loop at local optima, \num{g_term_abs} points; randomizing operator order, 0.3 to 0.5 points) and the operator pool (ten instead of five operators, 0.5 points), to which cheap and expensive added operators both contribute. A hybrid genetic search reaches a gap of 0.01 to 0.04\% on the same instances, so our conclusions concern the value of learning, not competitiveness. Protocol, raw results and code are provided to support similar audits.
 \end{abstract}
 
-\begin{highlights}
-\item Published gain of bandit-guided VNS over plain VNS is not reproduced on CVRPLIB
-\item Reward scale decides: raw-cost reward loses 1.0-1.3 pp to a normalized one
-\item Adaptive selection never beats uniform random selection, in four controlled studies
-\item Search structure and operator pool, not learning, drive gains of 0.3-0.8 pp
-\item Open protocol: matched budgets, equivalence tests, HGS-CVRP and tuned baselines
-\end{highlights}
+% Highlights: EJOR pede arquivo separado (highlights.txt, 3-5 itens, <= 85 caracteres cada); nao entram no PDF.
 
+% EJOR: 1 a 5 palavras-chave, a primeira da lista oficial de palavras-chave do EJOR (Metaheuristics)
 \begin{keyword}
-Routing \sep Metaheuristics \sep Variable neighborhood search \sep Adaptive operator selection \sep Multi-armed bandits \sep Reproducibility
+Metaheuristics \sep Routing \sep Machine learning in OR \sep Adaptive operator selection \sep Multi-armed bandits
 \end{keyword}
 
 \end{frontmatter}
@@ -62,27 +65,29 @@ Routing \sep Metaheuristics \sep Variable neighborhood search \sep Adaptive oper
 
 % ------------------------------- Declarations (GENERICAS) -------------------------------
 \section*{CRediT authorship contribution statement}
-\textbf{First Author:} Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Visualization. \textbf{Second Author:} Conceptualization, Supervision, Writing -- review \& editing. \pend{confirm the contributions of each author.}
+\textbf{First Author:} Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Visualization. \textbf{Second Author:} Conceptualization, Supervision, Writing -- review \& editing. \authorpend{confirm the contributions of each author.}
 
-\section*{Declaration of generative AI and AI-assisted technologies in the writing process}
-During the preparation of this work the authors used Claude (Anthropic) for code development, scripting of statistical analyses, verification of references against primary sources, and drafting and editing of text, and Gemini (Google) for independent second opinions on ambiguous readings of the reproduced method. After using these tools, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication. \pend{authors to confirm the extent of their own supervision and edit this statement.}
+\section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
+During the preparation of this work the authors used Claude (Anthropic) in order to develop code, script statistical analyses, verify references against primary sources, and draft and edit text, and Gemini (Google) in order to obtain independent second opinions on ambiguous readings of the reproduced method. After using these tools, the authors reviewed and edited the content as needed and take full responsibility for the content of the published article. \authorpend{authors to confirm the extent of their own supervision and edit this statement.}
 
 \section*{Declaration of competing interest}
-The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper. \pend{confirm.}
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper. \authorpend{confirm.}
 
 \section*{Funding}
-\pend{funding sources, or an explicit statement that there were none.}
+\authorpend{funding sources, or the sentence ``This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.''}
 
 \section*{Data and code availability}
-The protocol (pre-specification entries), instances (CVRPLIB subsets and the synthetic sets with their HGS-CVRP reference solutions), raw per-run results, analysis scripts and the research log are available at \pend{persistent repository DOI, to be minted at submission (Zenodo or equivalent)}. Third-party code (HGS-CVRP) is available from its authors under the MIT license.
-
-\section*{Acknowledgements}
-\pend{acknowledgements, if any.}
+The protocol (pre-specification entries of the research log), the instances (CVRPLIB subsets and the synthetic sets with their HGS-CVRP reference solutions), the raw per-run results of all studies, the analysis scripts and the research log are available at \authorpend{persistent repository DOI, to be minted at submission (Zenodo or equivalent)}. Third-party code (HGS-CVRP) is available from its authors under the MIT license.
 
 \appendix
 \input{sec_appendix}
 
+\section*{Acknowledgements}
+\authorpend{acknowledgements, if any.}
+
+\begin{singlespace}   % lista de referencias em espacamento simples (pratica comum; o texto principal segue 1,5)
 \bibliographystyle{elsarticle-harv}
 \bibliography{../refs}
+\end{singlespace}
 
 \end{document}

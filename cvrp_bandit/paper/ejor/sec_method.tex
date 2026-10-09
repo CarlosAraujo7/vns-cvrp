@@ -1,9 +1,9 @@
 \section{Problem, reproduced method and reproduction fidelity}\label{sec:method}
 
 \subsection{Problem and neighborhoods}
-The CVRP asks for a set of routes, each starting and ending at a depot, that serves every customer exactly once, respects the vehicle capacity on each route and minimizes total distance. For sets A and B the number of routes must equal the number of vehicles of the best-known solution; for sets CMT and X it must be at least that number. Distances are rounded to the nearest integer for A, B and X and are real-valued for CMT, following the instance definitions.
+The CVRP asks for a set of routes, each starting and ending at a depot, that serves every customer exactly once, respects the vehicle capacity on each route and minimizes total distance. For sets A and B of the benchmark the number of routes must equal the number of vehicles of the best-known solution; for sets CMT and X it must be at least that number. Distances are rounded to the nearest integer for A, B and X and are real-valued for CMT, following the instance definitions.
 
-Following \citet{kalatzantonakis2023}, the local search uses five best-improvement neighborhoods: 2-Opt and Move(1) inside a route, and Swap(1,1), Relocate(1,0) and Relocate(2,0) between routes. Each operator scans its entire neighborhood and applies the best improving move, so it is deterministic: repeating it on an unchanged solution cannot change it. Appendix~\ref{app:operators} gives the formal definitions, including the five additional operators of Study~3.
+Following \citet{kalatzantonakis2023}, the local search uses five best-improvement neighborhoods: 2-Opt and Move(1) inside a route, and Swap(1,1), Relocate(1,0) and Relocate(2,0) between routes. Each operator scans its entire neighborhood and applies the best improving move, so it is deterministic: repeating it on an unchanged solution cannot change it. \ref{app:operators} defines the operators, including the five added in Study~3.
 
 \subsection{The HG-UCB policy}\label{sec:hgucb}
 Let $k$ be the number of operators and $\mathrm{H}_j$ a preference for operator $j$, with $q_j=\exp(\mathrm{H}_j)/\sum_l\exp(\mathrm{H}_l)$. HG-UCB selects operator $a_t$ by (i) trying every operator once (cold start); (ii) with probability $\varepsilon=0.1$, choosing uniformly from the pool $N_t=\{j:q_j\ge b_t\}$ ($b_t=0.2$); (iii) otherwise
@@ -14,48 +14,21 @@ where $s_t$ counts selections and $n_j$ the applications of operator $j$. After 
 \begin{equation}
 \mathrm{H}_{a}\leftarrow \mathrm{H}_{a}+\alpha\,(r_t-\bar r_t)\,(\mathbb{1}[a=a_t]-q_a)\quad\forall a,
 \end{equation}
-with $\bar r_t$ the mean reward so far, and an ADWIN detector \citep{bifet2007} on the reward stream ($\delta=0.02$) resets the policy upon drift. The reward is
+with $\bar r_t$ the mean reward so far, and an adaptive-windowing drift detector (ADWIN, \citealp{bifet2007}) on the reward stream ($\delta=0.02$) resets the policy upon drift. The reward is
 \begin{equation}
 r^{+}=\rho\,|N_t|^{-1/n_{a_t}}\ \text{ if the move improves},\qquad r^{-}=-\tfrac12-2\,q_{a_t}^{\mathrm{prev}}\,|N_t|^{-1/n_{a_t}}\ \text{ otherwise},
 \end{equation}
 where $q^{\mathrm{prev}}$ is the operator's probability before the update and, in the published formulation, $\rho=c'-c''$ is the \emph{raw cost improvement} (cost of the reference solution minus cost of the new one). \emph{HG-UCB literal} denotes this formulation with $\alpha=5$, the value reported as best \citep{kalatzantonakis2023}.
 
 \subsection{Interpretation gaps and our choices}\label{sec:gaps}
-Reproducing the method from the published pseudocode required resolving four points, each documented in the research log:
-\begin{enumerate}
-\item \textbf{Unreachable stopping rule.} The inner loop stops when no improvement was found and $\max_j q_j<b_t$. With $k=5$ and $b_t=0.2$ this is impossible (a softmax of five values is never below $1/5$). We keep $b_t$ as published and add an explicit cap of 40 inner iterations (so the loop always runs to the cap).
-\item \textbf{Scope of the reference solution.} The text can be read as keeping the shaken solution $x'$ fixed throughout the inner loop, or advancing it after each improvement. A fixed $x'$ prevents composing improvements from different operators within a step; with it our results are much worse (set A: 5.76\% against 4.21\%), so we use the progressive reading.
-\item \textbf{Input of the drift detector.} The text says Q-values, the pseudocode the raw reward. We feed the raw reward; feeding Q-values worsened the gap in our tests.
-\item \textbf{Acceptance rule.} The pseudocode does not state when the local-search result replaces the incumbent. For the classical GVNS baseline we accept only strict improvements of the best solution; in the bandit loop the result replaces the incumbent when it improves the shaken point (Section~\ref{sec:s2} varies this).
-\end{enumerate}
+Four points of the published pseudocode required a choice, each documented in the research log. (i) \emph{Unreachable stopping rule}: the inner loop stops when no improvement was found and $\max_jq_j<b_t$, which is impossible with $k=5$ and $b_t=0.2$ (a softmax of five values is never below $1/5$); we keep $b_t$ and add an explicit cap of 40 inner iterations. (ii) \emph{Scope of the reference solution}: keeping the shaken solution $x'$ fixed through the inner loop prevents composing improvements of different operators and is much worse in our implementation (set A: \num{rep_lit_fixo_A}\% against \num{rep_lit_prog_A}\%), so $x'$ advances after each improvement. (iii) \emph{Input of the drift detector}: the text says Q-values, the pseudocode the raw reward; we feed the raw reward, since Q-values worsened the gap in our tests. (iv) \emph{Acceptance rule}: the pseudocode does not say when the local-search result replaces the incumbent; the classical baseline accepts only strict improvements of the best solution, the bandit loop accepts when the result improves the shaken point (Section~\ref{sec:s2} varies this).
 
 \subsection{A reward-scale failure and its correction}\label{sec:norm}
-With the raw-cost reward and $\alpha=5$, the softmax over preferences saturates: in an eight-instance diagnostic sample, 99.6\% of the iterations had $\max_j q_j>0.99$, so the probability filter and the exploration mechanism were effectively disabled. The range of $\alpha$ that avoids saturation depends on the instance's cost scale, since $r^{+}$ is in cost units (larger-cost X instances saturate at much smaller $\alpha$ than A or B). We therefore define a dimensionless reward by taking $\rho=(c'-c'')/c''$, which at the published $\alpha=5$ reduces saturation to 12.5\%. Unless stated otherwise, ``HG-UCB'' denotes this normalized reward with $\alpha=0.5$, the value that performed best in our diagnostic sweeps; since it was chosen on the same instances used for evaluation, Study~4 re-tunes it, together with all other policies, on disjoint instances.
+With the raw-cost reward and $\alpha=5$ the softmax over preferences saturates: in an eight-instance diagnostic sample, 99.6\% of the iterations had $\max_jq_j>0.99$, so the probability filter and the exploration mechanism were effectively disabled. The range of $\alpha$ that avoids saturation depends on the instance's cost scale, since $r^{+}$ is in cost units. We therefore define a dimensionless reward by taking $\rho=(c'-c'')/c''$, which at the published $\alpha=5$ reduces saturation to 12.5\%. Unless stated otherwise, ``HG-UCB'' denotes this normalized reward with $\alpha=0.5$, the value that performed best in our diagnostic sweeps; because it was chosen on evaluation instances, Study~4 re-tunes it, with all other policies, on disjoint instances.
 
 \subsection{Reproduction fidelity}\label{sec:repro}
-Table~\ref{tab:repro} compares our implementation, in the configuration closest to the published one (20 steps of 40 inner iterations, five seeds), with the numbers published for sets A, B and X \citep{kalatzantonakis2023}.
+Table~\ref{tab:repro} compares our implementation, in the configuration closest to the published one (20 steps of 40 inner iterations, five seeds), with the published numbers for sets A, B and X \citep{kalatzantonakis2023}. The plain-search baseline is the classical GVNS with 20 shake-and-descent steps, the protocol of the published comparison; because each descent stops at a local optimum it does not use the same number of operator applications as the bandit loop (Study~1 compares them at equal applications).
 
-\begin{table}[t]
-\caption{Reproduction fidelity: mean error (\%) over the instances of each set. Published values from the original study; ours from five seeds per instance. ``Literal'' uses the raw-cost reward and $\alpha=5$; ``normalized'' uses the dimensionless reward.}\label{tab:repro}
-\centering\small
-\begin{tabular}{lcccc}
-\toprule
- & A & B & X & Mean of sets \\
-\midrule
-Published VNS & 2.040 & 1.832 & 6.291 & 3.388 \\
-Published HG-UCB & 1.610 & 1.655 & 6.023 & 3.096 \\
-\addlinespace
-Ours: classical GVNS & 3.181 & 2.001 & 4.869 & 3.351 \\
-Ours: HG-UCB literal, fixed $x'$ & 5.764 & 3.603 & 6.337 & 5.235 \\
-Ours: HG-UCB literal, progressive $x'$ & 4.210 & 2.837 & 5.777 & 4.275 \\
-Ours: HG-UCB normalized, $\alpha=5$ & 3.367 & 2.092 & 5.069 & 3.510 \\
-Ours: HG-UCB normalized, $\alpha=0.5$ & 3.177 & 2.021 & 5.020 & 3.406 \\
-\midrule
-Published: HG-UCB $-$ VNS & $-$0.430 & $-$0.177 & $-$0.268 & $-$0.291 \\
-Ours: literal (progressive) $-$ GVNS & $+$1.028 & $+$0.835 & $+$0.908 & $+$0.924 \\
-Ours: normalized $\alpha=0.5$ $-$ GVNS & $-$0.004 & $+$0.020 & $+$0.151 & $+$0.056 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\input{tab_repro}
 
-Two observations qualify the reproduction. First, our classical GVNS agrees with the published VNS on the \emph{mean of the three sets} (3.351 against 3.388) but not set by set: it is worse on A (+1.14~pp) and B (+0.17~pp) and better on X ($-$1.42~pp). The published implementation is a cooperative parallel GVNS compiled with Cython, and details of operator order and acceptance are not fully specified, so the baseline is reproduced in aggregate, not instance by instance. Second, \emph{the published improvement of HG-UCB over VNS is not reproduced}: the configuration closest to the published one is 0.92~pp \emph{worse} than our GVNS, and with the corrected reward the difference is $+$0.06~pp, never the published $-$0.29~pp. This does not show that the published result is wrong; it shows that, with the implementation and acceptance rule we reconstructed from the text, the effect does not appear, and the differences listed above are candidate explanations that we did not test. We note also that the original study tuned its hyperparameters on three instances, two of which (B-n78-k10 and X-n120-k6) are among those later evaluated.
+Two observations qualify the reproduction. First, our classical general VNS (GVNS) agrees with the published VNS on the \emph{mean of the three sets} (\num{rep_gvns_m} against \num{rep_pub_m}) but not set by set: it is worse on A (\num{rep_gvns_vs_pub_A}~pp) and B (\num{rep_gvns_vs_pub_B}~pp) and better on X (\num{rep_gvns_vs_pub_X}~pp). The published implementation is a cooperative parallel GVNS compiled with Cython, and details of operator order and acceptance are not fully specified, so the baseline is reproduced in aggregate, not instance by instance. Second, \emph{the published improvement of HG-UCB over VNS is not reproduced}: the configuration closest to the published one is \num{rep_da_lit_prog_m}~pp \emph{worse} than our GVNS, and with the corrected reward the difference is \num{rep_d_n05_m}~pp, never the published \num{rep_pub_diff}~pp. This does not show that the published result is wrong; it shows that, with the implementation and acceptance rule we reconstructed, the effect does not appear, and the differences listed above are untested candidate explanations. The original study also tuned its hyperparameters on three instances, two of which (B-n78-k10 and X-n120-k6) are among those later evaluated.

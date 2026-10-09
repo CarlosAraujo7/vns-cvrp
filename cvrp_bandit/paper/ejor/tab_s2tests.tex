@@ -1,0 +1,28 @@
+\begin{table}[t]
+\caption{Study 2: confirmatory contrasts (mean paired difference in pp [95\% CI]; Holm-adjusted $p$ over 28 tests). C: structure; D: adaptive policies inside the best structure.}\label{tab:s2tests}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcc}
+\toprule
+Contrast & $B=800$ & $B=4000$ \\
+\midrule
+Termination, random/best: LO $-$ F40 & $-$0.66 [$-$0.81, $-$0.52]; \ensuremath{<10^{-4}} & $-$0.61 [$-$0.74, $-$0.49]; \ensuremath{<10^{-4}} \\
+Termination, random/shaken: LO $-$ F40 & $-$0.53 [$-$0.66, $-$0.41]; \ensuremath{<10^{-4}} & $-$0.63 [$-$0.79, $-$0.48]; \ensuremath{<10^{-4}} \\
+Acceptance, random/LO: best $-$ shaken & $-$0.21 [$-$0.32, $-$0.11]; 0.0003 & $-$0.18 [$-$0.31, $-$0.03]; 0.042 \\
+Acceptance, random/F40: best $-$ shaken & $-$0.09 [$-$0.13, $-$0.05]; 0.0009 & $-$0.20 [$-$0.31, $-$0.09]; 0.005 \\
+Order, best/LO: fixed $-$ random & $+$0.34 [$+$0.22, $+$0.46]; \ensuremath{<10^{-4}} & $+$0.38 [$+$0.25, $+$0.51]; \ensuremath{<10^{-4}} \\
+\addlinespace
+Order, shaken/LO: fixed $-$ random & $+$0.30 [$+$0.20, $+$0.41]; \ensuremath{<10^{-4}} & $+$0.48 [$+$0.35, $+$0.62]; \ensuremath{<10^{-4}} \\
+UCB1 $-$ random order (VND) & $+$0.03 [$-$0.05, $+$0.11]; 0.29 & $+$0.09 [$+$0.02, $+$0.15]; 0.043 \\
+$\varepsilon$-greedy $-$ random order (VND) & $+$0.23 [$+$0.11, $+$0.35]; 0.0002 & $+$0.20 [$+$0.13, $+$0.27]; \ensuremath{<10^{-4}} \\
+Prob. matching $-$ random order (VND) & $+$0.10 [$+$0.01, $+$0.19]; 0.26 & $+$0.06 [$-$0.01, $+$0.14]; 0.26 \\
+HG-UCB $-$ random order (VND) & $+$0.17 [$+$0.08, $+$0.27]; 0.0010 & $+$0.14 [$+$0.08, $+$0.21]; 0.0002 \\
+UCB1 $-$ fixed order (VND) & $-$0.31 [$-$0.44, $-$0.19]; 0.0001 & $-$0.29 [$-$0.42, $-$0.17]; 0.0006 \\
+$\varepsilon$-greedy $-$ fixed order (VND) & $-$0.11 [$-$0.22, 0.00]; 0.20 & $-$0.18 [$-$0.30, $-$0.06]; 0.054 \\
+Prob. matching $-$ fixed order (VND) & $-$0.24 [$-$0.35, $-$0.14]; 0.0004 & $-$0.31 [$-$0.43, $-$0.21]; \ensuremath{<10^{-4}} \\
+HG-UCB $-$ fixed order (VND) & $-$0.17 [$-$0.27, $-$0.06]; 0.011 & $-$0.23 [$-$0.36, $-$0.12]; 0.006 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

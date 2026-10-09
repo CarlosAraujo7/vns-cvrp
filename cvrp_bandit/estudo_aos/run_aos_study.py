@@ -32,7 +32,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 from instance import load_all  # noqa: E402
-from construction import clarke_wright_savings, repair_route_count  # noqa: E402
+from construction import clarke_wright_savings, repair_route_count  # noqa: E402,F401
+from solucao_inicial import obter_inicial  # noqa: E402
 from neighborhoods import NEIGHBORHOODS  # noqa: E402
 from vns import bandit_vns  # noqa: E402
 from bandit import HGUCBBandit, reward_positive_normalized  # noqa: E402
@@ -60,7 +61,8 @@ def _instancia(set_name, nome):
     if (set_name, nome) not in _CACHE:
         for i in load_all(ROOT / "instances" / set_name):
             if i.name == nome:
-                cws = repair_route_count(i, clarke_wright_savings(i))
+                # solucao inicial FIXADA em disco (diario, Entrada 88): o reparo com CP-SAT nao e deterministico
+                cws = obter_inicial(i)
                 _CACHE[(set_name, i.name)] = (i, cws)
                 break
     return _CACHE[(set_name, nome)]

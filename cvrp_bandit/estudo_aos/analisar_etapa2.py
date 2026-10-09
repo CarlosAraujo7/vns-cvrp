@@ -102,11 +102,12 @@ def main():
         for cid, a, b in CONTRASTES:
             x, y = t[a].values, t[b].values
             dif = x - y
+            dif = np.where(np.abs(dif) < 1e-9, 0.0, dif)   # empates: diferencas de ponto flutuante (~1e-15) nao sao vitorias/derrotas
             idx = rng.integers(0, len(dif), size=(N_BOOT, len(dif)))
             lo, hi = np.percentile(dif[idx].mean(axis=1), [2.5, 97.5])
             linhas.append(dict(B=B, id=cid, a=a, b=b, dif_pp=dif.mean(), ic_lo=lo, ic_hi=hi,
                                vit_a=int((dif < 0).sum()), der_a=int((dif > 0).sum()),
-                               emp=int((dif == 0).sum()), p_bruto=stats.wilcoxon(x, y).pvalue))
+                               emp=int((dif == 0).sum()), p_bruto=stats.wilcoxon(dif).pvalue))
         print()
     if linhas:
         r = pd.DataFrame(linhas)

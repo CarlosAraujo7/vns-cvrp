@@ -1,0 +1,21 @@
+\begin{algorithm}[h]
+\caption{Generic search loop. $B$ is the budget; policy $\pi$, acceptance $\in\{\textit{best},\textit{shaken}\}$, termination $\in\{\textrm{LO},\textrm{F40},\textrm{R}r\}$.}\label{alg:loop}
+\begin{algorithmic}[1]
+\State $x\gets$ initial solution; $x^*\gets x$
+\While{budget not exhausted}
+  \State $x'\gets \textsc{Shake}(x)$;\; $r\gets x'$;\; $F\gets\emptyset$;\; $m\gets 0$;\; $f\gets 0$
+  \While{budget not exhausted \textbf{and} not stop}
+    \State \textbf{stop if} LO: $|F|=k$;\; F40: $m=40$;\; R$r$: $f=r$
+    \State choose operator $j\sim\pi$ (LO: among $\{1..k\}\setminus F$; else among all)
+    \State apply best-improvement move of $j$ to $r$; update $\pi$ with the reward
+    \If{improved} $r\gets$ new solution;\; $F\gets\emptyset$;\; $f\gets 0$ \Else\; $F\gets F\cup\{j\}$;\; $f\gets f+1$ \EndIf
+    \State $m\gets m+1$
+  \EndWhile
+  \If{accept$(r)$}
+    \State $x\gets r$
+    \If{$c(r)<c(x^*)$} \State $x^*\gets r$ \EndIf
+  \EndIf
+\EndWhile
+\State \Return $x^*$
+\end{algorithmic}
+\end{algorithm}

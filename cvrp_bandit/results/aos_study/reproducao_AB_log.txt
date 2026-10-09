@@ -1,0 +1,370 @@
+A-n32-k5       n=  31  erro_melhor_de_5=  5.48%  erro_medio=  5.48%  tempo_medio=  0.08s
+A-n33-k5       n=  32  erro_melhor_de_5=  2.87%  erro_medio=  2.87%  tempo_medio=  0.08s
+A-n33-k6       n=  32  erro_melhor_de_5=  3.23%  erro_medio=  3.85%  tempo_medio=  0.06s
+A-n34-k5       n=  33  erro_melhor_de_5=  1.41%  erro_medio=  3.47%  tempo_medio=  0.06s
+A-n36-k5       n=  35  erro_melhor_de_5=  0.75%  erro_medio=  0.75%  tempo_medio=  0.11s
+A-n37-k5       n=  36  erro_melhor_de_5=  3.29%  erro_medio=  3.29%  tempo_medio=  0.12s
+A-n37-k6       n=  36  erro_melhor_de_5=  1.37%  erro_medio=  2.21%  tempo_medio=  0.04s
+A-n38-k5       n=  37  erro_melhor_de_5=  2.33%  erro_medio=  3.23%  tempo_medio=  0.05s
+A-n39-k5       n=  38  erro_melhor_de_5=  5.72%  erro_medio=  7.54%  tempo_medio=  0.07s
+A-n39-k6       n=  38  erro_melhor_de_5=  0.84%  erro_medio=  1.93%  tempo_medio=  0.10s
+A-n44-k6       n=  43  erro_melhor_de_5=  5.87%  erro_medio=  6.60%  tempo_medio=  0.06s
+A-n45-k6       n=  44  erro_melhor_de_5=  2.33%  erro_medio=  2.33%  tempo_medio=  0.04s
+A-n45-k7       n=  44  erro_melhor_de_5=  2.97%  erro_medio=  3.75%  tempo_medio=  0.16s
+A-n46-k7       n=  45  erro_melhor_de_5=  0.33%  erro_medio=  0.50%  tempo_medio=  0.25s
+A-n48-k7       n=  47  erro_melhor_de_5=  1.03%  erro_medio=  1.81%  tempo_medio=  0.32s
+A-n53-k7       n=  52  erro_melhor_de_5=  5.74%  erro_medio=  6.42%  tempo_medio=  0.21s
+A-n54-k7       n=  53  erro_melhor_de_5=  1.20%  erro_medio=  1.20%  tempo_medio=  0.21s
+A-n55-k9       n=  54  erro_melhor_de_5=  0.75%  erro_medio=  2.27%  tempo_medio=  0.24s
+A-n60-k9       n=  59  erro_melhor_de_5=  1.55%  erro_medio=  3.15%  tempo_medio=  0.50s
+A-n61-k9       n=  60  erro_melhor_de_5=  5.22%  erro_medio=  5.22%  tempo_medio=  0.17s
+A-n62-k8       n=  61  erro_melhor_de_5=  4.50%  erro_medio=  5.17%  tempo_medio=  0.70s
+A-n63-k10      n=  62  erro_melhor_de_5=  1.83%  erro_medio=  1.98%  tempo_medio=  0.32s
+A-n63-k9       n=  62  erro_melhor_de_5=  2.17%  erro_medio=  2.17%  tempo_medio=  0.23s
+A-n64-k9       n=  63  erro_melhor_de_5=  3.00%  erro_medio=  3.73%  tempo_medio=  0.33s
+A-n65-k9       n=  64  erro_melhor_de_5=  0.34%  erro_medio=  0.34%  tempo_medio=  0.27s
+A-n69-k9       n=  68  erro_melhor_de_5=  1.04%  erro_medio=  1.45%  tempo_medio=  0.50s
+
+=== Conjunto A: 26 instâncias, 5 seeds cada, steps_max=20 ===
+Tempo total de execução: 26.7s
+Erro médio (melhor-de-5 por instância, média sobre instâncias): 2.5830%
+Erro médio (média-de-5 por instância, média sobre instâncias): 3.1814%
+'VNS mean error' reportado no artigo para o conjunto A: 2.0401%
+Diferença (melhor-de-5 vs. artigo): +0.5429 p.p.
+Diferença (média-de-5 vs. artigo): +1.1413 p.p.
+
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/gvns_baseline_A.csv
+
+======================================================================
+CONJUNTO A [modo=fixo, recompensa=original]
+======================================================================
+A-n32-k5       n=  31  erro_melhor_de_5=  5.74%  erro_medio=  7.02%  tempo_medio=  0.53s  artigo_HGUCB=  0.19%  dif_media= +6.83pp
+A-n33-k5       n=  32  erro_melhor_de_5=  6.35%  erro_medio=  7.53%  tempo_medio=  0.49s  artigo_HGUCB=  0.02%  dif_media= +7.52pp
+A-n33-k6       n=  32  erro_melhor_de_5=  4.85%  erro_medio=  5.88%  tempo_medio=  0.42s  artigo_HGUCB=  0.04%  dif_media= +5.84pp
+A-n34-k5       n=  33  erro_melhor_de_5=  6.56%  erro_medio= 15.24%  tempo_medio=  0.42s  artigo_HGUCB=  0.14%  dif_media=+15.10pp
+A-n36-k5       n=  35  erro_melhor_de_5=  0.75%  erro_medio=  1.55%  tempo_medio=  0.46s  artigo_HGUCB=  1.66%  dif_media= -0.11pp
+A-n37-k5       n=  36  erro_melhor_de_5=  3.29%  erro_medio=  3.80%  tempo_medio=  0.63s  artigo_HGUCB=  0.08%  dif_media= +3.71pp
+A-n37-k6       n=  36  erro_melhor_de_5=  2.74%  erro_medio=  2.78%  tempo_medio=  0.38s  artigo_HGUCB=  0.58%  dif_media= +2.20pp
+A-n38-k5       n=  37  erro_melhor_de_5=  6.85%  erro_medio=  9.51%  tempo_medio=  0.39s  artigo_HGUCB=  0.68%  dif_media= +8.82pp
+A-n39-k5       n=  38  erro_melhor_de_5=  8.64%  erro_medio= 10.00%  tempo_medio=  0.52s  artigo_HGUCB=  0.61%  dif_media= +9.39pp
+A-n39-k6       n=  38  erro_melhor_de_5=  2.89%  erro_medio=  3.08%  tempo_medio=  0.63s  artigo_HGUCB=  0.85%  dif_media= +2.23pp
+A-n44-k6       n=  43  erro_melhor_de_5=  6.30%  erro_medio=  6.89%  tempo_medio=  0.55s  artigo_HGUCB=  1.57%  dif_media= +5.33pp
+A-n45-k6       n=  44  erro_melhor_de_5=  3.71%  erro_medio=  5.17%  tempo_medio=  0.34s  artigo_HGUCB=  2.36%  dif_media= +2.81pp
+A-n45-k7       n=  44  erro_melhor_de_5=  4.45%  erro_medio=  4.52%  tempo_medio=  0.66s  artigo_HGUCB=  1.36%  dif_media= +3.16pp
+A-n46-k7       n=  45  erro_melhor_de_5=  1.20%  erro_medio=  2.17%  tempo_medio=  0.85s  artigo_HGUCB=  0.85%  dif_media= +1.32pp
+A-n48-k7       n=  47  erro_melhor_de_5=  2.14%  erro_medio=  3.08%  tempo_medio=  0.93s  artigo_HGUCB=  2.57%  dif_media= +0.51pp
+A-n53-k7       n=  52  erro_melhor_de_5=  7.52%  erro_medio=  7.98%  tempo_medio=  0.60s  artigo_HGUCB=  2.26%  dif_media= +5.72pp
+A-n54-k7       n=  53  erro_melhor_de_5=  2.14%  erro_medio=  2.67%  tempo_medio=  0.77s  artigo_HGUCB=  1.45%  dif_media= +1.22pp
+A-n55-k9       n=  54  erro_melhor_de_5=  2.61%  erro_medio=  3.21%  tempo_medio=  1.09s  artigo_HGUCB=  1.27%  dif_media= +1.93pp
+A-n60-k9       n=  59  erro_melhor_de_5=  3.84%  erro_medio=  3.90%  tempo_medio=  1.27s  artigo_HGUCB=  2.54%  dif_media= +1.36pp
+A-n61-k9       n=  60  erro_melhor_de_5=  7.45%  erro_medio= 10.10%  tempo_medio=  0.68s  artigo_HGUCB=  2.22%  dif_media= +7.87pp
+A-n62-k8       n=  61  erro_melhor_de_5=  6.21%  erro_medio=  6.21%  tempo_medio=  1.24s  artigo_HGUCB=  3.26%  dif_media= +2.95pp
+A-n63-k10      n=  62  erro_melhor_de_5=  2.21%  erro_medio=  2.60%  tempo_medio=  1.51s  artigo_HGUCB=  2.62%  dif_media= -0.02pp
+A-n63-k9       n=  62  erro_melhor_de_5=  3.28%  erro_medio=  4.70%  tempo_medio=  0.89s  artigo_HGUCB=  2.49%  dif_media= +2.22pp
+A-n64-k9       n=  63  erro_melhor_de_5= 10.42%  erro_medio= 11.22%  tempo_medio=  1.07s  artigo_HGUCB=  4.09%  dif_media= +7.13pp
+A-n65-k9       n=  64  erro_melhor_de_5=  5.45%  erro_medio=  6.49%  tempo_medio=  1.11s  artigo_HGUCB=  2.81%  dif_media= +3.68pp
+A-n69-k9       n=  68  erro_melhor_de_5=  1.90%  erro_medio=  2.57%  tempo_medio=  1.50s  artigo_HGUCB=  3.45%  dif_media= -0.88pp
+
+=== Conjunto A [modo=fixo, recompensa=original]: 26 instâncias, 5 seeds cada, steps_max=20 (Bandit VNS / HG-UCB) ===
+Tempo total de execução: 100.0s
+Erro médio (melhor-de-5 por instância, média sobre instâncias): 4.5957%
+Erro médio (média-de-5 por instância, média sobre instâncias): 5.7642%
+'HG-UCB mean error' reportado no artigo para o conjunto A: 1.6103%
+Diferença (melhor-de-5 vs. artigo): +2.9854 p.p.
+Diferença (média-de-5 vs. artigo): +4.1539 p.p.
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/bandit_vns_validation_A.csv
+
+======================================================================
+CONJUNTO A [modo=progressivo, recompensa=original]
+======================================================================
+A-n32-k5       n=  31  erro_melhor_de_5=  5.48%  erro_medio=  6.25%  tempo_medio=  0.27s  artigo_HGUCB=  0.19%  dif_media= +6.06pp
+A-n33-k5       n=  32  erro_melhor_de_5=  6.20%  erro_medio=  7.20%  tempo_medio=  0.30s  artigo_HGUCB=  0.02%  dif_media= +7.19pp
+A-n33-k6       n=  32  erro_melhor_de_5=  4.45%  erro_medio=  5.80%  tempo_medio=  0.48s  artigo_HGUCB=  0.04%  dif_media= +5.75pp
+A-n34-k5       n=  33  erro_melhor_de_5=  2.31%  erro_medio=  5.40%  tempo_medio=  0.58s  artigo_HGUCB=  0.14%  dif_media= +5.26pp
+A-n36-k5       n=  35  erro_melhor_de_5=  0.75%  erro_medio=  1.03%  tempo_medio=  0.35s  artigo_HGUCB=  1.66%  dif_media= -0.64pp
+A-n37-k5       n=  36  erro_melhor_de_5=  3.29%  erro_medio=  3.47%  tempo_medio=  0.46s  artigo_HGUCB=  0.08%  dif_media= +3.39pp
+A-n37-k6       n=  36  erro_melhor_de_5=  2.74%  erro_medio=  2.82%  tempo_medio=  0.64s  artigo_HGUCB=  0.58%  dif_media= +2.24pp
+A-n38-k5       n=  37  erro_melhor_de_5=  3.01%  erro_medio=  3.67%  tempo_medio=  0.29s  artigo_HGUCB=  0.68%  dif_media= +2.99pp
+A-n39-k5       n=  38  erro_melhor_de_5=  8.76%  erro_medio=  9.49%  tempo_medio=  0.59s  artigo_HGUCB=  0.61%  dif_media= +8.88pp
+A-n39-k6       n=  38  erro_melhor_de_5=  1.68%  erro_medio=  2.70%  tempo_medio=  0.33s  artigo_HGUCB=  0.85%  dif_media= +1.84pp
+A-n44-k6       n=  43  erro_melhor_de_5=  7.26%  erro_medio=  7.26%  tempo_medio=  0.27s  artigo_HGUCB=  1.57%  dif_media= +5.69pp
+A-n45-k6       n=  44  erro_melhor_de_5=  2.33%  erro_medio=  2.33%  tempo_medio=  0.50s  artigo_HGUCB=  2.36%  dif_media= -0.03pp
+A-n45-k7       n=  44  erro_melhor_de_5=  2.18%  erro_medio=  3.80%  tempo_medio=  0.67s  artigo_HGUCB=  1.36%  dif_media= +2.45pp
+A-n46-k7       n=  45  erro_melhor_de_5=  0.88%  erro_medio=  1.40%  tempo_medio=  0.82s  artigo_HGUCB=  0.85%  dif_media= +0.55pp
+A-n48-k7       n=  47  erro_melhor_de_5=  2.14%  erro_medio=  2.63%  tempo_medio=  1.08s  artigo_HGUCB=  2.57%  dif_media= +0.06pp
+A-n53-k7       n=  52  erro_melhor_de_5=  7.03%  erro_medio=  7.11%  tempo_medio=  0.41s  artigo_HGUCB=  2.26%  dif_media= +4.84pp
+A-n54-k7       n=  53  erro_melhor_de_5=  1.71%  erro_medio=  2.43%  tempo_medio=  1.59s  artigo_HGUCB=  1.45%  dif_media= +0.98pp
+A-n55-k9       n=  54  erro_melhor_de_5=  3.36%  erro_medio=  3.36%  tempo_medio=  0.79s  artigo_HGUCB=  1.27%  dif_media= +2.08pp
+A-n60-k9       n=  59  erro_melhor_de_5=  3.84%  erro_medio=  3.93%  tempo_medio=  0.85s  artigo_HGUCB=  2.54%  dif_media= +1.39pp
+A-n61-k9       n=  60  erro_melhor_de_5=  4.35%  erro_medio=  5.03%  tempo_medio=  0.48s  artigo_HGUCB=  2.22%  dif_media= +2.81pp
+A-n62-k8       n=  61  erro_melhor_de_5=  5.75%  erro_medio=  6.12%  tempo_medio=  1.34s  artigo_HGUCB=  3.26%  dif_media= +2.86pp
+A-n63-k10      n=  62  erro_melhor_de_5=  1.83%  erro_medio=  2.39%  tempo_medio=  0.73s  artigo_HGUCB=  2.62%  dif_media= -0.23pp
+A-n63-k9       n=  62  erro_melhor_de_5=  2.29%  erro_medio=  2.54%  tempo_medio=  2.54s  artigo_HGUCB=  2.49%  dif_media= +0.05pp
+A-n64-k9       n=  63  erro_melhor_de_5=  3.07%  erro_medio=  6.45%  tempo_medio=  2.16s  artigo_HGUCB=  4.09%  dif_media= +2.37pp
+A-n65-k9       n=  64  erro_melhor_de_5=  1.19%  erro_medio=  2.96%  tempo_medio=  0.60s  artigo_HGUCB=  2.81%  dif_media= +0.15pp
+A-n69-k9       n=  68  erro_melhor_de_5=  1.90%  erro_medio=  1.90%  tempo_medio=  0.88s  artigo_HGUCB=  3.45%  dif_media= -1.56pp
+
+=== Conjunto A [modo=progressivo, recompensa=original]: 26 instâncias, 5 seeds cada, steps_max=20 (Bandit VNS / HG-UCB) ===
+Tempo total de execução: 100.2s
+Erro médio (melhor-de-5 por instância, média sobre instâncias): 3.4533%
+Erro médio (média-de-5 por instância, média sobre instâncias): 4.2098%
+'HG-UCB mean error' reportado no artigo para o conjunto A: 1.6103%
+Diferença (melhor-de-5 vs. artigo): +1.8430 p.p.
+Diferença (média-de-5 vs. artigo): +2.5995 p.p.
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/bandit_vns_validation_progressivo_A.csv
+
+======================================================================
+CONJUNTO A [modo=progressivo, recompensa=normalizado_alpha5.0]
+======================================================================
+A-n32-k5       n=  31  erro_melhor_de_5=  5.48%  erro_medio=  5.48%  tempo_medio=  0.50s  artigo_HGUCB=  0.19%  dif_media= +5.30pp
+A-n33-k5       n=  32  erro_melhor_de_5=  3.33%  erro_medio=  6.05%  tempo_medio=  0.52s  artigo_HGUCB=  0.02%  dif_media= +6.04pp
+A-n33-k6       n=  32  erro_melhor_de_5=  3.77%  erro_medio=  4.20%  tempo_medio=  0.36s  artigo_HGUCB=  0.04%  dif_media= +4.16pp
+A-n34-k5       n=  33  erro_melhor_de_5=  1.67%  erro_medio=  3.06%  tempo_medio=  0.33s  artigo_HGUCB=  0.14%  dif_media= +2.92pp
+A-n36-k5       n=  35  erro_melhor_de_5=  0.00%  erro_medio=  0.60%  tempo_medio=  0.57s  artigo_HGUCB=  1.66%  dif_media= -1.06pp
+A-n37-k5       n=  36  erro_melhor_de_5=  3.29%  erro_medio=  3.29%  tempo_medio=  0.62s  artigo_HGUCB=  0.08%  dif_media= +3.21pp
+A-n37-k6       n=  36  erro_melhor_de_5=  0.84%  erro_medio=  2.17%  tempo_medio=  0.33s  artigo_HGUCB=  0.58%  dif_media= +1.59pp
+A-n38-k5       n=  37  erro_melhor_de_5=  0.68%  erro_medio=  2.33%  tempo_medio=  0.48s  artigo_HGUCB=  0.68%  dif_media= +1.65pp
+A-n39-k5       n=  38  erro_melhor_de_5=  7.91%  erro_medio=  8.18%  tempo_medio=  0.46s  artigo_HGUCB=  0.61%  dif_media= +7.57pp
+A-n39-k6       n=  38  erro_melhor_de_5=  0.84%  erro_medio=  2.19%  tempo_medio=  0.86s  artigo_HGUCB=  0.85%  dif_media= +1.34pp
+A-n44-k6       n=  43  erro_melhor_de_5=  4.91%  erro_medio=  5.85%  tempo_medio=  0.42s  artigo_HGUCB=  1.57%  dif_media= +4.28pp
+A-n45-k6       n=  44  erro_melhor_de_5=  2.33%  erro_medio=  2.33%  tempo_medio=  0.42s  artigo_HGUCB=  2.36%  dif_media= -0.03pp
+A-n45-k7       n=  44  erro_melhor_de_5=  3.93%  erro_medio=  4.24%  tempo_medio=  0.91s  artigo_HGUCB=  1.36%  dif_media= +2.88pp
+A-n46-k7       n=  45  erro_melhor_de_5=  0.66%  erro_medio=  0.83%  tempo_medio=  0.77s  artigo_HGUCB=  0.85%  dif_media= -0.02pp
+A-n48-k7       n=  47  erro_melhor_de_5=  1.21%  erro_medio=  2.12%  tempo_medio=  0.72s  artigo_HGUCB=  2.57%  dif_media= -0.44pp
+A-n53-k7       n=  52  erro_melhor_de_5=  3.47%  erro_medio=  5.94%  tempo_medio=  0.80s  artigo_HGUCB=  2.26%  dif_media= +3.68pp
+A-n54-k7       n=  53  erro_melhor_de_5=  1.20%  erro_medio=  1.68%  tempo_medio=  0.99s  artigo_HGUCB=  1.45%  dif_media= +0.23pp
+A-n55-k9       n=  54  erro_melhor_de_5=  1.40%  erro_medio=  2.89%  tempo_medio=  0.94s  artigo_HGUCB=  1.27%  dif_media= +1.62pp
+A-n60-k9       n=  59  erro_melhor_de_5=  3.25%  erro_medio=  3.57%  tempo_medio=  1.70s  artigo_HGUCB=  2.54%  dif_media= +1.04pp
+A-n61-k9       n=  60  erro_melhor_de_5=  2.90%  erro_medio=  3.46%  tempo_medio=  1.24s  artigo_HGUCB=  2.22%  dif_media= +1.24pp
+A-n62-k8       n=  61  erro_melhor_de_5=  4.74%  erro_medio=  5.64%  tempo_medio=  1.19s  artigo_HGUCB=  3.26%  dif_media= +2.38pp
+A-n63-k10      n=  62  erro_melhor_de_5=  1.52%  erro_medio=  1.80%  tempo_medio=  1.44s  artigo_HGUCB=  2.62%  dif_media= -0.82pp
+A-n63-k9       n=  62  erro_melhor_de_5=  2.04%  erro_medio=  2.34%  tempo_medio=  0.99s  artigo_HGUCB=  2.49%  dif_media= -0.15pp
+A-n64-k9       n=  63  erro_melhor_de_5=  3.00%  erro_medio=  3.70%  tempo_medio=  1.40s  artigo_HGUCB=  4.09%  dif_media= -0.39pp
+A-n65-k9       n=  64  erro_melhor_de_5=  0.34%  erro_medio=  1.02%  tempo_medio=  2.17s  artigo_HGUCB=  2.81%  dif_media= -1.79pp
+A-n69-k9       n=  68  erro_melhor_de_5=  1.12%  erro_medio=  1.48%  tempo_medio=  1.96s  artigo_HGUCB=  3.45%  dif_media= -1.97pp
+
+=== Conjunto A [modo=progressivo, recompensa=normalizado_alpha5.0]: 26 instâncias, 5 seeds cada, steps_max=20 (Bandit VNS / HG-UCB) ===
+Tempo total de execução: 115.7s
+Erro médio (melhor-de-5 por instância, média sobre instâncias): 2.5320%
+Erro médio (média-de-5 por instância, média sobre instâncias): 3.3251%
+'HG-UCB mean error' reportado no artigo para o conjunto A: 1.6103%
+Diferença (melhor-de-5 vs. artigo): +0.9217 p.p.
+Diferença (média-de-5 vs. artigo): +1.7148 p.p.
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/bandit_vns_validation_progressivo_normalizado_alpha5.0_A.csv
+
+======================================================================
+CONJUNTO A [modo=progressivo, recompensa=normalizado_alpha0.5]
+======================================================================
+A-n32-k5       n=  31  erro_melhor_de_5=  5.48%  erro_medio=  5.48%  tempo_medio=  0.46s  artigo_HGUCB=  0.19%  dif_media= +5.30pp
+A-n33-k5       n=  32  erro_melhor_de_5=  3.48%  erro_medio=  5.54%  tempo_medio=  0.47s  artigo_HGUCB=  0.02%  dif_media= +5.52pp
+A-n33-k6       n=  32  erro_melhor_de_5=  4.18%  erro_medio=  4.47%  tempo_medio=  0.44s  artigo_HGUCB=  0.04%  dif_media= +4.43pp
+A-n34-k5       n=  33  erro_melhor_de_5=  1.67%  erro_medio=  2.13%  tempo_medio=  0.51s  artigo_HGUCB=  0.14%  dif_media= +1.99pp
+A-n36-k5       n=  35  erro_melhor_de_5=  0.75%  erro_medio=  0.75%  tempo_medio=  0.57s  artigo_HGUCB=  1.66%  dif_media= -0.91pp
+A-n37-k5       n=  36  erro_melhor_de_5=  0.00%  erro_medio=  1.97%  tempo_medio=  0.67s  artigo_HGUCB=  0.08%  dif_media= +1.89pp
+A-n37-k6       n=  36  erro_melhor_de_5=  1.26%  erro_medio=  1.71%  tempo_medio=  0.60s  artigo_HGUCB=  0.58%  dif_media= +1.12pp
+A-n38-k5       n=  37  erro_melhor_de_5=  2.05%  erro_medio=  2.38%  tempo_medio=  0.57s  artigo_HGUCB=  0.68%  dif_media= +1.70pp
+A-n39-k5       n=  38  erro_melhor_de_5=  8.03%  erro_medio=  8.03%  tempo_medio=  0.58s  artigo_HGUCB=  0.61%  dif_media= +7.42pp
+A-n39-k6       n=  38  erro_melhor_de_5=  1.20%  erro_medio=  2.45%  tempo_medio=  0.67s  artigo_HGUCB=  0.85%  dif_media= +1.60pp
+A-n44-k6       n=  43  erro_melhor_de_5=  3.52%  erro_medio=  4.33%  tempo_medio=  0.70s  artigo_HGUCB=  1.57%  dif_media= +2.77pp
+A-n45-k6       n=  44  erro_melhor_de_5=  2.33%  erro_medio=  2.33%  tempo_medio=  0.56s  artigo_HGUCB=  2.36%  dif_media= -0.03pp
+A-n45-k7       n=  44  erro_melhor_de_5=  3.05%  erro_medio=  3.86%  tempo_medio=  0.85s  artigo_HGUCB=  1.36%  dif_media= +2.50pp
+A-n46-k7       n=  45  erro_melhor_de_5=  0.66%  erro_medio=  0.83%  tempo_medio=  0.79s  artigo_HGUCB=  0.85%  dif_media= -0.02pp
+A-n48-k7       n=  47  erro_melhor_de_5=  1.21%  erro_medio=  2.18%  tempo_medio=  0.89s  artigo_HGUCB=  2.57%  dif_media= -0.39pp
+A-n53-k7       n=  52  erro_melhor_de_5=  3.76%  erro_medio=  5.70%  tempo_medio=  1.12s  artigo_HGUCB=  2.26%  dif_media= +3.44pp
+A-n54-k7       n=  53  erro_melhor_de_5=  1.11%  erro_medio=  1.66%  tempo_medio=  1.08s  artigo_HGUCB=  1.45%  dif_media= +0.21pp
+A-n55-k9       n=  54  erro_melhor_de_5=  1.40%  erro_medio=  2.27%  tempo_medio=  1.21s  artigo_HGUCB=  1.27%  dif_media= +1.00pp
+A-n60-k9       n=  59  erro_melhor_de_5=  2.44%  erro_medio=  3.53%  tempo_medio=  1.52s  artigo_HGUCB=  2.54%  dif_media= +0.99pp
+A-n61-k9       n=  60  erro_melhor_de_5=  3.77%  erro_medio=  4.16%  tempo_medio=  1.01s  artigo_HGUCB=  2.22%  dif_media= +1.93pp
+A-n62-k8       n=  61  erro_melhor_de_5=  5.05%  erro_medio=  5.70%  tempo_medio=  1.49s  artigo_HGUCB=  3.26%  dif_media= +2.44pp
+A-n63-k10      n=  62  erro_melhor_de_5=  1.52%  erro_medio=  1.74%  tempo_medio=  1.55s  artigo_HGUCB=  2.62%  dif_media= -0.88pp
+A-n63-k9       n=  62  erro_melhor_de_5=  2.17%  erro_medio=  2.25%  tempo_medio=  1.29s  artigo_HGUCB=  2.49%  dif_media= -0.23pp
+A-n64-k9       n=  63  erro_melhor_de_5=  3.07%  erro_medio=  3.61%  tempo_medio=  1.47s  artigo_HGUCB=  4.09%  dif_media= -0.47pp
+A-n65-k9       n=  64  erro_melhor_de_5=  0.34%  erro_medio=  0.94%  tempo_medio=  1.36s  artigo_HGUCB=  2.81%  dif_media= -1.88pp
+A-n69-k9       n=  68  erro_melhor_de_5=  1.12%  erro_medio=  1.42%  tempo_medio=  1.83s  artigo_HGUCB=  3.45%  dif_media= -2.04pp
+
+=== Conjunto A [modo=progressivo, recompensa=normalizado_alpha0.5]: 26 instâncias, 5 seeds cada, steps_max=20 (Bandit VNS / HG-UCB) ===
+Tempo total de execução: 121.6s
+Erro médio (melhor-de-5 por instância, média sobre instâncias): 2.4861%
+Erro médio (média-de-5 por instância, média sobre instâncias): 3.1323%
+'HG-UCB mean error' reportado no artigo para o conjunto A: 1.6103%
+Diferença (melhor-de-5 vs. artigo): +0.8758 p.p.
+Diferença (média-de-5 vs. artigo): +1.5220 p.p.
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/bandit_vns_validation_progressivo_normalizado_alpha0.5_A.csv
+B-n31-k5       n=  30  erro_melhor_de_5=  0.45%  erro_medio=  0.45%  tempo_medio=  0.16s
+B-n34-k5       n=  33  erro_melhor_de_5=  0.00%  erro_medio=  0.00%  tempo_medio=  0.16s
+B-n35-k5       n=  34  erro_melhor_de_5=  1.15%  erro_medio=  1.21%  tempo_medio=  0.15s
+B-n38-k6       n=  37  erro_melhor_de_5=  1.24%  erro_medio=  1.42%  tempo_medio=  0.20s
+B-n39-k5       n=  38  erro_melhor_de_5=  2.00%  erro_medio=  2.15%  tempo_medio=  0.24s
+B-n41-k6       n=  40  erro_melhor_de_5=  4.95%  erro_medio=  4.99%  tempo_medio=  0.13s
+B-n43-k6       n=  42  erro_melhor_de_5=  1.35%  erro_medio=  1.91%  tempo_medio=  0.28s
+B-n44-k7       n=  43  erro_melhor_de_5=  1.65%  erro_medio=  2.05%  tempo_medio=  0.23s
+B-n45-k5       n=  44  erro_melhor_de_5=  0.00%  erro_medio=  0.00%  tempo_medio=  0.12s
+B-n45-k6       n=  44  erro_melhor_de_5=  3.10%  erro_medio=  3.10%  tempo_medio=  0.09s
+B-n50-k7       n=  49  erro_melhor_de_5=  0.00%  erro_medio=  0.05%  tempo_medio=  0.43s
+B-n50-k8       n=  49  erro_melhor_de_5=  1.22%  erro_medio=  1.42%  tempo_medio=  0.36s
+B-n51-k7       n=  50  erro_melhor_de_5=  2.13%  erro_medio=  2.13%  tempo_medio=  0.13s
+B-n52-k7       n=  51  erro_melhor_de_5=  0.40%  erro_medio=  1.04%  tempo_medio=  0.41s
+B-n56-k7       n=  55  erro_melhor_de_5=  0.99%  erro_medio=  1.47%  tempo_medio=  0.47s
+B-n57-k7       n=  56  erro_melhor_de_5=  0.52%  erro_medio=  0.52%  tempo_medio=  0.15s
+B-n57-k9       n=  56  erro_melhor_de_5=  2.44%  erro_medio=  2.48%  tempo_medio=  0.58s
+B-n63-k10      n=  62  erro_melhor_de_5=  3.34%  erro_medio=  4.25%  tempo_medio=  0.57s
+B-n64-k9       n=  63  erro_melhor_de_5=  1.16%  erro_medio=  3.18%  tempo_medio=  0.26s
+B-n66-k9       n=  65  erro_melhor_de_5=  1.22%  erro_medio=  1.67%  tempo_medio=  0.40s
+B-n67-k10      n=  66  erro_melhor_de_5=  5.43%  erro_medio=  5.56%  tempo_medio=  0.59s
+B-n68-k9       n=  67  erro_melhor_de_5=  2.28%  erro_medio=  2.34%  tempo_medio=  0.68s
+B-n78-k10      n=  77  erro_melhor_de_5=  2.46%  erro_medio=  2.62%  tempo_medio=  0.92s
+
+=== Conjunto B: 23 instâncias, 5 seeds cada, steps_max=20 ===
+Tempo total de execução: 38.8s
+Erro médio (melhor-de-5 por instância, média sobre instâncias): 1.7162%
+Erro médio (média-de-5 por instância, média sobre instâncias): 2.0011%
+'VNS mean error' reportado no artigo para o conjunto B: 1.8324%
+Diferença (melhor-de-5 vs. artigo): -0.1162 p.p.
+Diferença (média-de-5 vs. artigo): +0.1687 p.p.
+
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/gvns_baseline_B.csv
+
+======================================================================
+CONJUNTO B [modo=fixo, recompensa=original]
+======================================================================
+B-n31-k5       n=  30  erro_melhor_de_5=  0.74%  erro_medio=  0.74%  tempo_medio=  0.50s  artigo_HGUCB=  0.26%  dif_media= +0.48pp
+B-n34-k5       n=  33  erro_melhor_de_5=  0.00%  erro_medio=  0.36%  tempo_medio=  0.45s  artigo_HGUCB=  0.14%  dif_media= +0.22pp
+B-n35-k5       n=  34  erro_melhor_de_5=  1.68%  erro_medio=  2.14%  tempo_medio=  0.57s  artigo_HGUCB=  0.46%  dif_media= +1.68pp
+B-n38-k6       n=  37  erro_melhor_de_5=  2.61%  erro_medio=  3.40%  tempo_medio=  0.75s  artigo_HGUCB=  0.30%  dif_media= +3.11pp
+B-n39-k5       n=  38  erro_melhor_de_5=  2.37%  erro_medio=  2.48%  tempo_medio=  0.85s  artigo_HGUCB=  0.66%  dif_media= +1.82pp
+B-n41-k6       n=  40  erro_melhor_de_5=  7.12%  erro_medio=  9.51%  tempo_medio=  0.53s  artigo_HGUCB=  0.90%  dif_media= +8.61pp
+B-n43-k6       n=  42  erro_melhor_de_5=  3.77%  erro_medio=  9.78%  tempo_medio=  1.17s  artigo_HGUCB=  0.79%  dif_media= +9.00pp
+B-n44-k7       n=  43  erro_melhor_de_5=  2.64%  erro_medio=  2.82%  tempo_medio=  0.66s  artigo_HGUCB=  1.27%  dif_media= +1.54pp
+B-n45-k5       n=  44  erro_melhor_de_5=  0.00%  erro_medio=  0.11%  tempo_medio=  0.48s  artigo_HGUCB=  0.72%  dif_media= -0.61pp
+B-n45-k6       n=  44  erro_melhor_de_5=  3.24%  erro_medio=  3.63%  tempo_medio=  0.39s  artigo_HGUCB=  3.91%  dif_media= -0.28pp
+B-n50-k7       n=  49  erro_melhor_de_5=  0.27%  erro_medio=  0.49%  tempo_medio=  1.05s  artigo_HGUCB=  0.17%  dif_media= +0.31pp
+B-n50-k8       n=  49  erro_melhor_de_5=  2.97%  erro_medio=  3.14%  tempo_medio=  1.07s  artigo_HGUCB=  1.12%  dif_media= +2.02pp
+B-n51-k7       n=  50  erro_melhor_de_5=  2.42%  erro_medio=  3.26%  tempo_medio=  0.52s  artigo_HGUCB=  0.00%  dif_media= +3.26pp
+B-n52-k7       n=  51  erro_melhor_de_5=  1.34%  erro_medio=  1.55%  tempo_medio=  1.09s  artigo_HGUCB=  1.31%  dif_media= +0.24pp
+B-n56-k7       n=  55  erro_melhor_de_5=  2.69%  erro_medio=  2.89%  tempo_medio=  1.37s  artigo_HGUCB=  1.09%  dif_media= +1.80pp
+B-n57-k7       n=  56  erro_melhor_de_5=  1.30%  erro_medio=  1.70%  tempo_medio=  0.43s  artigo_HGUCB=  0.00%  dif_media= +1.70pp
+B-n57-k9       n=  56  erro_melhor_de_5=  2.94%  erro_medio=  3.09%  tempo_medio=  1.25s  artigo_HGUCB=  1.60%  dif_media= +1.50pp
+B-n63-k10      n=  62  erro_melhor_de_5=  5.35%  erro_medio=  5.48%  tempo_medio=  1.30s  artigo_HGUCB=  4.08%  dif_media= +1.40pp
+B-n64-k9       n=  63  erro_melhor_de_5=  5.69%  erro_medio=  7.32%  tempo_medio=  1.18s  artigo_HGUCB=  3.76%  dif_media= +3.56pp
+B-n66-k9       n=  65  erro_melhor_de_5=  2.96%  erro_medio=  5.33%  tempo_medio=  2.04s  artigo_HGUCB=  2.35%  dif_media= +2.99pp
+B-n67-k10      n=  66  erro_melhor_de_5=  6.78%  erro_medio=  8.04%  tempo_medio=  2.10s  artigo_HGUCB=  4.12%  dif_media= +3.92pp
+B-n68-k9       n=  67  erro_melhor_de_5=  2.99%  erro_medio=  3.16%  tempo_medio=  1.39s  artigo_HGUCB=  3.08%  dif_media= +0.08pp
+B-n78-k10      n=  77  erro_melhor_de_5=  3.19%  erro_medio=  3.29%  tempo_medio=  1.80s  artigo_HGUCB=  6.00%  dif_media= -2.71pp
+
+=== Conjunto B [modo=fixo, recompensa=original]: 23 instâncias, 5 seeds cada, steps_max=20 (Bandit VNS / HG-UCB) ===
+Tempo total de execução: 114.8s
+Erro médio (melhor-de-5 por instância, média sobre instâncias): 2.8292%
+Erro médio (média-de-5 por instância, média sobre instâncias): 3.6390%
+'HG-UCB mean error' reportado no artigo para o conjunto B: 1.6554%
+Diferença (melhor-de-5 vs. artigo): +1.1738 p.p.
+Diferença (média-de-5 vs. artigo): +1.9836 p.p.
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/bandit_vns_validation_B.csv
+
+======================================================================
+CONJUNTO B [modo=progressivo, recompensa=original]
+======================================================================
+B-n31-k5       n=  30  erro_melhor_de_5=  0.45%  erro_medio=  0.68%  tempo_medio=  0.24s  artigo_HGUCB=  0.26%  dif_media= +0.43pp
+B-n34-k5       n=  33  erro_melhor_de_5=  0.00%  erro_medio=  0.00%  tempo_medio=  0.34s  artigo_HGUCB=  0.14%  dif_media= -0.14pp
+B-n35-k5       n=  34  erro_melhor_de_5=  1.47%  erro_medio=  1.70%  tempo_medio=  0.29s  artigo_HGUCB=  0.46%  dif_media= +1.24pp
+B-n38-k6       n=  37  erro_melhor_de_5=  1.61%  erro_medio=  2.91%  tempo_medio=  0.51s  artigo_HGUCB=  0.30%  dif_media= +2.61pp
+B-n39-k5       n=  38  erro_melhor_de_5=  2.19%  erro_medio=  2.26%  tempo_medio=  0.38s  artigo_HGUCB=  0.66%  dif_media= +1.60pp
+B-n41-k6       n=  40  erro_melhor_de_5=  8.81%  erro_medio=  9.87%  tempo_medio=  0.26s  artigo_HGUCB=  0.90%  dif_media= +8.97pp
+B-n43-k6       n=  42  erro_melhor_de_5=  1.62%  erro_medio=  5.34%  tempo_medio=  1.03s  artigo_HGUCB=  0.79%  dif_media= +4.55pp
+B-n44-k7       n=  43  erro_melhor_de_5=  2.64%  erro_medio=  2.66%  tempo_medio=  1.05s  artigo_HGUCB=  1.27%  dif_media= +1.39pp
+B-n45-k5       n=  44  erro_melhor_de_5=  0.00%  erro_medio=  0.03%  tempo_medio=  0.34s  artigo_HGUCB=  0.72%  dif_media= -0.69pp
+B-n45-k6       n=  44  erro_melhor_de_5=  3.10%  erro_medio=  3.39%  tempo_medio=  0.44s  artigo_HGUCB=  3.91%  dif_media= -0.51pp
+B-n50-k7       n=  49  erro_melhor_de_5=  0.27%  erro_medio=  0.38%  tempo_medio=  1.16s  artigo_HGUCB=  0.17%  dif_media= +0.20pp
+B-n50-k8       n=  49  erro_melhor_de_5=  2.44%  erro_medio=  2.79%  tempo_medio=  0.93s  artigo_HGUCB=  1.12%  dif_media= +1.67pp
+B-n51-k7       n=  50  erro_melhor_de_5=  1.84%  erro_medio=  2.46%  tempo_medio=  0.54s  artigo_HGUCB=  0.00%  dif_media= +2.46pp
+B-n52-k7       n=  51  erro_melhor_de_5=  1.20%  erro_medio=  1.37%  tempo_medio=  0.77s  artigo_HGUCB=  1.31%  dif_media= +0.05pp
+B-n56-k7       n=  55  erro_melhor_de_5=  2.12%  erro_medio=  2.46%  tempo_medio=  1.18s  artigo_HGUCB=  1.09%  dif_media= +1.37pp
+B-n57-k7       n=  56  erro_melhor_de_5=  0.52%  erro_medio=  0.69%  tempo_medio=  0.34s  artigo_HGUCB=  0.00%  dif_media= +0.69pp
+B-n57-k9       n=  56  erro_melhor_de_5=  2.63%  erro_medio=  2.88%  tempo_medio=  1.24s  artigo_HGUCB=  1.60%  dif_media= +1.28pp
+B-n63-k10      n=  62  erro_melhor_de_5=  5.08%  erro_medio=  5.25%  tempo_medio=  1.62s  artigo_HGUCB=  4.08%  dif_media= +1.17pp
+B-n64-k9       n=  63  erro_melhor_de_5=  3.72%  erro_medio=  4.16%  tempo_medio=  0.60s  artigo_HGUCB=  3.76%  dif_media= +0.40pp
+B-n66-k9       n=  65  erro_melhor_de_5=  1.22%  erro_medio=  2.02%  tempo_medio=  1.63s  artigo_HGUCB=  2.35%  dif_media= -0.32pp
+B-n67-k10      n=  66  erro_melhor_de_5=  5.91%  erro_medio=  6.78%  tempo_medio=  1.07s  artigo_HGUCB=  4.12%  dif_media= +2.66pp
+B-n68-k9       n=  67  erro_melhor_de_5=  2.91%  erro_medio=  2.99%  tempo_medio=  0.88s  artigo_HGUCB=  3.08%  dif_media= -0.09pp
+B-n78-k10      n=  77  erro_melhor_de_5=  2.62%  erro_medio=  2.90%  tempo_medio=  2.23s  artigo_HGUCB=  6.00%  dif_media= -3.10pp
+
+=== Conjunto B [modo=progressivo, recompensa=original]: 23 instâncias, 5 seeds cada, steps_max=20 (Bandit VNS / HG-UCB) ===
+Tempo total de execução: 95.6s
+Erro médio (melhor-de-5 por instância, média sobre instâncias): 2.3631%
+Erro médio (média-de-5 por instância, média sobre instâncias): 2.8679%
+'HG-UCB mean error' reportado no artigo para o conjunto B: 1.6554%
+Diferença (melhor-de-5 vs. artigo): +0.7077 p.p.
+Diferença (média-de-5 vs. artigo): +1.2125 p.p.
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/bandit_vns_validation_progressivo_B.csv
+
+======================================================================
+CONJUNTO B [modo=progressivo, recompensa=normalizado_alpha5.0]
+======================================================================
+B-n31-k5       n=  30  erro_melhor_de_5=  0.00%  erro_medio=  0.48%  tempo_medio=  0.47s  artigo_HGUCB=  0.26%  dif_media= +0.22pp
+B-n34-k5       n=  33  erro_melhor_de_5=  0.00%  erro_medio=  0.00%  tempo_medio=  0.61s  artigo_HGUCB=  0.14%  dif_media= -0.14pp
+B-n35-k5       n=  34  erro_melhor_de_5=  1.15%  erro_medio=  1.53%  tempo_medio=  0.47s  artigo_HGUCB=  0.46%  dif_media= +1.07pp
+B-n38-k6       n=  37  erro_melhor_de_5=  1.37%  erro_medio=  1.69%  tempo_medio=  0.73s  artigo_HGUCB=  0.30%  dif_media= +1.39pp
+B-n39-k5       n=  38  erro_melhor_de_5=  1.64%  erro_medio=  1.97%  tempo_medio=  1.05s  artigo_HGUCB=  0.66%  dif_media= +1.31pp
+B-n41-k6       n=  40  erro_melhor_de_5=  0.72%  erro_medio=  4.22%  tempo_medio=  0.59s  artigo_HGUCB=  0.90%  dif_media= +3.32pp
+B-n43-k6       n=  42  erro_melhor_de_5=  1.48%  erro_medio=  2.18%  tempo_medio=  1.13s  artigo_HGUCB=  0.79%  dif_media= +1.40pp
+B-n44-k7       n=  43  erro_melhor_de_5=  2.20%  erro_medio=  2.55%  tempo_medio=  0.60s  artigo_HGUCB=  1.27%  dif_media= +1.28pp
+B-n45-k5       n=  44  erro_melhor_de_5=  0.00%  erro_medio=  0.00%  tempo_medio=  0.72s  artigo_HGUCB=  0.72%  dif_media= -0.72pp
+B-n45-k6       n=  44  erro_melhor_de_5=  3.10%  erro_medio=  3.16%  tempo_medio=  0.95s  artigo_HGUCB=  3.91%  dif_media= -0.75pp
+B-n50-k7       n=  49  erro_melhor_de_5=  0.00%  erro_medio=  0.27%  tempo_medio=  1.31s  artigo_HGUCB=  0.17%  dif_media= +0.10pp
+B-n50-k8       n=  49  erro_melhor_de_5=  1.45%  erro_medio=  1.89%  tempo_medio=  1.52s  artigo_HGUCB=  1.12%  dif_media= +0.77pp
+B-n51-k7       n=  50  erro_melhor_de_5=  2.13%  erro_medio=  2.25%  tempo_medio=  0.93s  artigo_HGUCB=  0.00%  dif_media= +2.25pp
+B-n52-k7       n=  51  erro_melhor_de_5=  1.20%  erro_medio=  1.23%  tempo_medio=  1.48s  artigo_HGUCB=  1.31%  dif_media= -0.08pp
+B-n56-k7       n=  55  erro_melhor_de_5=  1.13%  erro_medio=  1.64%  tempo_medio=  1.49s  artigo_HGUCB=  1.09%  dif_media= +0.55pp
+B-n57-k7       n=  56  erro_melhor_de_5=  0.52%  erro_medio=  0.69%  tempo_medio=  1.22s  artigo_HGUCB=  0.00%  dif_media= +0.69pp
+B-n57-k9       n=  56  erro_melhor_de_5=  2.13%  erro_medio=  2.57%  tempo_medio=  1.69s  artigo_HGUCB=  1.60%  dif_media= +0.97pp
+B-n63-k10      n=  62  erro_melhor_de_5=  3.21%  erro_medio=  4.02%  tempo_medio=  1.43s  artigo_HGUCB=  4.08%  dif_media= -0.06pp
+B-n64-k9       n=  63  erro_melhor_de_5=  2.79%  erro_medio=  3.51%  tempo_medio=  1.48s  artigo_HGUCB=  3.76%  dif_media= -0.25pp
+B-n66-k9       n=  65  erro_melhor_de_5=  1.06%  erro_medio=  1.53%  tempo_medio=  2.03s  artigo_HGUCB=  2.35%  dif_media= -0.81pp
+B-n67-k10      n=  66  erro_melhor_de_5=  5.23%  erro_medio=  5.47%  tempo_medio=  1.88s  artigo_HGUCB=  4.12%  dif_media= +1.35pp
+B-n68-k9       n=  67  erro_melhor_de_5=  2.20%  erro_medio=  2.74%  tempo_medio=  2.69s  artigo_HGUCB=  3.08%  dif_media= -0.34pp
+B-n78-k10      n=  77  erro_melhor_de_5=  2.38%  erro_medio=  2.67%  tempo_medio=  2.47s  artigo_HGUCB=  6.00%  dif_media= -3.33pp
+
+=== Conjunto B [modo=progressivo, recompensa=normalizado_alpha5.0]: 23 instâncias, 5 seeds cada, steps_max=20 (Bandit VNS / HG-UCB) ===
+Tempo total de execução: 145.1s
+Erro médio (melhor-de-5 por instância, média sobre instâncias): 1.6128%
+Erro médio (média-de-5 por instância, média sobre instâncias): 2.0980%
+'HG-UCB mean error' reportado no artigo para o conjunto B: 1.6554%
+Diferença (melhor-de-5 vs. artigo): -0.0426 p.p.
+Diferença (média-de-5 vs. artigo): +0.4426 p.p.
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/bandit_vns_validation_progressivo_normalizado_alpha5.0_B.csv
+
+======================================================================
+CONJUNTO B [modo=progressivo, recompensa=normalizado_alpha0.5]
+======================================================================
+B-n31-k5       n=  30  erro_melhor_de_5=  0.45%  erro_medio=  0.68%  tempo_medio=  0.53s  artigo_HGUCB=  0.26%  dif_media= +0.43pp
+B-n34-k5       n=  33  erro_melhor_de_5=  0.00%  erro_medio=  0.00%  tempo_medio=  0.64s  artigo_HGUCB=  0.14%  dif_media= -0.14pp
+B-n35-k5       n=  34  erro_melhor_de_5=  0.84%  erro_medio=  1.40%  tempo_medio=  0.66s  artigo_HGUCB=  0.46%  dif_media= +0.95pp
+B-n38-k6       n=  37  erro_melhor_de_5=  1.37%  erro_medio=  1.66%  tempo_medio=  0.85s  artigo_HGUCB=  0.30%  dif_media= +1.37pp
+B-n39-k5       n=  38  erro_melhor_de_5=  2.00%  erro_medio=  2.22%  tempo_medio=  0.86s  artigo_HGUCB=  0.66%  dif_media= +1.56pp
+B-n41-k6       n=  40  erro_melhor_de_5=  0.24%  erro_medio=  4.00%  tempo_medio=  0.66s  artigo_HGUCB=  0.90%  dif_media= +3.10pp
+B-n43-k6       n=  42  erro_melhor_de_5=  1.35%  erro_medio=  1.62%  tempo_medio=  1.01s  artigo_HGUCB=  0.79%  dif_media= +0.83pp
+B-n44-k7       n=  43  erro_melhor_de_5=  0.00%  erro_medio=  1.83%  tempo_medio=  0.74s  artigo_HGUCB=  1.27%  dif_media= +0.55pp
+B-n45-k5       n=  44  erro_melhor_de_5=  0.00%  erro_medio=  0.00%  tempo_medio=  0.68s  artigo_HGUCB=  0.72%  dif_media= -0.72pp
+B-n45-k6       n=  44  erro_melhor_de_5=  2.51%  erro_medio=  2.98%  tempo_medio=  0.73s  artigo_HGUCB=  3.91%  dif_media= -0.93pp
+B-n50-k7       n=  49  erro_melhor_de_5=  0.27%  erro_medio=  0.32%  tempo_medio=  1.29s  artigo_HGUCB=  0.17%  dif_media= +0.15pp
+B-n50-k8       n=  49  erro_melhor_de_5=  0.91%  erro_medio=  1.54%  tempo_medio=  1.29s  artigo_HGUCB=  1.12%  dif_media= +0.42pp
+B-n51-k7       n=  50  erro_melhor_de_5=  2.13%  erro_medio=  2.25%  tempo_medio=  0.82s  artigo_HGUCB=  0.00%  dif_media= +2.25pp
+B-n52-k7       n=  51  erro_melhor_de_5=  0.80%  erro_medio=  1.12%  tempo_medio=  1.57s  artigo_HGUCB=  1.31%  dif_media= -0.19pp
+B-n56-k7       n=  55  erro_melhor_de_5=  0.99%  erro_medio=  1.70%  tempo_medio=  1.80s  artigo_HGUCB=  1.09%  dif_media= +0.61pp
+B-n57-k7       n=  56  erro_melhor_de_5=  0.26%  erro_medio=  0.57%  tempo_medio=  0.93s  artigo_HGUCB=  0.00%  dif_media= +0.57pp
+B-n57-k9       n=  56  erro_melhor_de_5=  2.44%  erro_medio=  2.69%  tempo_medio=  1.74s  artigo_HGUCB=  1.60%  dif_media= +1.10pp
+B-n63-k10      n=  62  erro_melhor_de_5=  3.41%  erro_medio=  4.34%  tempo_medio=  2.07s  artigo_HGUCB=  4.08%  dif_media= +0.26pp
+B-n64-k9       n=  63  erro_melhor_de_5=  2.79%  erro_medio=  3.25%  tempo_medio=  1.61s  artigo_HGUCB=  3.76%  dif_media= -0.51pp
+B-n66-k9       n=  65  erro_melhor_de_5=  0.99%  erro_medio=  1.25%  tempo_medio=  2.02s  artigo_HGUCB=  2.35%  dif_media= -1.10pp
+B-n67-k10      n=  66  erro_melhor_de_5=  5.14%  erro_medio=  5.50%  tempo_medio=  2.71s  artigo_HGUCB=  4.12%  dif_media= +1.38pp
+B-n68-k9       n=  67  erro_melhor_de_5=  2.36%  erro_medio=  2.61%  tempo_medio=  2.37s  artigo_HGUCB=  3.08%  dif_media= -0.47pp
+B-n78-k10      n=  77  erro_melhor_de_5=  2.62%  erro_medio=  2.82%  tempo_medio=  2.95s  artigo_HGUCB=  6.00%  dif_media= -3.19pp
+
+=== Conjunto B [modo=progressivo, recompensa=normalizado_alpha0.5]: 23 instâncias, 5 seeds cada, steps_max=20 (Bandit VNS / HG-UCB) ===
+Tempo total de execução: 153.1s
+Erro médio (melhor-de-5 por instância, média sobre instâncias): 1.4722%
+Erro médio (média-de-5 por instância, média sobre instâncias): 2.0162%
+'HG-UCB mean error' reportado no artigo para o conjunto B: 1.6554%
+Diferença (melhor-de-5 vs. artigo): -0.1832 p.p.
+Diferença (média-de-5 vs. artigo): +0.3608 p.p.
+CSV salvo em: /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/results/bandit_vns_validation_progressivo_normalizado_alpha0.5_B.csv
+REPRODUCAO_AB_COMPLETA

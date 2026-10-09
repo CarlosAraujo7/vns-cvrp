@@ -1,0 +1,2 @@
+grade: 24 configuracoes, 2880 execucoes
+grade concluida (0 execucoes novas)
