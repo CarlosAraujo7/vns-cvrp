@@ -30,6 +30,8 @@ from vns import shake
 from bandit import HGUCBBandit, reward_positive_normalized, reward_negative
 from aos_policies import (UniformePolitica, UCB1Politica, EpsGreedyPolitica,
                           ProbMatchingPolitica, reward_relativa)
+from aos_policies_ext import (Exp3Politica, ThompsonPolitica, SWUCBPolitica, AdaptivePursuitPolitica,
+                              EficienciaUCBPolitica)
 
 
 class OrdemFixaPolitica:
@@ -204,6 +206,18 @@ def construir_politica(nome, k, rng, custo=False, ordem=None, params=None):
         return (HGUCBMasc(n_operators=k, rng=rng, p_hat_mode="q_values", alpha=params.get("alpha", 0.5),
                           C=params.get("C", 2.0)),
                 "hgucb_custo" if custo else "hgucb")
+    # Etapa 6 (diario, Entrada 91): familias adicionais, sempre com recompensa "rel" (nao ha variante cost-aware)
+    if nome == "exp3":
+        return Exp3Politica(k, gamma=params.get("gamma", 0.1), rng=rng), "rel"
+    if nome == "ts":
+        return ThompsonPolitica(k, rng=rng), "rel"
+    if nome == "swucb":
+        return SWUCBPolitica(k, window=params.get("window", 200), xi=params.get("xi", 0.6), rng=rng), "rel"
+    if nome == "ap":
+        return (AdaptivePursuitPolitica(k, alpha=params.get("alpha", 0.1), beta=params.get("beta", 0.1),
+                                        p_min=params.get("p_min", 0.05), rng=rng), "rel")
+    if nome == "eff":
+        return EficienciaUCBPolitica(k, C=params.get("C", 1.0), rng=rng), "rel"
     raise ValueError(nome)
 
 
@@ -303,7 +317,12 @@ def vnd_generico(instance, initial_routes, rng, budget, neighborhoods, politica,
             else:
                 falhos.add(j)
                 consec += 1
-            if politica.update(j, recompensa):
+            if getattr(politica, "usa_custo", False):
+                # Etapa 6: politica de eficiencia -- precisa do custo da aplicacao, inclusive das que falham
+                terminou = politica.update_custo(j, recompensa, (medida() - m0) if medida is not None else 1)
+            else:
+                terminou = politica.update(j, recompensa)
+            if terminou:
                 pending_drift = True
 
         if aceitacao == "best":
