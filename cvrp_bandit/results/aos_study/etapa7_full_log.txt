@@ -1,0 +1,73 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+3300 tarefas, 0 ja feitas, 3300 pendentes
+  50/3300  11.1 min
+  100/3300  13.8 min
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+3300 tarefas, 100 ja feitas, 3200 pendentes
+  50/3200  5.4 min
+  100/3200  8.9 min
+  150/3200  18.0 min
+  200/3200  24.8 min
+  250/3200  35.5 min
+  300/3200  41.9 min
+  350/3200  51.9 min
+  400/3200  58.5 min
+  450/3200  67.5 min
+  500/3200  74.6 min
+  550/3200  76.3 min
+  600/3200  78.3 min
+  650/3200  81.9 min
+  700/3200  84.0 min
+  750/3200  86.6 min
+  800/3200  90.6 min
+  850/3200  94.0 min
+  900/3200  95.8 min
+  950/3200  99.6 min
+  1000/3200  103.9 min
+  1050/3200  109.6 min
+  1100/3200  116.4 min
+  1150/3200  119.0 min
+  1200/3200  119.9 min
+  1250/3200  121.5 min
+  1300/3200  123.2 min
+  1350/3200  125.0 min
+  1400/3200  126.5 min
+  1450/3200  128.2 min
+  1500/3200  129.4 min
+  1550/3200  131.1 min
+  1600/3200  132.6 min
+  1650/3200  134.2 min
+  1700/3200  136.4 min
+  1750/3200  139.4 min
+  1800/3200  142.9 min
+  1850/3200  149.7 min
+  1900/3200  154.3 min
+  1950/3200  157.8 min
+  2000/3200  161.6 min
+  2050/3200  165.8 min
+  2100/3200  169.2 min
+  2150/3200  174.5 min
+  2200/3200  178.8 min
+  2250/3200  183.8 min
+  2300/3200  188.8 min
+  2350/3200  192.4 min
+  2400/3200  195.2 min
+  2450/3200  199.8 min
+  2500/3200  203.5 min
+  2550/3200  207.8 min
+  2600/3200  211.4 min
+  2650/3200  214.7 min
+  2700/3200  217.3 min
+  2750/3200  221.1 min
+  2800/3200  224.0 min
+  2850/3200  226.5 min
+  2900/3200  230.6 min
+  2950/3200  232.5 min
+  3000/3200  233.2 min
+  3050/3200  234.6 min
+  3100/3200  236.1 min
+  3150/3200  238.4 min
+  3200/3200  238.8 min
+concluido

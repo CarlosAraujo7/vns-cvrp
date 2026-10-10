@@ -46,5 +46,11 @@ H20 & At least one new arm is significantly worse than uniform selection (probab
 H21 & The efficiency UCB ($C=1$ or $2$) is the best new arm on average at both budgets without beating uniform selection (probability assigned: 45\%). & Not confirmed: the efficiency UCB with $C=1$ is the worst arm at both budgets (\num{s6d_W5_1} and \num{s6d_W5_5}~pp). \\
 H22 & No new arm beats the tuned static mixture (exploratory; 85\%). & Confirmed: all sixteen differences from the static mixture are positive (policy worse), the smallest being $+0.02$~pp (analysis file \texttt{analise\_etapa6\_confirmatoria.csv}). \\
 H23 & Neither contextual policy beats uniform selection (80\%). & Confirmed (\num{s6d_W7_1} and \num{s6d_W7_5}~pp; \num{s6d_W8_1} and \num{s6d_W8_5}~pp). \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 7 (log entry 97; committed as \texttt{8a06b17} before its data)}} \\
+H24 & No adaptive move-order policy beats the uniform random order inside HGS-CVRP (probability assigned: 85\%). & Confirmed: \num{s7_nbetter} of 20 tests are significant and the largest difference of an adaptive policy is \num{s7_maxabs_adapt}~pp. \\
+H25 & The uniform random order does not beat the original HGS order (65\%). & Confirmed: the original order does not differ significantly from the random order (differences \num{s7d_fixed_P1_250}, \num{s7d_fixed_P1_1000}, \num{s7d_fixed_P2_250} and \num{s7d_fixed_P2_1000}~pp). \\
+H26 & At least one adaptive policy is significantly worse than the random order in some test (40\%). & Not confirmed: \num{s7_nworse} significant tests. \\
+H27 & Policy-driven move orders are slower per generation than the original code path (exploratory; 90\%). & Confirmed: \num{s7_cpu_fixed}~ms per generation against \num{s7_cpu_ts}--\num{s7_cpu_hg}~ms (probability matching \num{s7_cpu_pm}~ms, with floating-point underflow). \\
 \end{longtable}
 \end{center}

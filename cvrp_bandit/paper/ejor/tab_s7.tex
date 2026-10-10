@@ -1,0 +1,19 @@
+\begin{table}[t]
+\caption{Study 7 (HGS-CVRP): mean gap (\%) after 250 and 1000 generations on the 25 CVRPLIB instances of sets X and CMT (P1) and on the 30 synthetic validation instances (P2); in parentheses, the difference from the uniform random order in pp (* marks Holm-significance over 20 tests).}\label{tab:s7}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+ & \multicolumn{2}{c}{P1} & \multicolumn{2}{c}{P2} \\ Move-order policy & 250 & 1000 & 250 & 1000 \\
+\midrule
+Original HGS order & 0.87 ($+$0.02) & 0.34 ($-$0.02) & 1.08 ($+$0.05) & 0.50 ($-$0.02) \\
+Uniform random order & 0.86 & 0.36 & 1.03 & 0.52 \\
+UCB1 & 0.88 ($+$0.03) & 0.36 (0.00) & 1.04 ($+$0.01) & 0.51 ($-$0.01) \\
+Thompson sampling & 0.84 ($-$0.02) & 0.36 (0.00) & 1.04 ($+$0.01) & 0.50 ($-$0.02) \\
+Probability matching & 0.86 (0.00) & 0.35 ($-$0.01) & 1.05 ($+$0.02) & 0.51 (0.00) \\
+HG-UCB (lite) & 0.87 ($+$0.01) & 0.35 ($-$0.01) & 1.05 ($+$0.03) & 0.51 ($-$0.01) \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

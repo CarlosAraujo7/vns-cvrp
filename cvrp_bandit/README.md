@@ -3,7 +3,7 @@
 Code, instances, raw results and analysis scripts for the study *"Does adaptive operator selection help? A controlled,
 pre-specified study of bandit-guided variable neighborhood search for the capacitated vehicle routing problem"*
 (manuscript in `paper/ejor/`). The research log with the dated pre-specification of every study is
-`../diario_pesquisa.md` (Portuguese; entries 64, 71, 77, 83, 89 and 91 are the pre-registrations of Studies 1-6).
+`../diario_pesquisa.md` (Portuguese; entries 64, 71, 77, 83, 89, 91 and 97 are the pre-registrations of Studies 1-7).
 
 ## Layout
 
@@ -38,8 +38,9 @@ All commands run from `estudo_aos/` inside the Python environment (the experimen
 6. **Study 6** (EXP3, Thompson sampling, sliding-window UCB, adaptive pursuit, efficiency UCB): `bash etapa6_pipeline.sh` (about 2 h; waits for Study 5 to finish) and `python analisar_etapa6.py`; unit tests of the new policies: `python ../tests/test_aos_policies_ext.py`.
 7. **Initial solutions**: all arms start from the solution stored in `instances/_init/` (generated once by `python gerar_solucoes_iniciais.py`; the Clarke--Wright repair uses a non-deterministic CP-SAT fallback on 11 instances, which is why the solutions are persisted). **Structure diagnostic**: `python diag_estrutura.py`; **complementarity diagnostic** (exploratory): `python diag_complementaridade.py`.
 8. **Robustness and verification**: `python analise_robustez.py` (equivalence tests, two-level bootstrap, power); `python verificacao_independente.py` (recomputes the manuscript means and contrasts from raw costs with the standard library only); `python ../tests/validate_neighborhoods_ext.py`.
-9. **Tables, figures, supplement and PDFs**: in `paper/ejor/` run `python gerar_tabelas.py` (all numbers of the Results section become `\num{key}` macros in `numeros.tex`; run it twice around the verification), `python gerar_figuras.py`, `python gerar_suplemento.py`, `python checar_macros.py`, then compile `main.tex` and `supplement.tex` (XeLaTeX or Tectonic; `ferramentas/tectonic` is a Linux binary used in WSL: `tectonic -X compile main.tex --outdir build`). See `paper/RASTREIO_NUMEROS.md` for the provenance of every number.
-10. **Reference solver** (HGS-CVRP on the 74 instances): `python ../direcao1_local/rodar_hgs_74.py --regime matched|n01`.
+9. **Study 7** (adaptive move order inside HGS-CVRP): `bash direcao1_local/build_hgs_aos.sh` (builds the modified copy in `src/hgs_aos/` to `external/HGS-CVRP-aos/hgs_aos`; original solutions are reproduced byte for byte with `-aos fixed`), then `python estudo_aos/run_aos_etapa7.py --full --workers 11` (about 4 h; resumable) and `python estudo_aos/analisar_etapa7.py`.
+10. **Tables, figures, supplement and PDFs**: in `paper/ejor/` run `python gerar_tabelas.py` (all numbers of the Results section become `\num{key}` macros in `numeros.tex`; run it twice around the verification), `python gerar_figuras.py`, `python gerar_suplemento.py`, `python checar_macros.py`, then compile `main.tex` and `supplement.tex` (XeLaTeX or Tectonic; `ferramentas/tectonic` is a Linux binary used in WSL: `tectonic -X compile main.tex --outdir build`). See `paper/RASTREIO_NUMEROS.md` for the provenance of every number.
+11. **Reference solver** (HGS-CVRP on the 74 instances): `python ../direcao1_local/rodar_hgs_74.py --regime matched|n01`.
 
 Every runner appends one row per run to a CSV keyed by (arm, level, instance, seed) and skips rows already present,
 so interrupted runs can be resumed by repeating the same command.
@@ -49,7 +50,7 @@ so interrupted runs can be resumed by repeating the same command.
 * Exact regression: each new version of the search loop reproduces the previous version's costs exactly under identical seeds (checked at every change; 48/48, 8/8 and 6/6 in the logged checks).
 * Operators validated against brute force (1 600 tests) with a mutation test.
 * `verificacao_independente.py` must print `VERIFICACAO INDEPENDENTE: OK`.
-* Git timestamps: commit `ef82cdc` precedes the Study 4 evaluation and `02e58d3` precedes all Study 6 data; the pre-specification of Study 5 (entry 89) was in the research log before its data but was committed after its runs had started; Studies 1-3 are pre-specified only in the dated research log.
+* Git timestamps: commit `ef82cdc` precedes the Study 4 evaluation and `02e58d3` (extended by `b3d4add`) precedes all Study 6 data and `8a06b17` all Study 7 data; the pre-specification of Study 5 (entry 89) was in the research log before its data but was committed after its runs had started; Studies 1-3 are pre-specified only in the dated research log.
 * `paper/ejor/checar_afirmacoes.py` re-derives the universal claims of the manuscript (no adaptive policy significantly better than its non-adaptive baseline) from the confirmatory tables; `paper/ejor/compilar.sh` compiles `main.tex` and `supplement.tex`; `paper/ejor/checar_macros.py` checks the manuscript against the EJOR author guide limits (highlights, keywords, abstract length) and that every `\num{key}` exists.
 
 ## License and third-party material

@@ -98,6 +98,52 @@ def confere(chave, valor, m, casas=2):
     return 1
 
 
+def verifica_s7(num):
+    """Estudo 7 (HGS): recomputa as medias de gap por braco/populacao/ponto de controle e todos os contrastes do CSV de analise
+    (diferenca media, vitorias, derrotas) direto de etapa7_full.csv, so com a biblioteca padrao."""
+    arq = RES / "etapa7_full.csv"
+    if not arq.exists() or not (RES / "analise_etapa7_confirmatoria.csv").exists():
+        return 0, 0
+    por = defaultdict(list)                       # (braco, instancia, ponto) -> lista de gaps
+    pop_de = {}
+    inv7 = []
+    with open(arq, encoding="utf-8", newline="") as f:
+        for r in csv.DictReader(f):
+            if r["viavel"] != "True":                  # excluidas pela regra pre-registrada; a contagem e conferida abaixo
+                inv7.append((r["instancia"], r["braco"], r["seed"]))
+                continue
+            ref = float(r["ref"])
+            if abs(100.0 * (float(r["custo_final"]) - ref) / ref - float(r["gap_final"])) > 1e-6:
+                problemas.append(f"etapa7: gap_final divergente {r['instancia']} {r['braco']} {r['seed']}")
+            pop_de[r["instancia"]] = "P2" if r["conjunto"] == "SYN_VAL" else "P1"
+            for ck in (250, 500, 1000, 2000, 4000):
+                v = r[f"gap_{ck}"]
+                if v not in ("", "nan"):
+                    por[(r["braco"], r["instancia"], ck)].append(float(v))
+    medias = {k: statistics.fmean(v) for k, v in por.items()}
+    if str(len(inv7)) != num.get("s7_ninv"):
+        problemas.append(f"etapa7: {len(inv7)} execucoes inviaveis no CSV vs. macro s7_ninv = {num.get('s7_ninv')}")
+    print(f"     etapa7: {len(inv7)} execucoes inviaveis pela convencao (instancias: {sorted({i for i, _, _ in inv7})}), excluidas")
+    nm = 0
+    for chave, valor in num.items():
+        if chave.startswith("s7_gap_"):
+            braco, pop, ck = chave[len("s7_gap_"):].split("_")
+            vals = [m for (b, i, c), m in medias.items() if b == braco and c == int(ck) and pop_de[i] == pop]
+            nm += confere(chave, valor, statistics.fmean(vals), 3)
+    nc = 0
+    for r in csv.DictReader(open(RES / "analise_etapa7_confirmatoria.csv", encoding="utf-8")):
+        pops = {"P1": ["P1"], "P2": ["P2"], "P1+P2": ["P1", "P2"]}[r["pop"]]
+        ck = int(float(r["ponto"]))
+        inst = sorted({i for (b, i, c) in medias if c == ck and pop_de[i] in pops})
+        dif = [medias[(r["a"], i, ck)] - medias[(r["b"], i, ck)] for i in inst]
+        dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+        dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+        if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or len(inst) != int(r["n_inst"]):
+            problemas.append(f"etapa7 {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs {r['vit_a']}/{r['der_a']}")
+        nc += 1
+    return nm, nc
+
+
 def main():
     dados = {}
     tot = 0
@@ -190,6 +236,10 @@ def main():
                 problemas.append(f"{arq} {r.get('id', '')} {a} vs {b} ({nv}): n={len(inst)} dif {dm:.5f} vs {ref_dm:.5f}; "
                                  f"vit/der {vit}/{der} vs {r['vit_a']}/{r['der_a']}")
             cont += 1
+    n7m, n7c = verifica_s7(num)
+    outros += n7m
+    cont += n7c
+    print(f"(2b) Estudo 7 (HGS): {n7m} medias e {n7c} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(

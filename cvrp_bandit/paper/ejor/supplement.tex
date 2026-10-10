@@ -34,7 +34,7 @@
 \maketitle
 
 \section*{Contents}
-This supplement contains the complete confirmatory test tables of every study, the breakdown by instance set, the rank and time summary of Study~3, the probabilities of the tuned static mixture, the pre-specified hypotheses with their outcomes, and three additional figures. In all test tables, differences are mean paired differences in percentage points of gap (negative favors the first-named arm) with 95\% bootstrap intervals over instances in brackets, followed by the Holm-adjusted $p$ value of the family of the study. Per-run raw results, per-instance mean gaps for every arm and the analysis scripts are in the repository (Data and code availability statement of the manuscript).
+This supplement contains the complete confirmatory test tables of every study, the breakdown by instance set, the rank and time summary of Study~3, the probabilities of the tuned static mixture, the pre-specified hypotheses with their outcomes, the pseudo-code of the generic search loop, three additional figures, the formal definition of the ten operators (Section~6) and the policy hyperparameters (Section~7). In all test tables, differences are mean paired differences in percentage points of gap (negative favors the first-named arm) with 95\% bootstrap intervals over instances in brackets, followed by the Holm-adjusted $p$ value of the family of the study. Per-run raw results, per-instance mean gaps for every arm and the analysis scripts are in the repository (Data and code availability statement of the manuscript).
 
 \section{Confirmatory tests}
 \inputopt{tab_s1_tests}
@@ -44,6 +44,7 @@ This supplement contains the complete confirmatory test tables of every study, t
 \inputopt{tab_s4_val}
 \inputopt{tab_s5_tests}
 \inputopt{tab_s6_tests}
+\inputopt{tab_s7_tests}
 
 \section{Results by instance set and rank summary}
 \inputopt{tab_s2set}
@@ -51,6 +52,7 @@ This supplement contains the complete confirmatory test tables of every study, t
 \inputopt{tab_ranks_tempo}
 \inputopt{tab_s4_config}
 \inputopt{tab_s4_pesos}
+\inputopt{tab_s5}
 
 \section{Pre-specified hypotheses and outcomes}
 The research log (file \texttt{diario\_pesquisa.md}, released with the data) records, before the data of each study existed, its arms, tests, family size and the expected direction of each hypothesis (entries 64, 71, 77, 83, 89 and 91 with its extension 93). Deviations and caveats: the family of Study~1 was reduced from 18 to 12 tests, as declared in log entries 67 and 69 before the $B=4000$ data were analyzed, although the $B=800$ results had already been seen under the conservative family of 18; Study~6 was extended from six to eight arms (family of 16 tests) in entry 93 before any of its data existed; no external registry timestamps exist, and the version-control commits that precede the data are \texttt{ef82cdc} (Study~4), \texttt{02e58d3} and \texttt{b3d4add} (Study~6), whereas the pre-specification of Study~5 was written in the log before its data but committed after its runs had started.
@@ -77,5 +79,7 @@ The research log (file \texttt{diario\_pesquisa.md}, released with the data) rec
 \includegraphics[width=0.8\linewidth]{fig_operadores.pdf}
 \caption{Share of distance evaluations spent in each operator at $E_2$ under LO termination (uniform, HG-UCB, fixed order by cost) and under R5 (fixed order by cost).}\label{fig:operadores}
 \end{figure}
+
+\input{sec_suppl_ops}
 
 \end{document}

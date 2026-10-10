@@ -401,7 +401,8 @@ def reproducao():
 
 
 SUP_ORDEM = ["tab:s1tests", "tab:s2tests", "tab:s3tests", "tab:s4tests", "tab:s4val", "tab:s5tests", "tab:s6tests",
-             "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:hip", "tab:studies"]      # mesma ordem de supplement.tex
+             "tab:s7tests", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
+             "tab:studies", "tab:hyper"]      # mesma ordem de supplement.tex
 
 
 def suptab():
@@ -488,6 +489,93 @@ def estudo6():
         m = {a: media_arm(e6, "arm", a, "nivel", nv) for a, _ in ARMS6}
         NUM[f"s6_best_{nv}"] = min(m, key=m.get).replace("s6_R5_", "")
         NUM[f"s6_worst_{nv}"] = max(m, key=m.get).replace("s6_R5_", "")
+
+
+ARMS7 = [("fixed", "Original HGS order"), ("unif", "Uniform random order"), ("ucb1", "UCB1"), ("ts", "Thompson sampling"),
+         ("pm", "Probability matching"), ("hg", "HG-UCB (lite)")]
+
+
+def estudo7():
+    c7 = pd.read_csv(RES / "analise_etapa7_confirmatoria.csv")
+    d = pd.read_csv(RES / "etapa7_full.csv")
+    d["pop"] = np.where(d.conjunto == "SYN_VAL", "P2", "P1")
+    dv = d[d.viavel]
+    conf = c7[c7.grupo == "confirmatorio"]
+    NUM["s7_n_p1"], NUM["s7_n_p2"] = str(d[d["pop"] == "P1"].instancia.nunique()), str(d[d["pop"] == "P2"].instancia.nunique())
+    NUM["s7_nruns"] = f"{len(d):,}".replace(",", r"\,")
+    NUM["s7_ninv"] = str(int((~d.viavel).sum()))
+    # medias por braco, populacao e ponto de controle (media sobre instancias das medias por instancia)
+    for pop in ("P1", "P2"):
+        for ck in (250, 500, 1000, 2000, 4000):
+            t = dv[dv["pop"] == pop].groupby(["braco", "instancia"])[f"gap_{ck}"].mean().groupby("braco").mean()
+            for a, v in t.items():
+                NUM[f"s7_gap_{a}_{pop}_{ck}"] = f"{v:.3f}"
+    for pop in ("P1", "P2"):
+        for ck in (250, 1000):
+            for a, _ in ARMS7:
+                if a == "unif":
+                    continue
+                r = conf[(conf.a == a) & (conf["pop"] == pop) & (conf.ponto == ck)].iloc[0]
+                macros_contraste("s7", f"{a}_{pop}_{ck}", r)
+                NUM[f"s7eq_{a}_{pop}_{ck}"] = "yes" if r.equiv_005 else "no"
+    NUM["s7_nsig"] = str(int(conf.signif_005.sum()))
+    NUM["s7_nbetter"] = str(int(((conf.dif_pp < 0) & conf.signif_005).sum()))
+    NUM["s7_nworse"] = str(int(((conf.dif_pp > 0) & conf.signif_005).sum()))
+    NUM["s7_neq"] = str(int(conf[conf.a.isin(["ucb1", "ts", "pm", "hg"])].equiv_005.sum()))
+    tarde = c7[(c7.grupo == "exploratorio") & c7["pop"].isin(["P1", "P2"]) & c7.ponto.isin([2000, 4000]) & c7.a.isin(["ucb1", "ts", "pm", "hg"])]
+    NUM["s7_late_n"], NUM["s7_late_eq"] = str(len(tarde)), str(int(tarde.equiv_005.sum()))
+    NUM["s7_maxabs"] = f"{conf.dif_pp.abs().max():.2f}"
+    NUM["s7_maxabs_adapt"] = f"{conf[conf.a.isin(['ucb1', 'ts', 'pm', 'hg'])].dif_pp.abs().max():.2f}"
+    sf = RES / "analise_etapa7_sensibilidade.csv"
+    if sf.exists():
+        sn = pd.read_csv(sf)
+        NUM["s7_sens_nsig"] = str(int(sn.signif_005.sum()))
+    # tabela principal: ganho medio (diferenca para a ordem aleatoria) por braco, populacao e ponto de controle
+    lin = []
+    for a, nome in ARMS7:
+        cel_ = []
+        for pop in ("P1", "P2"):
+            for ck in (250, 1000):
+                g = float(NUM[f"s7_gap_{a}_{pop}_{ck}"])
+                if a == "unif":
+                    cel_.append(f"{g:.2f}")
+                else:
+                    r = conf[(conf.a == a) & (conf["pop"] == pop) & (conf.ponto == ck)].iloc[0]
+                    cel_.append(f"{g:.2f} ({sgn(r.dif_pp)}{'*' if r.signif_005 else ''})")
+        lin.append(f"{nome} & " + " & ".join(cel_))
+    escreve("tab_s7.tex", tabela(
+        "Study 7 (HGS-CVRP): mean gap (\\%) after 250 and 1000 generations on the 25 CVRPLIB instances of sets X and CMT (P1) and on the "
+        "30 synthetic validation instances (P2); in parentheses, the difference from the uniform random order in pp "
+        "(* marks Holm-significance over 20 tests).", "tab:s7",
+        r" & \multicolumn{2}{c}{P1} & \multicolumn{2}{c}{P2} \\ Move-order policy & 250 & 1000 & 250 & 1000", lin, "lcccc"))
+    lin = []
+    for a, nome in ARMS7:
+        if a == "unif":
+            continue
+        cel_ = []
+        for pop in ("P1", "P2"):
+            for ck in (250, 1000):
+                r = conf[(conf.a == a) & (conf["pop"] == pop) & (conf.ponto == ck)].iloc[0]
+                cel_.append(cel(r))
+        lin.append(f"{nome} $-$ uniform order & " + " & ".join(cel_))
+    escreve("tab_s7_tests.tex", tabela(
+        "Study 7 (HGS-CVRP): confirmatory contrasts against the uniform random order of the moves (mean paired difference in pp [95\\% CI]; "
+        "Holm-adjusted $p$ over 20 tests).", "tab:s7tests",
+        r"Contrast & P1, 250 & P1, 1000 & P2, 250 & P2, 1000", lin, "lcccc"))
+    # tempo de CPU por geracao
+    c = dv.groupby(["braco", "instancia"]).cpu_s.mean().unstack(0)
+    for a, _ in ARMS7:
+        NUM[f"s7_cpu_{a}"] = f"{1000 * c[a].mean() / 4000:.1f}"
+        NUM[f"s7_cpurat_{a}"] = f"{(c[a] / c['fixed']).mean():.1f}"
+    # tentativas e sucessos por tipo de movimento sob a ordem aleatoria
+    g = d[(d.braco == "unif") & d.tentativas.notna()]
+    ten = np.array([[float(x) for x in s.split("|")] for s in g.tentativas]).sum(0)
+    suc = np.array([[float(x) for x in s.split("|")] for s in g.sucessos]).sum(0)
+    taxa = suc / np.maximum(ten, 1)
+    for j in range(9):
+        NUM[f"s7_succ_{j + 1}"] = f"{1e4 * taxa[j]:.1f}"
+    NUM["s7_succ_max"], NUM["s7_succ_min"] = str(int(np.argmax(taxa)) + 1), str(int(np.argmin(taxa)) + 1)
+    NUM["s7_succ_ratio"] = f"{taxa.max() / taxa.min():.0f}"
 
 
 def afirmacoes():
@@ -739,6 +827,8 @@ def main():
         estudo5()
     if (RES / "analise_etapa6_confirmatoria.csv").exists():
         estudo6()
+    if (RES / "analise_etapa7_confirmatoria.csv").exists():
+        estudo7()
     referencias()
     complementaridade()
     afirmacoes()
