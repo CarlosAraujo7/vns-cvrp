@@ -12,7 +12,7 @@ Let a solution be a set of routes; $d(\cdot,\cdot)$ is the (symmetric) distance,
 \item[CROSS($\le3$)] Exchange a segment of $l_A$ customers of $A$ with one of $l_B$ customers of $B$, $l_A,l_B\in\{1,2,3\}$, $\max(l_A,l_B)\ge2$, preserving segment orientation.
 \item[SWAP*] \citep{vidal2022} Exchange $u\in A$ and $v\in B$, reinserting $u$ at the best position of $B\setminus\{v\}$ and $v$ at the best position of $A\setminus\{u\}$ (not necessarily each other's place). Our version evaluates all pairs without the polar-sector restriction or top-three insertion lists of the original, so it is slower.
 \end{description}
-All ten operators were validated against an independent enumeration of their neighborhoods (Section~4.7 of the manuscript). The shake applies one random move from a randomly chosen original neighborhood, accepted even if it worsens the solution.
+All ten operators were validated against an independent enumeration of their neighborhoods (subsection ``Verification and use of AI tools'' of the manuscript). The shake applies one random move from a randomly chosen original neighborhood, accepted even if it worsens the solution.
 
 \section{Hyperparameters}\label{app:hyper}
 \begin{table}[h]

@@ -10,7 +10,8 @@ pre-specified study of bandit-guided variable neighborhood search for the capaci
 | Path | Contents |
 |---|---|
 | `src/` | Core code: instance reader, construction, neighborhoods (`neighborhoods.py`: 5 original operators; `neighborhoods_ext.py`: 5 added operators), the reproduced HG-UCB bandit (`bandit.py`), search loops (`vns.py`, `aos_vnd.py`), classical AOS policies (`aos_policies.py`) and the additional policies of Study 6 (`aos_policies_ext.py`: EXP3, Thompson sampling, sliding-window UCB, adaptive pursuit, efficiency UCB), distance-evaluation counter (`instancia_contadora.py`), stored initial solutions loader (`solucao_inicial.py`) |
-| `estudo_aos/` | Runners and analyses of Studies 1-6 (`run_aos_*.py`, `analisar_*.py`), robustness analysis, independent verification, synthetic-instance generator, initial-solution generator, structure diagnostic (`diag_estrutura.py`), Study 4 and 6 pipelines |
+| `src/hgs_aos/` | Modified copy of HGS-CVRP (MIT license, notice in `src/hgs_aos/LICENSE`) with adaptive move-order policies, used in Study 7 (`direcao1_local/build_hgs_aos.sh` builds it) |
+| `estudo_aos/` | Runners and analyses of Studies 1-7 (`run_aos_*.py`, `analisar_*.py`), robustness analysis, independent verification, synthetic-instance generator, initial-solution generator, structure diagnostic (`diag_estrutura.py`), Study 4 and 6 pipelines |
 | `instances/` | CVRPLIB subsets `A`, `B`, `CMT`, `X` (74 instances, with reference solutions) and the synthetic sets `SYN_TUNE` (24) and `SYN_VAL` (30) with HGS-CVRP reference solutions and `metadata.csv` |
 | `results/` | Raw per-run results (`aos_study/*.csv`, `hgs_74_*.csv`, `kool_zeroshot_74.csv`, ...) |
 | `tests/` | Validation scripts; `validate_neighborhoods_ext.py` checks the added operators against brute-force enumeration |
@@ -47,7 +48,7 @@ so interrupted runs can be resumed by repeating the same command.
 
 ## Integrity controls
 
-* Exact regression: each new version of the search loop reproduces the previous version's costs exactly under identical seeds (checked at every change; 48/48, 8/8 and 6/6 in the logged checks).
+* Exact regression: each new version of the search loop reproduces the previous version's costs exactly under identical seeds (checked at every change; 48/48, 8/8 and 6/6 in the logged checks); the modified HGS-CVRP reproduces the original program's solution files byte for byte in `-aos fixed` mode (51/51).
 * Operators validated against brute force (1 600 tests) with a mutation test.
 * `verificacao_independente.py` must print `VERIFICACAO INDEPENDENTE: OK`.
 * Git timestamps: commit `ef82cdc` precedes the Study 4 evaluation and `02e58d3` (extended by `b3d4add`) precedes all Study 6 data and `8a06b17` all Study 7 data; the pre-specification of Study 5 (entry 89) was in the research log before its data but was committed after its runs had started; Studies 1-3 are pre-specified only in the dated research log.

@@ -49,12 +49,17 @@ def aos_vs_baseline():
     if d6 is not None:
         for _, r in d6[d6.grupo == "confirmatorio"].iterrows():
             linhas.append(("S6", f"{r.id} E{int(r.nivel)}", r.a, r.b, r.dif_pp, r.p_holm))
+    d7 = ler("analise_etapa7_confirmatoria.csv")
+    if d7 is not None:
+        # Estudo 7 (HGS-CVRP): 4 politicas adaptativas x 2 pontos de controle x 2 populacoes contra a ordem aleatoria
+        for _, r in d7[(d7.grupo == "confirmatorio") & (d7.a != "fixed")].iterrows():
+            linhas.append(("S7", f"{r.a} {r['pop']} g{int(r.ponto)}", r.a, r.b, r.dif_pp, r.p_holm))
     return pd.DataFrame(linhas, columns=["estudo", "contraste", "a", "b", "dif_pp", "p_holm"])
 
 
 def main():
     t = aos_vs_baseline()
-    print(f"{len(t)} contrastes 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa' (S1-S4, S6)")
+    print(f"{len(t)} contrastes 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa' (S1-S4, S6, S7)")
     melhores = t[(t.dif_pp < 0) & (t.p_holm < 0.05)]
     print("U1: contrastes com a politica significativamente MELHOR:", len(melhores))
     if len(melhores):
@@ -63,7 +68,7 @@ def main():
     piores = t[(t.dif_pp > 0) & (t.p_holm < 0.05)]
     print(f"    contrastes com a politica significativamente PIOR: {len(piores)}")
     print(piores.to_string(index=False))
-    hg = t[t.a.str.contains("hgucb")]
+    hg = t[t.a.str.contains("hgucb") | (t.a == "hg")]   # "hg" = HG-UCB-lite do Estudo 7
     mh = hg[(hg.dif_pp < 0) & (hg.p_holm < 0.05)]
     print(f"U2: HG-UCB significativamente melhor: {len(mh)} de {len(hg)} contrastes; "
           f"significativamente pior: {int(((hg.dif_pp > 0) & (hg.p_holm < 0.05)).sum())}")

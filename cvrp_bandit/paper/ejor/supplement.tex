@@ -16,7 +16,7 @@
 \usepackage{algpseudocode}
 \renewcommand{\thealgorithm}{S\arabic{algorithm}}
 \usepackage{xcolor}
-\usepackage{natbib}
+\usepackage[authoryear]{natbib}
 \usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
 \input{numeros}
 \input{suptab}
@@ -55,7 +55,7 @@ This supplement contains the complete confirmatory test tables of every study, t
 \inputopt{tab_s5}
 
 \section{Pre-specified hypotheses and outcomes}
-The research log (file \texttt{diario\_pesquisa.md}, released with the data) records, before the data of each study existed, its arms, tests, family size and the expected direction of each hypothesis (entries 64, 71, 77, 83, 89 and 91 with its extension 93). Deviations and caveats: the family of Study~1 was reduced from 18 to 12 tests, as declared in log entries 67 and 69 before the $B=4000$ data were analyzed, although the $B=800$ results had already been seen under the conservative family of 18; Study~6 was extended from six to eight arms (family of 16 tests) in entry 93 before any of its data existed; no external registry timestamps exist, and the version-control commits that precede the data are \texttt{ef82cdc} (Study~4), \texttt{02e58d3} and \texttt{b3d4add} (Study~6), whereas the pre-specification of Study~5 was written in the log before its data but committed after its runs had started.
+The research log (file \texttt{diario\_pesquisa.md}, released with the data) records, before the data of each study existed, its arms, tests, family size and the expected direction of each hypothesis (entries 64, 71, 77, 83, 89, 91 with its extension 93, and 97, for Studies 1 to 7 in this order). Deviations and caveats: the family of Study~1 was reduced from 18 to 12 tests, as declared in log entries 67 and 69 before the $B=4000$ data were analyzed, although the $B=800$ results had already been seen under the conservative family of 18; Study~6 was extended from six to eight arms (family of 16 tests) in entry 93 before any of its data existed; no external registry timestamps exist, and the version-control commits that precede the data are \texttt{ef82cdc} (Study~4), \texttt{02e58d3} and \texttt{b3d4add} (Study~6) and \texttt{8a06b17} (Study~7), whereas the pre-specification of Study~5 was written in the log before its data but committed after its runs had started. For Study~7 the budget of the HGS-CVRP runs was calibrated before the pre-specification on seven instances with seeds outside the inference set; 13 runs (all on instance X-n195-k51) violating the route-count bound of our convention were excluded by the feasibility rule fixed in the entry, and a sensitivity analysis that includes them gives the same result; the CPU time of probability matching, inflated by floating-point underflow, was left uncorrected so as not to change the pre-specified code.
 
 \inputopt{tab_hipoteses}
 \inputopt{tab_studies}
@@ -81,5 +81,8 @@ The research log (file \texttt{diario\_pesquisa.md}, released with the data) rec
 \end{figure}
 
 \input{sec_suppl_ops}
+
+\bibliographystyle{elsarticle-harv}
+\bibliography{../refs}
 
 \end{document}

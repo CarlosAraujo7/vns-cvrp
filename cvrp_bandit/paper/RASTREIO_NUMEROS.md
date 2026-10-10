@@ -17,7 +17,7 @@ estudo_aos/verificacao_independente.py  recalcula, só com a biblioteca padrão,
 paper/ejor/checar_macros.py             chaves \num{} usadas existem; sem caracteres de controle; highlights, palavras-chave, resumo
 ```
 
-Ordem para regenerar tudo: `analisar_aos.py`, `analisar_etapa{2,3,4,5,6}.py`, `analise_robustez.py`, `gerar_tabelas.py`, `verificacao_independente.py`, `gerar_tabelas.py` (de novo, para ler o resultado da verificação), `gerar_figuras.py`, `gerar_suplemento.py`, `checar_macros.py`, compilar `main.tex` e `supplement.tex`.
+Ordem para regenerar tudo: `analisar_aos.py`, `analisar_etapa{2,3,4,5,6,7}.py`, `analise_robustez.py`, `gerar_tabelas.py`, `verificacao_independente.py`, `gerar_tabelas.py` (de novo, para ler o resultado da verificação), `gerar_figuras.py`, `gerar_suplemento.py`, `checar_macros.py`, compilar `main.tex` e `supplement.tex`.
 
 ## Famílias de macros (`numeros.json`; prefixo → origem)
 
@@ -31,8 +31,10 @@ Ordem para regenerar tudo: `analisar_aos.py`, `analisar_etapa{2,3,4,5,6}.py`, `a
 | `s6_*`, `s6x_*` | Estudo 6: famílias adicionais de AOS (Holm m=12); `s6x` = exploratório contra a mistura estática | `etapa6_full.csv`, `analise_etapa6_confirmatoria.csv` |
 | `eq_*`, `mde_*`, `rb2_*`, `rb90_*`, `rb1_*`, `rbd_*`, `rb_wider_*`, `var_*`, `seed_*` | Robustez: equivalência, IC em dois níveis, MDE, componentes de variância | `analise_robustez.csv`, `analise_robustez.py` |
 | `s7_*`, `s7{d,a,ci,p,w,l}_*`, `s7eq_*` | Estudo 7 (HGS-CVRP): gaps por braço/população/ponto de controle, contrastes (Holm m=20), CPU por geração, taxas de sucesso por movimento | `etapa7_full.csv`, `analise_etapa7_confirmatoria.csv`, `analise_etapa7_sensibilidade.csv` |
+| `s7pr_*`, `s7_mde_med` | Estudo 7: p bruto (Wilcoxon, antes do Holm) por contraste e MDE mediano (80% de poder) dos 20 testes confirmatórios (adicionados na auditoria do ciclo 4, Entrada 99) | `analise_etapa7_confirmatoria.csv` (colunas `p_bruto`, `mde_pp`) |
+| `g_ord_r1`, `g_pool_r1`, `g_gvns_r1`, `g_struct_*` | Resumo e Discussão: faixas com 1 casa decimal (ordem aleatória, conjunto, GVNS−HG-UCB), menor/maior efeito estrutural (término, ordem, conjunto, incl. conjunto em SYN_VAL) e razão em relação a 0,14% (Turkeš et al.) | `gerar_tabelas.py::agrupamentos` sobre `s2a_*`, `s3a_T1_*`, `s4a_W1`, `s1a_*` |
 | `compl_*` | Diagnóstico de complementaridade (exploratório): % de ótimos locais dos 5 operadores originais em que cada operador adicionado acha melhora | `diag_complementaridade.csv`, `estudo_aos/diag_complementaridade.py` |
-| `u_*` | Contagens das afirmações universais (contrastes política − baseline: significativamente melhores/piores) | `analise_etapa*_confirmatoria.csv` via `paper/ejor/checar_afirmacoes.py` |
+| `u_*` | Contagens das afirmações universais (contrastes política − baseline: significativamente melhores/piores; 66 contrastes dos Estudos 1-4, 6 e 7 desde a Entrada 99, antes 50 sem o Estudo 7; HG-UCB: 15 contrastes incl. o HG-UCB-lite do Estudo 7) | `analise_etapa*_confirmatoria.csv` via `paper/ejor/checar_afirmacoes.py` |
 | `eff_*`, `s2_*`, `s3_swap*`, `diag_*`, `sh_*` | Instrumentação: eficiência por operador, % das avaliações por operador, diagnóstico de estrutura, nº de shakes | colunas `calls_por_operador`, `suc_por_operador`, `ganho_por_operador`, `shakes` dos CSVs; `diag_estrutura.csv` |
 | `rep_*` | Fidelidade da reprodução (tabela 1) | `results/gvns_baseline_*.csv`, `results/bandit_vns_validation_*.csv` (A e B reexecutados em 09/10/2026) |
 | `hgs_*`, `kool_*`, `vns_gap_*` | Tetos externos e faixa de gap das variantes VNS | `results/hgs_74_*.csv`, `results/kool_zeroshot_74.csv` |

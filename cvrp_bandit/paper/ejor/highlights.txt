@@ -1,5 +1,5 @@
 A published bandit-guided routing heuristic's gain is not reproduced
 Raw-cost rewards saturate the policy; normalizing them recovers over one point
-No adaptive policy beats uniform random selection in six controlled studies
+No adaptive policy beats uniform random selection in seven controlled studies
 Search structure and operator pool, not learning, drive the gains
 Pre-specified protocol, matched budgets, equivalence tests, open data and code

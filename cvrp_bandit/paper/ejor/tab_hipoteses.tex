@@ -49,7 +49,7 @@ H23 & Neither contextual policy beats uniform selection (80\%). & Confirmed (\nu
 \midrule
 \multicolumn{3}{l}{\emph{Study 7 (log entry 97; committed as \texttt{8a06b17} before its data)}} \\
 H24 & No adaptive move-order policy beats the uniform random order inside HGS-CVRP (probability assigned: 85\%). & Confirmed: \num{s7_nbetter} of 20 tests are significant and the largest difference of an adaptive policy is \num{s7_maxabs_adapt}~pp. \\
-H25 & The uniform random order does not beat the original HGS order (65\%). & Confirmed: the original order does not differ significantly from the random order (differences \num{s7d_fixed_P1_250}, \num{s7d_fixed_P1_1000}, \num{s7d_fixed_P2_250} and \num{s7d_fixed_P2_1000}~pp). \\
+H25 & The uniform random order does not beat the original HGS order (65\%). & Confirmed: the original order does not differ significantly from the random order (differences \num{s7d_fixed_P1_250}, \num{s7d_fixed_P1_1000}, \num{s7d_fixed_P2_250} and \num{s7d_fixed_P2_1000}~pp); at P2 and 250 generations the bootstrap interval \num{s7ci_fixed_P2_250} excludes zero, but the Wilcoxon test does not (raw $p=\num{s7pr_fixed_P2_250}$). \\
 H26 & At least one adaptive policy is significantly worse than the random order in some test (40\%). & Not confirmed: \num{s7_nworse} significant tests. \\
 H27 & Policy-driven move orders are slower per generation than the original code path (exploratory; 90\%). & Confirmed: \num{s7_cpu_fixed}~ms per generation against \num{s7_cpu_ts}--\num{s7_cpu_hg}~ms (probability matching \num{s7_cpu_pm}~ms, with floating-point underflow). \\
 \end{longtable}

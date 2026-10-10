@@ -317,9 +317,27 @@ def faixa_int(chaves, nome):
     NUM[nome] = f"{min(v)}" if min(v) == max(v) else f"{min(v)}--{max(v)}"
 
 
+def faixa1(chaves, nome):
+    """faixa com uma casa decimal (resumo): '0.3--0.5' ou '0.5' quando os extremos coincidem"""
+    v = [float(NUM[k].replace("$-$", "-").replace("$+$", "")) for k in chaves]
+    lo, hi = f"{min(v):.1f}", f"{max(v):.1f}"
+    NUM[nome] = lo if lo == hi else f"{lo}--{hi}"
+
+
 def agrupamentos():
     """faixas de contrastes agrupados (para frases do texto)"""
     B = (800, 4000)
+    k_ord = [f"s2a_C{c}_{b}" for c in (5, 6) for b in B]
+    k_pool = ["s3a_T1_1", "s3a_T1_5"]
+    k_term = [f"s2a_C{c}_{b}" for c in (1, 2) for b in B]
+    faixa1(k_ord, "g_ord_r1")
+    faixa1(k_pool, "g_pool_r1")
+    faixa1(["s1a_hgucb_norm_gvns_classico_800", "s1a_hgucb_norm_gvns_classico_4000"], "g_gvns_r1")
+    k_pool_syn = ["s4a_W1"] if "s4a_W1" in NUM else []   # efeito do conjunto nas 30 instancias sinteticas de validacao
+    v = [float(NUM[k].replace("$-$", "-").replace("$+$", "")) for k in k_ord + k_pool + k_term + k_pool_syn]
+    NUM["g_struct_lo"], NUM["g_struct_hi"] = f"{min(v):.2f}", f"{max(v):.2f}"
+    # razao em relacao a 0,14% (meta-analise de Turkes et al., 2021)
+    NUM["g_struct_x_lo"], NUM["g_struct_x_hi"] = f"{min(v) / 0.14:.0f}", f"{max(v) / 0.14:.0f}"
     faixa([f"s2a_C{c}_{b}" for c in (1, 2) for b in B], "g_term_abs")
     faixa_int([f"s2w_C{c}_{b}" for c in (1, 2) for b in B], "g_term_w")
     faixa([f"s2a_C{c}_{b}" for c in (3, 4) for b in B], "g_acc_abs")
@@ -517,6 +535,7 @@ def estudo7():
                     continue
                 r = conf[(conf.a == a) & (conf["pop"] == pop) & (conf.ponto == ck)].iloc[0]
                 macros_contraste("s7", f"{a}_{pop}_{ck}", r)
+                NUM[f"s7pr_{a}_{pop}_{ck}"] = f"{r.p_bruto:.2f}"   # p bruto (Wilcoxon), antes do Holm
                 NUM[f"s7eq_{a}_{pop}_{ck}"] = "yes" if r.equiv_005 else "no"
     NUM["s7_nsig"] = str(int(conf.signif_005.sum()))
     NUM["s7_nbetter"] = str(int(((conf.dif_pp < 0) & conf.signif_005).sum()))
@@ -524,6 +543,7 @@ def estudo7():
     NUM["s7_neq"] = str(int(conf[conf.a.isin(["ucb1", "ts", "pm", "hg"])].equiv_005.sum()))
     tarde = c7[(c7.grupo == "exploratorio") & c7["pop"].isin(["P1", "P2"]) & c7.ponto.isin([2000, 4000]) & c7.a.isin(["ucb1", "ts", "pm", "hg"])]
     NUM["s7_late_n"], NUM["s7_late_eq"] = str(len(tarde)), str(int(tarde.equiv_005.sum()))
+    NUM["s7_mde_med"] = f"{conf.mde_pp.median():.2f}"
     NUM["s7_maxabs"] = f"{conf.dif_pp.abs().max():.2f}"
     NUM["s7_maxabs_adapt"] = f"{conf[conf.a.isin(['ucb1', 'ts', 'pm', 'hg'])].dif_pp.abs().max():.2f}"
     sf = RES / "analise_etapa7_sensibilidade.csv"
@@ -585,7 +605,7 @@ def afirmacoes():
     NUM["u_n"] = str(len(t))
     NUM["u_better"] = str(int(((t.dif_pp < 0) & (t.p_holm < 0.05)).sum()))
     NUM["u_worse"] = str(int(((t.dif_pp > 0) & (t.p_holm < 0.05)).sum()))
-    hg = t[t.a.str.contains("hgucb")]
+    hg = t[t.a.str.contains("hgucb") | (t.a == "hg")]   # "hg" = HG-UCB-lite do Estudo 7
     NUM["u_hg_n"] = str(len(hg))
     NUM["u_hg_worse"] = str(int(((hg.dif_pp > 0) & (hg.p_holm < 0.05)).sum()))
     NUM["u_hg_better"] = str(int(((hg.dif_pp < 0) & (hg.p_holm < 0.05)).sum()))
