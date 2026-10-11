@@ -144,6 +144,52 @@ def verifica_s7(num):
     return nm, nc
 
 
+def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave):
+    """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
+    diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
+    instancia). Colunas esperadas no bruto: braco, instancia, custo, ref, gap_pct, viavel."""
+    arq = RES / eval_csv
+    if not arq.exists() or not (RES / analise_csv).exists():
+        return 0, 0
+    por = defaultdict(list)
+    with open(arq, encoding="utf-8", newline="") as f:
+        for r in csv.DictReader(f):
+            if r["viavel"] != "True":
+                problemas.append(f"{eval_csv}: execucao inviavel {r['braco']} {r['instancia']} {r['seed']}")
+                continue
+            ref = float(r["ref"])
+            gap = 100.0 * (float(r["custo"]) - ref) / ref
+            if abs(gap - float(r["gap_pct"])) > 1e-6:
+                problemas.append(f"{eval_csv}: gap gravado divergente {r['braco']} {r['instancia']} {r['seed']}")
+            por[(r["braco"], r["instancia"])].append(gap)
+    medias = {k: statistics.fmean(v) for k, v in por.items()}
+    nm = 0
+    for chave, valor in num.items():
+        if chave.startswith(prefixo + "_gap_"):
+            braco = braco_de_chave(chave)
+            vals = [m for (b, i), m in medias.items() if b == braco]
+            if not vals:
+                problemas.append(f"macro {chave}: braco {braco} ausente em {eval_csv}")
+                continue
+            nm += confere(chave, valor, statistics.fmean(vals), 3 if prefixo == "s10" else 2)
+    nc = 0
+    for r in csv.DictReader(open(RES / analise_csv, encoding="utf-8")):
+        ia = {i: m for (b, i), m in medias.items() if b == r["a"]}
+        ib = {i: m for (b, i), m in medias.items() if b == r["b"]}
+        inst = sorted(set(ia) & set(ib))
+        dif = [ia[i] - ib[i] for i in inst]
+        dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+        if not dif:
+            problemas.append(f"{analise_csv} {r['id']}: sem instancias comuns")
+            continue
+        dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+        if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or len(inst) != int(r["n_inst"]):
+            problemas.append(f"{analise_csv} {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs "
+                             f"{r['vit_a']}/{r['der_a']}; n {len(inst)} vs {r['n_inst']}")
+        nc += 1
+    return nm, nc
+
+
 def main():
     dados = {}
     tot = 0
@@ -240,6 +286,17 @@ def main():
     outros += n7m
     cont += n7c
     print(f"(2b) Estudo 7 (HGS): {n7m} medias e {n7c} contrastes conferidos")
+    for rot, ev, an, pref, bk in (("Estudo 8 (controle positivo)", "etapa8_full.csv", "analise_etapa8_confirmatoria.csv", "s8",
+                                   lambda k: "s8_" + ("P10+" if k[len("s8_gap_"):].startswith("D4") else "") + k[len("s8_gap_"):]),
+                                  ("Estudo 9 (ALNS)", "etapa9_eval.csv", "analise_etapa9_confirmatoria.csv", "s9",
+                                   lambda k: "s9_" + k[len("s9_gap_"):]),
+                                  ("Estudo 10 (tamanho)", "etapa10_eval.csv", "analise_etapa10_confirmatoria.csv", "s10",
+                                   lambda k: "s10_" + k[len("s10_gap_"):])):
+        nm_, nc_ = verifica_gaps(ev, an, num, pref, bk)
+        outros += nm_
+        cont += nc_
+        if nm_ or nc_:
+            print(f"(2c) {rot}: {nm_} medias e {nc_} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(

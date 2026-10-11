@@ -1,0 +1,19 @@
+\begin{table}[t]
+\caption{Study 8: share of the planted loss recovered, $1-\mathrm{loss}(\text{policy})/\mathrm{loss}(\text{uniform})$ with $\mathrm{loss}(x)$ the gap in the pool with useless operators minus the gap in the clean pool (exploratory; 95\% bootstrap interval over instances), and share of the distance evaluations spent on useless operators in the $8n^2$ pool (uniform selection: 62\%).}\label{tab:s8rec}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccc}
+\toprule
+Policy & Recovery, $4n^2$ & Recovery, $8n^2$ & On useless operators ($8n^2$) \\
+\midrule
+UCB1 (cost-aware) & -2\% [-26, 18] & -5\% [-23, 10] & 59\% \\
+Probability matching (cost-aware) & 21\% [-10, 45] & 10\% [-13, 28] & 56\% \\
+HG-UCB (cost-aware) & -9\% [-43, 17] & 7\% [-11, 21] & 55\% \\
+Thompson sampling & 71\% [50, 91] & 66\% [52, 79] & 23\% \\
+EXP3 & 5\% [-24, 27] & -1\% [-21, 16] & 59\% \\
+Efficiency UCB & 93\% [74, 111] & 84\% [71, 96] & 48\% \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

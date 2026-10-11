@@ -419,7 +419,7 @@ def reproducao():
 
 
 SUP_ORDEM = ["tab:s1tests", "tab:s2tests", "tab:s3tests", "tab:s4tests", "tab:s4val", "tab:s5tests", "tab:s6tests",
-             "tab:s7tests", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
+             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
              "tab:studies", "tab:hyper"]      # mesma ordem de supplement.tex
 
 
@@ -596,6 +596,89 @@ def estudo7():
         NUM[f"s7_succ_{j + 1}"] = f"{1e4 * taxa[j]:.1f}"
     NUM["s7_succ_max"], NUM["s7_succ_min"] = str(int(np.argmax(taxa)) + 1), str(int(np.argmin(taxa)) + 1)
     NUM["s7_succ_ratio"] = f"{taxa.max() / taxa.min():.0f}"
+
+
+ARMS8 = [("U", "Uniform selection"), ("ucb1c", "UCB1 (cost-aware)"), ("pmc", "Probability matching (cost-aware)"),
+         ("hgucbc", "HG-UCB (cost-aware)"), ("ts", "Thompson sampling"), ("exp3", "EXP3"), ("eff", "Efficiency UCB")]
+POOLS8 = [("P10", "Clean pool"), ("P10+D4x4", "4 useless, $4n^2$"), ("P10+D4x8", "4 useless, $8n^2$")]
+
+
+def estudo8():
+    """Estudo 8 (controle positivo): operadores inuteis plantados. Entrada 101/102 do diario."""
+    c8 = pd.read_csv(RES / "analise_etapa8_confirmatoria.csv")
+    c8["p_holm"] = c8.p_holm.fillna(c8.p_bruto)          # linhas exploratorias do pool limpo: p bruto
+    rc = pd.read_csv(RES / "analise_etapa8_recuperacao.csv")
+    d = pd.read_csv(RES / "etapa8_full.csv")
+    d = d[d.viavel]
+    gap = d.groupby(["braco", "instancia"]).gap_pct.mean().groupby("braco").mean()
+    for pool, _ in POOLS8:
+        for a, _ in ARMS8:
+            NUM[f"s8_gap_{pool}_{a}"] = f2(gap[f"s8_{pool}_{a}"])
+    for pool in ("P10+D4x4", "P10+D4x8"):
+        NUM[f"s8_loss_{pool}"] = sgn(gap[f"s8_{pool}_U"] - gap["s8_P10_U"])
+    # participacao das avaliacoes gastas nos operadores inuteis (indices >= 10)
+    for pool in ("P10+D4x4", "P10+D4x8"):
+        for a, _ in ARMS8:
+            g = d[d.braco == f"s8_{pool}_{a}"]
+            arr = np.array([[int(v) for v in s.split("|")] for s in g.calls_por_operador])
+            NUM[f"s8_duds_{pool}_{a}"] = f"{100 * arr[:, 10:].sum() / arr.sum():.0f}"
+    conf = c8[c8.grupo == "confirmatorio"]
+    lin_main, lin_sup = [], []
+    for a, nome in ARMS8:
+        cel_ = []
+        for pool, _ in POOLS8:
+            g = float(NUM[f"s8_gap_{pool}_{a}"])
+            if a == "U":
+                cel_.append(f"{g:.2f}")
+                continue
+            r = c8[(c8.id == f"{pool}:{a}")].iloc[0]
+            macros_contraste("s8", f"{pool}_{a}", r)
+            NUM[f"s8pr_{pool}_{a}"] = f"{r.p_bruto:.3f}"
+            star = "*" if (r.grupo == "confirmatorio" and r.signif_005) else ""
+            cel_.append(f"{g:.2f} ({sgn(r.dif_pp)}{star})")
+        lin_main.append(f"{nome} & " + " & ".join(cel_))
+        if a != "U":
+            sup = [cel(c8[c8.id == f"{pool}:{a}"].iloc[0]) for pool, _ in POOLS8]
+            lin_sup.append(f"{nome} $-$ uniform & {sup[1]} & {sup[2]} & {sup[0]}")
+    escreve("tab_s8.tex", tabela(
+        "Study 8 (positive control): mean gap (\\%) over 74 instances at $E_1$ in the clean pool of ten operators and in pools with four "
+        "planted useless operators (each costing $4n^2$ or $8n^2$ distance evaluations and never improving); in parentheses, the difference "
+        "from uniform selection \\emph{in the same pool} in pp (* marks Holm-significance over the 12 confirmatory tests; "
+        "clean-pool comparisons are exploratory).", "tab:s8",
+        r"Policy & " + " & ".join(n for _, n in POOLS8), lin_main, "lccc"))
+    escreve("tab_s8_tests.tex", tabela(
+        "Study 8: contrasts against uniform selection in the same pool (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over 12 "
+        "tests for the two pools with useless operators; the clean-pool column is exploratory and reports unadjusted $p$).", "tab:s8tests",
+        r"Contrast & 4 useless, $4n^2$ & 4 useless, $8n^2$ & Clean pool (exploratory)", lin_sup, "lccc"))
+    NUM["s8_nsig"] = str(int(conf.signif_005.sum()))
+    NUM["s8_nbetter"] = str(int(((conf.dif_pp < 0) & conf.signif_005).sum()))
+    NUM["s8_nworse"] = str(int(((conf.dif_pp > 0) & conf.signif_005).sum()))
+    # recuperacao da perda plantada
+    lin = []
+    for a, nome in ARMS8[1:]:
+        cel_ = []
+        for pool in ("P10+D4x4", "P10+D4x8"):
+            r = rc[(rc.pool == pool) & (rc.politica == a)].iloc[0]
+            NUM[f"s8rec_{pool}_{a}"] = f"{100 * r.recuperacao:.0f}"
+            NUM[f"s8reci_{pool}_{a}"] = f"[{100 * r.rec_lo:.0f}, {100 * r.rec_hi:.0f}]"
+            cel_.append(f"{100 * r.recuperacao:.0f}\\% [{100 * r.rec_lo:.0f}, {100 * r.rec_hi:.0f}]")
+        lin.append(f"{nome} & " + " & ".join(cel_) + f" & {NUM[f's8_duds_P10+D4x8_{a}']}\\%")
+    escreve("tab_s8_rec.tex", tabela(
+        "Study 8: share of the planted loss recovered, $1-\\mathrm{loss}(\\text{policy})/\\mathrm{loss}(\\text{uniform})$ with "
+        "$\\mathrm{loss}(x)$ the gap in the pool with useless operators minus the gap in the clean pool (exploratory; 95\\% bootstrap "
+        "interval over instances), and share of the distance evaluations spent on useless operators in the $8n^2$ pool (uniform selection: "
+        + NUM["s8_duds_P10+D4x8_U"] + "\\%).", "tab:s8rec",
+        r"Policy & Recovery, $4n^2$ & Recovery, $8n^2$ & On useless operators ($8n^2$)", lin, "lccc"))
+    rec8 = rc[rc.pool == "P10+D4x8"].recuperacao
+    NUM["s8_rec_med_D4x8"] = f"{100 * rec8.median():.0f}"
+    NUM["s8_rec_n40_D4x8"] = str(int((rec8 >= 0.4).sum()))
+    NUM["s8_rec_excl1_D4x8"] = str(int((rc[rc.pool == "P10+D4x8"].rec_hi < 1).sum()))
+    NUM["s8_rec_excl1_D4x4"] = str(int((rc[rc.pool == "P10+D4x4"].rec_hi < 1).sum()))
+    best = conf[conf.id.str.startswith("P10+D4x8")].sort_values("dif_pp").iloc[0]
+    NUM["s8_best_D4x8"] = best.id.split(":")[1]
+    NUM["s8_best_D4x4_a"] = f"{abs(conf[conf.id.str.startswith('P10+D4x4')].dif_pp.min()):.2f}"
+    for k in [k for k in NUM if k.startswith("s8") and "P10+" in k]:     # chaves sem '+' (nomes de macro seguros)
+        NUM[k.replace("P10+", "")] = NUM.pop(k)
 
 
 def afirmacoes():
@@ -849,6 +932,8 @@ def main():
         estudo6()
     if (RES / "analise_etapa7_confirmatoria.csv").exists():
         estudo7()
+    if (RES / "analise_etapa8_confirmatoria.csv").exists():
+        estudo8()
     referencias()
     complementaridade()
     afirmacoes()

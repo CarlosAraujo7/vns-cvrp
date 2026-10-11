@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Study 8 (positive control): mean gap (\%) over 74 instances at $E_1$ in the clean pool of ten operators and in pools with four planted useless operators (each costing $4n^2$ or $8n^2$ distance evaluations and never improving); in parentheses, the difference from uniform selection \emph{in the same pool} in pp (* marks Holm-significance over the 12 confirmatory tests; clean-pool comparisons are exploratory).}\label{tab:s8}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccc}
+\toprule
+Policy & Clean pool & 4 useless, $4n^2$ & 4 useless, $8n^2$ \\
+\midrule
+Uniform selection & 2.19 & 2.55 & 2.72 \\
+UCB1 (cost-aware) & 2.10 ($-$0.08) & 2.48 ($-$0.07*) & 2.67 ($-$0.05) \\
+Probability matching (cost-aware) & 2.19 ($+$0.01) & 2.48 ($-$0.07) & 2.68 ($-$0.05) \\
+HG-UCB (cost-aware) & 2.15 ($-$0.04) & 2.54 ($-$0.01) & 2.65 ($-$0.07*) \\
+Thompson sampling & 2.32 ($+$0.14) & 2.43 ($-$0.12) & 2.51 ($-$0.22*) \\
+EXP3 & 2.19 ($+$0.01) & 2.54 ($-$0.01) & 2.74 ($+$0.01) \\
+Efficiency UCB & 2.48 ($+$0.29) & 2.50 ($-$0.05) & 2.56 ($-$0.16*) \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

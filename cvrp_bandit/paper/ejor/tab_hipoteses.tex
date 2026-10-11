@@ -52,5 +52,13 @@ H24 & No adaptive move-order policy beats the uniform random order inside HGS-CV
 H25 & The uniform random order does not beat the original HGS order (65\%). & Confirmed: the original order does not differ significantly from the random order (differences \num{s7d_fixed_P1_250}, \num{s7d_fixed_P1_1000}, \num{s7d_fixed_P2_250} and \num{s7d_fixed_P2_1000}~pp); at P2 and 250 generations the bootstrap interval \num{s7ci_fixed_P2_250} excludes zero, but the Wilcoxon test does not (raw $p=\num{s7pr_fixed_P2_250}$). \\
 H26 & At least one adaptive policy is significantly worse than the random order in some test (40\%). & Not confirmed: \num{s7_nworse} significant tests. \\
 H27 & Policy-driven move orders are slower per generation than the original code path (exploratory; 90\%). & Confirmed: \num{s7_cpu_fixed}~ms per generation against \num{s7_cpu_ts}--\num{s7_cpu_hg}~ms (probability matching \num{s7_cpu_pm}~ms, with floating-point underflow). \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 8 (log entry 101; committed as \texttt{43cccb0} before its data)}} \\
+H28 & In the pool with four useless operators costing $8n^2$, at least one adaptive policy is Holm-significantly better than uniform selection by at least 0.2~pp (probability assigned: 90\%). & Confirmed: Thompson sampling \num{s8d_D4x8_ts}~pp (adjusted $p=\num{s8p_D4x8_ts}$). \\
+H29 & The same holds in the pool with useless operators costing $4n^2$ (75\%). & Not confirmed: one significant policy (UCB1, \num{s8d_D4x4_ucb1c}~pp), none by 0.2~pp. \\
+H30 & The best adaptive policy in the $8n^2$ pool is the efficiency UCB or Thompson sampling (60\%). & Confirmed: Thompson sampling, then the efficiency UCB. \\
+H31 & Exploratory: the median recovery of the planted loss in the $8n^2$ pool is at least 40\% (55\%). & Not confirmed: median \num{s8_rec_med_D4x8}\%; \num{s8_rec_n40_D4x8} of 6 policies recover 40\% or more. \\
+H32 & Exploratory: in the clean pool no policy is significantly better than uniform selection (80\%). & Confirmed (smallest unadjusted $p$ for an improvement: UCB1, \num{s8pr_P10_ucb1c}). \\
+H33 & Exploratory: no policy recovers the whole planted loss (interval excludes 100\% for at least four of six; 65\%). & Confirmed: \num{s8_rec_excl1_D4x8} of 6 in the $8n^2$ pool, \num{s8_rec_excl1_D4x4} of 6 in the $4n^2$ pool. \\
 \end{longtable}
 \end{center}

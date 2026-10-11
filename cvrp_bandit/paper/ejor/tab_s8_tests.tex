@@ -1,0 +1,19 @@
+\begin{table}[t]
+\caption{Study 8: contrasts against uniform selection in the same pool (mean paired difference in pp [95\% CI]; Holm-adjusted $p$ over 12 tests for the two pools with useless operators; the clean-pool column is exploratory and reports unadjusted $p$).}\label{tab:s8tests}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccc}
+\toprule
+Contrast & 4 useless, $4n^2$ & 4 useless, $8n^2$ & Clean pool (exploratory) \\
+\midrule
+UCB1 (cost-aware) $-$ uniform & $-$0.07 [$-$0.13, $-$0.01]; 0.049 & $-$0.05 [$-$0.11, 0.00]; 0.14 & $-$0.08 [$-$0.17, 0.00]; 0.053 \\
+Probability matching (cost-aware) $-$ uniform & $-$0.07 [$-$0.13, $-$0.01]; 0.19 & $-$0.05 [$-$0.10, $+$0.01]; 0.69 & $+$0.01 [$-$0.10, $+$0.10]; 0.21 \\
+HG-UCB (cost-aware) $-$ uniform & $-$0.01 [$-$0.09, $+$0.08]; 1.0 & $-$0.07 [$-$0.13, $-$0.02]; 0.047 & $-$0.04 [$-$0.12, $+$0.04]; 0.42 \\
+Thompson sampling $-$ uniform & $-$0.12 [$-$0.22, $-$0.03]; 0.096 & $-$0.22 [$-$0.31, $-$0.13]; \ensuremath{<10^{-4}} & $+$0.14 [$+$0.05, $+$0.22]; \ensuremath{<10^{-4}} \\
+EXP3 $-$ uniform & $-$0.01 [$-$0.07, $+$0.05]; 1.0 & $+$0.01 [$-$0.04, $+$0.07]; 1.0 & $+$0.01 [$-$0.09, $+$0.09]; 0.47 \\
+Efficiency UCB $-$ uniform & $-$0.05 [$-$0.14, $+$0.04]; 1.0 & $-$0.16 [$-$0.25, $-$0.07]; 0.005 & $+$0.29 [$+$0.18, $+$0.40]; \ensuremath{<10^{-4}} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

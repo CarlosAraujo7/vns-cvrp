@@ -45,7 +45,7 @@ def contraste(piv, cid, a, b, rng, grupo):
     lo, hi = np.percentile(med, [2.5, 97.5])
     lo90, hi90 = np.percentile(med, [5, 95])
     p = stats.wilcoxon(dif).pvalue if np.any(dif != 0) else 1.0
-    return dict(grupo=grupo, id=cid, a=a, b=b, dif_pp=dif.mean(), ic_lo=lo, ic_hi=hi, vit_a=int((dif < 0).sum()),
+    return dict(grupo=grupo, id=cid, a=a, b=b, n_inst=len(dif), dif_pp=dif.mean(), ic_lo=lo, ic_hi=hi, vit_a=int((dif < 0).sum()),
                 der_a=int((dif > 0).sum()), emp=int((dif == 0).sum()), p_bruto=p,
                 equiv_010=bool(lo90 > -0.1 and hi90 < 0.1), mde_pp=2.8 * dif.std(ddof=1) / np.sqrt(len(dif)))
 
