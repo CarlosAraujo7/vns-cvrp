@@ -149,6 +149,46 @@ def specs_eval9():
             "s9_exp3": s("s9_exp3", "exp3", {"gamma": 0.1}), "s9_eff": s("s9_eff", "eff", {"C": 1.0})}
 
 
+def _worker_vns(args):
+    sp, nivel, c, n, sd = args
+    return r4.executar4(sp, nivel, c, n, sd)
+
+
+def modo_vns(workers):
+    """Braços VNS ao MESMO orcamento do ALNS (kappa=1500 = 2,5 x E1), nas mesmas instancias e seeds do Estudo 9:
+    U (P10, R5) e a mistura estatica do Estudo 4. Sao a referencia 'melhor VNS' contra o ALNS."""
+    esc4 = json.loads((RES / "etapa4_tuning_escolhidas.json").read_text())
+    sp = [r4.spec("s9_vns_U", "U", termino="R", custo=False, config_id="e9v", pool="P10"),
+          r4.spec("s9_vns_static", "static", termino="R", custo=False, params=esc4["static"]["params"],
+                  config_id="e9v", pool="P10")]
+    insts = []
+    for conj in ("X", "SYN_VAL"):
+        from instance import load_all
+        insts += [(conj, i.name, i.n_customers) for i in load_all(ROOT / "instances" / conj)]
+    insts.sort(key=lambda t: -t[2])
+    nivel = KAPPA9 / 600.0                                   # 2,5: orcamento = 1500 n^2
+    tarefas = [(s, nivel, c, n, 1000 + sd) for (c, n, nc) in insts for s in sp for sd in range(10 if c == "X" else 5)]
+    out = RES / "etapa9_vns.csv"
+    feitos = set()
+    if out.exists():
+        with open(out, encoding="utf-8") as f:
+            feitos = {(r["braco"], r["config_id"], float(r["nivel"]), r["instancia"], int(r["seed"]))
+                      for r in csv.DictReader(f)}
+    pend = [t for t in tarefas if (t[0]["nome"], t[0]["config_id"], float(t[1]), t[3], t[4]) not in feitos]
+    print(f"vns: {len(tarefas)} execucoes ({len(pend)} pendentes)", flush=True)
+    novo = not out.exists()
+    with mp.Pool(workers) as pool, open(out, "a", newline="", encoding="utf-8") as f_out:
+        w = csv.DictWriter(f_out, fieldnames=r4.CAMPOS)
+        if novo:
+            w.writeheader()
+        for k, linha in enumerate(pool.imap_unordered(_worker_vns, pend, chunksize=1), 1):
+            w.writerow(linha)
+            if k % 50 == 0:
+                f_out.flush()
+                print(f"    {k}/{len(pend)}", flush=True)
+    print("vns concluido", flush=True)
+
+
 def modo_eval(workers):
     sp = specs_eval9()
     insts = []
@@ -172,6 +212,7 @@ def main():
     g.add_argument("--tuning-grid", action="store_true")
     g.add_argument("--selecionar", action="store_true")
     g.add_argument("--eval", action="store_true")
+    g.add_argument("--vns", action="store_true")
     ap.add_argument("--workers", type=int, default=11)
     a = ap.parse_args()
     if a.tuning_grid:
@@ -180,6 +221,8 @@ def main():
         return modo_selecionar()
     if a.eval:
         return modo_eval(a.workers)
+    if a.vns:
+        return modo_vns(a.workers)
     nm = r4.nomes("SYN_TUNE")
     if a.pilot:
         # piloto das politicas (SYN_TUNE; exploratorio): configuracao do ALNS fixada pela calibracao (diario, Entrada 100)
