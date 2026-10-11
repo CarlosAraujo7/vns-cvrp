@@ -419,7 +419,7 @@ def reproducao():
 
 
 SUP_ORDEM = ["tab:s1tests", "tab:s2tests", "tab:s3tests", "tab:s4tests", "tab:s4val", "tab:s5tests", "tab:s6tests",
-             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
+             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s10tests", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
              "tab:studies", "tab:hyper"]      # mesma ordem de supplement.tex
 
 
@@ -681,6 +681,78 @@ def estudo8():
         NUM[k.replace("P10+", "")] = NUM.pop(k)
 
 
+ARMS10 = [("U", "Uniform selection"), ("static_S", "Static mixture tuned at $n\\le150$ (Study 4)"),
+          ("static_L", "Static mixture tuned at $n=200$--400"), ("ucb1c", "UCB1 (cost-aware)"),
+          ("pmc", "Probability matching (cost-aware)"), ("hgucbc", "HG-UCB (cost-aware)"), ("ts", "Thompson sampling"),
+          ("eff", "Efficiency UCB")]
+
+
+def estudo10():
+    """Estudo 10 (o valor da selecao aprendida cresce com n?): instancias grandes. Entradas 104/105 do diario."""
+    c = pd.read_csv(RES / "analise_etapa10_confirmatoria.csv")
+    tam = pd.read_csv(RES / "analise_etapa10_tamanho.csv")
+    e = pd.read_csv(RES / "etapa10_eval.csv")
+    e = e[e.viavel]
+    gap = e.groupby(["braco", "instancia"]).gap_pct.mean().groupby("braco").mean()
+    for a, _ in ARMS10:
+        NUM[f"s10_gap_{a}"] = f"{gap['s10_' + a]:.3f}"
+    NUM["s10_n_inst"] = str(e.instancia.nunique())
+    NUM["s10_nruns"] = f"{len(e):,}".replace(",", r"\,")
+    lin_main, lin_sup = [], []
+    for a, nome in ARMS10:
+        if a == "U":
+            lin_main.append(f"{nome} & {gap['s10_U']:.2f} & & & ")
+            continue
+        r = c[c.id == f"{a}-U"].iloc[0]
+        macros_contraste("s10", a, r)
+        NUM[f"s10pr_{a}"] = f"{r.p_bruto:.3f}"
+        NUM[f"s10mde_{a}"] = f"{r.mde_pp:.2f}"
+        lin_main.append(f"{nome} & {gap['s10_' + a]:.2f} & {sgn(r.dif_pp)} [{plano(r.ic_lo)}, {plano(r.ic_hi)}] & "
+                        f"{r.p_bruto:.3f} & {padj(r.p_holm)}")
+        lin_sup.append(f"{nome} $-$ uniform & {cel(r)} & {int(r.vit_a)}/{int(r.der_a)}")
+    escreve("tab_s10.tex", tabela(
+        "Study 10: instances of 200 to 500 customers (20 synthetic validation instances, five seeds, $E_1$): mean gap (\\%), mean paired "
+        "difference from uniform selection in pp [95\\% CI], unadjusted $p$ and Holm-adjusted $p$ over seven tests.", "tab:s10",
+        r"Policy & Gap & Difference & $p$ & $p$ (Holm)", lin_main, "lcccc"))
+    escreve("tab_s10_tests.tex", tabela(
+        "Study 10: confirmatory contrasts against uniform selection on the 20 large synthetic instances (mean paired difference in pp "
+        "[95\\% CI]; Holm-adjusted $p$ over seven tests; wins/losses of the first-named arm).", "tab:s10tests",
+        r"Contrast & $E_1$ & Wins/losses", lin_sup, "lcc"))
+    NUM["s10_nsig"] = str(int(c.signif_005.sum()))
+    NUM["s10_nbetter"] = str(int(((c.dif_pp < 0) & c.signif_005).sum()))
+    NUM["s10_nworse"] = str(int(((c.dif_pp > 0) & c.signif_005).sum()))
+    # tendencia com o tamanho (exploratorio)
+    for _, r in tam.iterrows():
+        a = r.braco
+        NUM[f"s10rho_{a}"] = sgn(r.rho)
+        NUM[f"s10rhop_{a}"] = f"{r.p:.2f}"
+        for n in (200, 300, 400, 500):
+            NUM[f"s10dn{n}_{a}"] = sgn(r[f"dif_n{n}"])
+    # participacao do SWAP* e do CROSS sob U por tamanho
+    g = e[e.braco == "s10_U"]
+    for nn, gg in g.groupby("n_customers"):
+        arr = np.array([[int(x) for x in s.split("|")] for s in gg.calls_por_operador])
+        pct = 100 * arr.sum(0) / arr.sum()
+        NUM[f"s10_swap_n{int(nn)}"], NUM[f"s10_cross_n{int(nn)}"] = f"{pct[9]:.0f}", f"{pct[8]:.0f}"
+    esc = json.loads((RES / "etapa10_tuning_escolhida.json").read_text())
+    NUM["s10_tune_gap_L"], NUM["s10_tune_gap_eq"] = f"{esc['gap_tune']:.2f}", f"{esc['gap_pesos_iguais']:.2f}"
+    # a hipotese pos-hoc dos dados antigos (Entrada 100): estatica do Estudo 4 vs U em CVRPLIB n>120 (E1 e E2)
+    if (RES / "etapa4_eval74.csv").exists():
+        e3_ = pd.read_csv(RES / "etapa3_full.csv")
+        e4_ = pd.read_csv(RES / "etapa4_eval74.csv")
+        from scipy import stats
+        for nv in (1, 5):
+            b = e3_[(e3_.braco == "s3_R5_U") & (e3_.nivel == nv) & e3_.viavel].groupby("instancia").gap_pct.mean()
+            s = e4_[(e4_.braco == "s4_R5_static") & (e4_.nivel == nv) & e4_.viavel].groupby("instancia").gap_pct.mean()
+            nn = e3_.drop_duplicates("instancia").set_index("instancia").n_customers
+            dif = (s - b).dropna()
+            gr = dif[nn.reindex(dif.index) > 120]
+            NUM[f"s10ph_d_{nv}"] = sgn(gr.mean())
+            NUM[f"s10ph_w_{nv}"] = str(int((gr < 0).sum()))
+            NUM[f"s10ph_n_{nv}"] = str(len(gr))
+            NUM[f"s10ph_p_{nv}"] = f"{stats.wilcoxon(gr).pvalue:.3f}"
+
+
 def afirmacoes():
     """contagens das afirmacoes universais (mesma logica de checar_afirmacoes.py)"""
     from checar_afirmacoes import aos_vs_baseline
@@ -934,6 +1006,8 @@ def main():
         estudo7()
     if (RES / "analise_etapa8_confirmatoria.csv").exists():
         estudo8()
+    if (RES / "analise_etapa10_confirmatoria.csv").exists():
+        estudo10()
     referencias()
     complementaridade()
     afirmacoes()

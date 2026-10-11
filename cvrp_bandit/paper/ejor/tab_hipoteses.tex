@@ -60,5 +60,12 @@ H30 & The best adaptive policy in the $8n^2$ pool is the efficiency UCB or Thomp
 H31 & Exploratory: the median recovery of the planted loss in the $8n^2$ pool is at least 40\% (55\%). & Not confirmed: median \num{s8_rec_med_D4x8}\%; \num{s8_rec_n40_D4x8} of 6 policies recover 40\% or more. \\
 H32 & Exploratory: in the clean pool no policy is significantly better than uniform selection (80\%). & Confirmed (smallest unadjusted $p$ for an improvement: UCB1, \num{s8pr_P10_ucb1c}). \\
 H33 & Exploratory: no policy recovers the whole planted loss (interval excludes 100\% for at least four of six; 65\%). & Confirmed: \num{s8_rec_excl1_D4x8} of 6 in the $8n^2$ pool, \num{s8_rec_excl1_D4x4} of 6 in the $4n^2$ pool. \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 10 (log entry 104; written before the tuning and the evaluation data)}} \\
+H40 & The static mixture tuned on large instances is Holm-significantly better than uniform selection on new large instances by at least 0.2~pp (probability assigned: 65\%). & Not confirmed: \num{s10d_static_L}~pp, adjusted $p=\num{s10p_static_L}$. \\
+H41 & The mixture tuned at $n\le150$ (Study 4) is Holm-significantly better than uniform selection there (50\%). & Not confirmed: \num{s10d_static_S}~pp in the predicted direction, adjusted $p=\num{s10p_static_S}$. \\
+H42 & No online policy is significantly better than uniform selection (65\%). & Confirmed (\num{s10_nbetter} improvements; Thompson sampling and the efficiency UCB are significantly worse). \\
+H43 & Exploratory: the advantage of the tuned mixture grows with $n$ (negative Spearman correlation; 60\%). & Not confirmed, opposite sign: \num{s10rho_static_L} ($p=\num{s10rhop_static_L}$). \\
+H44 & Exploratory: under uniform selection the naive SWAP* absorbs at least 60\% of the evaluations at $n=500$ (75\%). & Confirmed: \num{s10_swap_n500}\%. \\
 \end{longtable}
 \end{center}

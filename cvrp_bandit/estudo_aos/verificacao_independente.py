@@ -173,9 +173,12 @@ def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave):
                 continue
             nm += confere(chave, valor, statistics.fmean(vals), 3 if prefixo == "s10" else 2)
     nc = 0
+    bracos = {b for (b, _i) in medias}
     for r in csv.DictReader(open(RES / analise_csv, encoding="utf-8")):
-        ia = {i: m for (b, i), m in medias.items() if b == r["a"]}
-        ib = {i: m for (b, i), m in medias.items() if b == r["b"]}
+        na = r["a"] if r["a"] in bracos else prefixo + "_" + r["a"]
+        nb = r["b"] if r["b"] in bracos else prefixo + "_" + r["b"]
+        ia = {i: m for (b, i), m in medias.items() if b == na}
+        ib = {i: m for (b, i), m in medias.items() if b == nb}
         inst = sorted(set(ia) & set(ib))
         dif = [ia[i] - ib[i] for i in inst]
         dif = [0.0 if abs(x) < 1e-9 else x for x in dif]

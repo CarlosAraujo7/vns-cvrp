@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Study 10: confirmatory contrasts against uniform selection on the 20 large synthetic instances (mean paired difference in pp [95\% CI]; Holm-adjusted $p$ over seven tests; wins/losses of the first-named arm).}\label{tab:s10tests}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcc}
+\toprule
+Contrast & $E_1$ & Wins/losses \\
+\midrule
+Static mixture tuned at $n\le150$ (Study 4) $-$ uniform & $-$0.40 [$-$0.69, $-$0.13]; 0.13 & 12/8 \\
+Static mixture tuned at $n=200$--400 $-$ uniform & $-$0.14 [$-$0.25, $-$0.04]; 0.13 & 12/8 \\
+UCB1 (cost-aware) $-$ uniform & $-$0.09 [$-$0.20, $+$0.02]; 0.43 & 14/6 \\
+Probability matching (cost-aware) $-$ uniform & $-$0.06 [$-$0.22, $+$0.11]; 0.52 & 11/9 \\
+HG-UCB (cost-aware) $-$ uniform & $-$0.03 [$-$0.13, $+$0.08]; 0.52 & 13/7 \\
+Thompson sampling $-$ uniform & $+$0.20 [$+$0.10, $+$0.32]; 0.006 & 4/16 \\
+Efficiency UCB $-$ uniform & $+$0.24 [$+$0.04, $+$0.43]; 0.050 & 3/17 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

@@ -1,0 +1,21 @@
+\begin{table}[t]
+\caption{Study 10: instances of 200 to 500 customers (20 synthetic validation instances, five seeds, $E_1$): mean gap (\%), mean paired difference from uniform selection in pp [95\% CI], unadjusted $p$ and Holm-adjusted $p$ over seven tests.}\label{tab:s10}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+Policy & Gap & Difference & $p$ & $p$ (Holm) \\
+\midrule
+Uniform selection & 4.44 & & &  \\
+Static mixture tuned at $n\le150$ (Study 4) & 4.04 & $-$0.40 [$-$0.69, $-$0.13] & 0.027 & 0.13 \\
+Static mixture tuned at $n=200$--400 & 4.30 & $-$0.14 [$-$0.25, $-$0.04] & 0.030 & 0.13 \\
+UCB1 (cost-aware) & 4.35 & $-$0.09 [$-$0.20, 0.02] & 0.143 & 0.43 \\
+Probability matching (cost-aware) & 4.38 & $-$0.06 [$-$0.22, 0.11] & 0.498 & 0.52 \\
+HG-UCB (cost-aware) & 4.41 & $-$0.03 [$-$0.13, 0.08] & 0.261 & 0.52 \\
+Thompson sampling & 4.64 & $+$0.20 [0.10, 0.32] & 0.001 & 0.006 \\
+Efficiency UCB & 4.68 & $+$0.24 [0.04, 0.43] & 0.008 & 0.050 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
