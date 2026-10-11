@@ -1,0 +1,37 @@
+{
+ "ucb1": {
+  "params": {
+   "C": 2.0
+  },
+  "gap_tune": 0.8281762005356975,
+  "gap_padrao": 0.8281762005356975,
+  "n_configs": 5
+ },
+ "pm": {
+  "params": {
+   "gamma": 0.3,
+   "p_min": 0.02
+  },
+  "gap_tune": 0.6712281725266387,
+  "gap_padrao": 0.8355313735551224,
+  "n_configs": 9
+ },
+ "hgucb": {
+  "params": {
+   "C": 1.0,
+   "alpha": 0.1
+  },
+  "gap_tune": 0.8767455160368057,
+  "gap_padrao": 0.954089102522501,
+  "n_configs": 9
+ },
+ "RP": {
+  "params": {
+   "rho": 0.3,
+   "segmento": 100
+  },
+  "gap_tune": 0.7674024016463667,
+  "gap_padrao": 0.7984906683676171,
+  "n_configs": 9
+ }
+}
