@@ -36,6 +36,9 @@ HGS = ROOT / "external" / "HGS-CVRP" / "hgs"
 CONJUNTOS = {
     "SYN_TUNE": dict(tag="t", semente=20261008, tamanhos=[50] * 8 + [100] * 8 + [150] * 8),
     "SYN_VAL": dict(tag="v", semente=20261009, tamanhos=[100] * 10 + [200] * 10 + [300] * 10),
+    # Estudo 10 (instancias GRANDES; diario, Entrada 100): ajuste e validacao em tamanhos maiores que os dos Estudos 4-7
+    "SYN_TUNE_L": dict(tag="tl", semente=20261011, tamanhos=[200] * 4 + [300] * 4 + [400] * 4),
+    "SYN_VAL_L": dict(tag="vl", semente=20261012, tamanhos=[200] * 5 + [300] * 5 + [400] * 5 + [500] * 5),
 }
 
 
@@ -74,8 +77,16 @@ def hgs_melhor(vrp_path, n):
 
 
 def main():
+    # Uso: python3 gerar_instancias_sinteticas.py [CONJUNTO ...]   (sem argumentos: todos). Um conjunto que ja tem
+    # metadata.csv NAO e regenerado (os conjuntos dos Estudos 4-7 sao fixos; o HGS de referencia depende do tempo).
+    escolhidos = sys.argv[1:] or list(CONJUNTOS)
     for nome_conj, cfg in CONJUNTOS.items():
+        if nome_conj not in escolhidos:
+            continue
         destino = ROOT / "instances" / nome_conj
+        if (destino / "metadata.csv").exists():
+            print(f"{nome_conj}: ja existe (metadata.csv); nao regenerado", flush=True)
+            continue
         destino.mkdir(parents=True, exist_ok=True)
         rng = random.Random(cfg["semente"])
         itens = []
