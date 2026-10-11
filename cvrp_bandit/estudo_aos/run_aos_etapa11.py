@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from run_aos_study import _instancia  # noqa: E402
-from run_aos_etapa3 import POOL_P10, PACIENCIA, KAPPA, _proxy  # noqa: E402
+from run_aos_etapa3 import POOL_P10, POOL_P5, PACIENCIA, KAPPA, _proxy  # noqa: E402
 import run_aos_etapa4 as r4  # noqa: E402
 from neighborhoods import NEIGHBORHOODS  # noqa: E402
 from neighborhoods_ext import _nao_usado_random  # noqa: E402
@@ -39,7 +39,7 @@ def executar11(sp, nivel, set_name, nome_inst, seed):
     inst, cws = _instancia(set_name, nome_inst)
     proxy = _proxy(set_name, nome_inst)
     proxy.chamadas = 0
-    pool = POOL_P10F
+    pool = POOL_P10F if sp.get("pool", "P10F") == "P10F" else POOL_P5
     k = len(pool)
     uso, calls_op, maximo = [0] * k, [0] * k, [0]
     suc, gan = [0] * k, [0.0] * k
@@ -114,5 +114,131 @@ def rodar11(tarefas, out_csv, pool_mp):
     return len(pend)
 
 
+import argparse  # noqa: E402
+import numpy as np  # noqa: E402
+from instance import load_all  # noqa: E402
+
+SEEDS_TUNE11 = [3000, 3001, 3002, 3003, 3004]
+ES_BASE_SEED = 20261111
+
+
+def spec11(nome, pol, custo=False, params=None, pool="P10F", config_id="e11"):
+    return {"nome": nome, "pol": pol, "custo": custo, "params": params or {}, "config_id": config_id, "pool": pool,
+            "termino": "R"}
+
+
+def tarefas_tune(sp):
+    return [(sp, 1, "SYN_TUNE", n, s) for n in sorted(r4.nomes("SYN_TUNE"), reverse=True) for s in SEEDS_TUNE11]
+
+
+def modo_tuning(workers):
+    out = RES / "etapa11_tuning_static.csv"
+    estado_p = RES / "etapa11_tuning_static_estado.json"
+    k = len(POOL_P10F)
+    n_ref = len(r4.nomes("SYN_TUNE")) * len(SEEDS_TUNE11)
+    estado = (json.loads(estado_p.read_text()) if estado_p.exists()
+              else {"geracao": 0, "theta": [0.0] * k, "sigma": r4.ES_SIGMA0, "melhor": None})
+
+    def pesos(theta):
+        w = np.exp(np.array(theta))
+        return (w / w.sum()).tolist()
+
+    with mp.Pool(workers) as pool:
+        def avaliar(theta, cid):
+            sp = spec11("tune_static_F", "static", params={"pesos": pesos(theta), "theta": list(map(float, theta))},
+                        config_id=cid)
+            rodar11(tarefas_tune(sp), out, pool)
+            m, n = r4.media_gap(out, "tune_static_F", cid)
+            assert n == n_ref, (cid, n, n_ref)
+            return m
+
+        if estado["melhor"] is None:
+            estado["melhor"] = avaliar(estado["theta"], "gen00")
+            estado_p.write_text(json.dumps(estado))
+            print(f"gen 0: gap {estado['melhor']:.4f}", flush=True)
+        while estado["geracao"] < r4.ES_GERACOES:
+            g = estado["geracao"] + 1
+            rng = np.random.default_rng(ES_BASE_SEED + g)
+            filhos = [np.array(estado["theta"]) + estado["sigma"] * rng.normal(size=k) for _ in range(r4.ES_FILHOS)]
+            gaps = [avaliar(th, f"gen{g:02d}c{i}") for i, th in enumerate(filhos)]
+            i = int(np.argmin(gaps))
+            if gaps[i] < estado["melhor"]:
+                estado["theta"], estado["melhor"] = filhos[i].tolist(), gaps[i]
+            else:
+                estado["sigma"] *= 0.9
+            estado["geracao"] = g
+            estado_p.write_text(json.dumps(estado))
+            print(f"gen {g}: melhor filho {min(gaps):.4f}  atual {estado['melhor']:.4f}  sigma {estado['sigma']:.3f}",
+                  flush=True)
+    print("busca estatica (P10F) concluida", flush=True)
+
+
+def modo_selecionar():
+    import pandas as pd
+    st = pd.read_csv(RES / "etapa11_tuning_static.csv")
+    st = st[st.viavel].groupby(["config_id", "params"]).gap_pct.mean().reset_index().sort_values("gap_pct")
+    top = st.iloc[0]
+    par = json.loads(top.params)
+    u0 = st[st.config_id == "gen00"].gap_pct.iloc[0]
+    (RES / "etapa11_tuning_escolhida.json").write_text(json.dumps(
+        {"params": par, "gap_tune": float(top.gap_pct), "gap_pesos_iguais": float(u0), "config_id": top.config_id,
+         "n_configs": int(len(st))}, indent=1))
+    print(f"static_F: melhor {top.config_id} gap_tune={top.gap_pct:.4f} (pesos iguais {u0:.4f}); pesos="
+          f"{[round(x, 3) for x in par['pesos']]}")
+
+
+def specs_eval():
+    esc = json.loads((RES / "etapa11_tuning_escolhida.json").read_text())
+    return {
+        "s11_U": spec11("s11_U", "U"),
+        "s11_ucb1c": spec11("s11_ucb1c", "ucb1", custo=True, params={"C": 2.0}),
+        "s11_pmc": spec11("s11_pmc", "pm", custo=True, params={"gamma": 0.1, "p_min": 0.05}),
+        "s11_hgucbc": spec11("s11_hgucbc", "hgucb", custo=True, params={"alpha": 0.5, "C": 2.0}),
+        "s11_ts": spec11("s11_ts", "ts"),
+        "s11_exp3": spec11("s11_exp3", "exp3", params={"gamma": 0.1}),
+        "s11_eff": spec11("s11_eff", "eff", params={"C": 1.0}),
+        "s11_static_F": spec11("s11_static_F", "static", params=esc["params"]),
+        "s11_P5_U": spec11("s11_P5_U", "U", pool="P5"),
+    }
+
+
+def modo_eval74(workers):
+    from run_aos_study import todas_instancias
+    sp = specs_eval()
+    insts = sorted(todas_instancias(), key=lambda x: -x[2])
+    tarefas = [(s, nv, c, n, 1000 + sd) for nv in (1, 5) for (c, n, nc) in insts for s in sp.values() for sd in range(10)]
+    print(f"eval74: {len(tarefas)} execucoes", flush=True)
+    with mp.Pool(workers) as pool:
+        rodar11(tarefas, RES / "etapa11_eval74.csv", pool)
+    print("eval74 concluido", flush=True)
+
+
+def modo_evalL(workers):
+    sp = {k: v for k, v in specs_eval().items() if k != "s11_P5_U"}
+    nm = [i.name for i in sorted(load_all(ROOT / "instances" / "SYN_VAL_L"), key=lambda i: -i.n_customers)]
+    tarefas = [(s, 1, "SYN_VAL_L", n, 1000 + sd) for n in nm for s in sp.values() for sd in range(5)]
+    print(f"evalL: {len(tarefas)} execucoes", flush=True)
+    with mp.Pool(workers) as pool:
+        rodar11(tarefas, RES / "etapa11_evalL.csv", pool)
+    print("evalL concluido", flush=True)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    g = ap.add_mutually_exclusive_group(required=True)
+    for m in ("tuning-static", "selecionar", "eval74", "evalL"):
+        g.add_argument(f"--{m}", action="store_true")
+    ap.add_argument("--workers", type=int, default=11)
+    a = ap.parse_args()
+    if a.tuning_static:
+        modo_tuning(a.workers)
+    elif a.selecionar:
+        modo_selecionar()
+    elif a.eval74:
+        modo_eval74(a.workers)
+    else:
+        modo_evalL(a.workers)
+
+
 if __name__ == "__main__":
-    print("este arquivo so tem o esqueleto de execucao; o desenho confirmatorio do Estudo 11 ainda nao foi pre-registrado")
+    main()
