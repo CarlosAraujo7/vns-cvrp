@@ -104,6 +104,10 @@ def rodar_alns(inst, rotas0, rng, orcamento, pol_d, modo_d, pol_r, modo_r, medid
         m1 = medida()
         ok = REPARAR[jr][1](est, removidos, rng, max_rotas)
         m2 = medida()
+        # Emenda de contabilidade (diario, Entrada 107): cada iteracao paga n + R avaliacoes de distancia pelo custo de
+        # avaliar a solucao candidata (recomputo do custo), que antes era gratuito; sem isso, operadores quase gratuitos
+        # em avaliacoes (destruir uma rota pequena) rodavam milhoes de iteracoes dentro do mesmo orcamento.
+        inst.chamadas += n + len(est.rotas)
         nd[jd] += 1
         nr[jr] += 1
         calld[jd] += m1 - m0
