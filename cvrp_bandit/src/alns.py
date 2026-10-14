@@ -186,7 +186,8 @@ def _opcoes(est, c, so_rota=None):
     return out
 
 
-def reparar_arrependimento(est, removidos, rng, k=2, max_rotas=None):
+def reparar_arrependimento_v1(est, removidos, rng, k=2, max_rotas=None):
+    # versao ORIGINAL (usada nas 325 primeiras execucoes do Estudo 9); mantida para o teste de regressao exata
     """k=1: insercao gulosa; k=2: regret-2. Mantem, para cada cliente, o melhor custo POR ROTA e so recalcula a
     rota modificada a cada insercao (tecnica padrao)."""
     inst, dep = est.inst, est.dep
@@ -224,6 +225,68 @@ def reparar_arrependimento(est, removidos, rng, k=2, max_rotas=None):
             op[cc].pop(i, None)
             if est.cargas[i] + est.dem[cc] <= est.Q:
                 op[cc][i] = melhor_posicao(inst, _nos(dep, est.rotas[i]), est.arest[i], cc)
+    return True
+
+
+def reparar_arrependimento(est, removidos, rng, k=2, max_rotas=None):
+    """Mesmas decisoes que `reparar_arrependimento_v1` (regressao exata: tests/test_alns.py), com custo de CPU muito menor:
+    em vez de ordenar as opcoes de TODAS as rotas de cada cliente pendente a cada insercao (O(q^2 R log R) por iteracao,
+    inviavel com 100 rotas), mantem as duas menores opcoes (custo, rota) por cliente e so as recalcula quando a rota
+    modificada estava entre elas. Desempates por (custo, indice da rota), como na versao original; a opcao 'abrir rota
+    nova' e (custo, -1)."""
+    from heapq import nsmallest
+    inst, dep = est.inst, est.dep
+    pend = list(removidos)
+    op = {c: _opcoes(est, c) for c in pend}
+    novo = {c: inst.dist(dep, c) * 2.0 for c in pend}     # custo de abrir uma rota so para c
+    incremental = max_rotas is None                       # sem limite de rotas, abrir rota nova e sempre permitido
+
+    def top2(c, pode_abrir):
+        t = [(v[0], i) for i, v in op[c].items()]
+        if pode_abrir:
+            t.append((novo[c], -1))
+        if len(t) <= 2:
+            t.sort()
+            return t
+        return nsmallest(2, t)
+
+    t2 = {c: top2(c, True) for c in pend} if incremental else None
+    while pend:
+        melhor_c, melhor_chave, escolha = None, None, None
+        pode_abrir = max_rotas is None or len(est.rotas) < max_rotas
+        for c in pend:
+            custos = t2[c] if incremental else top2(c, pode_abrir)
+            if not custos:
+                return False
+            if k == 1:
+                chave = (custos[0][0], 0.0)
+            elif len(custos) == 1:
+                chave = (-INF, custos[0][0])          # so uma opcao: arrependimento infinito, prioridade maxima
+            else:
+                chave = (-(custos[1][0] - custos[0][0]), custos[0][0])
+            if melhor_chave is None or chave < melhor_chave:
+                melhor_chave, melhor_c, escolha = chave, c, custos[0]
+        c = melhor_c
+        pend.remove(c)
+        i = escolha[1]
+        if i == -1:
+            i = est.abrir(c)
+        else:
+            est.inserir(i, op[c][i][1], c)
+        for cc in pend:
+            op[cc].pop(i, None)
+            entrada = None
+            if est.cargas[i] + est.dem[cc] <= est.Q:
+                op[cc][i] = melhor_posicao(inst, _nos(dep, est.rotas[i]), est.arest[i], cc)
+                entrada = (op[cc][i][0], i)
+            if incremental:
+                lst = t2[cc]
+                if any(tt[1] == i for tt in lst):
+                    t2[cc] = top2(cc, True)              # a entrada da rota modificada estava entre as duas menores
+                elif entrada is not None and (len(lst) < 2 or entrada < lst[-1]):
+                    lst.append(entrada)
+                    lst.sort()
+                    del lst[2:]
     return True
 
 
