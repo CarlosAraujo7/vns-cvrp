@@ -144,7 +144,7 @@ def verifica_s7(num):
     return nm, nc
 
 
-def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave):
+def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csvs=()):
     """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
     diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
     instancia). Colunas esperadas no bruto: braco, instancia, custo, ref, gap_pct, viavel."""
@@ -152,15 +152,16 @@ def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave):
     if not arq.exists() or not (RES / analise_csv).exists():
         return 0, 0
     por = defaultdict(list)
-    with open(arq, encoding="utf-8", newline="") as f:
+    for nome_csv in (eval_csv,) + tuple(c for c in extra_csvs if (RES / c).exists()):
+      with open(RES / nome_csv, encoding="utf-8", newline="") as f:
         for r in csv.DictReader(f):
             if r["viavel"] != "True":
-                problemas.append(f"{eval_csv}: execucao inviavel {r['braco']} {r['instancia']} {r['seed']}")
+                problemas.append(f"{nome_csv}: execucao inviavel {r['braco']} {r['instancia']} {r['seed']}")
                 continue
             ref = float(r["ref"])
             gap = 100.0 * (float(r["custo"]) - ref) / ref
             if abs(gap - float(r["gap_pct"])) > 1e-6:
-                problemas.append(f"{eval_csv}: gap gravado divergente {r['braco']} {r['instancia']} {r['seed']}")
+                problemas.append(f"{nome_csv}: gap gravado divergente {r['braco']} {r['instancia']} {r['seed']}")
             por[(r["braco"], r["instancia"])].append(gap)
     medias = {k: statistics.fmean(v) for k, v in por.items()}
     nm = 0
@@ -180,6 +181,10 @@ def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave):
         ia = {i: m for (b, i), m in medias.items() if b == na}
         ib = {i: m for (b, i), m in medias.items() if b == nb}
         inst = sorted(set(ia) & set(ib))
+        if r["id"].endswith("@X"):                        # contrastes por conjunto (Estudo 9): X = nomes sem "syn"
+            inst = [i for i in inst if "syn" not in i]
+        elif r["id"].endswith("@SYN_VAL"):
+            inst = [i for i in inst if "synv" in i]
         dif = [ia[i] - ib[i] for i in inst]
         dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
         if not dif:
@@ -289,13 +294,13 @@ def main():
     outros += n7m
     cont += n7c
     print(f"(2b) Estudo 7 (HGS): {n7m} medias e {n7c} contrastes conferidos")
-    for rot, ev, an, pref, bk in (("Estudo 8 (controle positivo)", "etapa8_full.csv", "analise_etapa8_confirmatoria.csv", "s8",
+    for rot, ev, an, pref, bk, *ex in (("Estudo 8 (controle positivo)", "etapa8_full.csv", "analise_etapa8_confirmatoria.csv", "s8",
                                    lambda k: "s8_" + ("P10+" if k[len("s8_gap_"):].startswith("D4") else "") + k[len("s8_gap_"):]),
                                   ("Estudo 9 (ALNS)", "etapa9_eval.csv", "analise_etapa9_confirmatoria.csv", "s9",
-                                   lambda k: "s9_" + k[len("s9_gap_"):]),
+                                   lambda k: "s9_" + k[len("s9_gap_"):], ("etapa9_vns.csv",)),
                                   ("Estudo 10 (tamanho)", "etapa10_eval.csv", "analise_etapa10_confirmatoria.csv", "s10",
                                    lambda k: "s10_" + k[len("s10_gap_"):])):
-        nm_, nc_ = verifica_gaps(ev, an, num, pref, bk)
+        nm_, nc_ = verifica_gaps(ev, an, num, pref, bk, tuple(ex[0]) if ex else ())
         outros += nm_
         cont += nc_
         if nm_ or nc_:

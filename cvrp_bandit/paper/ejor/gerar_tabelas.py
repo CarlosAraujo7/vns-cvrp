@@ -419,14 +419,15 @@ def reproducao():
 
 
 SUP_ORDEM = ["tab:s1tests", "tab:s2tests", "tab:s3tests", "tab:s4tests", "tab:s4val", "tab:s5tests", "tab:s6tests",
-             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s10tests", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
+             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s9tests", "tab:s10tests", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
              "tab:studies", "tab:hyper"]      # mesma ordem de supplement.tex
 
 
 def suptab():
     """numeracao S<k> das tabelas do suplemento online, para o manuscrito citar 'Table S<k>' (\\stab{label})"""
     l = ["% GERADO por gerar_tabelas.py -- NAO EDITAR A MAO", r"\makeatletter"]
-    for k, lab in enumerate(SUP_ORDEM, 1):
+    ordem = [lab for lab in SUP_ORDEM if lab != "tab:s9tests" or (RES / "analise_etapa9_confirmatoria.csv").exists()]
+    for k, lab in enumerate(ordem, 1):
         l.append(r"\expandafter\gdef\csname sup@" + lab + r"\endcsname{S" + str(k) + "}")
     l += [r"\makeatother",
           r"\newcommand{\stab}[1]{\ifcsname sup@#1\endcsname\csname sup@#1\endcsname\else\textcolor{red}{??\detokenize{#1}??}\fi}"]
@@ -679,6 +680,88 @@ def estudo8():
     NUM["s8_best_D4x4_a"] = f"{abs(conf[conf.id.str.startswith('P10+D4x4')].dif_pp.min()):.2f}"
     for k in [k for k in NUM if k.startswith("s8") and "P10+" in k]:     # chaves sem '+' (nomes de macro seguros)
         NUM[k.replace("P10+", "")] = NUM.pop(k)
+
+
+ARMS9 = [("U", "Uniform selection"), ("RP", "Adaptive weights (Ropke--Pisinger)"), ("ucb1", "UCB1"), ("pm", "Probability matching"),
+         ("hgucb", "HG-UCB"), ("ts", "Thompson sampling"), ("exp3", "EXP3"), ("eff", "Efficiency UCB")]
+
+
+def estudo9():
+    """Estudo 9 (ALNS): selecao adaptativa com operadores estocasticos. Entradas 103/107 do diario."""
+    c = pd.read_csv(RES / "analise_etapa9_confirmatoria.csv")
+    e = pd.read_csv(RES / "etapa9_eval.csv")
+    e = e[e.viavel]
+    vp = RES / "etapa9_vns.csv"
+    v = pd.read_csv(vp) if vp.exists() else None
+    if v is not None:
+        v = v[v.viavel]
+    allr = pd.concat([e, v]) if v is not None else e
+    allr["set"] = np.where(allr.instancia.str.contains("syn"), "V", "X")
+    gm = allr.groupby(["braco", "set", "instancia"]).gap_pct.mean().reset_index()
+    for br, g in gm.groupby("braco"):
+        a = br.replace("s9_", "")
+        NUM[f"s9_gap_{a}"] = f"{g.gap_pct.mean():.3f}"
+        for s in ("X", "V"):
+            NUM[f"s9{s.lower()}_gap_{a}"] = f"{g[g.set == s].gap_pct.mean():.3f}"
+    NUM["s9_n_inst"] = str(e.instancia.nunique())
+    NUM["s9_nruns"] = f"{len(e):,}".replace(",", r"\,")
+    esc = json.loads((RES / "etapa9_tuning_escolhidas.json").read_text())
+    for fam in ("RP", "ucb1", "pm", "hgucb"):
+        NUM[f"s9_tune_{fam}"] = f"{esc[fam]['gap_tune']:.2f}"
+        NUM[f"s9_tune_{fam}_padrao"] = f"{esc[fam]['gap_padrao']:.2f}"
+    pr = c[c.id == "PRIM:RP"].iloc[0]
+    NUM["s9prim_d"], NUM["s9prim_a"] = sgn(pr.dif_pp), f"{abs(pr.dif_pp):.2f}"
+    NUM["s9prim_ci"] = f"[{plano(pr.ic_lo)}, {plano(pr.ic_hi)}]"
+    NUM["s9prim_p"] = f"{pr.p_bruto:.3f}"
+    NUM["s9prim_w"], NUM["s9prim_l"] = str(int(pr.vit_a)), str(int(pr.der_a))
+    NUM["s9prim_n"] = str(int(pr.n_inst))
+    lin_main, lin_sup = [], []
+    for a, nome in ARMS9:
+        cel_ = []
+        for s in ("X", "V"):
+            g = float(NUM[f"s9{s.lower()}_gap_{a}"])
+            if a == "U":
+                cel_.append(f"{g:.2f}")
+                continue
+            r = c[c.id == f"SEC:{a}@{'X' if s == 'X' else 'SYN_VAL'}"].iloc[0]
+            macros_contraste("s9", f"{a}_{s}", r)
+            cel_.append(f"{g:.2f} ({sgn(r.dif_pp)}{'*' if r.signif_005 else ''})")
+        lin_main.append(f"{nome} & " + " & ".join(cel_))
+        if a != "U":
+            rx = c[c.id == f"SEC:{a}@X"].iloc[0]
+            rv = c[c.id == f"SEC:{a}@SYN_VAL"].iloc[0]
+            lin_sup.append(f"{nome} $-$ uniform & {cel(rx)} & {cel(rv)}")
+    if "vns_U" in [k.replace("s9_gap_", "") for k in NUM if k.startswith("s9_gap_")]:
+        for a, nome in (("vns_U", "VNS, uniform selection (same budget)"), ("vns_static", "VNS, static mixture (same budget)")):
+            lin_main.append(f"{nome} & {float(NUM[f's9x_gap_{a}']):.2f} & {float(NUM[f's9v_gap_{a}']):.2f}")
+        for ref in ("vns_U", "vns_static"):
+            for s, tag in (("X", "X"), ("V", "SYN_VAL")):
+                r = c[c.id == f"TERC:ALNS-U vs {ref}@{tag}"].iloc[0]
+                macros_contraste("s9t", f"{ref}_{s}", r)
+        lin_sup.append(r"\addlinespace")
+        for ref, nome in (("vns_U", "ALNS uniform $-$ VNS uniform"), ("vns_static", "ALNS uniform $-$ VNS static mixture")):
+            rx = c[c.id == f"TERC:ALNS-U vs {ref}@X"].iloc[0]
+            rv = c[c.id == f"TERC:ALNS-U vs {ref}@SYN_VAL"].iloc[0]
+            lin_sup.append(f"{nome} & {cel(rx)} & {cel(rv)}")
+    escreve("tab_s9.tex", tabela(
+        "Study 9 (ALNS with stochastic destroy and repair operators, $1500\\,n^2$ distance evaluations): mean gap (\\%) on the 21 instances of "
+        "set X (ten seeds) and the 30 synthetic validation instances (five seeds); in parentheses, the difference from uniform selection in pp "
+        "(* marks Holm-significance over the 12 secondary tests). The last rows are VNS arms at the same budget.", "tab:s9",
+        r"Policy & Set X & Synthetic validation", lin_main, "lcc"))
+    escreve("tab_s9_tests.tex", tabela(
+        "Study 9: secondary and tertiary contrasts (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over 12 secondary and, separately, "
+        "four tertiary tests).", "tab:s9tests", r"Contrast & Set X & Synthetic validation", lin_sup, "lcc"))
+    sec = c[c.grupo == "secundario"]
+    NUM["s9_nsig"] = str(int(sec.signif_005.sum()))
+    NUM["s9_nbetter"] = str(int(((sec.dif_pp < 0) & sec.signif_005).sum()))
+    NUM["s9_nworse"] = str(int(((sec.dif_pp > 0) & sec.signif_005).sum()))
+    for pol in ("RP", "ucb1", "pm", "hgucb", "ts", "exp3", "eff", "U"):
+        g = e[e.braco == f"s9_{pol}"]
+        ur = np.array([[float(x) for x in s.split("|")] for s in g.uso_r])
+        ud = np.array([[float(x) for x in s.split("|")] for s in g.uso_d])
+        NUM[f"s9_reg2_{pol}"] = f"{100 * np.mean(ur[:, 1] / ur.sum(1)):.0f}"
+        NUM[f"s9_rota_{pol}"] = f"{100 * np.mean(ud[:, 3] / ud.sum(1)):.0f}"
+        NUM[f"s9_cpu_{pol}"] = f"{g.tempo_s.mean():.0f}"
 
 
 ARMS10 = [("U", "Uniform selection"), ("static_S", "Static mixture tuned at $n\\le150$ (Study 4)"),
@@ -1006,6 +1089,8 @@ def main():
         estudo7()
     if (RES / "analise_etapa8_confirmatoria.csv").exists():
         estudo8()
+    if (RES / "analise_etapa9_confirmatoria.csv").exists():
+        estudo9()
     if (RES / "analise_etapa10_confirmatoria.csv").exists():
         estudo10()
     referencias()
