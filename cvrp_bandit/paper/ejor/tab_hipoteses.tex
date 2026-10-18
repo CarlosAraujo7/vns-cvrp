@@ -61,6 +61,14 @@ H31 & Exploratory: the median recovery of the planted loss in the $8n^2$ pool is
 H32 & Exploratory: in the clean pool no policy is significantly better than uniform selection (80\%). & Confirmed (smallest unadjusted $p$ for an improvement: UCB1, \num{s8pr_P10_ucb1c}). \\
 H33 & Exploratory: no policy recovers the whole planted loss (interval excludes 100\% for at least four of six; 65\%). & Confirmed: \num{s8_rec_excl1_D4x8} of 6 in the $8n^2$ pool, \num{s8_rec_excl1_D4x4} of 6 in the $4n^2$ pool. \\
 \midrule
+\multicolumn{3}{l}{\emph{Study 9 (log entries 103 and 107; committed before its evaluation data; the accounting of the ALNS was amended before any analysis)}} \\
+H34 & Primary: the adaptive weights of Ropke and Pisinger are significantly better than uniform selection on the 51 instances (probability assigned: 55\%). & Confirmed: \num{s9prim_d}~pp (\num{s9prim_ci}), $p<10^{-4}$. \\
+H35 & At least one of the six other policies is Holm-significantly better than uniform selection in at least one set (25\%). & Confirmed: \num{s9_nbetter} of 12 tests. \\
+H36 & Thompson sampling and the efficiency UCB are significantly worse than uniform selection in both sets (80\%). & Not confirmed: three of the four tests (Thompson sampling on set X is not significant after correction). \\
+H37 & ALNS with uniform selection beats both VNS arms at the same budget by at least 0.5~pp in both sets (85\%). & Confirmed in the four tests (\num{s9ta_vns_U_X} to \num{s9ta_vns_static_V}~pp). \\
+H38 & Exploratory: all adaptive policies except Thompson sampling and the efficiency UCB differ from uniform selection by at most 0.25~pp (80\%). & Not confirmed: the largest difference is \num{s9a_pm_V}~pp. \\
+H39 & Exploratory: RP, UCB1 and probability matching put more than half of the repair choices on regret-2 (80\%). & Confirmed (\num{s9_reg2_RP}, \num{s9_reg2_ucb1} and \num{s9_reg2_pm}\%). \\
+\midrule
 \multicolumn{3}{l}{\emph{Study 10 (log entry 104; written before the tuning and the evaluation data)}} \\
 H40 & The static mixture tuned on large instances is Holm-significantly better than uniform selection on new large instances by at least 0.2~pp (probability assigned: 65\%). & Not confirmed: \num{s10d_static_L}~pp, adjusted $p=\num{s10p_static_L}$. \\
 H41 & The mixture tuned at $n\le150$ (Study 4) is Holm-significantly better than uniform selection there (50\%). & Not confirmed: \num{s10d_static_S}~pp in the predicted direction, adjusted $p=\num{s10p_static_S}$. \\

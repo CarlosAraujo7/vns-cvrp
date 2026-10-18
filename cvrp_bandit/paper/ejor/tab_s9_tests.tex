@@ -1,0 +1,23 @@
+\begin{table}[t]
+\caption{Study 9: secondary and tertiary contrasts (mean paired difference in pp [95\% CI]; Holm-adjusted $p$ over 12 secondary and, separately, four tertiary tests).}\label{tab:s9tests}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcc}
+\toprule
+Contrast & Set X & Synthetic validation \\
+\midrule
+Adaptive weights (Ropke--Pisinger) $-$ uniform & $-$0.24 [$-$0.36, $-$0.13]; 0.0006 & $-$0.44 [$-$0.60, $-$0.30]; \ensuremath{<10^{-4}} \\
+UCB1 $-$ uniform & $+$0.26 [$-$0.16, $+$0.78]; 0.58 & $+$0.34 [$-$0.03, $+$0.73]; 0.58 \\
+Probability matching $-$ uniform & $-$0.33 [$-$0.47, $-$0.20]; 0.0002 & $-$0.46 [$-$0.68, $-$0.26]; 0.0002 \\
+HG-UCB $-$ uniform & $-$0.16 [$-$0.30, $-$0.02]; 0.036 & $-$0.26 [$-$0.44, $-$0.09]; 0.12 \\
+Thompson sampling $-$ uniform & $+$1.16 [$+$0.37, $+$2.03]; 0.41 & $+$1.18 [$+$0.57, $+$1.94]; 0.007 \\
+EXP3 $-$ uniform & $-$0.27 [$-$0.39, $-$0.16]; 0.001 & $-$0.34 [$-$0.53, $-$0.15]; 0.009 \\
+Efficiency UCB $-$ uniform & $+$1.97 [$+$1.16, $+$2.80]; 0.001 & $+$1.95 [$+$1.44, $+$2.49]; \ensuremath{<10^{-4}} \\
+\addlinespace
+ALNS uniform $-$ VNS uniform & $-$1.68 [$-$2.36, $-$1.08]; \ensuremath{<10^{-4}} & $-$1.06 [$-$1.68, $-$0.56]; 0.0003 \\
+ALNS uniform $-$ VNS static mixture & $-$1.24 [$-$1.83, $-$0.72]; 0.0002 & $-$0.72 [$-$1.11, $-$0.36]; 0.002 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

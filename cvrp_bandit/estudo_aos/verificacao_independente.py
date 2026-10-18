@@ -172,7 +172,7 @@ def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csv
             if not vals:
                 problemas.append(f"macro {chave}: braco {braco} ausente em {eval_csv}")
                 continue
-            nm += confere(chave, valor, statistics.fmean(vals), 3 if prefixo == "s10" else 2)
+            nm += confere(chave, valor, statistics.fmean(vals), 3 if prefixo in ("s9", "s10") else 2)
     nc = 0
     bracos = {b for (b, _i) in medias}
     for r in csv.DictReader(open(RES / analise_csv, encoding="utf-8")):

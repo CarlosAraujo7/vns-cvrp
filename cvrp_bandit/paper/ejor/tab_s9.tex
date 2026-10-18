@@ -1,0 +1,23 @@
+\begin{table}[t]
+\caption{Study 9 (ALNS with stochastic destroy and repair operators, $1500\,n^2$ distance evaluations): mean gap (\%) on the 21 instances of set X (ten seeds) and the 30 synthetic validation instances (five seeds); in parentheses, the difference from uniform selection in pp (* marks Holm-significance over the 12 secondary tests; for the adaptive weights, the primary test on the 51 instances is in the text and the per-set differences are exploratory). The last rows are VNS arms at the same budget.}\label{tab:s9}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcc}
+\toprule
+Policy & Set X & Synthetic validation \\
+\midrule
+Uniform selection & 1.48 & 1.86 \\
+Adaptive weights (Ropke--Pisinger) & 1.24 ($-$0.24) & 1.42 ($-$0.44) \\
+UCB1 & 1.74 ($+$0.26) & 2.20 ($+$0.34) \\
+Probability matching & 1.15 ($-$0.33*) & 1.40 ($-$0.46*) \\
+HG-UCB & 1.31 ($-$0.16*) & 1.60 ($-$0.26) \\
+Thompson sampling & 2.63 ($+$1.16) & 3.04 ($+$1.18*) \\
+EXP3 & 1.21 ($-$0.27*) & 1.52 ($-$0.34*) \\
+Efficiency UCB & 3.45 ($+$1.97*) & 3.81 ($+$1.95*) \\
+VNS, uniform selection (same budget) & 3.15 & 2.92 \\
+VNS, static mixture (same budget) & 2.72 & 2.58 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

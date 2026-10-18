@@ -107,3 +107,22 @@ RP: escolhida {"rho": 0.1, "segmento": 100} gap_tune=0.8154 (padrao 0.8154; pior
 <frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
 <frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
 grade: 33 configuracoes, 2376 execucoes
+grade concluida
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+U (referencia, SYN_TUNE): 1.0609
+ucb1: escolhida {"C": 2.0} gap_tune=0.9636 (padrao 0.9636; pior 2.0245)
+pm: escolhida {"gamma": 0.05, "p_min": 0.05} gap_tune=0.6930 (padrao 0.9120; pior 0.9239)
+hgucb: escolhida {"C": 1.0, "alpha": 0.1} gap_tune=0.8563 (padrao 0.9535; pior 1.7803)
+RP: escolhida {"rho": 0.1, "segmento": 100} gap_tune=0.8154 (padrao 0.8154; pior 0.9102)
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+grade: 33 configuracoes, 2376 execucoes
+grade concluida
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+U (referencia, SYN_TUNE): 1.0609
+ucb1: escolhida {"C": 2.0} gap_tune=0.9636 (padrao 0.9636; pior 2.0245)
+pm: escolhida {"gamma": 0.05, "p_min": 0.05} gap_tune=0.6930 (padrao 0.9120; pior 0.9239)
+hgucb: escolhida {"C": 1.0, "alpha": 0.1} gap_tune=0.8563 (padrao 0.9535; pior 1.7803)
+RP: escolhida {"rho": 0.1, "segmento": 100} gap_tune=0.8154 (padrao 0.8154; pior 0.9102)

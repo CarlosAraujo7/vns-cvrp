@@ -709,6 +709,8 @@ def estudo9():
     for fam in ("RP", "ucb1", "pm", "hgucb"):
         NUM[f"s9_tune_{fam}"] = f"{esc[fam]['gap_tune']:.2f}"
         NUM[f"s9_tune_{fam}_padrao"] = f"{esc[fam]['gap_padrao']:.2f}"
+    c["p_holm"] = c.p_holm.fillna(c.p_bruto)           # linhas primaria/exploratorias: p bruto
+    c.loc[c.id == "PRIM:RP", "signif_005"] = c.loc[c.id == "PRIM:RP", "p_bruto"] < 0.05
     pr = c[c.id == "PRIM:RP"].iloc[0]
     NUM["s9prim_d"], NUM["s9prim_a"] = sgn(pr.dif_pp), f"{abs(pr.dif_pp):.2f}"
     NUM["s9prim_ci"] = f"[{plano(pr.ic_lo)}, {plano(pr.ic_hi)}]"
@@ -723,13 +725,15 @@ def estudo9():
             if a == "U":
                 cel_.append(f"{g:.2f}")
                 continue
-            r = c[c.id == f"SEC:{a}@{'X' if s == 'X' else 'SYN_VAL'}"].iloc[0]
+            pref = "EXPL" if a == "RP" else "SEC"
+            r = c[c.id == f"{pref}:{a}@{'X' if s == 'X' else 'SYN_VAL'}"].iloc[0]
             macros_contraste("s9", f"{a}_{s}", r)
-            cel_.append(f"{g:.2f} ({sgn(r.dif_pp)}{'*' if r.signif_005 else ''})")
+            cel_.append(f"{g:.2f} ({sgn(r.dif_pp)}{'*' if (a != 'RP' and r.signif_005) else ''})")
         lin_main.append(f"{nome} & " + " & ".join(cel_))
         if a != "U":
-            rx = c[c.id == f"SEC:{a}@X"].iloc[0]
-            rv = c[c.id == f"SEC:{a}@SYN_VAL"].iloc[0]
+            pref = "EXPL" if a == "RP" else "SEC"
+            rx = c[c.id == f"{pref}:{a}@X"].iloc[0]
+            rv = c[c.id == f"{pref}:{a}@SYN_VAL"].iloc[0]
             lin_sup.append(f"{nome} $-$ uniform & {cel(rx)} & {cel(rv)}")
     if "vns_U" in [k.replace("s9_gap_", "") for k in NUM if k.startswith("s9_gap_")]:
         for a, nome in (("vns_U", "VNS, uniform selection (same budget)"), ("vns_static", "VNS, static mixture (same budget)")):
@@ -746,7 +750,7 @@ def estudo9():
     escreve("tab_s9.tex", tabela(
         "Study 9 (ALNS with stochastic destroy and repair operators, $1500\\,n^2$ distance evaluations): mean gap (\\%) on the 21 instances of "
         "set X (ten seeds) and the 30 synthetic validation instances (five seeds); in parentheses, the difference from uniform selection in pp "
-        "(* marks Holm-significance over the 12 secondary tests). The last rows are VNS arms at the same budget.", "tab:s9",
+        "(* marks Holm-significance over the 12 secondary tests; for the adaptive weights, the primary test on the 51 instances is in the text and the per-set differences are exploratory). The last rows are VNS arms at the same budget.", "tab:s9",
         r"Policy & Set X & Synthetic validation", lin_main, "lcc"))
     escreve("tab_s9_tests.tex", tabela(
         "Study 9: secondary and tertiary contrasts (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over 12 secondary and, separately, "
