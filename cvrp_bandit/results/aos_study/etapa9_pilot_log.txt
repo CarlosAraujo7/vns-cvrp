@@ -1,0 +1,42 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+960 tarefas (piloto das politicas em SYN_TUNE)
+    25/960  1.1 min
+    50/960  2.5 min
+    75/960  3.3 min
+    100/960  8.6 min
+    125/960  10.7 min
+    150/960  13.6 min
+    175/960  18.1 min
+    200/960  21.3 min
+    225/960  24.7 min
+    250/960  26.7 min
+    275/960  27.9 min
+    300/960  32.7 min
+    325/960  35.8 min
+    350/960  36.5 min
+    375/960  37.4 min
+    400/960  38.2 min
+    425/960  38.7 min
+    450/960  39.4 min
+    475/960  39.9 min
+    500/960  41.9 min
+    525/960  44.8 min
+    550/960  47.8 min
+    575/960  48.8 min
+    600/960  49.5 min
+    625/960  51.5 min
+    650/960  53.0 min
+    675/960  53.3 min
+    700/960  53.5 min
+    725/960  53.8 min
+    750/960  54.0 min
+    775/960  54.9 min
+    800/960  56.5 min
+    825/960  56.9 min
+    850/960  57.4 min
+    875/960  57.8 min
+    900/960  58.0 min
+    925/960  58.2 min
+    950/960  58.4 min
+concluido

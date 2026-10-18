@@ -1,0 +1,29 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+504 tarefas pendentes
+    20/504
+    40/504
+    60/504
+    80/504
+    100/504
+    120/504
+    140/504
+    160/504
+    180/504
+    200/504
+    220/504
+    240/504
+    260/504
+    280/504
+    300/504
+    320/504
+    340/504
+    360/504
+    380/504
+    400/504
+    420/504
+    440/504
+    460/504
+    480/504
+    500/504
+concluido

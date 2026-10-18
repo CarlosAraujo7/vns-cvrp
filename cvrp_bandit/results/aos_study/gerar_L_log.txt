@@ -1,0 +1,36 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+SYN_TUNE_L: 12 instancias escritas; rodando HGS de referencia...
+  X-syntl01-n201     n=200 comb=(2, 3, 7, 6) cap=  308 ref=12020 K=6
+  X-syntl02-n201     n=200 comb=(1, 3, 4, 3) cap=  447 ref=40038 K=25
+  X-syntl03-n201     n=200 comb=(3, 3, 2, 4) cap=   84 ref=28134 K=14
+  X-syntl04-n201     n=200 comb=(1, 3, 4, 2) cap=  291 ref=56249 K=37
+  X-syntl05-n301     n=300 comb=(1, 2, 6, 6) cap= 2332 ref=13992 K=8
+  X-syntl06-n301     n=300 comb=(1, 1, 5, 1) cap=  237 ref=135803 K=99
+  X-syntl07-n301     n=300 comb=(2, 3, 4, 5) cap= 1218 ref=18260 K=14
+  X-syntl08-n301     n=300 comb=(1, 3, 2, 1) cap=   17 ref=88727 K=98
+  X-syntl09-n401     n=400 comb=(3, 1, 5, 5) cap= 1505 ref=41145 K=21
+  X-syntl10-n401     n=400 comb=(2, 3, 5, 2) cap=  466 ref=59523 K=66
+  X-syntl11-n401     n=400 comb=(1, 3, 6, 5) cap= 1182 ref=26379 K=17
+  X-syntl12-n401     n=400 comb=(2, 3, 5, 1) cap=  325 ref=82490 K=93
+SYN_VAL_L: 20 instancias escritas; rodando HGS de referencia...
+  X-synvl01-n201     n=200 comb=(2, 2, 7, 5) cap=  215 ref=10559 K=9
+  X-synvl02-n201     n=200 comb=(2, 1, 2, 6) cap=  176 ref=12992 K=7
+  X-synvl03-n201     n=200 comb=(3, 1, 7, 5) cap=  200 ref=23330 K=11
+  X-synvl04-n201     n=200 comb=(3, 2, 1, 2) cap=    5 ref=65660 K=40
+  X-synvl05-n201     n=200 comb=(1, 3, 3, 2) cap=   55 ref=28049 K=29
+  X-synvl06-n301     n=300 comb=(3, 2, 4, 3) cap=  484 ref=50374 K=32
+  X-synvl07-n301     n=300 comb=(2, 3, 6, 1) cap=  245 ref=65789 K=62
+  X-synvl08-n301     n=300 comb=(2, 2, 7, 4) cap=  188 ref=21566 K=20
+  X-synvl09-n301     n=300 comb=(1, 3, 3, 6) cap=  305 ref=13337 K=8
+  X-synvl10-n301     n=300 comb=(3, 3, 3, 5) cap=  182 ref=26772 K=13
+  X-synvl11-n401     n=400 comb=(1, 2, 1, 1) cap=    3 ref=141542 K=134
+  X-synvl12-n401     n=400 comb=(2, 3, 1, 6) cap=   26 ref=21090 K=16
+  X-synvl13-n401     n=400 comb=(3, 3, 2, 4) cap=   77 ref=46973 K=28
+  X-synvl14-n401     n=400 comb=(1, 2, 1, 3) cap=   10 ref=42894 K=40
+  X-synvl15-n401     n=400 comb=(2, 1, 6, 4) cap=  721 ref=30791 K=27
+  X-synvl16-n501     n=500 comb=(3, 1, 6, 5) cap= 1249 ref=41134 K=21
+  X-synvl17-n501     n=500 comb=(3, 3, 3, 6) cap=  341 ref=28020 K=12
+  X-synvl18-n501     n=500 comb=(3, 1, 7, 5) cap=  206 ref=50497 K=26
+  X-synvl19-n501     n=500 comb=(3, 3, 6, 6) cap= 2150 ref=26384 K=11
+  X-synvl20-n501     n=500 comb=(1, 1, 4, 4) cap=  719 ref=43195 K=35

@@ -1,0 +1,164 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+  A-n32-k5: ja existe, mantido
+  A-n33-k5: ja existe, mantido
+  A-n33-k6: ja existe, mantido
+  A-n34-k5: ja existe, mantido
+  A-n36-k5: ja existe, mantido
+  A-n37-k5: ja existe, mantido
+  A-n37-k6: ja existe, mantido
+  A-n38-k5: ja existe, mantido
+  A-n39-k5: ja existe, mantido
+  A-n39-k6: ja existe, mantido
+  A-n44-k6: ja existe, mantido
+  A-n45-k6: ja existe, mantido
+  A-n45-k7: ja existe, mantido
+  A-n46-k7: ja existe, mantido
+  A-n48-k7: ja existe, mantido
+  A-n53-k7: ja existe, mantido
+  A-n54-k7: ja existe, mantido
+  A-n55-k9: ja existe, mantido
+  A-n60-k9: ja existe, mantido
+  A-n61-k9: ja existe, mantido
+  A-n62-k8: ja existe, mantido
+  A-n63-k10: ja existe, mantido
+  A-n63-k9: ja existe, mantido
+  A-n64-k9: ja existe, mantido
+  A-n65-k9: ja existe, mantido
+  A-n69-k9: ja existe, mantido
+  B-n31-k5: ja existe, mantido
+  B-n34-k5: ja existe, mantido
+  B-n35-k5: ja existe, mantido
+  B-n38-k6: ja existe, mantido
+  B-n39-k5: ja existe, mantido
+  B-n41-k6: ja existe, mantido
+  B-n43-k6: ja existe, mantido
+  B-n44-k7: ja existe, mantido
+  B-n45-k5: ja existe, mantido
+  B-n45-k6: ja existe, mantido
+  B-n50-k7: ja existe, mantido
+  B-n50-k8: ja existe, mantido
+  B-n51-k7: ja existe, mantido
+  B-n52-k7: ja existe, mantido
+  B-n56-k7: ja existe, mantido
+  B-n57-k7: ja existe, mantido
+  B-n57-k9: ja existe, mantido
+  B-n63-k10: ja existe, mantido
+  B-n64-k9: ja existe, mantido
+  B-n66-k9: ja existe, mantido
+  B-n67-k10: ja existe, mantido
+  B-n68-k9: ja existe, mantido
+  B-n78-k10: ja existe, mantido
+  CMT1: ja existe, mantido
+  CMT11: ja existe, mantido
+  CMT2: ja existe, mantido
+  CMT3: ja existe, mantido
+  X-n101-k25: ja existe, mantido
+  X-n106-k14: ja existe, mantido
+  X-n110-k13: ja existe, mantido
+  X-n115-k10: ja existe, mantido
+  X-n120-k6: ja existe, mantido
+  X-n125-k30: ja existe, mantido
+  X-n129-k18: ja existe, mantido
+  X-n134-k13: ja existe, mantido
+  X-n139-k10: ja existe, mantido
+  X-n143-k7: ja existe, mantido
+  X-n148-k46: ja existe, mantido
+  X-n153-k22: ja existe, mantido
+  X-n157-k13: ja existe, mantido
+  X-n162-k11: ja existe, mantido
+  X-n167-k10: ja existe, mantido
+  X-n172-k51: ja existe, mantido
+  X-n176-k26: ja existe, mantido
+  X-n181-k23: ja existe, mantido
+  X-n186-k15: ja existe, mantido
+  X-n190-k8: ja existe, mantido
+  X-n195-k51: ja existe, mantido
+  X-synt01-n51: ja existe, mantido
+  X-synt02-n51: ja existe, mantido
+  X-synt03-n51: ja existe, mantido
+  X-synt04-n51: ja existe, mantido
+  X-synt05-n51: ja existe, mantido
+  X-synt06-n51: ja existe, mantido
+  X-synt07-n51: ja existe, mantido
+  X-synt08-n51: ja existe, mantido
+  X-synt09-n101: ja existe, mantido
+  X-synt10-n101: ja existe, mantido
+  X-synt11-n101: ja existe, mantido
+  X-synt12-n101: ja existe, mantido
+  X-synt13-n101: ja existe, mantido
+  X-synt14-n101: ja existe, mantido
+  X-synt15-n101: ja existe, mantido
+  X-synt16-n101: ja existe, mantido
+  X-synt17-n151: ja existe, mantido
+  X-synt18-n151: ja existe, mantido
+  X-synt19-n151: ja existe, mantido
+  X-synt20-n151: ja existe, mantido
+  X-synt21-n151: ja existe, mantido
+  X-synt22-n151: ja existe, mantido
+  X-synt23-n151: ja existe, mantido
+  X-synt24-n151: ja existe, mantido
+  X-synv01-n101: ja existe, mantido
+  X-synv02-n101: ja existe, mantido
+  X-synv03-n101: ja existe, mantido
+  X-synv04-n101: ja existe, mantido
+  X-synv05-n101: ja existe, mantido
+  X-synv06-n101: ja existe, mantido
+  X-synv07-n101: ja existe, mantido
+  X-synv08-n101: ja existe, mantido
+  X-synv09-n101: ja existe, mantido
+  X-synv10-n101: ja existe, mantido
+  X-synv11-n201: ja existe, mantido
+  X-synv12-n201: ja existe, mantido
+  X-synv13-n201: ja existe, mantido
+  X-synv14-n201: ja existe, mantido
+  X-synv15-n201: ja existe, mantido
+  X-synv16-n201: ja existe, mantido
+  X-synv17-n201: ja existe, mantido
+  X-synv18-n201: ja existe, mantido
+  X-synv19-n201: ja existe, mantido
+  X-synv20-n201: ja existe, mantido
+  X-synv21-n301: ja existe, mantido
+  X-synv22-n301: ja existe, mantido
+  X-synv23-n301: ja existe, mantido
+  X-synv24-n301: ja existe, mantido
+  X-synv25-n301: ja existe, mantido
+  X-synv26-n301: ja existe, mantido
+  X-synv27-n301: ja existe, mantido
+  X-synv28-n301: ja existe, mantido
+  X-synv29-n301: ja existe, mantido
+  X-synv30-n301: ja existe, mantido
+  X-syntl01-n201   K=  6 custo=   13178.0 fallback=False
+  X-syntl02-n201   K= 25 custo=   41785.0 fallback=False
+  X-syntl03-n201   K= 15 custo=   29531.0 fallback=False
+  X-syntl04-n201   K= 38 custo=   58252.0 fallback=False
+  X-syntl05-n301   K=  8 custo=   15449.0 fallback=False
+  X-syntl06-n301   K=106 custo=  143605.0 fallback=False
+  X-syntl07-n301   K= 14 custo=   19908.0 fallback=False
+  X-syntl08-n301   K=102 custo=   92342.0 fallback=False
+  X-syntl09-n401   K= 21 custo=   43786.0 fallback=False
+  X-syntl10-n401   K= 68 custo=   61991.0 fallback=False
+  X-syntl11-n401   K= 18 custo=   28752.0 fallback=False
+  X-syntl12-n401   K= 99 custo=   86786.0 fallback=False
+  X-synvl01-n201   K=  9 custo=   11133.0 fallback=False
+  X-synvl02-n201   K=  7 custo=   14472.0 fallback=False
+  X-synvl03-n201   K= 11 custo=   25360.0 fallback=False
+  X-synvl04-n201   K= 40 custo=   66555.0 fallback=False
+  X-synvl05-n201   K= 30 custo=   29517.0 fallback=False
+  X-synvl06-n301   K= 33 custo=   52239.0 fallback=False
+  X-synvl07-n301   K= 66 custo=   70475.0 fallback=False
+  X-synvl08-n301   K= 21 custo=   23354.0 fallback=False
+  X-synvl09-n301   K=  8 custo=   14705.0 fallback=False
+  X-synvl10-n301   K= 13 custo=   29371.0 fallback=False
+  X-synvl11-n401   K=134 custo=  142361.0 fallback=False
+  X-synvl12-n401   K= 16 custo=   23880.0 fallback=False
+  X-synvl13-n401   K= 28 custo=   49545.0 fallback=False
+  X-synvl14-n401   K= 40 custo=   44732.0 fallback=False
+  X-synvl15-n401   K= 28 custo=   32917.0 fallback=False
+  X-synvl16-n501   K= 21 custo=   44344.0 fallback=False
+  X-synvl17-n501   K= 12 custo=   32220.0 fallback=False
+  X-synvl18-n501   K= 27 custo=   53367.0 fallback=False
+  X-synvl19-n501   K= 11 custo=   29196.0 fallback=False
+  X-synvl20-n501   K= 35 custo=   45734.0 fallback=False
+
+32 solucoes gravadas; com fallback: []

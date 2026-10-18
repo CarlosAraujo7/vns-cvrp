@@ -1,0 +1,3 @@
+Estudo 8 concluido em Sun Oct 11 02:33:52 -03 2026
+instancias grandes geradas em Sun Oct 11 02:47:53 -03 2026
+FILA_COMPLETA Sun Oct 11 02:48:04 -03 2026
