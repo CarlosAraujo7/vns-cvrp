@@ -419,7 +419,7 @@ def reproducao():
 
 
 SUP_ORDEM = ["tab:s1tests", "tab:s2tests", "tab:s3tests", "tab:s4tests", "tab:s4val", "tab:s5tests", "tab:s6tests",
-             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s9tests", "tab:s10tests", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
+             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s9tests", "tab:s10tests", "tab:s12tests", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
              "tab:studies", "tab:hyper"]      # mesma ordem de supplement.tex
 
 
@@ -768,6 +768,59 @@ def estudo9():
         NUM[f"s9_cpu_{pol}"] = f"{g.tempo_s.mean():.0f}"
 
 
+ARMS12 = [("U", "Uniform selection"), ("static", "Static mixture (tuned offline)"), ("reg2", "Fixed repair: always regret-2"),
+          ("RP", "Adaptive weights (Ropke--Pisinger)"), ("pm", "Probability matching (tuned)")]
+
+
+def estudo12():
+    """Estudo 12 (controle estatico no ALNS). Entradas 109/111 do diario."""
+    c = pd.read_csv(RES / "analise_etapa12_confirmatoria.csv")
+    cap = pd.read_csv(RES / "analise_etapa12_captura.csv")
+    e12 = pd.read_csv(RES / "etapa12_eval.csv")
+    e9 = pd.read_csv(RES / "etapa9_eval.csv")
+    d = pd.concat([e9[e9.braco.isin(["s9_U", "s9_RP", "s9_pm"])], e12])
+    d = d[d.viavel]
+    d["set"] = np.where(d.instancia.str.contains("syn"), "V", "X")
+    gm = d.groupby(["braco", "set", "instancia"]).gap_pct.mean().reset_index()
+    for br, g in gm.groupby("braco"):
+        a = br.replace("s9_", "").replace("s12_", "")
+        NUM[f"s12_gap_{a}"] = f"{g.gap_pct.mean():.3f}"
+        for s in ("X", "V"):
+            NUM[f"s12{s.lower()}_gap_{a}"] = f"{g[g.set == s].gap_pct.mean():.3f}"
+    esc = json.loads((RES / "etapa12_tuning_escolhida.json").read_text())
+    for k, w in enumerate(esc["pesos_d"]):
+        NUM[f"s12_wd_{k}"] = f"{100 * w:.0f}"
+    for k, w in enumerate(esc["pesos_r"]):
+        NUM[f"s12_wr_{k}"] = f"{100 * w:.0f}"
+    NUM["s12_tune_gap"], NUM["s12_tune_eq"] = f"{esc['gap_tune']:.2f}", f"{esc['gap_pesos_iguais']:.2f}"
+    NUM["s12_tune_runs"] = f"{esc['n_configs'] * 72:,}".replace(",", r"\,")
+    c["p_holm"] = c.p_holm.fillna(c.p_bruto)
+    conf = c[c.grupo == "confirmatorio"]
+    for _, r in conf.iterrows():
+        k = r.id.replace("-", "_")
+        macros_contraste("s12", k, r)
+        NUM[f"s12pr_{k}"] = f"{r.p_bruto:.3f}"
+    for _, r in cap.iterrows():
+        NUM[f"s12cap_{r.braco}"] = f"{100 * r.rec:.0f}"
+        NUM[f"s12capci_{r.braco}"] = f"[{100 * r.rec_lo:.0f}, {100 * r.rec_hi:.0f}]"
+    lin_main, lin_sup = [], []
+    gU = float(NUM["s12_gap_U"])
+    for a, nome in ARMS12:
+        lin_main.append(f"{nome} & {float(NUM[f's12x_gap_{a}']):.2f} & {float(NUM[f's12v_gap_{a}']):.2f} & {float(NUM[f's12_gap_{a}']):.2f}"
+                        + ("" if a == "U" else f" & {sgn(float(NUM[f's12_gap_{a}']) - gU)}"))
+    for _, r in conf.iterrows():
+        lin_sup.append(f"{r.id.replace('-', ' $-$ ').replace('static', 'static mixture').replace('reg2', 'fixed regret-2').replace('RP', 'adaptive weights').replace('pm', 'probability matching')} & {cel(r)} & {int(r.vit_a)}/{int(r.der_a)}")
+    escreve("tab_s12.tex", tabela(
+        "Study 12 (static control for the ALNS): mean gap (\\%) on set X (21 instances), the synthetic validation set (30) and both (51), and "
+        "the difference from uniform selection over the 51 instances in pp. The static mixture and the fixed repair are new arms; the other "
+        "rows are the corresponding arms of Study 9 (same code, instances and seeds).", "tab:s12",
+        r"Policy & Set X & Synthetic & All & Difference", lin_main, "lcccc"))
+    escreve("tab_s12_tests.tex", tabela(
+        "Study 12: confirmatory contrasts on the 51 instances (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over five tests; "
+        "wins/losses of the first-named arm).", "tab:s12tests", r"Contrast & Difference [CI]; $p$ & Wins/losses", lin_sup, "lcc"))
+    NUM["s12_nsig"] = str(int(conf.signif_005.sum()))
+
+
 ARMS10 = [("U", "Uniform selection"), ("static_S", "Static mixture tuned at $n\\le150$ (Study 4)"),
           ("static_L", "Static mixture tuned at $n=200$--400"), ("ucb1c", "UCB1 (cost-aware)"),
           ("pmc", "Probability matching (cost-aware)"), ("hgucbc", "HG-UCB (cost-aware)"), ("ts", "Thompson sampling"),
@@ -1097,6 +1150,8 @@ def main():
         estudo9()
     if (RES / "analise_etapa10_confirmatoria.csv").exists():
         estudo10()
+    if (RES / "analise_etapa12_confirmatoria.csv").exists():
+        estudo12()
     referencias()
     complementaridade()
     afirmacoes()

@@ -75,5 +75,11 @@ H41 & The mixture tuned at $n\le150$ (Study 4) is Holm-significantly better than
 H42 & No online policy is significantly better than uniform selection (65\%). & Confirmed (\num{s10_nbetter} improvements; Thompson sampling and the efficiency UCB are significantly worse). \\
 H43 & Exploratory: the advantage of the tuned mixture grows with $n$ (negative Spearman correlation; 60\%). & Not confirmed, opposite sign: \num{s10rho_static_L} ($p=\num{s10rhop_static_L}$). \\
 H44 & Exploratory: under uniform selection the naive SWAP* absorbs at least 60\% of the evaluations at $n=500$ (75\%). & Confirmed: \num{s10_swap_n500}\%. \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 12 (log entry 109; committed before its data)}} \\
+H50 & The static mixture tuned offline is Holm-significantly better than uniform selection in the ALNS (probability assigned: 90\%). & Confirmed: \num{s12d_static_U}~pp (adjusted $p<10^{-3}$). \\
+H51 & The adaptive weights are not significantly different from the static mixture (45\%; 35\% that they are better, 20\% that they are worse). & Confirmed: \num{s12d_RP_static}~pp, adjusted $p=\num{s12p_RP_static}$. \\
+H52 & Always using the regret-2 repair is Holm-significantly better than uniform selection (80\%). & Confirmed: \num{s12d_reg2_U}~pp. \\
+H53 & Exploratory: the static mixture captures at least 70\% of the gain of the adaptive weights over uniform selection (50\%). & Confirmed: \num{s12cap_static}\% (interval \num{s12capci_static}). \\
 \end{longtable}
 \end{center}

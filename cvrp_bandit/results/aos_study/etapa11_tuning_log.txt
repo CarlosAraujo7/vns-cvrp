@@ -5,3 +5,10 @@
 gen 0: gap 2.4500
     50/120  0.6 min
     100/120  0.7 min
+    50/120  0.5 min
+    100/120  0.7 min
+    50/120  0.6 min
+    100/120  0.7 min
+    50/120  0.6 min
+    100/120  0.8 min
+gen 1: melhor filho 2.4439  atual 2.4439  sigma 0.500

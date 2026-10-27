@@ -172,12 +172,13 @@ def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csv
             if not vals:
                 problemas.append(f"macro {chave}: braco {braco} ausente em {eval_csv}")
                 continue
-            nm += confere(chave, valor, statistics.fmean(vals), 3 if prefixo in ("s9", "s10") else 2)
+            nm += confere(chave, valor, statistics.fmean(vals), 3 if prefixo in ("s9", "s10", "s12") else 2)
     nc = 0
     bracos = {b for (b, _i) in medias}
     for r in csv.DictReader(open(RES / analise_csv, encoding="utf-8")):
-        na = r["a"] if r["a"] in bracos else prefixo + "_" + r["a"]
-        nb = r["b"] if r["b"] in bracos else prefixo + "_" + r["b"]
+        def _nome(x):
+            return next((cand for cand in (x, prefixo + "_" + x, "s9_" + x, "s12_" + x) if cand in bracos), x)
+        na, nb = _nome(r["a"]), _nome(r["b"])
         ia = {i: m for (b, i), m in medias.items() if b == na}
         ib = {i: m for (b, i), m in medias.items() if b == nb}
         inst = sorted(set(ia) & set(ib))
@@ -299,7 +300,10 @@ def main():
                                   ("Estudo 9 (ALNS)", "etapa9_eval.csv", "analise_etapa9_confirmatoria.csv", "s9",
                                    lambda k: "s9_" + k[len("s9_gap_"):], ("etapa9_vns.csv",)),
                                   ("Estudo 10 (tamanho)", "etapa10_eval.csv", "analise_etapa10_confirmatoria.csv", "s10",
-                                   lambda k: "s10_" + k[len("s10_gap_"):])):
+                                   lambda k: "s10_" + k[len("s10_gap_"):]),
+                                  ("Estudo 12 (controle estatico no ALNS)", "etapa12_eval.csv", "analise_etapa12_confirmatoria.csv", "s12",
+                                   lambda k: ("s12_" if k[len("s12_gap_"):] in ("static", "reg2") else "s9_") + k[len("s12_gap_"):],
+                                   ("etapa9_eval.csv",))):
         nm_, nc_ = verifica_gaps(ev, an, num, pref, bk, tuple(ex[0]) if ex else ())
         outros += nm_
         cont += nc_

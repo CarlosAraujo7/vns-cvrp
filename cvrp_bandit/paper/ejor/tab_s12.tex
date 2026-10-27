@@ -1,0 +1,18 @@
+\begin{table}[t]
+\caption{Study 12 (static control for the ALNS): mean gap (\%) on set X (21 instances), the synthetic validation set (30) and both (51), and the difference from uniform selection over the 51 instances in pp. The static mixture and the fixed repair are new arms; the other rows are the corresponding arms of Study 9 (same code, instances and seeds).}\label{tab:s12}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+Policy & Set X & Synthetic & All & Difference \\
+\midrule
+Uniform selection & 1.48 & 1.86 & 1.70 \\
+Static mixture (tuned offline) & 1.16 & 1.45 & 1.33 & $-$0.37 \\
+Fixed repair: always regret-2 & 1.16 & 1.29 & 1.23 & $-$0.47 \\
+Adaptive weights (Ropke--Pisinger) & 1.24 & 1.42 & 1.34 & $-$0.36 \\
+Probability matching (tuned) & 1.15 & 1.40 & 1.30 & $-$0.40 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
