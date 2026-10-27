@@ -1,0 +1,7 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+    50/120  0.6 min
+    100/120  0.7 min
+gen 0: gap 2.4500
+    50/120  0.6 min
+    100/120  0.7 min

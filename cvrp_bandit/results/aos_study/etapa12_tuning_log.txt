@@ -3,3 +3,85 @@
     25/72  0.9 min
     50/72  1.3 min
 gen 0: gap 1.0670
+    25/72  0.9 min
+    50/72  1.2 min
+    25/72  1.8 min
+    50/72  2.6 min
+    25/72  1.8 min
+    50/72  2.7 min
+    25/72  2.0 min
+    50/72  2.8 min
+gen 1: melhor filho 0.8628  atual 0.8628  sigma 0.500
+    25/72  2.1 min
+    50/72  2.9 min
+    25/72  1.9 min
+    50/72  2.4 min
+    25/72  2.0 min
+    50/72  2.7 min
+    25/72  1.9 min
+    50/72  2.4 min
+gen 2: melhor filho 0.7948  atual 0.7948  sigma 0.500
+    25/72  1.9 min
+    50/72  2.6 min
+    25/72  2.0 min
+    50/72  2.7 min
+    25/72  2.0 min
+    50/72  2.6 min
+    25/72  1.7 min
+    50/72  2.3 min
+gen 3: melhor filho 0.8440  atual 0.7948  sigma 0.450
+    25/72  2.2 min
+    50/72  2.8 min
+    25/72  1.9 min
+    50/72  2.5 min
+    25/72  1.9 min
+    50/72  2.5 min
+    25/72  2.1 min
+    50/72  2.8 min
+gen 4: melhor filho 0.8390  atual 0.7948  sigma 0.405
+    25/72  1.8 min
+    50/72  2.4 min
+    25/72  1.9 min
+    50/72  2.6 min
+    25/72  2.0 min
+    50/72  2.7 min
+    25/72  1.8 min
+    50/72  2.4 min
+gen 5: melhor filho 0.8534  atual 0.7948  sigma 0.365
+    25/72  2.1 min
+    50/72  2.7 min
+    25/72  2.0 min
+    50/72  2.6 min
+    25/72  1.8 min
+    50/72  2.4 min
+    25/72  2.3 min
+    50/72  3.1 min
+gen 6: melhor filho 0.8655  atual 0.7948  sigma 0.328
+    25/72  2.0 min
+    50/72  2.6 min
+    25/72  1.9 min
+    50/72  2.6 min
+    25/72  2.0 min
+    50/72  2.5 min
+    25/72  2.1 min
+    50/72  2.7 min
+gen 7: melhor filho 0.7912  atual 0.7912  sigma 0.328
+    25/72  1.9 min
+    50/72  2.5 min
+    25/72  1.8 min
+    50/72  2.4 min
+    25/72  2.1 min
+    50/72  2.8 min
+    25/72  2.0 min
+    50/72  2.6 min
+gen 8: melhor filho 0.8416  atual 0.7912  sigma 0.295
+busca estatica (ALNS) concluida
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+static_A: gen07c0 gap_tune=0.7912 (pesos iguais 1.0670); destruir [0.3171, 0.1818, 0.0613, 0.4397] reparar [0.0422, 0.7797, 0.1782]
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+busca estatica (ALNS) concluida
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+static_A: gen07c0 gap_tune=0.7912 (pesos iguais 1.0670); destruir [0.3171, 0.1818, 0.0613, 0.4397] reparar [0.0422, 0.7797, 0.1782]

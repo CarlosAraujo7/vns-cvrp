@@ -1,0 +1,35 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+eval: 720 execucoes
+    25/720  9.0 min
+    50/720  17.2 min
+    75/720  24.3 min
+    100/720  31.7 min
+    125/720  35.4 min
+    150/720  39.6 min
+    175/720  43.0 min
+    200/720  46.2 min
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+eval: 720 execucoes
+    25/520  2.2 min
+    50/520  3.5 min
+    75/520  5.1 min
+    100/520  6.7 min
+    125/520  8.7 min
+    150/520  9.4 min
+    175/520  10.5 min
+    200/520  11.9 min
+    225/520  13.3 min
+    250/520  14.1 min
+    275/520  14.9 min
+    300/520  15.8 min
+    325/520  16.8 min
+    350/520  17.3 min
+    375/520  18.0 min
+    400/520  18.5 min
+    425/520  19.0 min
+    450/520  19.5 min
+    475/520  20.2 min
+    500/520  20.6 min
+eval concluido
