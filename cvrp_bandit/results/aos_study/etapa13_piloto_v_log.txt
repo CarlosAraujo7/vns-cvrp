@@ -1,0 +1,16 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+piloto VND: 2592 execucoes
+    200/2592  0.1 min
+    400/2592  0.1 min
+    600/2592  0.1 min
+    800/2592  0.3 min
+    1000/2592  0.6 min
+    1200/2592  0.7 min
+    1400/2592  1.5 min
+    1600/2592  2.9 min
+    1800/2592  3.5 min
+    2000/2592  6.5 min
+    2200/2592  13.8 min
+    2400/2592  17.7 min
+piloto VND concluido

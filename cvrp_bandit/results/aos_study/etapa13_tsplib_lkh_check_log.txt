@@ -1,0 +1,35 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+{'instancia': 'eil51', 'n': 51, 'otimo': '426', 'custo_lkh': 426, 'gap_pct': 0.0, 'tempo_s': 0.0}
+{'instancia': 'berlin52', 'n': 52, 'otimo': '7542', 'custo_lkh': 7542, 'gap_pct': 0.0, 'tempo_s': 0.0}
+{'instancia': 'st70', 'n': 70, 'otimo': '675', 'custo_lkh': 675, 'gap_pct': 0.0, 'tempo_s': 0.0}
+{'instancia': 'eil76', 'n': 76, 'otimo': '538', 'custo_lkh': 538, 'gap_pct': 0.0, 'tempo_s': 0.0}
+{'instancia': 'pr76', 'n': 76, 'otimo': '108159', 'custo_lkh': 108159, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'rat99', 'n': 99, 'otimo': '1211', 'custo_lkh': 1211, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'kroA100', 'n': 100, 'otimo': '21282', 'custo_lkh': 21282, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'kroB100', 'n': 100, 'otimo': '22141', 'custo_lkh': 22141, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'kroC100', 'n': 100, 'otimo': '20749', 'custo_lkh': 20749, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'kroD100', 'n': 100, 'otimo': '21294', 'custo_lkh': 21294, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'kroE100', 'n': 100, 'otimo': '22068', 'custo_lkh': 22068, 'gap_pct': 0.0, 'tempo_s': 0.2}
+{'instancia': 'rd100', 'n': 100, 'otimo': '7910', 'custo_lkh': 7910, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'eil101', 'n': 101, 'otimo': '629', 'custo_lkh': 629, 'gap_pct': 0.0, 'tempo_s': 0.0}
+{'instancia': 'lin105', 'n': 105, 'otimo': '14379', 'custo_lkh': 14379, 'gap_pct': 0.0, 'tempo_s': 0.0}
+{'instancia': 'pr107', 'n': 107, 'otimo': '44303', 'custo_lkh': 44303, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'pr124', 'n': 124, 'otimo': '59030', 'custo_lkh': 59030, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'bier127', 'n': 127, 'otimo': '118282', 'custo_lkh': 118282, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'ch130', 'n': 130, 'otimo': '6110', 'custo_lkh': 6110, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'pr136', 'n': 136, 'otimo': '96772', 'custo_lkh': 96772, 'gap_pct': 0.0, 'tempo_s': 0.3}
+{'instancia': 'pr144', 'n': 144, 'otimo': '58537', 'custo_lkh': 58537, 'gap_pct': 0.0, 'tempo_s': 0.2}
+{'instancia': 'ch150', 'n': 150, 'otimo': '6528', 'custo_lkh': 6528, 'gap_pct': 0.0, 'tempo_s': 0.2}
+{'instancia': 'kroA150', 'n': 150, 'otimo': '26524', 'custo_lkh': 26524, 'gap_pct': 0.0, 'tempo_s': 0.3}
+{'instancia': 'kroB150', 'n': 150, 'otimo': '26130', 'custo_lkh': 26130, 'gap_pct': 0.0, 'tempo_s': 0.3}
+{'instancia': 'pr152', 'n': 152, 'otimo': '73682', 'custo_lkh': 73682, 'gap_pct': 0.0, 'tempo_s': 0.5}
+{'instancia': 'u159', 'n': 159, 'otimo': '42080', 'custo_lkh': 42080, 'gap_pct': 0.0, 'tempo_s': 0.1}
+{'instancia': 'rat195', 'n': 195, 'otimo': '2323', 'custo_lkh': 2323, 'gap_pct': 0.0, 'tempo_s': 1.2}
+{'instancia': 'd198', 'n': 198, 'otimo': '15780', 'custo_lkh': 15780, 'gap_pct': 0.0, 'tempo_s': 1.5}
+{'instancia': 'kroA200', 'n': 200, 'otimo': '29368', 'custo_lkh': 29368, 'gap_pct': 0.0, 'tempo_s': 0.5}
+{'instancia': 'kroB200', 'n': 200, 'otimo': '29437', 'custo_lkh': 29437, 'gap_pct': 0.0, 'tempo_s': 0.2}
+{'instancia': 'ts225', 'n': 225, 'otimo': '126643', 'custo_lkh': 126643, 'gap_pct': 0.0, 'tempo_s': 0.6}
+{'instancia': 'tsp225', 'n': 225, 'otimo': '3916', 'custo_lkh': 3916, 'gap_pct': 0.0, 'tempo_s': 0.8}
+{'instancia': 'pr226', 'n': 226, 'otimo': '80369', 'custo_lkh': 80369, 'gap_pct': 0.0, 'tempo_s': 0.3}
+LKH-3 reproduz o otimo publicado em 32 de 32; abaixo do otimo (impossivel): []

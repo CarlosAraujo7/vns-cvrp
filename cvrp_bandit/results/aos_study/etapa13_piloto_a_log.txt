@@ -1,0 +1,22 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+piloto ALNS: 936 execucoes
+    50/936  0.1 min
+    100/936  0.1 min
+    150/936  0.2 min
+    200/936  0.2 min
+    250/936  0.3 min
+    300/936  0.3 min
+    350/936  0.4 min
+    400/936  0.4 min
+    450/936  0.4 min
+    500/936  0.4 min
+    550/936  0.5 min
+    600/936  0.5 min
+    650/936  0.5 min
+    700/936  0.5 min
+    750/936  0.5 min
+    800/936  0.5 min
+    850/936  0.6 min
+    900/936  0.6 min
+piloto ALNS concluido

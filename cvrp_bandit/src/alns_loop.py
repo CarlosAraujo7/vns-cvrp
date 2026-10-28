@@ -74,9 +74,11 @@ def qrange(n):
 
 
 def rodar_alns(inst, rotas0, rng, orcamento, pol_d, modo_d, pol_r, modo_r, medida, w0=0.05, tf_fator=1e-3,
-               max_rotas=None, on_iteracao=None):
+               max_rotas=None, on_iteracao=None, destruir=None, reparar=None):
     """Executa o ALNS ate `orcamento` avaliacoes de distancia (checado antes de cada iteracao).
+    `destruir`/`reparar`: tabelas de operadores (default: as do CVRP, alns.DESTRUIR/REPARAR); o Estudo 13 (TSP) passa as suas.
     Retorna (melhor_solucao, info)."""
+    DESTRUIR_, REPARAR_ = (DESTRUIR if destruir is None else destruir), (REPARAR if reparar is None else reparar)
     n = inst.n_customers
     qmin, qmax = qrange(n)
     D = inst._D
@@ -85,7 +87,7 @@ def rodar_alns(inst, rotas0, rng, orcamento, pol_d, modo_d, pol_r, modo_r, medid
     cur_c = inst.solution_cost(cur)
     best, best_c = [list(r) for r in cur], cur_c
     T0 = w0 * cur_c / math.log(2.0)
-    kd, kr = len(DESTRUIR), len(REPARAR)
+    kd, kr = len(DESTRUIR_), len(REPARAR_)
     nd, nr = [0] * kd, [0] * kr
     sucd, sucr = [0.0] * kd, [0.0] * kr
     calld, callr = [0] * kd, [0] * kr
@@ -100,9 +102,9 @@ def rodar_alns(inst, rotas0, rng, orcamento, pol_d, modo_d, pol_r, modo_r, medid
         jr = pol_r.select_masked(list(range(kr)))
         est = Estado(inst, cur, dmax)
         m0 = medida()
-        removidos = DESTRUIR[jd][1](est, q, rng) if jd != 3 else DESTRUIR[jd][1](est, q, rng, qmax=qmax)
+        removidos = DESTRUIR_[jd][1](est, q, rng) if jd != 3 else DESTRUIR_[jd][1](est, q, rng, qmax=qmax)
         m1 = medida()
-        ok = REPARAR[jr][1](est, removidos, rng, max_rotas)
+        ok = REPARAR_[jr][1](est, removidos, rng, max_rotas)
         m2 = medida()
         # Emenda de contabilidade (diario, Entrada 107): cada iteracao paga n + R avaliacoes de distancia pelo custo de
         # avaliar a solucao candidata (recomputo do custo), que antes era gratuito; sem isso, operadores quase gratuitos
