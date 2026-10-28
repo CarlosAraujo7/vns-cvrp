@@ -1,0 +1,19 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+gen 0: gap 2.5909
+gen 1: melhor filho 2.5184  atual 2.5184  sigma 0.500
+gen 2: melhor filho 2.5849  atual 2.5184  sigma 0.450
+gen 3: melhor filho 2.1515  atual 2.1515  sigma 0.450
+gen 4: melhor filho 2.2977  atual 2.1515  sigma 0.405
+gen 5: melhor filho 2.3666  atual 2.1515  sigma 0.365
+gen 6: melhor filho 2.2736  atual 2.1515  sigma 0.328
+gen 7: melhor filho 2.1640  atual 2.1515  sigma 0.295
+gen 8: melhor filho 2.1362  atual 2.1362  sigma 0.295
+gen 9: melhor filho 2.1014  atual 2.1014  sigma 0.295
+gen 10: melhor filho 2.0408  atual 2.0408  sigma 0.295
+gen 11: melhor filho 2.1778  atual 2.0408  sigma 0.266
+gen 12: melhor filho 2.1490  atual 2.0408  sigma 0.239
+gen 13: melhor filho 2.0644  atual 2.0408  sigma 0.215
+gen 14: melhor filho 2.1027  atual 2.0408  sigma 0.194
+gen 15: melhor filho 2.1223  atual 2.0408  sigma 0.174
+busca estatica (VND P9) concluida

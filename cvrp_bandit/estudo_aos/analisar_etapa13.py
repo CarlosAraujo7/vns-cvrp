@@ -98,6 +98,15 @@ def analisa_v(rng):
     print(f"H57 (ucb1c, pmc, hgucbc, exp3 melhores que U): {int((A.a.isin(['ucb1c', 'pmc', 'hgucbc', 'exp3']) & (A.dif_pp < 0) & A.signif_005).sum())}")
     print(f"H58 (static significativamente melhor que U em algum cenario): {int(((A.a == 'static') & (A.dif_pp < 0) & A.signif_005).sum())} de 3")
     print(f"H59 (eff ou ts significativamente melhores que static): {int(((D.dif_pp < 0) & D.signif_005).sum())} de 6")
+    # POS-HOC (escrito depois de ver os resultados primarios; NAO pre-registrado; gerador proprio para nao alterar os IC dos pre-registrados)
+    rng_ph = np.random.default_rng(1)
+    # POS-HOC (idem): a melhor politica no pool completo contra
+    # simplesmente usar o pool menor com a escolha uniforme (Holm m=9)
+    P = com_holm([contraste(piv[n], f"{a}-P5_U@{n}", a, "P5_U", rng_ph, "posthoc_P", cenario=n)
+                  for n in ("TSPLIB E1", "TSPLIB E2", "SYN_VAL_T E1") for a in ("eff", "ucb1c", "hgucbc")], 9)
+    print("\n=== VND pos-hoc: politica no P9 - uniforme no P5 (Holm m=9) ===")
+    print(P.drop(columns=["grupo", "a", "b"]).round(4).to_string(index=False))
+    P.to_csv(RES / "analise_etapa13_v_posthoc.csv", index=False)
     return piv
 
 
@@ -154,6 +163,12 @@ def analisa_a(rng):
     ju = t[["U"]].join(tr, how="inner").rename(columns={"U": "alns_U"})
     est = com_holm([contraste(ju[conj.reindex(ju.index) == c], f"alns_U-{v}@{c}", "alns_U", v, rng, "estrutura", conjunto=c)
                     for c in ("TSPLIB", "SYN_VAL_T") for v in ("vnd_U_P9", "vnd_U_P5", "vnd_static")], 6)
+    # POS-HOC (nao pre-registrado): a politica adaptativa mais forte (eff) contra a mistura estatica ajustada e contra o reparo unico (Holm m=2)
+    rng_ph = np.random.default_rng(2)
+    ph = com_holm([contraste(t, "eff-static", "eff", "static", rng_ph, "posthoc_A"), contraste(t, "eff-fixrep", "eff", "fixrep", rng_ph, "posthoc_A")], 2)
+    print("\n=== ALNS pos-hoc: eff - static, eff - fixrep (Holm m=2) ===")
+    print(ph.drop(columns=["grupo", "a", "b"]).round(4).to_string(index=False))
+    ph.to_csv(RES / "analise_etapa13_a_posthoc.csv", index=False)
     r = pd.concat([prim, sec, ter, est], ignore_index=True)
     pd.set_option("display.width", 240)
     print("\n=== ALNS: primario, secundarios (m=12), terciarios (m=4), estrutura (m=6) ===")
@@ -170,11 +185,36 @@ def analisa_a(rng):
           f"{int(((est.dif_pp <= -0.3) & est.signif_005).sum())} de 6 contrastes")
 
 
+def analisa_ordem():
+    """POS-HOC (NAO pre-registrado; escrito depois de ver os resultados primarios e o uso quase uniforme de ucb1c/hgucbc):
+    VND classico de ORDEM FIXA no P9 (indice crescente = custo nominal crescente; FOC_asc) e no sentido inverso (FOC_desc), sem
+    aprendizado, contra U, P5_U, eff, ucb1c e hgucbc (Holm m=24: 4 cenarios x 6 contrastes)."""
+    x = pd.read_csv(RES / "etapa13_explor_ordem.csv")
+    e = pd.read_csv(RES / "etapa13_eval_v.csv")
+    d = pd.concat([x, e], ignore_index=True)
+    rng_ph = np.random.default_rng(3)
+    linhas = []
+    cen = {"TSPLIB E1": (d.conjunto == "TSPLIB") & (d.nivel == 1), "TSPLIB E2": (d.conjunto == "TSPLIB") & (d.nivel == 5),
+           "SYN_VAL_T E1": (d.conjunto == "SYN_VAL_T") & (d.nivel == 1), "TSPLIB E3": (d.conjunto == "TSPLIB") & (d.nivel == 25)}
+    print("\n=== POS-HOC: VND de ordem fixa (FOC) ===")
+    for nome, msk in cen.items():
+        t = pivo(d[msk])
+        t.columns = [c.replace("s13v_", "").replace("s13x_", "") for c in t.columns]
+        print(f"{nome}: " + ", ".join(f"{k} {v:.3f}" for k, v in t.mean().sort_values().items()))
+        for a, b in (("FOC_asc", "U"), ("FOC_asc", "P5_U"), ("FOC_asc", "eff"), ("FOC_asc", "ucb1c"), ("FOC_asc", "hgucbc"), ("FOC_desc", "U")):
+            linhas.append(contraste(t, f"{a}-{b}@{nome}", a, b, rng_ph, "posthoc_O", cenario=nome))
+    r = com_holm(linhas, len(linhas))
+    print(r.drop(columns=["grupo", "a", "b"]).round(4).to_string(index=False))
+    r.to_csv(RES / "analise_etapa13_ordem.csv", index=False)
+
+
 def main():
     rng = np.random.default_rng(0)
     piv_v = analisa_v(rng)
     analisa_pc(rng, piv_v)
     analisa_a(rng)
+    if (RES / "etapa13_explor_ordem.csv").exists():
+        analisa_ordem()
 
 
 if __name__ == "__main__":

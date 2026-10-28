@@ -1,0 +1,2 @@
+TSP (1 rota): guloso == regret-2 em 300/300 estados; barato difere do guloso em 135/300
+3 rotas: regret-2 difere do guloso em 154/300 estados

@@ -109,7 +109,7 @@ def executar_v(sp, nivel, conj, nome_inst, seed):
 
     nbhs = [(nm, envolver(i, bf), rf) for i, (nm, bf, rf) in enumerate(pool)]
     rng = random.Random(seed)
-    politica, modo = construir_politica(sp["pol"], k, rng, custo=sp["custo"], params=sp["params"])
+    politica, modo = construir_politica(sp["pol"], k, rng, custo=sp["custo"], params=sp["params"], ordem=sp.get("ordem"))
     orcamento = nivel * KAPPA_V * inst.n_customers ** 2
     t0 = time.perf_counter()
     rotas, info = vnd_generico(inst, [list(nn)], rng, orcamento, nbhs, politica, "best", "R", modo_recompensa=modo,
@@ -495,9 +495,28 @@ def modo_eval_ref(workers):
     print("eval referencias concluido", flush=True)
 
 
+def modo_explor_ordem(workers):
+    """POS-HOC, exploratorio (NAO pre-registrado; escrito depois de ver a Entrada 114): ucb1c e hgucbc ganham de U em E1 com uso quase
+    uniforme dos operadores; testa se o ganho vem da ORDEM inicial (a rodada de inicializacao dos bandits percorre o pool na ordem
+    do indice, aproximadamente de custo crescente): VND classico de ordem FIXA do P9 (FOC) em ordem crescente e decrescente de indice.
+    TSPLIB (E1, E2, E3) e SYN_VAL_T (E1), mesmas sementes da avaliacao."""
+    sp = [spec_v("s13x_FOC_asc", "FOC"), spec_v("s13x_FOC_desc", "FOC")]
+    sp[0]["ordem"] = list(range(9))
+    sp[1]["ordem"] = list(range(8, -1, -1))
+    tar = []
+    for conj, n, _nc, ns in _instancias_aval():
+        for nv in (NIVEIS_V_TSPLIB if conj == "TSPLIB" else (1,)):
+            tar += [(s, nv, conj, n, SEMENTES_AVAL + sd) for s in sp for sd in range(ns)]
+    print(f"explor ordem: {len(tar)} execucoes", flush=True)
+    with mp.Pool(workers) as pool:
+        rodar(tar, RES / "etapa13_explor_ordem.csv", pool, CAMPOS_V, cada=100)
+    print("explor ordem concluido", flush=True)
+
+
 MODOS = {"pilot-v": piloto_v, "pilot-a": piloto_a, "pilot-a2": piloto_a2,
          "tuning-static-v": modo_tuning_static_v, "tuning-a": modo_tuning_a,
-         "eval-v": modo_eval_v, "eval-pc": modo_eval_pc, "eval-a": modo_eval_a, "eval-ref": modo_eval_ref}
+         "eval-v": modo_eval_v, "eval-pc": modo_eval_pc, "eval-a": modo_eval_a, "eval-ref": modo_eval_ref,
+         "explor-ordem": modo_explor_ordem}
 
 
 def main():

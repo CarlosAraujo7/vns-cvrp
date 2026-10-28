@@ -1,0 +1,38 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+grade ALNS: 36 configuracoes, 2592 execucoes
+    100/2592  1.2 min
+    200/2592  2.4 min
+    300/2592  3.5 min
+    400/2592  4.7 min
+    500/2592  5.9 min
+    600/2592  7.0 min
+    700/2592  8.2 min
+    800/2592  9.3 min
+    900/2592  10.3 min
+    1000/2592  10.8 min
+    1100/2592  11.4 min
+    1200/2592  12.0 min
+    1300/2592  12.6 min
+    1400/2592  13.2 min
+    1500/2592  13.8 min
+    1600/2592  14.4 min
+    1700/2592  15.0 min
+    1800/2592  15.4 min
+    1900/2592  15.7 min
+    2000/2592  15.9 min
+    2100/2592  16.2 min
+    2200/2592  16.4 min
+    2300/2592  16.6 min
+    2400/2592  16.8 min
+    2500/2592  17.0 min
+gen 0: gap 1.1473
+gen 1: melhor filho 1.1623  atual 1.1473  sigma 0.450
+gen 2: melhor filho 0.8698  atual 0.8698  sigma 0.450
+gen 3: melhor filho 0.9805  atual 0.8698  sigma 0.405
+gen 4: melhor filho 0.8888  atual 0.8698  sigma 0.365
+gen 5: melhor filho 0.9449  atual 0.8698  sigma 0.328
+gen 6: melhor filho 0.9694  atual 0.8698  sigma 0.295
+gen 7: melhor filho 0.6670  atual 0.6670  sigma 0.295
+gen 8: melhor filho 0.6449  atual 0.6449  sigma 0.295
+busca estatica (ALNS) concluida

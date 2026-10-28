@@ -195,6 +195,103 @@ def verifica_s11(num):
     return nm, nc
 
 
+def verifica_s13(num):
+    """Estudo 13 (TSP): recomputa, so com a biblioteca padrao, as medias de gap dos macros `s13_gap_*`, `s13_pcgap_*`, `s13a_gap_*` e
+    `s13r_gap_*` e a diferenca media, vitorias, derrotas e n de todos os contrastes dos CSV de analise do Estudo 13 (VND, pos-hoc P5,
+    pos-hoc de ordem fixa, controle positivo, ALNS e pos-hoc ALNS), direto dos CSV brutos (media das seeds por instancia)."""
+    brutos = RES / "etapa13_eval_v.csv"
+    if not brutos.exists() or not (RES / "analise_etapa13_v.csv").exists():
+        return 0, 0
+    por = defaultdict(list)
+    inst_conj = {}
+    nivel_rot = {"1": "E1", "5": "E2", "25": "E3"}
+
+    def ler13(nome_csv, cen_de, braco_de):
+        arq = RES / nome_csv
+        if not arq.exists():
+            return
+        with open(arq, encoding="utf-8", newline="") as f:
+            for r in csv.DictReader(f):
+                if r["viavel"] != "True":
+                    problemas.append(f"{nome_csv}: execucao inviavel {r['braco']} {r['instancia']} {r['seed']}")
+                    continue
+                ref = float(r["ref"])
+                gap = 100.0 * (float(r["custo"]) - ref) / ref
+                if abs(gap - float(r["gap_pct"])) > 1e-6:
+                    problemas.append(f"{nome_csv}: gap gravado divergente {r['braco']} {r['instancia']} {r['seed']}")
+                inst_conj[r["instancia"]] = r["conjunto"]
+                por[(cen_de(r), braco_de(r["braco"]), r["instancia"])].append(gap)
+
+    def vnd_cen(r):
+        return f"{r['conjunto']} {nivel_rot[str(int(float(r['nivel'])))]}"
+
+    strip_v = lambda b: b.replace("s13v_", "").replace("s13x_", "")    # noqa: E731
+    ler13("etapa13_eval_v.csv", vnd_cen, strip_v)
+    ler13("etapa13_explor_ordem.csv", vnd_cen, strip_v)
+    ler13("etapa13_eval_pc.csv", lambda r: r["braco"].split("_")[1], lambda b: b.split("_", 2)[2])
+    ler13("etapa13_eval_a.csv", lambda r: "ALNS", lambda b: b.replace("s13a_", ""))
+    ler13("etapa13_eval_ref.csv", lambda r: "ALNS", lambda b: "vnd_" + b.replace("s13r_", ""))
+    medias = {k: statistics.fmean(v) for k, v in por.items()}
+    nm = 0
+    cenmac = {"T1": "TSPLIB E1", "T2": "TSPLIB E2", "S1": "SYN_VAL_T E1", "T3": "TSPLIB E3"}
+    for chave, valor in num.items():
+        vals = None
+        if chave.startswith("s13_gap_"):
+            arm, k = chave[len("s13_gap_"):].rsplit("_", 1)
+            vals = [m for (c_, b, _i), m in medias.items() if c_ == cenmac[k] and b == arm]
+        elif chave.startswith("s13_pcgap_"):
+            arm, tag = chave[len("s13_pcgap_"):].rsplit("_", 1)
+            vals = [m for (c_, b, _i), m in medias.items() if c_ == tag and b == arm]
+        elif chave.startswith("s13a_gap_"):
+            arm, k = chave[len("s13a_gap_"):].rsplit("_", 1)
+            sel = {"all": None, "T": "TSPLIB", "S": "SYN_VAL_T"}[k]
+            vals = [m for (c_, b, i), m in medias.items() if c_ == "ALNS" and b == arm and (sel is None or inst_conj[i] == sel)]
+        elif chave.startswith("s13r_gap_"):
+            arm = "vnd_" + chave[len("s13r_gap_"):]
+            vals = [m for (c_, b, _i), m in medias.items() if c_ == "ALNS" and b == arm]
+        if vals is None:
+            continue
+        if not vals:
+            problemas.append(f"macro {chave}: braco/cenario ausente nos CSV do Estudo 13")
+            continue
+        nm += confere(chave, valor, statistics.fmean(vals), 3)
+
+    def confere_contrastes(nome_an, resolve):
+        arq = RES / nome_an
+        if not arq.exists():
+            return 0
+        n = 0
+        for r in csv.DictReader(open(arq, encoding="utf-8")):
+            cen, na, nb, conj = resolve(r)
+            ia = {i: m for (c_, b, i), m in medias.items() if c_ == cen and b == na and (conj is None or inst_conj[i] == conj)}
+            ib = {i: m for (c_, b, i), m in medias.items() if c_ == cen and b == nb and (conj is None or inst_conj[i] == conj)}
+            inst = sorted(set(ia) & set(ib))
+            dif = [ia[i] - ib[i] for i in inst]
+            dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+            if not dif:
+                problemas.append(f"{nome_an} {r['id']}: sem instancias comuns")
+                continue
+            dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+            if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or len(inst) != int(r["n_inst"]):
+                problemas.append(f"{nome_an} {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs "
+                                 f"{r['vit_a']}/{r['der_a']}; n {len(inst)} vs {r['n_inst']}")
+            n += 1
+        return n
+
+    por_cenario = lambda r: (r["cenario"], r["a"], r["b"], None)    # noqa: E731
+    nc = 0
+    for nome_an in ("analise_etapa13_v.csv", "analise_etapa13_v_posthoc.csv", "analise_etapa13_ordem.csv"):
+        nc += confere_contrastes(nome_an, por_cenario)
+    nc += confere_contrastes("analise_etapa13_pc.csv", lambda r: (r["pool"], r["a"], r["b"], None))
+
+    def res_a(r):
+        conj = r.get("conjunto") or None
+        return ("ALNS", r["a"].replace("alns_", ""), r["b"], conj)
+    nc += confere_contrastes("analise_etapa13_a.csv", res_a)
+    nc += confere_contrastes("analise_etapa13_a_posthoc.csv", res_a)
+    return nm, nc
+
+
 def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csvs=()):
     """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
     diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
@@ -365,6 +462,11 @@ def main():
     cont += n11c
     if n11m or n11c:
         print(f"(2c) Estudo 11 (SWAP* eficiente): {n11m} medias e {n11c} contrastes conferidos")
+    n13m, n13c = verifica_s13(num)
+    outros += n13m
+    cont += n13c
+    if n13m or n13c:
+        print(f"(2c) Estudo 13 (TSP): {n13m} medias e {n13c} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(
