@@ -1,0 +1,18 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+explor perm: 1410 execucoes
+    100/1410  0.1 min
+    200/1410  0.1 min
+    300/1410  0.2 min
+    400/1410  0.2 min
+    500/1410  0.3 min
+    600/1410  0.3 min
+    700/1410  0.3 min
+    800/1410  0.4 min
+    900/1410  0.4 min
+    1000/1410  0.4 min
+    1100/1410  0.4 min
+    1200/1410  0.4 min
+    1300/1410  0.4 min
+    1400/1410  0.5 min
+explor perm concluido

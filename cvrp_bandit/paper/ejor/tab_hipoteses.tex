@@ -88,5 +88,19 @@ H50 & The static mixture tuned offline is Holm-significantly better than uniform
 H51 & The adaptive weights are not significantly different from the static mixture (45\%; 35\% that they are better, 20\% that they are worse). & Confirmed: \num{s12d_RP_static}~pp, adjusted $p=\num{s12p_RP_static}$. \\
 H52 & Always using the regret-2 repair is Holm-significantly better than uniform selection (80\%). & Confirmed: \num{s12d_reg2_U}~pp. \\
 H53 & Exploratory: the static mixture captures at least 70\% of the gain of the adaptive weights over uniform selection (50\%). & Confirmed: \num{s12cap_static}\% (interval \num{s12capci_static}). \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 13, TSP (log entry 113; committed before its data)}} \\
+H54 & The pool effect is reversed: uniform selection over P9 is worse than over P5 and Holm-significant in TSPLIB at $E_1$ and $E_2$ (70\%). & Confirmed: P9 is worse by \num{s13a_set_T1} and \num{s13a_set_T2}~pp. \\
+H55 & The efficiency UCB is significantly better than uniform selection in at least one of the three VND scenarios (60\%). & Confirmed in \num{s13_h55_n} of 3: \num{s13d_eff_T1} (TSPLIB $E_1$), \num{s13d_eff_T2} ($E_2$, not significant) and \num{s13d_eff_S1}~pp (synthetic $E_1$). \\
+H56 & Thompson sampling, idem (45\%). & Not confirmed (\num{s13_h56_n} of 3): \num{s13d_ts_T1}, \num{s13d_ts_T2} and \num{s13d_ts_S1}~pp. \\
+H57 & None of UCB1, probability matching, HG-UCB (cost-aware) and EXP3 is significantly better than uniform selection (65\%). & Not confirmed: UCB1 and HG-UCB are better in TSPLIB $E_1$ (\num{s13d_ucb1c_T1} and \num{s13d_hgucbc_T1}~pp) and in the synthetic set (\num{s13d_ucb1c_S1} and \num{s13d_hgucbc_S1}~pp). \\
+H58 & The static mixture is significantly better than uniform selection in at least one of the three scenarios (75\%). & Not confirmed (\num{s13_h58_n} of 3): \num{s13d_static_T1}, \num{s13d_static_T2} and \num{s13d_static_S1}~pp. \\
+H59 & Exploratory: neither the efficiency UCB nor Thompson sampling is significantly better than the static mixture (85\%). & Not confirmed: the efficiency UCB is better in TSPLIB $E_1$ (\num{s13dd_eff_T1}~pp) and in the synthetic set (\num{s13dd_eff_S1}~pp). \\
+H60 & Positive control: at least two policies are significantly better than uniform selection in the pool D16 (85\%). & Confirmed: \num{s13_h60_n} of 6 policies. \\
+H61 & In the ALNS, the adaptive weights are not significantly different from uniform selection (65\%). & Confirmed: \num{s13ad_RP_U}~pp, $p=\num{s13apr_RP_U}$ (the sign is unfavorable). \\
+H62 & None of the 12 secondary ALNS contrasts shows a policy significantly better than uniform selection (55\%). & Not confirmed: the efficiency UCB is better in the synthetic set (\num{s13ad_eff_S}~pp, adjusted $p=\num{s13ap_eff_S}$); \num{s13a_sec_nworse} of 12 are significantly worse. \\
+H63 & The static mixture of the ALNS is not significantly better than uniform selection (60\%). & Not confirmed: \num{s13ad_static_U}~pp (adjusted $p<10^{-3}$). \\
+H64 & The ALNS with uniform selection beats each of the three VND references by at least 0.3~pp, significantly, in both sets (30\%). & Not confirmed (\num{s13_h64_n} of 6). \\
+H65 & The ALNS with uniform selection is significantly better than the VND with uniform selection over P9 in both sets (80\%). & Not confirmed (\num{s13_h65_n} of 2): only in the synthetic set (\num{s13ad_alnsU_UP9_S}~pp; TSPLIB \num{s13ad_alnsU_UP9_T}~pp, adjusted $p=\num{s13ap_alnsU_UP9_T}$). \\
 \end{longtable}
 \end{center}

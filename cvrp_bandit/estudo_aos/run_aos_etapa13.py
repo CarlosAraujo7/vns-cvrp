@@ -86,6 +86,8 @@ def executar_v(sp, nivel, conj, nome_inst, seed):
     inst.chamadas = 0
     base, duds = POOLS13[sp["pool"]]
     pool = list(base) + [dud(f) for f in duds]
+    if sp.get("perm"):
+        random.Random(seed * 7919 + 13).shuffle(pool)      # POS-HOC: ordem inicial aleatoria do pool (Entrada 114)
     k = len(pool)
     uso, calls_op, maximo = [0] * k, [0] * k, [0]
     suc, gan = [0] * k, [0.0] * k
@@ -513,10 +515,28 @@ def modo_explor_ordem(workers):
     print("explor ordem concluido", flush=True)
 
 
+def modo_explor_perm(workers):
+    """POS-HOC, exploratorio (NAO pre-registrado; Entrada 114): teste causal da hipotese de que o ganho de ucb1c, hgucbc e eff em E1
+    vem da ordem de inicializacao (indice do pool ~ custo crescente): as mesmas politicas, mesmos hiperparametros, com o pool
+    PERMUTADO ao acaso a cada execucao (a mesma permutacao para todos os bracos numa mesma semente). TSPLIB e SYN_VAL_T em E1."""
+    base = specs_eval_v()
+    sp = []
+    for k in ("ucb1c", "hgucbc", "eff"):
+        a = dict(base["s13v_" + k], nome=f"s13x_{k}_perm", perm=True)
+        sp.append(a)
+    tar = []
+    for conj, n, _nc, ns in _instancias_aval():
+        tar += [(s, 1, conj, n, SEMENTES_AVAL + sd) for s in sp for sd in range(ns)]
+    print(f"explor perm: {len(tar)} execucoes", flush=True)
+    with mp.Pool(workers) as pool:
+        rodar(tar, RES / "etapa13_explor_perm.csv", pool, CAMPOS_V, cada=100)
+    print("explor perm concluido", flush=True)
+
+
 MODOS = {"pilot-v": piloto_v, "pilot-a": piloto_a, "pilot-a2": piloto_a2,
          "tuning-static-v": modo_tuning_static_v, "tuning-a": modo_tuning_a,
          "eval-v": modo_eval_v, "eval-pc": modo_eval_pc, "eval-a": modo_eval_a, "eval-ref": modo_eval_ref,
-         "explor-ordem": modo_explor_ordem}
+         "explor-ordem": modo_explor_ordem, "explor-perm": modo_explor_perm}
 
 
 def main():

@@ -419,7 +419,7 @@ def reproducao():
 
 
 SUP_ORDEM = ["tab:s1tests", "tab:s2tests", "tab:s3tests", "tab:s4tests", "tab:s4val", "tab:s5tests", "tab:s6tests",
-             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s9tests", "tab:s10tests", "tab:s12tests", "tab:s11tests", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
+             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s9tests", "tab:s10tests", "tab:s12tests", "tab:s11tests", "tab:s13tests", "tab:s13atests", "tab:s13pc", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
              "tab:studies", "tab:hyper"]      # mesma ordem de supplement.tex
 
 
@@ -1011,6 +1011,328 @@ def estudo11():
     NUM["s11_h47_n"] = str(int(((fb.dif_pp <= -0.3) & fb.signif_005).sum()))
 
 
+ARMS13V = [("U", "Uniform selection"), ("ucb1c", "UCB1 (cost-aware)"), ("pmc", "Probability matching (cost-aware)"),
+           ("hgucbc", "HG-UCB (cost-aware)"), ("ts", "Thompson sampling"), ("exp3", "EXP3"), ("eff", "Efficiency UCB"),
+           ("static", "Static mixture (tuned offline)")]
+SC13 = [("TSPLIB E1", "T1", "TSPLIB $E_1$"), ("TSPLIB E2", "T2", "TSPLIB $E_2$"), ("SYN_VAL_T E1", "S1", "Synthetic $E_1$")]
+ARMS13A = [("U", "Uniform selection"), ("RP", "Adaptive weights (Ropke--Pisinger)"), ("ucb1", "UCB1"), ("pm", "Probability matching"),
+           ("hgucb", "HG-UCB"), ("ts", "Thompson sampling"), ("exp3", "EXP3"), ("eff", "Efficiency UCB"),
+           ("static", "Static mixture (tuned offline)"), ("fixrep", "Fixed repair (cheapest insertion, random order)")]
+
+
+def _neg(x):
+    return x.replace("-", "$-$")
+
+
+def _soma_pipe(df, col):
+    arr = np.array([[float(v) for v in s.split("|")] for s in df[col]])
+    return arr.sum(0)
+
+
+def estudo13():
+    """Estudo 13 (generalidade: TSP). Entradas 113 (pre-registro) e 114 (resultados) do diario."""
+    ev = pd.read_csv(RES / "etapa13_eval_v.csv")
+    xo = pd.read_csv(RES / "etapa13_explor_ordem.csv") if (RES / "etapa13_explor_ordem.csv").exists() else ev.iloc[0:0]
+    xp = pd.read_csv(RES / "etapa13_explor_perm.csv") if (RES / "etapa13_explor_perm.csv").exists() else ev.iloc[0:0]
+    aq = pd.read_csv(RES / "analise_etapa13_perm.csv") if (RES / "analise_etapa13_perm.csv").exists() else None
+    pc = pd.read_csv(RES / "etapa13_eval_pc.csv")
+    ea = pd.read_csv(RES / "etapa13_eval_a.csv")
+    er = pd.read_csv(RES / "etapa13_eval_ref.csv")
+    av = pd.read_csv(RES / "analise_etapa13_v.csv")
+    ap_ = pd.read_csv(RES / "analise_etapa13_v_posthoc.csv")
+    ao = pd.read_csv(RES / "analise_etapa13_ordem.csv") if (RES / "analise_etapa13_ordem.csv").exists() else None
+    apc = pd.read_csv(RES / "analise_etapa13_pc.csv")
+    arec = pd.read_csv(RES / "analise_etapa13_recuperacao.csv")
+    aa = pd.read_csv(RES / "analise_etapa13_a.csv")
+    aph = pd.read_csv(RES / "analise_etapa13_a_posthoc.csv")
+    tv = json.loads((RES / "etapa13_tuning_escolhida_v.json").read_text())
+    ta = json.loads((RES / "etapa13_tuning_escolhidas_a.json").read_text())
+    lkh = pd.read_csv(RES / "etapa13_tsplib_lkh_check.csv")
+
+    # ------------------------------------------------------------------ contagens e instancias
+    NUM["s13_nT"] = str(ev[ev.conjunto == "TSPLIB"].instancia.nunique())
+    NUM["s13_nS"] = str(ev[ev.conjunto == "SYN_VAL_T"].instancia.nunique())
+    NUM["s13_nN"] = str(int(NUM["s13_nT"]) + int(NUM["s13_nS"]))
+    nn = ev[ev.conjunto == "TSPLIB"].drop_duplicates("instancia").n_customers + 1
+    NUM["s13_Tmin"], NUM["s13_Tmax"] = str(int(nn.min())), str(int(nn.max()))
+    ns_ = ev[ev.conjunto == "SYN_VAL_T"].drop_duplicates("instancia").n_customers + 1
+    NUM["s13_Smin"], NUM["s13_Smax"] = str(int(ns_.min())), str(int(ns_.max()))
+    nruns = len(ev) + len(pc) + len(ea) + len(er)
+    NUM["s13_nruns"] = f"{nruns:,}".replace(",", r"\,")
+    NUM["s13_nruns_ev"], NUM["s13_nruns_pc"] = f"{len(ev):,}".replace(",", r"\,"), f"{len(pc):,}".replace(",", r"\,")
+    NUM["s13_nruns_a"], NUM["s13_nruns_ref"] = f"{len(ea):,}".replace(",", r"\,"), f"{len(er):,}".replace(",", r"\,")
+    NUM["s13_nruns_x"] = f"{len(xo):,}".replace(",", r"\,")
+    NUM["s13_nruns_q"] = f"{len(xp):,}".replace(",", r"\,")
+    xo = pd.concat([xo, xp], ignore_index=True)        # as colunas de ordem fixa e de pool permutado entram juntas nos gaps
+    ntv = len(pd.read_csv(RES / "etapa13_tuning_static_v.csv"))
+    nta = len(pd.read_csv(RES / "etapa13_tuning_grid_a.csv")) + len(pd.read_csv(RES / "etapa13_tuning_static_a.csv"))
+    NUM["s13_tune_runs"] = f"{ntv + nta:,}".replace(",", r"\,")
+    NUM["s13_lkh_ok"] = str(int((lkh.gap_pct.abs() < 1e-9).sum()))
+    NUM["s13_lkh_tot"] = str(len(lkh))
+    req = (RES / "etapa13_regret_equiv.txt").read_text().splitlines() if (RES / "etapa13_regret_equiv.txt").exists() else []
+    if len(req) >= 2:
+        import re
+        m1 = re.search(r"em (\d+)/(\d+) estados; barato difere do guloso em (\d+)/", req[0])
+        m2 = re.search(r"em (\d+)/(\d+) estados", req[1])
+        NUM["s13_req_n"], NUM["s13_req_tot"], NUM["s13_req_cheap"] = m1.group(1), m1.group(2), m1.group(3)
+        NUM["s13_req3_n"], NUM["s13_req3_tot"] = m2.group(1), m2.group(2)
+
+    # ------------------------------------------------------------------ regime VND: gaps
+    cen = {"T1": (ev.conjunto == "TSPLIB") & (ev.nivel == 1), "T2": (ev.conjunto == "TSPLIB") & (ev.nivel == 5),
+           "S1": (ev.conjunto == "SYN_VAL_T") & (ev.nivel == 1), "T3": (ev.conjunto == "TSPLIB") & (ev.nivel == 25)}
+    cenx = {"T1": (xo.conjunto == "TSPLIB") & (xo.nivel == 1), "T2": (xo.conjunto == "TSPLIB") & (xo.nivel == 5),
+            "S1": (xo.conjunto == "SYN_VAL_T") & (xo.nivel == 1), "T3": (xo.conjunto == "TSPLIB") & (xo.nivel == 25)}
+    gap = {}
+    for k in cen:
+        d = pd.concat([ev[cen[k]], xo[cenx[k]]])
+        d = d[d.viavel]
+        g = d.groupby(["braco", "instancia"]).gap_pct.mean().groupby("braco").mean()
+        g.index = [i.replace("s13v_", "").replace("s13x_", "") for i in g.index]
+        gap[k] = g
+        for a, v in g.items():
+            NUM[f"s13_gap_{a}_{k}"] = f"{v:.3f}"
+    # contrastes pre-registrados (Familia A, B) e exploratorios C (E3) e D
+    cod = {"TSPLIB E1": "T1", "TSPLIB E2": "T2", "SYN_VAL_T E1": "S1", "TSPLIB E3": "T3"}
+    fa, fb = av[av.grupo == "familiaA"], av[av.grupo == "familiaB"]
+    fc, fd = av[av.grupo == "explor_C"], av[av.grupo == "explor_D"]
+    por = {}
+    for _, r in fa.iterrows():
+        k = f"{r.a}_{cod[r.cenario]}"
+        por[(r.a, cod[r.cenario])] = r
+        macros_contraste("s13", k, r)
+        NUM[f"s13pr_{k}"] = f"{r.p_bruto:.3f}"
+        NUM[f"s13mde_{k}"] = f"{r.mde_pp:.2f}"
+    for _, r in fb.iterrows():
+        macros_contraste("s13", "set_" + cod[r.cenario], r)
+    for _, r in fc.iterrows():
+        macros_contraste("s13e3", r.a, r)
+        NUM[f"s13e3eq_{r.a}"] = "yes" if r.equiv_010 else "no"
+    for _, r in fd.iterrows():
+        macros_contraste("s13d", f"{r.a}_{cod[r.cenario]}", r)
+    for _, r in ap_.iterrows():
+        macros_contraste("s13p5", f"{r.a}_{cod[r.cenario]}", r)
+    por_o = {}
+    if ao is not None:
+        for _, r in ao.iterrows():
+            k = f"{r.a.replace('_', '')}_{r.b}_{cod[r.cenario]}"
+            por_o[(r.a, r.b, cod[r.cenario])] = r
+            macros_contraste("s13o", k, r)
+        NUM["s13o_m"] = str(len(ao))
+    # tabela principal do regime VND
+    lin = []
+    for a, nome in ARMS13V:
+        c = [nome]
+        for _n, k, _r in SC13:
+            c.append(f"{gap[k][a]:.2f}" + ("" if a == "U" else f" ({sgn(por[(a, k)].dif_pp)}; {padj(por[(a, k)].p_holm)})"))
+        lin.append(" & ".join(c))
+    lin.append(r"\addlinespace")
+    c = [r"Pool P5, uniform selection\textsuperscript{a}"]
+    for _n, k, _r in SC13:
+        r = fb[fb.cenario == _n].iloc[0]
+        c.append(f"{gap[k]['P5_U']:.2f} ({sgn(-r.dif_pp)}; {padj(r.p_holm)})")
+    lin.append(" & ".join(c))
+    if ao is not None:
+        for a, nome in (("FOC_asc", r"Fixed order, increasing index, no learning\textsuperscript{b}"),
+                        ("FOC_desc", r"Fixed order, decreasing index\textsuperscript{b}")):
+            c = [nome]
+            for _n, k, _r in SC13:
+                r = por_o[(a, "U", k)]
+                c.append(f"{gap[k][a]:.2f} ({sgn(r.dif_pp)}; {padj(r.p_holm)})")
+            lin.append(" & ".join(c))
+    if aq is not None:
+        for _, r in aq.iterrows():
+            macros_contraste("s13q", f"{r.a.replace('_', '')}_{r.b}_{cod[r.cenario]}", r)
+        NUM["s13q_m"] = str(len(aq))
+        for a, nome in (("ucb1c_perm", "UCB1 (cost-aware), operators in random order\\textsuperscript{c}"),
+                        ("hgucbc_perm", "HG-UCB (cost-aware), operators in random order\\textsuperscript{c}"),
+                        ("eff_perm", "Efficiency UCB, operators in random order\\textsuperscript{c}")):
+            c = [nome]
+            for _n, k, _r in SC13:
+                if k == "T2":
+                    c.append("---")
+                    continue
+                r = aq[(aq.a == a) & (aq.b == "U") & (aq.cenario == _n)].iloc[0]
+                c.append(f"{gap[k][a]:.2f} ({sgn(r.dif_pp)}; {padj(r.p_holm)})")
+            lin.append(" & ".join(c))
+    escreve("tab_s13.tex", tabela(
+        "Study 13 (TSP, deterministic VND, pool P9): mean gap (\\%) to the LKH-3 reference and, in parentheses, the paired difference from uniform "
+        "selection in pp and its Holm-adjusted $p$ (21 pre-registered tests for the policy rows). \\textsuperscript{a}Pre-registered pool contrast "
+        "(P5 minus P9, sign reversed: negative favors P5; 3 tests). \\textsuperscript{b}Post hoc, not pre-registered (Holm over a family of \\num{s13o_m} post hoc tests). \\textsuperscript{c}Post hoc: the same policy with the list of operators shuffled in every run (not run at $E_2$; Holm over \\num{s13q_m} tests).",
+        "tab:s13", r"Policy & TSPLIB $E_1$ & TSPLIB $E_2$ & Synthetic $E_1$", lin, "lccc"))
+    # texto: tabelas de testes (suplemento) -- Familia A, B
+    lin_sup = []
+    for a, nome in ARMS13V[1:]:
+        lin_sup.append(f"{nome} $-$ uniform & " + " & ".join(
+            f"{cel(por[(a, k)])} & {int(por[(a, k)].vit_a)}/{int(por[(a, k)].der_a)}" for _n, k, _r in SC13))
+    lin_sup.append(r"\addlinespace")
+    lin_sup.append("Pool effect: P9 $-$ P5, uniform selection & " + " & ".join(
+        f"{cel(fb[fb.cenario == _n].iloc[0])} & {int(fb[fb.cenario == _n].iloc[0].vit_a)}/{int(fb[fb.cenario == _n].iloc[0].der_a)}"
+        for _n, k, _r in SC13))
+    escreve("tab_s13_tests.tex", tabela(
+        "Study 13 (TSP, VND): pre-registered contrasts against uniform selection (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over 21 tests "
+        "for the policy rows and over 3 for the pool row; wins/losses of the first-named arm).", "tab:s13tests",
+        r"Contrast & TSPLIB $E_1$ & W/L & TSPLIB $E_2$ & W/L & Synthetic $E_1$ & W/L", lin_sup, "lcccccc"))
+    NUM["s13_nsig"] = str(int(fa.signif_005.sum()))
+    NUM["s13_nbetter"] = str(int(((fa.dif_pp < 0) & fa.signif_005).sum()))
+    NUM["s13_nworse"] = str(int(((fa.dif_pp > 0) & fa.signif_005).sum()))
+    # uso e avaliacoes por operador (TSPLIB E1)
+    d1 = ev[cen["T1"]]
+    for arm in ("U", "eff", "ucb1c", "hgucbc", "static"):
+        g = d1[d1.braco == "s13v_" + arm]
+        cu, uu = _soma_pipe(g, "calls_por_operador"), _soma_pipe(g, "uso_operadores")
+        NUM[f"s13_3opt_{arm}"] = f"{100 * (cu[7] + cu[8]) / cu.sum():.0f}"
+        NUM[f"s13_use3opt_{arm}"] = f"{100 * (uu[7] + uu[8]) / uu.sum():.0f}"
+        NUM[f"s13_use2opt_{arm}"] = f"{100 * uu[0] / uu.sum():.0f}"
+        NUM[f"s13_apps_{arm}"] = f"{g.apps.mean():.0f}"
+    NUM["s13_apps_FOC"] = f"{xo[cenx['T1'] & (xo.braco == 's13x_FOC_asc')].apps.mean():.0f}" if len(xo) else "0"
+    # mistura estatica do VND ajustada
+    NUM["s13_tune_gap"], NUM["s13_tune_eq"] = f"{tv['gap_tune']:.2f}", f"{tv['gap_pesos_iguais']:.2f}"
+    NUM["s13_tune_cfg"] = str(tv["n_configs"])
+    for j, w in enumerate(tv["params"]["pesos"]):
+        NUM[f"s13_w_{j}"] = f"{100 * w:.0f}"
+    NUM["s13_w_or"] = f"{100 * (tv['params']['pesos'][1] + tv['params']['pesos'][3] + tv['params']['pesos'][4] + tv['params']['pesos'][6]):.0f}"
+    NUM["s13_w_3opt"] = f"{100 * (tv['params']['pesos'][7] + tv['params']['pesos'][8]):.0f}"
+
+    # ------------------------------------------------------------------ controle positivo
+    for tag in ("D8", "D16"):
+        g = pc[pc.braco.str.startswith(f"s13pc_{tag}_") & pc.viavel].groupby(["braco", "instancia"]).gap_pct.mean().groupby("braco").mean()
+        for a, v in g.items():
+            NUM[f"s13_pcgap_{a.replace(f's13pc_{tag}_', '')}_{tag}"] = f"{v:.3f}"
+        u_pool = pc[(pc.braco == f"s13pc_{tag}_U") & pc.viavel].groupby("instancia").gap_pct.mean()
+        u_clean = ev[cen["T1"] & (ev.braco == "s13v_U") & ev.viavel].groupby("instancia").gap_pct.mean()
+        NUM[f"s13_loss_{tag}"] = f"{(u_pool - u_clean.reindex(u_pool.index)).mean():.2f}"
+    for _, r in apc.iterrows():
+        macros_contraste("s13pc", f"{r.a}_{r.pool}", r)
+    for _, r in arec.iterrows():
+        NUM[f"s13rec_{r.politica}_{r.pool}"] = f"{100 * r.rec:.0f}"
+        NUM[f"s13reclo_{r.politica}_{r.pool}"] = f"{100 * r.rec_lo:.0f}"
+        NUM[f"s13rechi_{r.politica}_{r.pool}"] = f"{100 * r.rec_hi:.0f}"
+    NUM["s13_pc_nsig16"] = str(int(((apc.pool == "D16") & (apc.dif_pp < 0) & apc.signif_005).sum()))
+    NUM["s13_pc_nsig8"] = str(int(((apc.pool == "D8") & (apc.dif_pp < 0) & apc.signif_005).sum()))
+    lin_pc = []
+    names_pc = dict(ARMS13V)
+    for a in ("ucb1c", "pmc", "hgucbc", "ts", "exp3", "eff"):
+        lin_pc.append(" & ".join([names_pc[a]] + [
+            f"{cel(apc[(apc.a == a) & (apc.pool == t)].iloc[0])} & {_neg(NUM[f's13rec_{a}_{t}'])}" + r"\% " + f"[{_neg(NUM[f's13reclo_{a}_{t}'])}, {_neg(NUM[f's13rechi_{a}_{t}'])}]"
+            for t in ("D8", "D16")]))
+    escreve("tab_s13_pc.tex", tabela(
+        "Study 13, positive control (four useless operators of cost $8n^2$ or $16n^2$ added to P9; TSPLIB, $E_1$): paired difference from uniform "
+        "selection in pp [95\\% CI; Holm-adjusted $p$ over 12 tests] and fraction of the planted loss recovered (exploratory; ratio of means, "
+        "bootstrap 95\\% CI over instances).", "tab:s13pc",
+        r"Policy & D8: $\Delta$ vs.\ U & recovered & D16: $\Delta$ vs.\ U & recovered", lin_pc, "lcccc"))
+
+    # ------------------------------------------------------------------ regime ALNS
+    ga = {}
+    ea_v = ea[ea.viavel]
+    mean_inst = ea_v.groupby(["braco", "instancia"]).gap_pct.mean().unstack(0)
+    mean_inst.columns = [c.replace("s13a_", "") for c in mean_inst.columns]
+    conj = ea.drop_duplicates("instancia").set_index("instancia").conjunto.reindex(mean_inst.index)
+    for a in mean_inst.columns:
+        NUM[f"s13a_gap_{a}_all"] = f"{mean_inst[a].mean():.3f}"
+        NUM[f"s13a_gap_{a}_T"] = f"{mean_inst[a][conj == 'TSPLIB'].mean():.3f}"
+        NUM[f"s13a_gap_{a}_S"] = f"{mean_inst[a][conj == 'SYN_VAL_T'].mean():.3f}"
+    NUM["s13a_n"] = str(len(mean_inst))
+    tr = er[er.viavel].groupby(["braco", "instancia"]).gap_pct.mean().unstack(0)
+    tr.columns = [c.replace("s13r_", "") for c in tr.columns]
+    for a in tr.columns:
+        NUM[f"s13r_gap_{a}"] = f"{tr[a].mean():.3f}"
+    sec = aa[aa.grupo == "secundario"]
+    tcod = {"TSPLIB": "T", "SYN_VAL_T": "S"}
+    for _, r in aa.iterrows():
+        if r.grupo == "estrutura":
+            macros_contraste("s13a", f"{r.a.replace('_', '')}_{r.b.replace('vnd_', '').replace('_', '')}_{tcod[r.conjunto]}", r)
+        elif r.grupo == "secundario":
+            macros_contraste("s13a", f"{r.a}_{tcod[r.conjunto]}", r)
+        else:
+            macros_contraste("s13a", r.id.replace("-", "_"), r)
+        NUM[f"s13apr_{r.id.replace('-', '_').replace('@', '_')}"] = f"{r.p_bruto:.3f}"
+    for _, r in aph.iterrows():
+        macros_contraste("s13ah", r.id.replace("-", "_"), r)
+    NUM["s13a_sec_nbetter"] = str(int(((sec.dif_pp < 0) & sec.signif_005).sum()))
+    NUM["s13a_sec_nworse"] = str(int(((sec.dif_pp > 0) & sec.signif_005).sum()))
+    NUM["s13a_rp_mde"] = f"{aa[aa.id == 'RP-U'].iloc[0].mde_pp:.2f}"
+    # uso na ALNS
+    for arm in ("U", "RP", "ucb1", "pm", "hgucb", "ts", "exp3", "eff", "static", "fixrep"):
+        g = ea[ea.braco == "s13a_" + arm]
+        ud, ur = _soma_pipe(g, "uso_d"), _soma_pipe(g, "uso_r")
+        for j in range(4):
+            NUM[f"s13a_des{j}_{arm}"] = f"{100 * ud[j] / ud.sum():.0f}"
+        for j in range(3):
+            NUM[f"s13a_rep{j}_{arm}"] = f"{100 * ur[j] / ur.sum():.0f}"
+        NUM[f"s13a_iter_{arm}"] = f"{g.iteracoes.mean():,.0f}".replace(",", r"\,")
+    # ajuste do ALNS
+    NUM["s13a_fix_j"] = str(ta["fixrep"]["j"])
+    NUM["s13a_tune_ucb1_C"] = f"{ta['ucb1']['params']['C']:g}"
+    NUM["s13a_tune_pm_g"], NUM["s13a_tune_pm_p"] = f"{ta['pm']['params']['gamma']:g}", f"{ta['pm']['params']['p_min']:g}"
+    NUM["s13a_tune_hg_a"], NUM["s13a_tune_hg_C"] = f"{ta['hgucb']['params']['alpha']:g}", f"{ta['hgucb']['params']['C']:g}"
+    NUM["s13a_tune_rp_r"], NUM["s13a_tune_rp_s"] = f"{ta['RP']['params']['rho']:g}", f"{ta['RP']['params']['segmento']:g}"
+    for nm_, v in ta["fixrep"]["gaps"].items():
+        NUM[f"s13a_tunefix_{nm_}"] = f"{v:.3f}"
+    NUM["s13a_tunefix_equal"] = "yes" if abs(ta["fixrep"]["gaps"]["r0"] - ta["fixrep"]["gaps"]["r1"]) < 1e-9 else "no"
+    NUM["s13a_tune_static"], NUM["s13a_tune_static_eq"] = f"{ta['static']['gap_tune']:.2f}", f"{ta['static']['gap_pesos_iguais']:.2f}"
+    for j, w in enumerate(ta["static"]["pesos_r"]):
+        NUM[f"s13a_wr_{j}"] = f"{100 * w:.0f}"
+    lin_a = []
+    secd = {(r.a, tcod[r.conjunto]): r for _, r in sec.iterrows()}
+    for a, nome in ARMS13A:
+        c = [nome]
+        for t in ("T", "S"):
+            cell = f"{float(NUM[f's13a_gap_{a}_{t}']):.2f}"
+            if (a, t) in secd:
+                cell += f" ({sgn(secd[(a, t)].dif_pp)}; {padj(secd[(a, t)].p_holm)})"
+            c.append(cell)
+        pooled = {"RP": "RP-U", "static": "static-U", "fixrep": "fixrep-U"}
+        if a in pooled:
+            r = aa[aa.id == pooled[a]].iloc[0]
+            c.append(f"{float(NUM[f's13a_gap_{a}_all']):.2f} ({sgn(r.dif_pp)}; {padj(r.p_holm)})")
+        else:
+            c.append(f"{float(NUM[f's13a_gap_{a}_all']):.2f}")
+        c += [NUM[f"s13a_iter_{a}"], NUM[f"s13a_rep2_{a}"]]
+        lin_a.append(" & ".join(c))
+    escreve("tab_s13a.tex", tabela(
+        "Study 13 (TSP, ALNS): mean gap (\\%) and, in parentheses, the paired difference from uniform selection in pp and its adjusted $p$. TSPLIB and "
+        "synthetic columns: Holm over 12 pre-registered secondary tests; the all-instances column gives the pooled contrast for the three arms "
+        "pre-registered at that level (RP: one test at 0.05; static and fixed repair: Holm over 4). Last two columns: mean iterations per run and "
+        "share of repairs by the cheapest-insertion operator (\\%).", "tab:s13a",
+        r"Policy & TSPLIB & Synthetic & All 62 & Iter./run & Cheap repair (\%)", lin_a, "lccccc"))
+    lin_at = []
+    for a, nome in ARMS13A[2:9]:
+        if a in ("static",):
+            continue
+        lin_at.append(f"{nome} $-$ uniform & " + " & ".join(
+            f"{cel(secd[(a, t)])} & {int(secd[(a, t)].vit_a)}/{int(secd[(a, t)].der_a)}" for t in ("T", "S")))
+    lin_at.append(r"\addlinespace")
+    for iid, lab in (("RP-U", "RP $-$ uniform (primary, unadjusted)"), ("static-U", "Static mixture $-$ uniform"),
+                     ("fixrep-U", "Fixed repair $-$ uniform"), ("RP-static", "RP $-$ static mixture"), ("RP-fixrep", "RP $-$ fixed repair")):
+        r = aa[aa.id == iid].iloc[0]
+        lin_at.append(f"{lab} & \\multicolumn{{4}}{{c}}{{{cel(r)}; W/L {int(r.vit_a)}/{int(r.der_a)} (62 instances)}}")
+    escreve("tab_s13a_tests.tex", tabela(
+        "Study 13 (TSP, ALNS): pre-registered contrasts (mean paired difference in pp [95\\% CI]; adjusted $p$; wins/losses of the first-named arm).",
+        "tab:s13atests", r"Contrast & TSPLIB & W/L & Synthetic & W/L", lin_at, "lcccc"))
+    # estrutura: ALNS-U contra os tres braços VND ao mesmo orcamento
+    est = aa[aa.grupo == "estrutura"]
+    NUM["s13_nstruct_sig"] = str(int(((est.dif_pp < 0) & est.signif_005).sum()))
+    NUM["s13_nstruct_03"] = str(int(((est.dif_pp <= -0.3) & est.signif_005).sum()))
+    # hipoteses (entrada 113): estado de cada uma
+    sig_b = lambda df: ((df.dif_pp < 0) & df.signif_005)    # noqa: E731
+    NUM["s13_h54_ok"] = "yes" if ((fb.cenario.isin(["TSPLIB E1", "TSPLIB E2"])) & (fb.dif_pp > 0) & fb.signif_005).sum() == 2 else "no"
+    NUM["s13_h55_n"] = str(int(sig_b(fa[fa.a == "eff"]).sum()))
+    NUM["s13_h56_n"] = str(int(sig_b(fa[fa.a == "ts"]).sum()))
+    NUM["s13_h57_n"] = str(int(sig_b(fa[fa.a.isin(["ucb1c", "pmc", "hgucbc", "exp3"])]).sum()))
+    NUM["s13_h58_n"] = str(int(sig_b(fa[fa.a == "static"]).sum()))
+    NUM["s13_h59_n"] = str(int(sig_b(fd).sum()))
+    NUM["s13_h60_n"] = NUM["s13_pc_nsig16"]
+    NUM["s13_h61_ok"] = "yes" if not bool(aa[aa.id == "RP-U"].iloc[0].signif_005) else "no"
+    NUM["s13_h62_n"] = NUM["s13a_sec_nbetter"]
+    NUM["s13_h63_ok"] = "yes" if not bool(sig_b(aa[aa.id == "static-U"]).any()) else "no"
+    NUM["s13_h64_n"] = NUM["s13_nstruct_03"]
+    NUM["s13_h65_n"] = str(int(sig_b(est[est.b == "vnd_U_P9"]).sum()))
+    NUM["s13_hconf"] = str(int(NUM["s13_h54_ok"] == "yes") + int(int(NUM["s13_h55_n"]) >= 1) + int(int(NUM["s13_h56_n"]) >= 1)
+                           + int(int(NUM["s13_h57_n"]) == 0) + int(int(NUM["s13_h58_n"]) >= 1) + int(int(NUM["s13_h59_n"]) == 0)
+                           + int(int(NUM["s13_h60_n"]) >= 2) + int(NUM["s13_h61_ok"] == "yes") + int(int(NUM["s13_h62_n"]) == 0)
+                           + int(NUM["s13_h63_ok"] == "yes") + int(int(NUM["s13_h64_n"]) == 6) + int(int(NUM["s13_h65_n"]) == 2))
+
+
 def afirmacoes():
     """contagens das afirmacoes universais (mesma logica de checar_afirmacoes.py)"""
     from checar_afirmacoes import aos_vs_baseline
@@ -1272,6 +1594,8 @@ def main():
         estudo12()
     if (RES / "analise_etapa11_confirmatoria.csv").exists():
         estudo11()
+    if (RES / "analise_etapa13_v.csv").exists():
+        estudo13()
     referencias()
     complementaridade()
     afirmacoes()

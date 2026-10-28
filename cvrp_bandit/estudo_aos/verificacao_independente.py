@@ -228,6 +228,7 @@ def verifica_s13(num):
     strip_v = lambda b: b.replace("s13v_", "").replace("s13x_", "")    # noqa: E731
     ler13("etapa13_eval_v.csv", vnd_cen, strip_v)
     ler13("etapa13_explor_ordem.csv", vnd_cen, strip_v)
+    ler13("etapa13_explor_perm.csv", vnd_cen, strip_v)
     ler13("etapa13_eval_pc.csv", lambda r: r["braco"].split("_")[1], lambda b: b.split("_", 2)[2])
     ler13("etapa13_eval_a.csv", lambda r: "ALNS", lambda b: b.replace("s13a_", ""))
     ler13("etapa13_eval_ref.csv", lambda r: "ALNS", lambda b: "vnd_" + b.replace("s13r_", ""))
@@ -280,7 +281,7 @@ def verifica_s13(num):
 
     por_cenario = lambda r: (r["cenario"], r["a"], r["b"], None)    # noqa: E731
     nc = 0
-    for nome_an in ("analise_etapa13_v.csv", "analise_etapa13_v_posthoc.csv", "analise_etapa13_ordem.csv"):
+    for nome_an in ("analise_etapa13_v.csv", "analise_etapa13_v_posthoc.csv", "analise_etapa13_ordem.csv", "analise_etapa13_perm.csv"):
         nc += confere_contrastes(nome_an, por_cenario)
     nc += confere_contrastes("analise_etapa13_pc.csv", lambda r: (r["pool"], r["a"], r["b"], None))
 

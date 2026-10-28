@@ -1,0 +1,19 @@
+\begin{table}[t]
+\caption{Study 13, positive control (four useless operators of cost $8n^2$ or $16n^2$ added to P9; TSPLIB, $E_1$): paired difference from uniform selection in pp [95\% CI; Holm-adjusted $p$ over 12 tests] and fraction of the planted loss recovered (exploratory; ratio of means, bootstrap 95\% CI over instances).}\label{tab:s13pc}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+Policy & D8: $\Delta$ vs.\ U & recovered & D16: $\Delta$ vs.\ U & recovered \\
+\midrule
+UCB1 (cost-aware) & $-$0.58 [$-$0.79, $-$0.39]; \ensuremath{<10^{-4}} & 106\% [71, 150] & $-$0.84 [$-$1.10, $-$0.59]; \ensuremath{<10^{-4}} & 70\% [52, 90] \\
+Probability matching (cost-aware) & $-$0.37 [$-$0.61, $-$0.14]; 0.014 & 68\% [27, 105] & $-$0.73 [$-$0.99, $-$0.47]; \ensuremath{<10^{-4}} & 61\% [42, 81] \\
+HG-UCB (cost-aware) & $-$0.42 [$-$0.59, $-$0.24]; 0.0002 & 76\% [44, 116] & $-$0.66 [$-$0.84, $-$0.47]; \ensuremath{<10^{-4}} & 55\% [40, 74] \\
+Thompson sampling & $+$0.11 [$-$0.07, $+$0.27]; 0.43 & $-$19\% [$-$52, 12] & $-$0.41 [$-$0.60, $-$0.22]; 0.003 & 34\% [19, 49] \\
+EXP3 & $+$0.21 [$-$0.01, $+$0.43]; 0.33 & $-$38\% [$-$80, 3] & $+$0.09 [$-$0.14, $+$0.31]; 0.52 & $-$7\% [$-$27, 12] \\
+Efficiency UCB & $-$0.99 [$-$1.28, $-$0.71]; \ensuremath{<10^{-4}} & 181\% [133, 238] & $-$1.24 [$-$1.58, $-$0.95]; \ensuremath{<10^{-4}} & 104\% [82, 129] \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

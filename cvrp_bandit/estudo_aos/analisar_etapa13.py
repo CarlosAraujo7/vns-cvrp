@@ -208,6 +208,29 @@ def analisa_ordem():
     r.to_csv(RES / "analise_etapa13_ordem.csv", index=False)
 
 
+def analisa_perm():
+    """POS-HOC (NAO pre-registrado; Entrada 114): ucb1c, hgucbc e eff com o pool PERMUTADO ao acaso a cada execucao (a mesma ordem de
+    inicializacao nao e mais a de custo crescente) contra a uniforme e contra a propria politica com o pool na ordem original, em TSPLIB E1
+    e SYN_VAL_T E1 (Holm m=12)."""
+    x = pd.read_csv(RES / "etapa13_explor_perm.csv")
+    e = pd.read_csv(RES / "etapa13_eval_v.csv")
+    d = pd.concat([x, e], ignore_index=True)
+    rng_ph = np.random.default_rng(4)
+    linhas = []
+    cen = {"TSPLIB E1": (d.conjunto == "TSPLIB") & (d.nivel == 1), "SYN_VAL_T E1": (d.conjunto == "SYN_VAL_T") & (d.nivel == 1)}
+    print("\n=== POS-HOC: politicas com o pool permutado ao acaso ===")
+    for nome, msk in cen.items():
+        t = pivo(d[msk])
+        t.columns = [c.replace("s13v_", "").replace("s13x_", "") for c in t.columns]
+        print(f"{nome}: " + ", ".join(f"{k} {t[k].mean():.3f}" for k in ("U", "ucb1c", "ucb1c_perm", "hgucbc", "hgucbc_perm", "eff", "eff_perm")))
+        for pol in ("ucb1c", "hgucbc", "eff"):
+            for b in ("U", pol):
+                linhas.append(contraste(t, f"{pol}_perm-{b}@{nome}", f"{pol}_perm", b, rng_ph, "posthoc_Q", cenario=nome))
+    r = com_holm(linhas, len(linhas))
+    print(r.drop(columns=["grupo", "a", "b"]).round(4).to_string(index=False))
+    r.to_csv(RES / "analise_etapa13_perm.csv", index=False)
+
+
 def main():
     rng = np.random.default_rng(0)
     piv_v = analisa_v(rng)
@@ -215,6 +238,8 @@ def main():
     analisa_a(rng)
     if (RES / "etapa13_explor_ordem.csv").exists():
         analisa_ordem()
+    if (RES / "etapa13_explor_perm.csv").exists():
+        analisa_perm()
 
 
 if __name__ == "__main__":

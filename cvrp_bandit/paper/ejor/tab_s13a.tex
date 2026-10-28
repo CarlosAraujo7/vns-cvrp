@@ -1,0 +1,23 @@
+\begin{table}[t]
+\caption{Study 13 (TSP, ALNS): mean gap (\%) and, in parentheses, the paired difference from uniform selection in pp and its adjusted $p$. TSPLIB and synthetic columns: Holm over 12 pre-registered secondary tests; the all-instances column gives the pooled contrast for the three arms pre-registered at that level (RP: one test at 0.05; static and fixed repair: Holm over 4). Last two columns: mean iterations per run and share of repairs by the cheapest-insertion operator (\%).}\label{tab:s13a}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccccc}
+\toprule
+Policy & TSPLIB & Synthetic & All 62 & Iter./run & Cheap repair (\%) \\
+\midrule
+Uniform selection & 1.35 & 1.37 & 1.36 & 877 & 33 \\
+Adaptive weights (Ropke--Pisinger) & 1.49 & 1.49 & 1.49 ($+$0.13; 0.094) & 874 & 33 \\
+UCB1 & 1.67 ($+$0.31; 0.003) & 1.71 ($+$0.34; 0.013) & 1.69 & 879 & 33 \\
+Probability matching & 1.47 ($+$0.11; 0.26) & 1.64 ($+$0.27; 0.033) & 1.55 & 865 & 32 \\
+HG-UCB & 1.60 ($+$0.24; 0.014) & 1.42 ($+$0.05; 0.66) & 1.51 & 885 & 34 \\
+Thompson sampling & 3.04 ($+$1.68; \ensuremath{<10^{-4}}) & 3.03 ($+$1.66; \ensuremath{<10^{-4}}) & 3.03 & 970 & 39 \\
+EXP3 & 1.66 ($+$0.30; 0.001) & 1.79 ($+$0.43; 0.014) & 1.73 & 878 & 32 \\
+Efficiency UCB & 1.08 ($-$0.27; 0.10) & 1.03 ($-$0.34; 0.009) & 1.06 & 7\,351 & 99 \\
+Static mixture (tuned offline) & 0.91 & 0.90 & 0.91 ($-$0.46; \ensuremath{<10^{-4}}) & 1\,590 & 68 \\
+Fixed repair (cheapest insertion, random order) & 0.45 & 0.46 & 0.45 ($-$0.91; \ensuremath{<10^{-4}}) & 6\,370 & 100 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

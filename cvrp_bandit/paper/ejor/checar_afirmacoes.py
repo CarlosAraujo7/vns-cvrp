@@ -5,10 +5,13 @@ checar_afirmacoes.py
 Confere, direto das tabelas de testes confirmatorios, as afirmacoes UNIVERSAIS do manuscrito (as que dizem "nenhuma",
 "todas", "em nenhum estudo"), porque um unico contraste em contrario as derruba:
 
-  U1  nenhuma politica adaptativa (nem ajustada, nem de outras familias) supera a selecao uniforme (ou a ordem
-      aleatoria dentro do VND) com significancia apos Holm: nenhum contraste confirmatorio "politica - baseline" com
-      dif < 0 e p ajustado < 0,05;
-  U2  o HG-UCB nunca e significativamente melhor que a baseline nao adaptativa;
+  U1  nos Estudos do CVRP (S1-S11) nenhuma politica adaptativa (nem ajustada, nem de outras familias) supera a selecao
+      uniforme (ou a ordem aleatoria dentro do VND) com significancia apos Holm: nenhum contraste confirmatorio
+      "politica - baseline" com dif < 0 e p ajustado < 0,05. No TSP (Estudo 13, VND) essa afirmacao e FALSA e o script lista
+      as excecoes (U1t); a afirmacao que vale no TSP e U5;
+  U2  o HG-UCB (literal ou sensivel a custo) nunca e significativamente melhor que a baseline nao adaptativa nos estudos do CVRP;
+  U5  no TSP (Estudo 13), toda politica que supera a uniforme com significancia e, no mesmo cenario, significativamente PIOR que a
+      ordem fixa de custo crescente sem aprendizado (analise pos-hoc, Holm sobre a familia pos-hoc);
   U3  a variante literal do HG-UCB e pior que a normalizada nos dois orcamentos (74/74);
   U4  os efeitos estruturais (termino, ordem aleatoria, conjunto de operadores) sao significativos e maiores que 0,2pp.
 Uso: python checar_afirmacoes.py     (sai com codigo 1 se alguma afirmacao falhar)
@@ -63,26 +66,58 @@ def aos_vs_baseline():
     if d11 is not None:
         for _, r in d11[d11.grupo == "familiaA"].iterrows():
             linhas.append(("S11", f"{r.a} {r.cenario}", r.a, r.b, r.dif_pp, r.p_holm))
+    d13 = ler("analise_etapa13_v.csv")
+    if d13 is not None:
+        # Estudo 13 (TSP, VND): 7 politicas x 3 cenarios contra a uniforme (familia A pre-registrada, Holm m=21)
+        for _, r in d13[d13.grupo == "familiaA"].iterrows():
+            linhas.append(("S13", f"{r.a} {r.cenario}", r.a, r.b, r.dif_pp, r.p_holm))
     return pd.DataFrame(linhas, columns=["estudo", "contraste", "a", "b", "dif_pp", "p_holm"])
 
 
 def main():
-    t = aos_vs_baseline()
-    print(f"{len(t)} contrastes 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa' (S1-S4, S6, S7, S10, S11)")
+    todos = aos_vs_baseline()
+    t = todos[todos.estudo != "S13"]
+    tsp = todos[todos.estudo == "S13"]
+    print(f"{len(t)} contrastes 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa' no CVRP (S1-S4, S6, S7, S10, S11)")
     melhores = t[(t.dif_pp < 0) & (t.p_holm < 0.05)]
-    print("U1: contrastes com a politica significativamente MELHOR:", len(melhores))
+    print("U1: contrastes do CVRP com a politica significativamente MELHOR:", len(melhores))
     if len(melhores):
         falhas.append("U1")
         print(melhores.to_string(index=False))
     piores = t[(t.dif_pp > 0) & (t.p_holm < 0.05)]
-    print(f"    contrastes com a politica significativamente PIOR: {len(piores)}")
+    print(f"    contrastes do CVRP com a politica significativamente PIOR: {len(piores)}")
     print(piores.to_string(index=False))
     hg = t[t.a.str.contains("hgucb") | (t.a == "hg")]   # "hg" = HG-UCB-lite do Estudo 7
     mh = hg[(hg.dif_pp < 0) & (hg.p_holm < 0.05)]
-    print(f"U2: HG-UCB significativamente melhor: {len(mh)} de {len(hg)} contrastes; "
+    print(f"U2: HG-UCB significativamente melhor (CVRP): {len(mh)} de {len(hg)} contrastes; "
           f"significativamente pior: {int(((hg.dif_pp > 0) & (hg.p_holm < 0.05)).sum())}")
     if len(mh):
         falhas.append("U2")
+    if len(tsp):
+        mt = tsp[(tsp.dif_pp < 0) & (tsp.p_holm < 0.05)]
+        pt = tsp[(tsp.dif_pp > 0) & (tsp.p_holm < 0.05)]
+        print(f"U1t (TSP, Estudo 13, {len(tsp)} contrastes): politica significativamente melhor que a uniforme em {len(mt)}, pior em {len(pt)}")
+        print(mt.to_string(index=False))
+        d13o = ler("analise_etapa13_ordem.csv")
+        if d13o is None:
+            falhas.append("U5 (sem analise_etapa13_ordem.csv)")
+        else:
+            ok5, n5 = True, 0
+            for _, r in mt.iterrows():
+                pol, cen = r.a, r.contraste.split(" ", 1)[1]
+                rr = d13o[(d13o.a == "FOC_asc") & (d13o.b == pol) & (d13o.cenario == cen)]
+                if rr.empty:
+                    print(f"    sem contraste de ordem fixa para {pol} em {cen}")
+                    ok5 = False
+                    continue
+                rr = rr.iloc[0]
+                dom = bool(rr.dif_pp < 0 and rr.p_holm < 0.05)
+                print(f"    {pol} em {cen}: ordem fixa crescente - politica = {rr.dif_pp:+.2f} pp (p Holm {rr.p_holm:.4f}) -> {'domina' if dom else 'NAO domina'}")
+                ok5 &= dom
+                n5 += 1
+            print(f"U5: toda politica que supera a uniforme no TSP e dominada pela ordem fixa de custo crescente: {ok5} ({n5} contrastes)")
+            if not ok5:
+                falhas.append("U5")
     d1 = ler("analise_confirmatoria.csv")
     lit = d1[d1.a == "hgucb_literal"]
     print(f"U3: literal - normalizado: {[round(x, 2) for x in lit.dif_media_pp]} pp, derrotas do literal {list(lit.der_a)} de 74")

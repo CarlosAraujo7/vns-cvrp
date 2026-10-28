@@ -1,0 +1,25 @@
+\begin{table}[t]
+\caption{Study 13 (TSP, ALNS): pre-registered contrasts (mean paired difference in pp [95\% CI]; adjusted $p$; wins/losses of the first-named arm).}\label{tab:s13atests}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+Contrast & TSPLIB & W/L & Synthetic & W/L \\
+\midrule
+UCB1 $-$ uniform & $+$0.31 [$+$0.12, $+$0.53]; 0.003 & 4/28 & $+$0.34 [$+$0.15, $+$0.56]; 0.013 & 8/22 \\
+Probability matching $-$ uniform & $+$0.11 [$-$0.06, $+$0.30]; 0.26 & 12/20 & $+$0.27 [$+$0.07, $+$0.45]; 0.033 & 10/20 \\
+HG-UCB $-$ uniform & $+$0.24 [$+$0.11, $+$0.40]; 0.014 & 9/23 & $+$0.05 [$-$0.11, $+$0.20]; 0.66 & 14/16 \\
+Thompson sampling $-$ uniform & $+$1.68 [$+$1.26, $+$2.13]; \ensuremath{<10^{-4}} & 1/31 & $+$1.66 [$+$1.25, $+$2.10]; \ensuremath{<10^{-4}} & 1/29 \\
+EXP3 $-$ uniform & $+$0.30 [$+$0.14, $+$0.48]; 0.001 & 5/27 & $+$0.43 [$+$0.18, $+$0.67]; 0.014 & 8/21 \\
+Efficiency UCB $-$ uniform & $-$0.27 [$-$0.52, $-$0.05]; 0.10 & 23/9 & $-$0.34 [$-$0.53, $-$0.17]; 0.009 & 21/9 \\
+\addlinespace
+RP $-$ uniform (primary, unadjusted) & \multicolumn{4}{c}{$+$0.13 [$-$0.01, $+$0.27]; 0.094; W/L 27/34 (62 instances)} \\
+Static mixture $-$ uniform & \multicolumn{4}{c}{$-$0.46 [$-$0.59, $-$0.32]; \ensuremath{<10^{-4}}; W/L 53/9 (62 instances)} \\
+Fixed repair $-$ uniform & \multicolumn{4}{c}{$-$0.91 [$-$1.09, $-$0.74]; \ensuremath{<10^{-4}}; W/L 61/1 (62 instances)} \\
+RP $-$ static mixture & \multicolumn{4}{c}{$+$0.58 [$+$0.44, $+$0.73]; \ensuremath{<10^{-4}}; W/L 5/56 (62 instances)} \\
+RP $-$ fixed repair & \multicolumn{4}{c}{$+$1.04 [$+$0.85, $+$1.24]; \ensuremath{<10^{-4}}; W/L 2/59 (62 instances)} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

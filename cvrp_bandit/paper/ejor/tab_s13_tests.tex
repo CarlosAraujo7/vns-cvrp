@@ -1,0 +1,22 @@
+\begin{table}[t]
+\caption{Study 13 (TSP, VND): pre-registered contrasts against uniform selection (mean paired difference in pp [95\% CI]; Holm-adjusted $p$ over 21 tests for the policy rows and over 3 for the pool row; wins/losses of the first-named arm).}\label{tab:s13tests}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccccc}
+\toprule
+Contrast & TSPLIB $E_1$ & W/L & TSPLIB $E_2$ & W/L & Synthetic $E_1$ & W/L \\
+\midrule
+UCB1 (cost-aware) $-$ uniform & $-$0.34 [$-$0.52, $-$0.14]; 0.016 & 26/6 & $-$0.10 [$-$0.24, $+$0.04]; 1.0 & 18/14 & $-$0.60 [$-$0.91, $-$0.31]; 0.012 & 21/9 \\
+Probability matching (cost-aware) $-$ uniform & $+$0.11 [$-$0.10, $+$0.33]; 1.0 & 13/19 & $-$0.03 [$-$0.18, $+$0.10]; 1.0 & 17/15 & $-$0.52 [$-$0.92, $-$0.13]; 0.34 & 18/12 \\
+HG-UCB (cost-aware) $-$ uniform & $-$0.33 [$-$0.49, $-$0.16]; 0.010 & 26/6 & 0.00 [$-$0.14, $+$0.15]; 1.0 & 17/15 & $-$0.54 [$-$0.81, $-$0.28]; 0.016 & 22/8 \\
+Thompson sampling $-$ uniform & $+$0.23 [0.00, $+$0.49]; 1.0 & 13/19 & $+$0.05 [$-$0.08, $+$0.18]; 1.0 & 17/15 & $+$0.30 [$-$0.01, $+$0.65]; 0.46 & 9/21 \\
+EXP3 $-$ uniform & $+$0.31 [$+$0.11, $+$0.53]; 0.29 & 12/20 & $+$0.04 [$-$0.09, $+$0.17]; 1.0 & 15/16 & $+$0.19 [$-$0.16, $+$0.55]; 1.0 & 11/19 \\
+Efficiency UCB $-$ uniform & $-$0.76 [$-$1.11, $-$0.44]; 0.0003 & 27/5 & $-$0.17 [$-$0.32, $-$0.03]; 0.30 & 21/11 & $-$1.28 [$-$1.69, $-$0.90]; \ensuremath{<10^{-4}} & 25/5 \\
+Static mixture (tuned offline) $-$ uniform & $-$0.13 [$-$0.38, $+$0.12]; 1.0 & 19/13 & $-$0.06 [$-$0.21, $+$0.07]; 1.0 & 17/15 & $-$0.20 [$-$0.55, $+$0.13]; 1.0 & 12/18 \\
+\addlinespace
+Pool effect: P9 $-$ P5, uniform selection & $+$1.03 [$+$0.53, $+$1.57]; 0.0001 & 7/25 & $+$0.64 [$+$0.42, $+$0.87]; \ensuremath{<10^{-4}} & 3/29 & $+$1.67 [$+$1.09, $+$2.29]; \ensuremath{<10^{-4}} & 3/27 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
