@@ -144,6 +144,57 @@ def verifica_s7(num):
     return nm, nc
 
 
+def verifica_s11(num):
+    """Estudo 11: recomputa as medias de gap (macros `s11_gap_<braco>_<E1|E2|L>`) e a diferenca media, vitorias, derrotas e
+    n de todos os contrastes de analise_etapa11_confirmatoria.csv direto dos CSV brutos (eval74: nivel 1 = E1, 5 = E2;
+    evalL = SYN_VAL_L em E1), so com a biblioteca padrao."""
+    a74, aL, an = RES / "etapa11_eval74.csv", RES / "etapa11_evalL.csv", RES / "analise_etapa11_confirmatoria.csv"
+    if not (a74.exists() and aL.exists() and an.exists()):
+        return 0, 0
+    por = defaultdict(list)
+    for arq, cenario_de in ((a74, lambda r: {"1": "E1", "5": "E2"}[r["nivel"]]), (aL, lambda r: "L")):
+        with open(arq, encoding="utf-8", newline="") as f:
+            for r in csv.DictReader(f):
+                if r["viavel"] != "True":
+                    problemas.append(f"{arq.name}: execucao inviavel {r['braco']} {r['instancia']} {r['seed']}")
+                    continue
+                ref = float(r["ref"])
+                gap = 100.0 * (float(r["custo"]) - ref) / ref
+                if abs(gap - float(r["gap_pct"])) > 1e-6:
+                    problemas.append(f"{arq.name}: gap gravado divergente {r['braco']} {r['instancia']} {r['seed']}")
+                por[(cenario_de(r), r["braco"], r["instancia"])].append(gap)
+    medias = {k: statistics.fmean(v) for k, v in por.items()}
+    nm = 0
+    for chave, valor in num.items():
+        if chave.startswith("s11_gap_"):
+            resto = chave[len("s11_gap_"):]
+            arm, cen = resto.rsplit("_", 1)
+            vals = [m for (c_, b, _i), m in medias.items() if c_ == cen and b == "s11_" + arm]
+            if not vals:
+                problemas.append(f"macro {chave}: braco/cenario ausente nos CSV do Estudo 11")
+                continue
+            nm += confere(chave, valor, statistics.fmean(vals), 3)
+    cod = {"CVRPLIB E1": "E1", "CVRPLIB E2": "E2", "SYN_VAL_L E1": "L"}
+    nc = 0
+    for r in csv.DictReader(open(an, encoding="utf-8")):
+        cen = cod[r["cenario"]]
+        na, nb = "s11_" + r["a"], "s11_" + r["b"]
+        ia = {i: m for (c_, b, i), m in medias.items() if c_ == cen and b == na}
+        ib = {i: m for (c_, b, i), m in medias.items() if c_ == cen and b == nb}
+        inst = sorted(set(ia) & set(ib))
+        dif = [ia[i] - ib[i] for i in inst]
+        dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+        if not dif:
+            problemas.append(f"{an.name} {r['id']}: sem instancias comuns")
+            continue
+        dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+        if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or len(inst) != int(r["n_inst"]):
+            problemas.append(f"{an.name} {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs "
+                             f"{r['vit_a']}/{r['der_a']}; n {len(inst)} vs {r['n_inst']}")
+        nc += 1
+    return nm, nc
+
+
 def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csvs=()):
     """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
     diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
@@ -309,6 +360,11 @@ def main():
         cont += nc_
         if nm_ or nc_:
             print(f"(2c) {rot}: {nm_} medias e {nc_} contrastes conferidos")
+    n11m, n11c = verifica_s11(num)
+    outros += n11m
+    cont += n11c
+    if n11m or n11c:
+        print(f"(2c) Estudo 11 (SWAP* eficiente): {n11m} medias e {n11c} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(

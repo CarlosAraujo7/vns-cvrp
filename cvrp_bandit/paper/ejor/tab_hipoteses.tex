@@ -76,6 +76,13 @@ H42 & No online policy is significantly better than uniform selection (65\%). & 
 H43 & Exploratory: the advantage of the tuned mixture grows with $n$ (negative Spearman correlation; 60\%). & Not confirmed, opposite sign: \num{s10rho_static_L} ($p=\num{s10rhop_static_L}$). \\
 H44 & Exploratory: under uniform selection the naive SWAP* absorbs at least 60\% of the evaluations at $n=500$ (75\%). & Confirmed: \num{s10_swap_n500}\%. \\
 \midrule
+\multicolumn{3}{l}{\emph{Study 11 (log entry 106; committed before its data)}} \\
+H45 & No online policy is significantly better than uniform selection in the 18 tests with the efficient SWAP* (70\%). & Confirmed (\num{s11_nbetter} improvements; \num{s11_nworse} significantly worse: the efficiency UCB in the three scenarios and cost-aware HG-UCB at $E_2$). \\
+H46 & The static mixture tuned for the efficient pool is Holm-significantly better than uniform selection in at least one of the three scenarios (35\%). & Not confirmed (\num{s11_h46_n} of 3): \num{s11d_static_F_E1}, \num{s11d_static_F_E2} and \num{s11d_static_F_L}~pp, adjusted $p=1$. \\
+H47 & The pool effect persists: P10F better than P5 by at least 0.3~pp and Holm-significant at $E_1$ and $E_2$ (85\%). & Confirmed: \num{s11d_set_E1} and \num{s11d_set_E2}~pp. \\
+H48 & Exploratory: under uniform selection the efficient SWAP* absorbs less than 25\% of the evaluations on the CVRPLIB instances at $E_1$ (80\%). & Confirmed: \num{s11_swap_E1}\%. \\
+H49 & Exploratory: Thompson sampling and the efficiency UCB are both significantly worse than uniform selection on the CVRPLIB instances at $E_1$ (65\%). & Not confirmed as stated: the efficiency UCB is (\num{s11d_eff_E1}~pp), Thompson sampling is not (\num{s11d_ts_E1}~pp, adjusted $p=\num{s11p_ts_E1}$). \\
+\midrule
 \multicolumn{3}{l}{\emph{Study 12 (log entry 109; committed before its data)}} \\
 H50 & The static mixture tuned offline is Holm-significantly better than uniform selection in the ALNS (probability assigned: 90\%). & Confirmed: \num{s12d_static_U}~pp (adjusted $p<10^{-3}$). \\
 H51 & The adaptive weights are not significantly different from the static mixture (45\%; 35\% that they are better, 20\% that they are worse). & Confirmed: \num{s12d_RP_static}~pp, adjusted $p=\num{s12p_RP_static}$. \\

@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Study 11: confirmatory contrasts against uniform selection (mean paired difference in pp [95\% CI]; Holm-adjusted $p$ over 21 tests; wins/losses of the first-named arm), by scenario.}\label{tab:s11tests}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccccc}
+\toprule
+Contrast & CVRPLIB $E_1$ & W/L & CVRPLIB $E_2$ & W/L & Large synthetic $E_1$ & W/L \\
+\midrule
+UCB1 (cost-aware) $-$ uniform & $-$0.07 [$-$0.16, 0.00]; 0.50 & 45/26 & $-$0.05 [$-$0.12, $+$0.01]; 1.0 & 37/29 & $-$0.11 [$-$0.27, $+$0.03]; 1.0 & 11/9 \\
+Probability matching (cost-aware) $-$ uniform & $+$0.02 [$-$0.09, $+$0.12]; 1.0 & 30/41 & $+$0.02 [$-$0.05, $+$0.09]; 1.0 & 28/33 & $-$0.15 [$-$0.37, $+$0.04]; 1.0 & 12/8 \\
+HG-UCB (cost-aware) $-$ uniform & $+$0.04 [$-$0.04, $+$0.12]; 1.0 & 33/38 & $+$0.18 [$+$0.11, $+$0.26]; 0.0002 & 15/52 & $-$0.08 [$-$0.25, $+$0.07]; 1.0 & 12/8 \\
+Thompson sampling $-$ uniform & $+$0.08 [0.00, $+$0.15]; 0.25 & 30/41 & $+$0.15 [$+$0.06, $+$0.24]; 0.054 & 23/42 & $-$0.09 [$-$0.29, $+$0.08]; 1.0 & 9/11 \\
+EXP3 $-$ uniform & $+$0.03 [$-$0.07, $+$0.12]; 1.0 & 36/34 & 0.00 [$-$0.06, $+$0.06]; 1.0 & 33/33 & $-$0.04 [$-$0.16, $+$0.07]; 1.0 & 12/8 \\
+Efficiency UCB $-$ uniform & $+$0.46 [$+$0.34, $+$0.59]; \ensuremath{<10^{-4}} & 8/63 & $+$0.96 [$+$0.76, $+$1.16]; \ensuremath{<10^{-4}} & 0/70 & $+$0.47 [$+$0.23, $+$0.68]; 0.015 & 2/18 \\
+Static mixture tuned for the efficient pool $-$ uniform & $-$0.07 [$-$0.18, $+$0.02]; 1.0 & 41/31 & $+$0.03 [$-$0.04, $+$0.10]; 1.0 & 34/31 & $-$0.32 [$-$0.63, $-$0.05]; 1.0 & 11/8 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

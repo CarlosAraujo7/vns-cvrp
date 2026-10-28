@@ -419,7 +419,7 @@ def reproducao():
 
 
 SUP_ORDEM = ["tab:s1tests", "tab:s2tests", "tab:s3tests", "tab:s4tests", "tab:s4val", "tab:s5tests", "tab:s6tests",
-             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s9tests", "tab:s10tests", "tab:s12tests", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
+             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s9tests", "tab:s10tests", "tab:s12tests", "tab:s11tests", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
              "tab:studies", "tab:hyper"]      # mesma ordem de supplement.tex
 
 
@@ -893,6 +893,124 @@ def estudo10():
             NUM[f"s10ph_p_{nv}"] = f"{stats.wilcoxon(gr).pvalue:.3f}"
 
 
+ARMS11 = [("U", "Uniform selection"), ("ucb1c", "UCB1 (cost-aware)"), ("pmc", "Probability matching (cost-aware)"),
+          ("hgucbc", "HG-UCB (cost-aware)"), ("ts", "Thompson sampling"), ("exp3", "EXP3"), ("eff", "Efficiency UCB"),
+          ("static_F", "Static mixture tuned for the efficient pool")]
+SC11 = [("CVRPLIB E1", "E1", "$E_1$"), ("CVRPLIB E2", "E2", "$E_2$"), ("SYN_VAL_L E1", "L", "Large synthetic, $E_1$")]
+
+
+def estudo11():
+    """Estudo 11 (SWAP* eficiente). Entradas 106/112 do diario."""
+    c = pd.read_csv(RES / "analise_etapa11_confirmatoria.csv")
+    sw = pd.read_csv(RES / "analise_etapa11_swap.csv")
+    e74 = pd.read_csv(RES / "etapa11_eval74.csv")
+    eL = pd.read_csv(RES / "etapa11_evalL.csv")
+    esc = json.loads((RES / "etapa11_tuning_escolhida.json").read_text())
+    cen = {"E1": e74[(e74.nivel == 1) & e74.viavel], "E2": e74[(e74.nivel == 5) & e74.viavel], "L": eL[eL.viavel]}
+    gap = {}
+    for k, d in cen.items():
+        gap[k] = d.groupby(["braco", "instancia"]).gap_pct.mean().groupby("braco").mean()
+        for a, _ in ARMS11 + [("P5_U", "")]:
+            if "s11_" + a in gap[k].index:
+                NUM[f"s11_gap_{a}_{k}"] = f"{gap[k]['s11_' + a]:.3f}"
+    NUM["s11_n74"], NUM["s11_nL"] = str(e74.instancia.nunique()), str(eL.instancia.nunique())
+    NUM["s11_nruns"] = f"{len(e74) + len(eL):,}".replace(",", r"\,")
+    NUM["s11_tune_gap"], NUM["s11_tune_eq"] = f"{esc['gap_tune']:.2f}", f"{esc['gap_pesos_iguais']:.2f}"
+    NUM["s11_tune_runs"] = f"{esc['n_configs'] * 120:,}".replace(",", r"\,")
+    for j, w in enumerate(esc["params"]["pesos"]):
+        NUM[f"s11_w_{j}"] = f"{100 * w:.0f}"
+    cf = c.copy()
+    cf["p_holm"] = cf.p_holm.fillna(cf.p_bruto)
+    fa = cf[cf.grupo == "familiaA"]
+    fb = cf[cf.grupo == "familiaB"]
+    cod = {nome: k for nome, k, _ in SC11}
+    por = {}
+    for _, r in fa.iterrows():
+        k = f"{r.a}_{cod[r.cenario]}"
+        por[(r.a, cod[r.cenario])] = r
+        macros_contraste("s11", k, r)
+        NUM[f"s11pr_{k}"] = f"{r.p_bruto:.3f}"
+        NUM[f"s11mde_{k}"] = f"{r.mde_pp:.2f}"
+    for _, r in fb.iterrows():
+        k = "set_" + cod[r.cenario]
+        macros_contraste("s11", k, r)
+    lin_main, lin_sup = [], []
+    for a, nome in ARMS11:
+        cel_main = [nome]
+        for _nome, k, _rot in SC11:
+            cel_main.append(f"{gap[k]['s11_' + a]:.2f}")
+            if a != "U":
+                r = por[(a, k)]
+                cel_main[-1] += f" ({sgn(r.dif_pp)}; {padj(r.p_holm)})"
+        lin_main.append(" & ".join(cel_main))
+        if a != "U":
+            lin_sup.append(f"{nome} $-$ uniform & " + " & ".join(
+                f"{cel(por[(a, k)])} & {int(por[(a, k)].vit_a)}/{int(por[(a, k)].der_a)}" for _n, k, _r in SC11))
+    lin_main.append(r"Uniform, five original operators (P5) & " + f"{gap['E1']['s11_P5_U']:.2f} & {gap['E2']['s11_P5_U']:.2f} & ---")
+    escreve("tab_s11.tex", tabela(
+        "Study 11 (efficient SWAP*): mean gap (\\%) and, in parentheses, the paired difference from uniform selection in pp and its Holm-adjusted "
+        "$p$ (21 tests), on the 74 CVRPLIB instances at $E_1$ and $E_2$ and on the 20 large synthetic instances at $E_1$; the last row is the "
+        "pool of the five original operators under the same structure.", "tab:s11",
+        r"Policy & CVRPLIB $E_1$ & CVRPLIB $E_2$ & Large synthetic $E_1$", lin_main, "lccc"))
+    lin_set = [f"Pool effect: P10F $-$ P5, uniform selection & {cel(fb[fb.cenario == nome].iloc[0])} & "
+               f"{int(fb[fb.cenario == nome].iloc[0].vit_a)}/{int(fb[fb.cenario == nome].iloc[0].der_a)}" for nome in ("CVRPLIB E1", "CVRPLIB E2")]
+    escreve("tab_s11_tests.tex", tabela(
+        "Study 11: confirmatory contrasts against uniform selection (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over 21 tests; "
+        "wins/losses of the first-named arm), by scenario.", "tab:s11tests",
+        r"Contrast & CVRPLIB $E_1$ & W/L & CVRPLIB $E_2$ & W/L & Large synthetic $E_1$ & W/L", lin_sup, "lcccccc"))
+    NUM["s11_nsig"] = str(int(cf.signif_005.sum()))
+    NUM["s11_nbetter"] = str(int(((fa.dif_pp < 0) & fa.signif_005).sum()))
+    NUM["s11_nworse"] = str(int(((fa.dif_pp > 0) & fa.signif_005).sum()))
+    # participacao do SWAP* eficiente e do CROSS nas avaliacoes sob U
+    for k, d in (("E1", e74[(e74.nivel == 1) & (e74.braco == "s11_U")]), ("E2", e74[(e74.nivel == 5) & (e74.braco == "s11_U")]),
+                 ("L", eL[eL.braco == "s11_U"])):
+        arr = np.array([[int(x) for x in s.split("|")] for s in d.calls_por_operador])
+        pct = 100 * arr.sum(0) / arr.sum()
+        NUM[f"s11_swap_{k}"], NUM[f"s11_cross_{k}"] = f"{pct[9]:.0f}", f"{pct[8]:.0f}"
+    # custo e eficiencia do SWAP* eficiente sob U em E1 (74 instancias), contra o ingenuo da tabela de eficiencia (macros eff_*)
+    ins = e74[(e74.nivel == 1) & (e74.braco == "s11_U")]
+    suc_ = np.array([[int(x) for x in s.split("|")] for s in ins.suc_por_operador]).sum(0)
+    uso_ = np.array([[int(x) for x in s.split("|")] for s in ins.uso_operadores]).sum(0)
+    cal_ = np.array([[int(x) for x in s.split("|")] for s in ins.calls_por_operador]).sum(0)
+    gan_ = np.array([[float(x) for x in s.split("|")] for s in ins.ganho_por_operador]).sum(0)
+    NUM["s11_cost_fast"] = f"{cal_[9] / uso_[9] / 1000:.1f}"
+    NUM["s11_cost_ratio"] = f"{float(NUM['eff_cost_9']) / (cal_[9] / uso_[9] / 1000):.1f}"
+    NUM["s11_eff_fast"] = f"{1000 * gan_[9] / cal_[9] * 100:.3f}"
+    NUM["s11_eff_rank"] = str(int((np.argsort(np.argsort(-(gan_ / cal_))))[9]) + 1)
+    # comparacao descritiva com o SWAP* ingenuo (Estudo 3, mesmos 74 instancias e seeds): uniforme em P10
+    e3_ = pd.read_csv(RES / "etapa3_full.csv")
+    arr3 = np.array([[int(x) for x in s.split("|")] for s in e3_[(e3_.braco == "s3_R5_U") & (e3_.nivel == 1)].calls_por_operador])
+    NUM["s11_swap_naive"] = f"{100 * arr3.sum(0)[9] / arr3.sum():.0f}"
+    for k, nv in (("E1", 1), ("E2", 5)):
+        b = e3_[(e3_.braco == "s3_R5_U") & (e3_.nivel == nv) & e3_.viavel].groupby("instancia").gap_pct.mean()
+        f = cen[k][cen[k].braco == "s11_U"].groupby("instancia").gap_pct.mean()
+        dif = (f - b).dropna()
+        NUM[f"s11vs3_d_{k}"] = sgn(dif.mean())
+        NUM[f"s11vs3_w_{k}"] = str(int((dif < 0).sum()))
+        NUM[f"s11vs3_gap_naive_{k}"] = f"{b.mean():.3f}"
+    # efeito do conjunto com o SWAP* ingenuo sob R5 (P10 ingenuo do Estudo 3 contra P5 do Estudo 5; descritivo) e controle de
+    # regressao exata: o braco P5 do Estudo 11 reproduz, custo a custo, o braco s5_R5_P5 (mesmas instancias e seeds)
+    e5_ = pd.read_csv(RES / "etapa5_full.csv")
+    for k, nv in (("E1", 1), ("E2", 5)):
+        b3 = e3_[(e3_.braco == "s3_R5_U") & (e3_.nivel == nv) & e3_.viavel].groupby("instancia").gap_pct.mean()
+        b5 = e5_[(e5_.braco == "s5_R5_P5") & (e5_.nivel == nv) & e5_.viavel].groupby("instancia").gap_pct.mean()
+        NUM[f"s11vs3_set_{k}"] = f"{abs((b3 - b5).dropna().mean()):.2f}"
+    a11 = e74[e74.braco == "s11_P5_U"].merge(e5_[e5_.braco == "s5_R5_P5"], on=["nivel", "instancia", "seed"], suffixes=("_a", "_b"))
+    NUM["s11_reg_n"] = str(int((np.abs(a11.custo_a - a11.custo_b) < 1e-9).sum()))
+    NUM["s11_reg_tot"] = str(len(a11))
+    # tendencia da mistura estatica com n (exploratorio)
+    from scipy import stats
+    t = eL[eL.viavel].groupby(["braco", "instancia"]).gap_pct.mean().unstack(0).dropna()
+    n = eL.drop_duplicates("instancia").set_index("instancia").n_customers.reindex(t.index)
+    rho = stats.spearmanr(n, t["s11_static_F"] - t["s11_U"])
+    NUM["s11rho_static_F"], NUM["s11rhop_static_F"] = sgn(rho.statistic), f"{rho.pvalue:.2f}"
+    # hipoteses pre-registradas (entrada 106): estados calculados aqui para a tabela de hipoteses
+    on = fa[fa.a != "static_F"]
+    NUM["s11_h45_ok"] = "yes" if not ((on.dif_pp < 0) & on.signif_005).any() else "no"
+    NUM["s11_h46_n"] = str(int(((fa[fa.a == "static_F"].dif_pp < 0) & fa[fa.a == "static_F"].signif_005).sum()))
+    NUM["s11_h47_n"] = str(int(((fb.dif_pp <= -0.3) & fb.signif_005).sum()))
+
+
 def afirmacoes():
     """contagens das afirmacoes universais (mesma logica de checar_afirmacoes.py)"""
     from checar_afirmacoes import aos_vs_baseline
@@ -1152,6 +1270,8 @@ def main():
         estudo10()
     if (RES / "analise_etapa12_confirmatoria.csv").exists():
         estudo12()
+    if (RES / "analise_etapa11_confirmatoria.csv").exists():
+        estudo11()
     referencias()
     complementaridade()
     afirmacoes()

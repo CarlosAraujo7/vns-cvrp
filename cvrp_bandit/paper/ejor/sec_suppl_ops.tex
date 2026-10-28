@@ -10,13 +10,13 @@ Let a solution be a set of routes; $d(\cdot,\cdot)$ is the (symmetric) distance,
 \item[Or-opt(2--3)] Move a segment of two or three consecutive customers, with or without inversion, to another position of the same route.
 \item[Swap-intra] Exchange two customers of the same route.
 \item[CROSS($\le3$)] Exchange a segment of $l_A$ customers of $A$ with one of $l_B$ customers of $B$, $l_A,l_B\in\{1,2,3\}$, $\max(l_A,l_B)\ge2$, preserving segment orientation.
-\item[SWAP*] \citep{vidal2022} Exchange $u\in A$ and $v\in B$, reinserting $u$ at the best position of $B\setminus\{v\}$ and $v$ at the best position of $A\setminus\{u\}$ (not necessarily each other's place). Our version evaluates all pairs without the polar-sector restriction or top-three insertion lists of the original, so it is slower.
+\item[SWAP*] \citep{vidal2022} Exchange $u\in A$ and $v\in B$, reinserting $u$ at the best position of $B\setminus\{v\}$ and $v$ at the best position of $A\setminus\{u\}$ (not necessarily each other's place). Our version evaluates all pairs without the polar-sector restriction or top-three insertion lists of the original, so it is slower; Study~11 uses a variant with the top-three insertion lists (same best move, \num{s11_cost_ratio} times fewer distance evaluations per application inside the search).
 \end{description}
 All ten operators were validated against an independent enumeration of their neighborhoods (subsection ``Verification and use of AI tools'' of the manuscript). The shake applies one random move from a randomly chosen original neighborhood, accepted even if it worsens the solution.
 
 \section{Hyperparameters}\label{app:hyper}
 \begin{table}[h]
-\caption{Policy hyperparameters. Defaults are used in Studies 1--3, 6 and 7; Study~4 tunes the first four families (default in bold in the grids).}\label{tab:hyper}
+\caption{Policy hyperparameters. Defaults are used in Studies 1--3, 6--8, 10 and 11; Study~4 tunes the first four families (default in bold in the grids), and Study~9 tunes UCB1, probability matching, HG-UCB and the adaptive weights of the ALNS on the same grids (selected values in the last rows).}\label{tab:hyper}
 \centering\small
 \begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{lll}
@@ -26,7 +26,8 @@ Policy & Default & Study 4 grid \\
 UCB1 & $C=2$ & $C\in\{0.1,0.3,1,\mathbf{2},4\}$ \\
 Probability matching & $\gamma=0.1$, $p_{\min}=0.05$ & $\gamma\in\{0.05,\mathbf{0.1},0.3\}\times p_{\min}\in\{0.02,\mathbf{0.05},0.1\}$ \\
 HG-UCB & $\alpha=0.5$, $C=2$, $\varepsilon=0.1$, $b_t=0.2$, ADWIN $\delta=0.02$ & $\alpha\in\{0.1,\mathbf{0.5},2\}\times C\in\{1,\mathbf{2},4\}$ \\
-Static mixture & uniform & $\theta\in\mathbb{R}^{10}$, $(1{+}4)$ evolution strategy, 15 generations \\
+Static mixture & uniform & $\theta\in\mathbb{R}^{10}$, $(1{+}4)$ evolution strategy, 15 generations (Studies 4, 10 and 11); $\theta\in\mathbb{R}^{7}$, 8 generations (ALNS, Study 12) \\
+Adaptive weights (ALNS, Studies 9 and 12) & $\rho=0.1$, segment 100 & $\rho\in\{0.05,\mathbf{0.1},0.3\}\times$ segment $\in\{50,\mathbf{100},200\}$ \\
 $\varepsilon$-greedy & $\varepsilon=0.1$ & not tuned \\
 EXP3 & $\gamma=0.1$ & not tuned (Study 6) \\
 Thompson sampling & Beta(1,1) prior & not tuned (Study 6) \\
@@ -38,6 +39,7 @@ HGS-CVRP move order (Study 7) & UCB1 $C=1$; PM $\gamma=0.1$, $p_{\min}=0.05$; HG
 Patience (R5) & $r=5$ & not tuned \\
 Inner cap (F40) & 40 & not tuned \\
 Cost-aware factor & $\mathrm{clip}(\bar g/g,0.1,10)$ & not tuned \\
+Selected for the ALNS (Study 9) & UCB1 $C=2$; PM $\gamma=0.05$, $p_{\min}=0.05$; HG-UCB $\alpha=0.1$, $C=1$; adaptive weights $\rho=0.1$, segment 100 & 24 tuning instances \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}

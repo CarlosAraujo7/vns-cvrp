@@ -1,0 +1,22 @@
+\begin{table}[t]
+\caption{Study 11 (efficient SWAP*): mean gap (\%) and, in parentheses, the paired difference from uniform selection in pp and its Holm-adjusted $p$ (21 tests), on the 74 CVRPLIB instances at $E_1$ and $E_2$ and on the 20 large synthetic instances at $E_1$; the last row is the pool of the five original operators under the same structure.}\label{tab:s11}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccc}
+\toprule
+Policy & CVRPLIB $E_1$ & CVRPLIB $E_2$ & Large synthetic $E_1$ \\
+\midrule
+Uniform selection & 1.89 & 1.18 & 3.87 \\
+UCB1 (cost-aware) & 1.81 ($-$0.07; 0.50) & 1.12 ($-$0.05; 1.0) & 3.76 ($-$0.11; 1.0) \\
+Probability matching (cost-aware) & 1.91 ($+$0.02; 1.0) & 1.20 ($+$0.02; 1.0) & 3.72 ($-$0.15; 1.0) \\
+HG-UCB (cost-aware) & 1.93 ($+$0.04; 1.0) & 1.36 ($+$0.18; 0.0002) & 3.79 ($-$0.08; 1.0) \\
+Thompson sampling & 1.96 ($+$0.08; 0.25) & 1.33 ($+$0.15; 0.054) & 3.78 ($-$0.09; 1.0) \\
+EXP3 & 1.92 ($+$0.03; 1.0) & 1.17 (0.00; 1.0) & 3.83 ($-$0.04; 1.0) \\
+Efficiency UCB & 2.34 ($+$0.46; \ensuremath{<10^{-4}}) & 2.14 ($+$0.96; \ensuremath{<10^{-4}}) & 4.34 ($+$0.47; 0.015) \\
+Static mixture tuned for the efficient pool & 1.81 ($-$0.07; 1.0) & 1.21 ($+$0.03; 1.0) & 3.55 ($-$0.32; 1.0) \\
+Uniform, five original operators (P5) & 2.91 & 2.11 & --- \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

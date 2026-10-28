@@ -54,12 +54,21 @@ def aos_vs_baseline():
         # Estudo 7 (HGS-CVRP): 4 politicas adaptativas x 2 pontos de controle x 2 populacoes contra a ordem aleatoria
         for _, r in d7[(d7.grupo == "confirmatorio") & (d7.a != "fixed")].iterrows():
             linhas.append(("S7", f"{r.a} {r['pop']} g{int(r.ponto)}", r.a, r.b, r.dif_pp, r.p_holm))
+    # Estudo 10 (instancias grandes) e Estudo 11 (SWAP* eficiente): mesmos operadores deterministas, so mudam o tamanho e o custo do SWAP*
+    d10 = ler("analise_etapa10_confirmatoria.csv")
+    if d10 is not None:
+        for _, r in d10[d10.grupo == "confirmatorio"].iterrows():
+            linhas.append(("S10", r.id, r.a, r.b, r.dif_pp, r.p_holm))
+    d11 = ler("analise_etapa11_confirmatoria.csv")
+    if d11 is not None:
+        for _, r in d11[d11.grupo == "familiaA"].iterrows():
+            linhas.append(("S11", f"{r.a} {r.cenario}", r.a, r.b, r.dif_pp, r.p_holm))
     return pd.DataFrame(linhas, columns=["estudo", "contraste", "a", "b", "dif_pp", "p_holm"])
 
 
 def main():
     t = aos_vs_baseline()
-    print(f"{len(t)} contrastes 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa' (S1-S4, S6, S7)")
+    print(f"{len(t)} contrastes 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa' (S1-S4, S6, S7, S10, S11)")
     melhores = t[(t.dif_pp < 0) & (t.p_holm < 0.05)]
     print("U1: contrastes com a politica significativamente MELHOR:", len(melhores))
     if len(melhores):

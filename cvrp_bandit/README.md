@@ -49,7 +49,7 @@ so interrupted runs can be resumed by repeating the same command.
 
 ## Integrity controls
 
-* Exact regression: each new version of the search loop reproduces the previous version's costs exactly under identical seeds (checked at every change; 48/48, 8/8 and 6/6 in the logged checks); the modified HGS-CVRP reproduces the original program's solution files byte for byte in `-aos fixed` mode (51/51).
+* Exact regression: each new version of the search loop reproduces the previous version's costs exactly under identical seeds (checked at every change; 48/48, 8/8 and 6/6 in the logged checks); the modified HGS-CVRP reproduces the original program's solution files byte for byte in `-aos fixed` mode (51/51); the five-operator arm of Study 11 reproduces the corresponding arm of Study 5 cost for cost (1 480/1 480).
 * Operators validated against brute force (1 600 tests) with a mutation test.
 * `verificacao_independente.py` must print `VERIFICACAO INDEPENDENTE: OK`.
 * Git timestamps: commit `ef82cdc` precedes the Study 4 evaluation and `02e58d3` (extended by `b3d4add`) precedes all Study 6 data and `8a06b17` all Study 7 data; `43cccb0` precedes the Study 8 data, `d0347ac` the Study 9 and 10 data (the accounting of Study 9 was amended by `a61aab6`, entry 107, before any analysis of its data), `71a4553` the Study 11 data and `7977d5a` the Study 12 data; the pre-specification of Study 5 (entry 89) was in the research log before its data but was committed after its runs had started; Studies 1-3 are pre-specified only in the dated research log.
