@@ -88,6 +88,8 @@ def executar_v(sp, nivel, conj, nome_inst, seed):
     inst.chamadas = 0
     base, duds = POOLS[sp["pool"]]
     pool = list(base) + [dud(f) for f in duds]
+    if sp.get("perm"):
+        random.Random(seed * 7919 + 13).shuffle(pool)      # POS-HOC: ordem inicial aleatoria do pool (Entrada 117)
     k = len(pool)
     uso, calls_op, maximo = [0] * k, [0] * k, [0]
     suc, gan = [0] * k, [0.0] * k
@@ -301,7 +303,23 @@ def modo_eval_pc(workers):
     print("eval controle positivo concluido", flush=True)
 
 
-MODOS = {"pilot-v": piloto_v, "tuning-static-v": modo_tuning_static_v, "eval-v": modo_eval_v, "eval-pc": modo_eval_pc}
+def modo_explor_perm(workers):
+    """POS-HOC, exploratorio (NAO pre-registrado; Entrada 117): teste causal da hipotese de que o ganho das politicas sobre U vem da ordem de
+    inicializacao (indice do pool ~ custo crescente): as mesmas politicas e hiperparametros com o pool PERMUTADO ao acaso a cada execucao
+    (mesma permutacao para todos os bracos numa semente). Solomon, E1 e E2, 10 seeds."""
+    base = specs_eval_v()
+    sp = [dict(base["s14v_" + k], nome=f"s14x_{k}_perm", perm=True) for k in ("ucb1c", "hgucbc", "pmc", "ts", "eff")]
+    tar = []
+    for conj, n, _nc, ns in _instancias_aval():
+        for nv in (1, 5):
+            tar += [(s, nv, conj, n, SEMENTES_AVAL + sd) for s in sp for sd in range(ns)]
+    print(f"explor perm: {len(tar)} execucoes", flush=True)
+    with mp.Pool(workers) as pool:
+        rodar(tar, RES / "etapa14_explor_perm.csv", pool, CAMPOS_V, cada=200)
+    print("explor perm concluido", flush=True)
+
+
+MODOS = {"pilot-v": piloto_v, "tuning-static-v": modo_tuning_static_v, "eval-v": modo_eval_v, "eval-pc": modo_eval_pc, "explor-perm": modo_explor_perm}
 
 
 def main():

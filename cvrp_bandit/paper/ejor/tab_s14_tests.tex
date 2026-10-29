@@ -1,0 +1,25 @@
+\begin{table}[t]
+\caption{Study 14 (CVRPTW, VND): pre-registered contrasts against uniform selection (mean paired difference in pp [95\% CI]; Holm-adjusted $p$ over 14 tests for the policy rows, 6 for the fixed orders and 2 for the pool row; wins/losses of the first-named arm).}\label{tab:s14tests}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+Contrast & Solomon $E_1$ & W/L & Solomon $E_2$ & W/L \\
+\midrule
+UCB1 (cost-aware) $-$ uniform & $-$0.69 [$-$1.24, $-$0.18]; 0.10 & 33/21 & $-$0.69 [$-$1.07, $-$0.38]; 0.0003 & 37/10 \\
+Probability matching (cost-aware) $-$ uniform & $-$0.95 [$-$1.53, $-$0.45]; 0.005 & 37/17 & $-$0.57 [$-$1.00, $-$0.21]; 0.027 & 33/14 \\
+HG-UCB (cost-aware) $-$ uniform & $-$0.60 [$-$1.01, $-$0.21]; 0.025 & 37/17 & $-$0.14 [$-$0.38, $+$0.11]; 0.76 & 25/24 \\
+Thompson sampling $-$ uniform & $-$0.93 [$-$1.38, $-$0.55]; \ensuremath{<10^{-4}} & 41/13 & $-$0.58 [$-$0.95, $-$0.24]; 0.024 & 34/15 \\
+EXP3 $-$ uniform & $-$0.17 [$-$0.72, $+$0.31]; 0.76 & 34/20 & $-$0.39 [$-$0.65, $-$0.14]; 0.053 & 30/18 \\
+Efficiency UCB $-$ uniform & $-$1.48 [$-$2.08, $-$0.99]; \ensuremath{<10^{-4}} & 48/6 & $+$0.48 [$+$0.04, $+$0.88]; 0.027 & 16/33 \\
+Static mixture (tuned offline) $-$ uniform & $-$0.49 [$-$1.01, $-$0.02]; 0.16 & 34/20 & $-$0.48 [$-$0.85, $-$0.15]; 0.069 & 32/16 \\
+Fixed order of increasing cost, no learning $-$ uniform & $-$0.69 [$-$1.37, $-$0.04]; 0.011 & 39/15 & $-$0.57 [$-$0.94, $-$0.18]; 0.005 & 36/13 \\
+Fixed order of the list, no learning $-$ uniform & $+$0.57 [$-$0.24, $+$1.40]; 0.14 & 22/32 & $-$0.56 [$-$0.92, $-$0.23]; 0.008 & 35/14 \\
+Fixed order of decreasing cost, no learning $-$ uniform & $+$16.74 [$+$13.67, $+$19.97]; \ensuremath{<10^{-4}} & 1/54 & $+$3.85 [$+$2.80, $+$5.01]; \ensuremath{<10^{-4}} & 5/47 \\
+\addlinespace
+Pool effect: P9 $-$ P5, uniform selection & $+$0.65 [$+$0.19, $+$1.09]; 0.003 & 15/39 & $+$0.50 [$+$0.16, $+$0.84]; 0.008 & 16/31 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

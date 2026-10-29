@@ -1,5 +1,5 @@
 A published bandit-guided routing heuristic's gain is not reproduced
 Raw-cost rewards saturate the policy; normalizing them recovers over one point
-No adaptive policy beats a fixed design in 13 studies on two problems
+No adaptive policy beats a fixed design in 14 studies on three problems
 Adaptation substitutes for tuning operator weights; it does not exceed it
 Search structure, not learning, drives the gains; pre-specified open protocol

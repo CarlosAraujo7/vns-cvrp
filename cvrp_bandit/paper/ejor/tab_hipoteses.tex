@@ -102,5 +102,15 @@ H62 & None of the 12 secondary ALNS contrasts shows a policy significantly bette
 H63 & The static mixture of the ALNS is not significantly better than uniform selection (60\%). & Not confirmed: \num{s13ad_static_U}~pp (adjusted $p<10^{-3}$). \\
 H64 & The ALNS with uniform selection beats each of the three VND references by at least 0.3~pp, significantly, in both sets (30\%). & Not confirmed (\num{s13_h64_n} of 6). \\
 H65 & The ALNS with uniform selection is significantly better than the VND with uniform selection over P9 in both sets (80\%). & Not confirmed (\num{s13_h65_n} of 2): only in the synthetic set (\num{s13ad_alnsU_UP9_S}~pp; TSPLIB \num{s13ad_alnsU_UP9_T}~pp, adjusted $p=\num{s13ap_alnsU_UP9_T}$). \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 14, CVRPTW (log entry 116; committed before its data)}} \\
+H66 & The pool effect is small: $|$U(P9) $-$ U(P5)$|<0.3$~pp and not significant at $E_1$ and $E_2$ (60\%). & Not confirmed: P9 is worse by \num{s14a_set_E1} and \num{s14a_set_E2}~pp (adjusted $p=\num{s14p_set_E1}$ and \num{s14p_set_E2}). \\
+H67 & The efficiency UCB is significantly better than uniform selection at $E_1$ (65\%). & Confirmed: \num{s14d_eff_E1}~pp. \\
+H68 & The efficiency UCB is significantly worse than uniform selection at $E_2$ (55\%). & Confirmed: \num{s14d_eff_E2}~pp (adjusted $p=\num{s14p_eff_E2}$). \\
+H69 & None of UCB1, probability matching, HG-UCB, Thompson sampling and EXP3 is significantly better than uniform selection at $E_1$ or $E_2$ (60\%). & Not confirmed: \num{s14_h69_n} of the 10 tests are better (probability matching, HG-UCB and Thompson sampling at $E_1$; UCB1, probability matching and Thompson sampling at $E_2$). \\
+H70 & The static mixture is significantly better than uniform selection at $E_1$ or $E_2$ (55\%). & Not confirmed (\num{s14_h70_n} of 2): \num{s14d_static_E1} and \num{s14d_static_E2}~pp. \\
+H71 & The fixed order of increasing cost is significantly better than uniform selection at $E_1$ (45\%). & Confirmed: \num{s14d_FOCcusto_E1}~pp. \\
+H72 & Positive control: at least two policies are significantly better than uniform selection in the pool D4 (80\%). & Confirmed: \num{s14_h72_n} of 6. \\
+H73 & Exploratory: no policy is significantly better than the best non-adaptive alternative (the best of the static mixture, P5 and the cost-ordered descent) (75\%). & Confirmed: the best alternative is the cost-ordered descent and \num{s14_h73_n} of 6 contrasts favor a policy (the efficiency UCB is better than the static mixture, \num{s14xd_eff_static_E1}~pp at $E_1$). \\
 \end{longtable}
 \end{center}

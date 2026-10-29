@@ -12,6 +12,9 @@ Confere, direto das tabelas de testes confirmatorios, as afirmacoes UNIVERSAIS d
   U2  o HG-UCB (literal ou sensivel a custo) nunca e significativamente melhor que a baseline nao adaptativa nos estudos do CVRP;
   U5  no TSP (Estudo 13), toda politica que supera a uniforme com significancia e, no mesmo cenario, significativamente PIOR que a
       ordem fixa de custo crescente sem aprendizado (analise pos-hoc, Holm sobre a familia pos-hoc);
+  U6  no CVRPTW (Estudo 14) politicas superam a uniforme (U1w lista), mas NENHUMA politica e significativamente melhor que a melhor
+      alternativa nao adaptativa (a ordem fixa de custo crescente, a de menor gap medio em E1 e E2): nenhum contraste
+      politica - FOC_custo com dif < 0 e p ajustado < 0,05 (familia exploratoria de 18 testes);
   U3  a variante literal do HG-UCB e pior que a normalizada nos dois orcamentos (74/74);
   U4  os efeitos estruturais (termino, ordem aleatoria, conjunto de operadores) sao significativos e maiores que 0,2pp.
 Uso: python checar_afirmacoes.py     (sai com codigo 1 se alguma afirmacao falhar)
@@ -66,6 +69,10 @@ def aos_vs_baseline():
     if d11 is not None:
         for _, r in d11[d11.grupo == "familiaA"].iterrows():
             linhas.append(("S11", f"{r.a} {r.cenario}", r.a, r.b, r.dif_pp, r.p_holm))
+    d14 = ler("analise_etapa14_v.csv")
+    if d14 is not None:
+        for _, r in d14[d14.grupo == "familiaA"].iterrows():
+            linhas.append(("S14", f"{r.a} {r.cenario}", r.a, r.b, r.dif_pp, r.p_holm))
     d13 = ler("analise_etapa13_v.csv")
     if d13 is not None:
         # Estudo 13 (TSP, VND): 7 politicas x 3 cenarios contra a uniforme (familia A pre-registrada, Holm m=21)
@@ -76,8 +83,9 @@ def aos_vs_baseline():
 
 def main():
     todos = aos_vs_baseline()
-    t = todos[todos.estudo != "S13"]
+    t = todos[~todos.estudo.isin(["S13", "S14"])]
     tsp = todos[todos.estudo == "S13"]
+    tw = todos[todos.estudo == "S14"]
     print(f"{len(t)} contrastes 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa' no CVRP (S1-S4, S6, S7, S10, S11)")
     melhores = t[(t.dif_pp < 0) & (t.p_holm < 0.05)]
     print("U1: contrastes do CVRP com a politica significativamente MELHOR:", len(melhores))
@@ -118,6 +126,17 @@ def main():
             print(f"U5: toda politica que supera a uniforme no TSP e dominada pela ordem fixa de custo crescente: {ok5} ({n5} contrastes)")
             if not ok5:
                 falhas.append("U5")
+    if len(tw):
+        mw = tw[(tw.dif_pp < 0) & (tw.p_holm < 0.05)]
+        pw = tw[(tw.dif_pp > 0) & (tw.p_holm < 0.05)]
+        print(f"U1w (CVRPTW, Estudo 14, {len(tw)} contrastes): politica significativamente melhor que a uniforme em {len(mw)}, pior em {len(pw)}")
+        print(mw.to_string(index=False))
+        d14 = ler("analise_etapa14_v.csv")
+        foc = d14[(d14.grupo == "explor_X") & (d14.b == "FOC_custo")]
+        n6 = int(((foc.dif_pp < 0) & (foc.p_holm < 0.05)).sum())
+        print(f"U6: politicas significativamente melhores que a ordem fixa de custo crescente: {n6} de {len(foc)} contrastes")
+        if n6 > 0 or len(foc) == 0:
+            falhas.append("U6")
     d1 = ler("analise_confirmatoria.csv")
     lit = d1[d1.a == "hgucb_literal"]
     print(f"U3: literal - normalizado: {[round(x, 2) for x in lit.dif_media_pp]} pp, derrotas do literal {list(lit.der_a)} de 74")

@@ -419,7 +419,7 @@ def reproducao():
 
 
 SUP_ORDEM = ["tab:s1tests", "tab:s2tests", "tab:s3tests", "tab:s4tests", "tab:s4val", "tab:s5tests", "tab:s6tests",
-             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s9tests", "tab:s10tests", "tab:s12tests", "tab:s11tests", "tab:s13tests", "tab:s13atests", "tab:s13pc", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
+             "tab:s7tests", "tab:s8tests", "tab:s8rec", "tab:s9tests", "tab:s10tests", "tab:s12tests", "tab:s11tests", "tab:s13tests", "tab:s13atests", "tab:s13pc", "tab:s14tests", "tab:s14pc", "tab:s2set", "tab:s3set", "tab:ranks", "tab:s4config", "tab:s4pesos", "tab:s5", "tab:hip",
              "tab:studies", "tab:hyper"]      # mesma ordem de supplement.tex
 
 
@@ -1333,6 +1333,164 @@ def estudo13():
                            + int(NUM["s13_h63_ok"] == "yes") + int(int(NUM["s13_h64_n"]) == 6) + int(int(NUM["s13_h65_n"]) == 2))
 
 
+ARMS14 = [("U", "Uniform selection"), ("ucb1c", "UCB1 (cost-aware)"), ("pmc", "Probability matching (cost-aware)"),
+          ("hgucbc", "HG-UCB (cost-aware)"), ("ts", "Thompson sampling"), ("exp3", "EXP3"), ("eff", "Efficiency UCB"),
+          ("static", "Static mixture (tuned offline)")]
+FOC14 = [("FOC_custo", "Fixed order of increasing cost, no learning"), ("FOC_idx", "Fixed order of the list, no learning"),
+         ("FOC_rev", "Fixed order of decreasing cost, no learning")]
+SC14 = [("E1", "$E_1$"), ("E2", "$E_2$")]
+
+
+def estudo14():
+    """Estudo 14 (CVRPTW, VND). Entradas 116 (pre-registro) e 117 (resultados) do diario."""
+    ev = pd.read_csv(RES / "etapa14_eval_v.csv")
+    pc = pd.read_csv(RES / "etapa14_eval_pc.csv")
+    av = pd.read_csv(RES / "analise_etapa14_v.csv")
+    apc = pd.read_csv(RES / "analise_etapa14_pc.csv")
+    xp = pd.read_csv(RES / "etapa14_explor_perm.csv") if (RES / "etapa14_explor_perm.csv").exists() else ev.iloc[0:0]
+    aq = pd.read_csv(RES / "analise_etapa14_perm.csv") if (RES / "analise_etapa14_perm.csv").exists() else None
+    arec = pd.read_csv(RES / "analise_etapa14_recuperacao.csv")
+    tv = json.loads((RES / "etapa14_tuning_escolhida_v.json").read_text())
+    bks = pd.read_csv(RES / "etapa14_solomon_bks_check.csv")
+    NUM["s14_nS"] = str(ev.instancia.nunique())
+    NUM["s14_bks_ok"] = str(int((bks.viavel & bks.igual).sum()))
+    NUM["s14_bks_tot"] = str(len(bks))
+    NUM["s14_nruns"] = f"{len(ev) + len(pc):,}".replace(",", r"\,")
+    NUM["s14_nruns_q"] = f"{len(xp):,}".replace(",", r"\,")
+    NUM["s14_nruns_ev"], NUM["s14_nruns_pc"] = f"{len(ev):,}".replace(",", r"\,"), f"{len(pc):,}".replace(",", r"\,")
+    NUM["s14_tune_gap"], NUM["s14_tune_eq"] = f"{tv['gap_tune']:.2f}", f"{tv['gap_pesos_iguais']:.2f}"
+    NUM["s14_tune_cfg"] = str(tv["n_configs"])
+    for j, w in enumerate(tv["params"]["pesos"]):
+        NUM[f"s14_w_{j}"] = f"{100 * w:.0f}"
+    evq = pd.concat([ev, xp], ignore_index=True)
+    cen = {"E1": evq[(evq.nivel == 1) & evq.viavel], "E2": evq[(evq.nivel == 5) & evq.viavel], "E3": evq[(evq.nivel == 25) & evq.viavel]}
+    gap = {}
+    for k, d in cen.items():
+        g = d.groupby(["braco", "instancia"]).gap_pct.mean().groupby("braco").mean()
+        g.index = [i.replace("s14v_", "").replace("s14x_", "") for i in g.index]
+        gap[k] = g
+        for a, v in g.items():
+            NUM[f"s14_gap_{a}_{k}"] = f"{v:.3f}"
+    fa, fb, fc = av[av.grupo == "familiaA"], av[av.grupo == "familiaB"], av[av.grupo == "familiaC"]
+    fe, fx = av[av.grupo == "explor_E3"], av[av.grupo == "explor_X"]
+    por = {}
+    for _, r in pd.concat([fa, fc]).iterrows():
+        por[(r.a, r.cenario)] = r
+        macros_contraste("s14", f"{r.a.replace('_', '')}_{r.cenario}", r)
+        NUM[f"s14pr_{r.a.replace('_', '')}_{r.cenario}"] = f"{r.p_bruto:.3f}"
+        NUM[f"s14mde_{r.a.replace('_', '')}_{r.cenario}"] = f"{r.mde_pp:.2f}"
+    for _, r in fb.iterrows():
+        macros_contraste("s14", f"set_{r.cenario}", r)
+    for _, r in fe.iterrows():
+        macros_contraste("s14e3", r.a.replace("_", ""), r)
+    for _, r in fx.iterrows():
+        macros_contraste("s14x", f"{r.a}_{r.b.replace('_', '')}_{r.cenario}", r)
+    # tabela principal
+    lin = []
+    for a, nome in ARMS14:
+        c = [nome]
+        for k, _r in SC14:
+            c.append(f"{gap[k][a]:.2f}" + ("" if a == "U" else f" ({sgn(por[(a, k)].dif_pp)}; {padj(por[(a, k)].p_holm)})"))
+        lin.append(" & ".join(c))
+    lin.append(r"\addlinespace")
+    c = [r"Pool P5, uniform selection\textsuperscript{a}"]
+    for k, _r in SC14:
+        r = fb[fb.cenario == k].iloc[0]
+        c.append(f"{gap[k]['P5_U']:.2f} ({sgn(-r.dif_pp)}; {padj(r.p_holm)})")
+    lin.append(" & ".join(c))
+    for a, nome in FOC14:
+        c = [nome + r"\textsuperscript{b}"]
+        for k, _r in SC14:
+            c.append(f"{gap[k][a]:.2f} ({sgn(por[(a, k)].dif_pp)}; {padj(por[(a, k)].p_holm)})")
+        lin.append(" & ".join(c))
+    if aq is not None:
+        for _, r in aq.iterrows():
+            macros_contraste("s14q", f"{r.a.replace('_', '')}_{r.b}_{r.cenario}", r)
+        NUM["s14q_m"] = str(len(aq))
+        NUM["s14q_maxdiff"] = f"{aq[aq.b != 'U'].dif_pp.abs().max():.2f}"
+        NUM["s14q_nsig_orig"] = str(int(((aq.b != "U") & aq.signif_005).sum()))
+        for a, nome in (("ucb1c_perm", "UCB1 (cost-aware)"), ("hgucbc_perm", "HG-UCB (cost-aware)"), ("pmc_perm", "Probability matching (cost-aware)"),
+                        ("ts_perm", "Thompson sampling"), ("eff_perm", "Efficiency UCB")):
+            c = [nome + ", operators in random order" + r"\textsuperscript{c}"]
+            for k, _r in SC14:
+                r = aq[(aq.a == a) & (aq.b == "U") & (aq.cenario == k)].iloc[0]
+                c.append(f"{gap[k][a]:.2f} ({sgn(r.dif_pp)}; {padj(r.p_holm)})")
+            lin.append(" & ".join(c))
+    escreve("tab_s14.tex", tabela(
+        "Study 14 (CVRPTW, deterministic VND, pool P9, the 56 Solomon instances): mean gap (\\%) to the best known solution and, in parentheses, the "
+        "paired difference from uniform selection in pp and its Holm-adjusted $p$ (14 tests for the policy rows). \\textsuperscript{a}Pool contrast "
+        "(P5 minus P9, sign reversed: negative favors P5; 2 tests). \\textsuperscript{b}Fixed-order VND controls, pre-registered (6 tests). "
+        "\\textsuperscript{c}Post hoc: the same policy with the list of operators shuffled in every run (Holm over \\num{s14q_m} tests).",
+        "tab:s14", r"Policy & Solomon $E_1$ & Solomon $E_2$", lin, "lcc"))
+    lin_sup = []
+    for a, nome in ARMS14[1:] + FOC14:
+        lin_sup.append(f"{nome} $-$ uniform & " + " & ".join(
+            f"{cel(por[(a, k)])} & {int(por[(a, k)].vit_a)}/{int(por[(a, k)].der_a)}" for k, _r in SC14))
+    lin_sup.append(r"\addlinespace")
+    lin_sup.append("Pool effect: P9 $-$ P5, uniform selection & " + " & ".join(
+        f"{cel(fb[fb.cenario == k].iloc[0])} & {int(fb[fb.cenario == k].iloc[0].vit_a)}/{int(fb[fb.cenario == k].iloc[0].der_a)}" for k, _r in SC14))
+    escreve("tab_s14_tests.tex", tabela(
+        "Study 14 (CVRPTW, VND): pre-registered contrasts against uniform selection (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over "
+        "14 tests for the policy rows, 6 for the fixed orders and 2 for the pool row; wins/losses of the first-named arm).", "tab:s14tests",
+        r"Contrast & Solomon $E_1$ & W/L & Solomon $E_2$ & W/L", lin_sup, "lcccc"))
+    NUM["s14_nsig"] = str(int(fa.signif_005.sum()))
+    NUM["s14_nbetter"] = str(int(((fa.dif_pp < 0) & fa.signif_005).sum()))
+    NUM["s14_nworse"] = str(int(((fa.dif_pp > 0) & fa.signif_005).sum()))
+    # uso por operador sob U e eff a E1
+    d1 = cen["E1"]
+    for arm in ("U", "eff", "ucb1c", "ts", "pmc", "hgucbc", "static", "FOC_custo"):
+        g = d1[d1.braco == "s14v_" + arm]
+        cu = np.array([[float(v) for v in s.split("|")] for s in g.calls_por_operador]).sum(0)
+        uu = np.array([[float(v) for v in s.split("|")] for s in g.uso_operadores]).sum(0)
+        NUM[f"s14_cross_{arm}"] = f"{100 * (cu[7] + cu[8]) / cu.sum():.0f}"
+        NUM[f"s14_usecross_{arm}"] = f"{100 * (uu[7] + uu[8]) / uu.sum():.0f}"
+        NUM[f"s14_use2opt_{arm}"] = f"{100 * uu[4] / uu.sum():.0f}"
+        NUM[f"s14_apps_{arm}"] = f"{g.apps.mean():.0f}"
+    # controle positivo
+    for tag in ("D_LO", "D_HI"):
+        t = pc[pc.braco.str.startswith(f"s14pc_{tag}_") & pc.viavel].groupby(["braco", "instancia"]).gap_pct.mean().groupby("braco").mean()
+        for a, v in t.items():
+            NUM[f"s14_pcgap_{a.replace(f's14pc_{tag}_', '')}_{tag}"] = f"{v:.3f}"
+        u_pool = pc[(pc.braco == f"s14pc_{tag}_U") & pc.viavel].groupby("instancia").gap_pct.mean()
+        u_clean = ev[(ev.nivel == 1) & (ev.braco == "s14v_U") & ev.viavel].groupby("instancia").gap_pct.mean()
+        NUM[f"s14_loss_{tag}"] = f"{(u_pool - u_clean.reindex(u_pool.index)).mean():.2f}"
+    for _, r in apc.iterrows():
+        macros_contraste("s14pc", f"{r.a}_{r.pool}", r)
+    for _, r in arec.iterrows():
+        NUM[f"s14rec_{r.politica}_{r.pool}"] = f"{100 * r.rec:.0f}"
+        NUM[f"s14reclo_{r.politica}_{r.pool}"] = f"{100 * r.rec_lo:.0f}"
+        NUM[f"s14rechi_{r.politica}_{r.pool}"] = f"{100 * r.rec_hi:.0f}"
+    NUM["s14_pc_nsig_hi"] = str(int(((apc.pool == "D_HI") & (apc.dif_pp < 0) & apc.signif_005).sum()))
+    NUM["s14_pc_nsig_lo"] = str(int(((apc.pool == "D_LO") & (apc.dif_pp < 0) & apc.signif_005).sum()))
+    names14 = dict(ARMS14)
+    lin_pc = []
+    for a in ("ucb1c", "pmc", "hgucbc", "ts", "exp3", "eff"):
+        lin_pc.append(" & ".join([names14[a]] + [
+            f"{cel(apc[(apc.a == a) & (apc.pool == t)].iloc[0])} & {_neg(NUM[f's14rec_{a}_{t}'])}" + r"\% "
+            + f"[{_neg(NUM[f's14reclo_{a}_{t}'])}, {_neg(NUM[f's14rechi_{a}_{t}'])}]" for t in ("D_LO", "D_HI")]))
+    escreve("tab_s14_pc.tex", tabela(
+        "Study 14, positive control (four useless operators of cost $2n^2$ or $4n^2$ added to P9; Solomon, $E_1$): paired difference from uniform "
+        "selection in pp [95\\% CI; Holm-adjusted $p$ over 12 tests] and fraction of the planted loss recovered (exploratory; ratio of means, "
+        "bootstrap 95\\% CI over instances).", "tab:s14pc",
+        r"Policy & D2: $\Delta$ vs.\ U & recovered & D4: $\Delta$ vs.\ U & recovered", lin_pc, "lcccc"))
+    # hipoteses (entrada 116)
+    sig_b = lambda df: ((df.dif_pp < 0) & df.signif_005)    # noqa: E731
+    NUM["s14_h66_ok"] = "yes" if ((fb.dif_pp.abs() < 0.3).all() and not fb.signif_005.any()) else "no"
+    NUM["s14_h67_ok"] = "yes" if bool(sig_b(fa[(fa.a == "eff") & (fa.cenario == "E1")]).any()) else "no"
+    NUM["s14_h68_ok"] = "yes" if bool(((fa.a == "eff") & (fa.cenario == "E2") & (fa.dif_pp > 0) & fa.signif_005).any()) else "no"
+    NUM["s14_h69_n"] = str(int(sig_b(fa[fa.a.isin(["ucb1c", "pmc", "hgucbc", "ts", "exp3"])]).sum()))
+    NUM["s14_h70_n"] = str(int(sig_b(fa[fa.a == "static"]).sum()))
+    NUM["s14_h71_ok"] = "yes" if bool(sig_b(fc[(fc.a == "FOC_custo") & (fc.cenario == "E1")]).any()) else "no"
+    NUM["s14_h72_n"] = NUM["s14_pc_nsig_hi"]
+    melhores14 = {k: min(("static", "P5_U", "FOC_custo"), key=lambda b: gap[k][b]) for k in ("E1", "E2")}
+    NUM["s14_best_na"] = melhores14["E1"] if melhores14["E1"] == melhores14["E2"] else "mixed"
+    NUM["s14_h73_n"] = str(int(sig_b(fx[[b == melhores14[k] for b, k in zip(fx.b, fx.cenario)]]).sum()))
+    NUM["s14_h73_any"] = str(int(sig_b(fx).sum()))
+    NUM["s14_hconf"] = str(int(NUM["s14_h66_ok"] == "yes") + int(NUM["s14_h67_ok"] == "yes") + int(NUM["s14_h68_ok"] == "yes")
+                           + int(NUM["s14_h69_n"] == "0") + int(int(NUM["s14_h70_n"]) >= 1) + int(NUM["s14_h71_ok"] == "yes")
+                           + int(int(NUM["s14_h72_n"]) >= 2) + int(NUM["s14_h73_n"] == "0"))
+
+
 def afirmacoes():
     """contagens das afirmacoes universais (mesma logica de checar_afirmacoes.py)"""
     from checar_afirmacoes import aos_vs_baseline
@@ -1596,6 +1754,8 @@ def main():
         estudo11()
     if (RES / "analise_etapa13_v.csv").exists():
         estudo13()
+    if (RES / "analise_etapa14_v.csv").exists():
+        estudo14()
     referencias()
     complementaridade()
     afirmacoes()
