@@ -1,0 +1,16 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/direcao1_local/venv, got /mnt/c/Pesquisas/learnheuristica/cvrp_bandit/estudo_aos/../direcao1_local/venv
+tuning de pools (t): 600 execucoes
+    100/600  0.0 min
+    200/600  0.1 min
+    300/600  0.1 min
+    400/600  0.1 min
+    500/600  0.1 min
+    600/600  0.2 min
+tuning de pools (w): 600 execucoes
+    100/600  0.1 min
+    200/600  0.1 min
+    300/600  0.1 min
+    400/600  0.1 min
+    500/600  0.1 min
+    600/600  0.2 min

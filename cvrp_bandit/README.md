@@ -2,8 +2,24 @@
 
 Code, instances, raw results and analysis scripts for the study *"Does adaptive operator selection help? A controlled,
 pre-specified study of bandit-guided variable neighborhood search for the capacitated vehicle routing problem"*
-(manuscript in `paper/ejor/`). The research log with the dated pre-specification of every study is
-`../diario_pesquisa.md` (Portuguese; entries 64, 71, 77, 83, 89, 91 and 97 are the pre-registrations of Studies 1-7; entries 101, 103 (amended by 107), 104, 106 and 109 those of Studies 8, 9, 10, 11 and 12).
+(manuscript in `paper/ejor/`; fourteen studies on the CVRP, the TSP and the CVRP with time windows). The research log with the dated pre-specification of every study is
+`../diario_pesquisa.md` (Portuguese; entries 64, 71, 77, 83, 89, 91 and 97 are the pre-registrations of Studies 1-7; entries 101, 103 (amended by 107), 104, 106, 109, 113 and 116 those of Studies 8, 9, 10, 11, 12, 13 and 14).
+
+## Quick path: regenerate every table, number and figure of the manuscript from the shipped raw results
+
+The raw per-run files of all studies are in `results/aos_study/`. From `paper/ejor/` (Windows or Linux Python with `numpy`, `pandas`, `scipy`, `matplotlib`; no solver needed):
+
+```
+python ../../estudo_aos/verificacao_independente.py   # recomputes means and contrasts with the standard library only (expects OK)
+python gerar_tabelas.py        # tables (tab_*.tex), numeros.tex/json, suptab.tex
+python gerar_figuras.py        # figures
+python gerar_suplemento.py     # supplementary per-instance tables
+python checar_macros.py        # every \num{} key exists; abstract length; no control bytes
+python checar_afirmacoes.py    # universal claims (U1-U6) checked against the confirmatory tables
+bash compilar.sh               # manuscript and supplement (Tectonic)
+```
+
+The analysis scripts (`estudo_aos/analisar_etapa*.py`) regenerate the `analise_*.csv` files from the raw runs; `python tests/validate_tsp_neighborhoods.py`, `python tests/validate_tw_neighborhoods.py` and `python tests/test_tsp_regret_equiv.py` re-run the operator validations (the first two include mutation tests and take a few minutes).
 
 ## Layout
 

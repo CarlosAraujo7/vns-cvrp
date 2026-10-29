@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the associated manuscript."
+title: "Does adaptive operator selection help? Replication package"
+type: software
+authors:
+  - family-names: "[Author]"
+    given-names: "[First]"
+version: "1.0.0"
+date-released: "[to be set at deposit]"
+license: "[to be chosen by the authors; third-party code keeps its own license: HGS-CVRP (MIT), LKH-3 (research use), PyVRP (MIT)]"
+repository-code: "[persistent repository DOI, to be minted at submission (Zenodo or equivalent)]"
+keywords:
+  - adaptive operator selection
+  - multi-armed bandits
+  - vehicle routing
+  - metaheuristics

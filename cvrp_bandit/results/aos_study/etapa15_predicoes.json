@@ -1,0 +1,49 @@
+{
+ "limiar_D_pp": 0.3,
+ "pools": {
+  "t": {
+   "P5": {
+    "D": 0.0,
+    "previsao": "nenhum"
+   },
+   "P6": {
+    "D": 0.2686,
+    "previsao": "nenhum"
+   },
+   "P7": {
+    "D": 0.1607,
+    "previsao": "nenhum"
+   },
+   "P8": {
+    "D": 0.554,
+    "previsao": "ganho"
+   },
+   "P9": {
+    "D": 0.4383,
+    "previsao": "ganho"
+   }
+  },
+  "w": {
+   "P5": {
+    "D": 0.0,
+    "previsao": "nenhum"
+   },
+   "P6": {
+    "D": -0.4853,
+    "previsao": "nenhum"
+   },
+   "P7": {
+    "D": 0.1113,
+    "previsao": "nenhum"
+   },
+   "P8": {
+    "D": 0.252,
+    "previsao": "nenhum"
+   },
+   "P9": {
+    "D": 0.7304,
+    "previsao": "ganho"
+   }
+  }
+ }
+}
