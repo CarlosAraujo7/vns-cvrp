@@ -1,0 +1,3 @@
+{"ordem": [6, 0, 4, 5, 1, 2, 3, 7, 8],
+ "nomes": ["Swap-intra", "Move(1)", "2-opt*", "Or-opt(2-3)", "Swap(1,1)", "Relocate(1,0)", "Relocate(2,0)", "CROSS(<=3)", "CROSS(4-5)"],
+ "origem": "custo medio por aplicacao crescente de U(P9) em SYN_TUNE_W a E1, 24 instancias x 3 seeds (etapa14_piloto_v.csv): 2.460, 3.580, 7.316, 10.672, 16.483, 25.652, 38.280, 86.535, 103.188 avaliacoes"}
