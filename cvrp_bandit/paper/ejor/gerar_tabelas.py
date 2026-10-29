@@ -423,14 +423,76 @@ SUP_ORDEM = ["tab:s1tests", "tab:s2tests", "tab:s3tests", "tab:s4tests", "tab:s4
              "tab:studies", "tab:hyper"]      # mesma ordem de supplement.tex
 
 
+def _casa_chave(t, i):
+    """indice do '}' que fecha a chave aberta em t[i] == '{'"""
+    nivel = 0
+    for k in range(i, len(t)):
+        if t[k] == "{":
+            nivel += 1
+        elif t[k] == "}":
+            nivel -= 1
+            if nivel == 0:
+                return k
+    return len(t) - 1
+
+
+def _numera(texto, prefixo_s="", inicio_secao=0):
+    """numera \\section/\\subsection (nao-estrelados) de `texto` e devolve {rotulo: numero}; o rotulo e o \\label logo apos o titulo."""
+    import re as _re
+    out, sec, sub = {}, inicio_secao, 0
+    for m in _re.finditer(r"\\(section|subsection)(\*?)\{", texto):
+        if m.group(2):
+            continue
+        fim = _casa_chave(texto, m.end() - 1)
+        resto = texto[fim + 1:fim + 80]
+        mm = _re.match(r"\s*\\label\{([^}]+)\}", resto)
+        if m.group(1) == "section":
+            sec, sub = sec + 1, 0
+            num = f"{prefixo_s}{sec}"
+        else:
+            sub += 1
+            num = f"{prefixo_s}{sec}.{sub}"
+        if mm:
+            out[mm.group(1)] = num
+    return out
+
+
+def _expande(nome):
+    """texto de um arquivo .tex com os \\input{sec_*} expandidos (so os de texto, nao as tabelas)"""
+    import re as _re
+    t = (AQUI / nome).read_bytes().decode("utf-8").replace("\r\n", "\n")
+    return _re.sub(r"\\input\{(sec_[A-Za-z_0-9]+)\}", lambda m: _expande(m.group(1) + ".tex") if (AQUI / (m.group(1) + ".tex")).exists() else m.group(0), t)
+
+
 def suptab():
-    """numeracao S<k> das tabelas do suplemento online, para o manuscrito citar 'Table S<k>' (\\stab{label})"""
+    """numeracao S<k> das tabelas do suplemento online, para o manuscrito citar 'Table S<k>' (\\stab{label}); numeracao das secoes do
+    manuscrito (\\mref, usada no suplemento) e das secoes do suplemento (\\ssec, usada no manuscrito)"""
+    import re as _re
     l = ["% GERADO por gerar_tabelas.py -- NAO EDITAR A MAO", r"\makeatletter"]
     ordem = [lab for lab in SUP_ORDEM if lab != "tab:s9tests" or (RES / "analise_etapa9_confirmatoria.csv").exists()]
+    # tabelas do detalhe dos resultados (Secao 9 do suplemento), na ordem em que aparecem
+    det = AQUI / "sec_results_detail.tex"
+    if det.exists():
+        for nome in _re.findall(r"\\input(?:opt)?\{(tab_[A-Za-z_0-9]+)\}", det.read_bytes().decode("utf-8")):
+            f = AQUI / (nome + ".tex")
+            if f.exists():
+                for lab in _re.findall(r"\\label\{(tab:[^}]+)\}", f.read_bytes().decode("utf-8")):
+                    if lab not in ordem:
+                        ordem.append(lab)
     for k, lab in enumerate(ordem, 1):
         l.append(r"\expandafter\gdef\csname sup@" + lab + r"\endcsname{S" + str(k) + "}")
+    # secoes do manuscrito
+    corpo = "\n".join(_expande(n) for n in ("sec_intro.tex", "sec_related.tex", "sec_method.tex", "sec_design.tex", "sec_results.tex", "sec_discussion.tex"))
+    for lab, num in _numera(corpo).items():
+        l.append(r"\expandafter\gdef\csname mref@" + lab + r"\endcsname{" + num + "}")
+    # secoes do suplemento
+    sup = _expande("supplement.tex")
+    for lab, num in _numera(sup, prefixo_s="S").items():
+        l.append(r"\expandafter\gdef\csname ssec@" + lab + r"\endcsname{" + num + "}")
     l += [r"\makeatother",
-          r"\newcommand{\stab}[1]{\ifcsname sup@#1\endcsname\csname sup@#1\endcsname\else\textcolor{red}{??\detokenize{#1}??}\fi}"]
+          r"\newcommand{\stab}[1]{\ifcsname sup@#1\endcsname\csname sup@#1\endcsname\else\textcolor{red}{??\detokenize{#1}??}\fi}",
+          r"\newcommand{\mref}[1]{\ifcsname mref@#1\endcsname\csname mref@#1\endcsname\ of the manuscript\else\textcolor{red}{??\detokenize{#1}??}\fi}",
+          r"\newcommand{\ssec}[1]{\ifcsname ssec@#1\endcsname\csname ssec@#1\endcsname\else\textcolor{red}{??\detokenize{#1}??}\fi}"]
     escreve("suptab.tex", "\n".join(l) + "\n")
 
 
@@ -1491,6 +1553,13 @@ def estudo14():
                            + int(int(NUM["s14_h72_n"]) >= 2) + int(NUM["s14_h73_n"] == "0"))
 
 
+def sintese_extra():
+    """macros auxiliares da tabela de sintese do texto principal"""
+    d = pd.read_csv(RES / "analise_etapa8_confirmatoria.csv")
+    g = d[d.id.str.startswith("P10+D4x8:")]
+    NUM["s8_nsig_hi"] = str(int(((g.dif_pp < 0) & (g.p_holm < 0.05)).sum()))
+
+
 def afirmacoes():
     """contagens das afirmacoes universais (mesma logica de checar_afirmacoes.py)"""
     from checar_afirmacoes import aos_vs_baseline
@@ -1756,6 +1825,7 @@ def main():
         estudo13()
     if (RES / "analise_etapa14_v.csv").exists():
         estudo14()
+    sintese_extra()
     referencias()
     complementaridade()
     afirmacoes()

@@ -127,7 +127,67 @@ def fig_operadores():
     plt.close(fig)
 
 
+def fig_sintese():
+    """Sintese entre estudos: cada ponto e um contraste confirmatorio 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa'
+    (diferenca media em pp; negativo = a politica e melhor); verde/vermelho = significativo apos Holm (melhor/pior), cinza = n.s.;
+    losangos = alternativas NAO adaptativas contra a uniforme (ordem fixa de custo crescente e pool menor), onde o estudo as tem."""
+    import sys
+    sys.path.insert(0, str(AQUI))
+    import checar_afirmacoes as ca
+    t = ca.aos_vs_baseline()
+    linhas = [("S1", "Original loop (S1)"), ("S2", "VND: order, policies (S2)"), ("S3", "Ten-operator pool (S3)"),
+              ("S4", "Tuned policies, mixture (S4)"), ("S4val", "Synthetic validation (S4)"), ("S6", "Further policy families (S6)"),
+              ("S7", "Inside HGS-CVRP (S7)"), ("S10", "Large instances (S10)"), ("S11", "Efficient SWAP* (S11)"),
+              ("S13", "TSP (S13)"), ("S14", "CVRPTW (S14)")]
+    fig, ax = plt.subplots(figsize=(6.4, 4.2))
+    rng = np.random.default_rng(5)
+    nlin = len(linhas)
+    for k, (cod, rot) in enumerate(linhas):
+        y0 = nlin - 1 - k
+        d = t[t.estudo == cod]
+        if len(d) == 0:
+            continue
+        cores = np.where((d.dif_pp < 0) & (d.p_holm < 0.05), "#1b9e77", np.where((d.dif_pp > 0) & (d.p_holm < 0.05), "#d95f02", "0.6"))
+        ax.scatter(d.dif_pp, y0 + rng.uniform(-0.22, 0.22, len(d)), c=cores, s=14, alpha=0.9, linewidths=0, zorder=3)
+        nb, nw = int(((d.dif_pp < 0) & (d.p_holm < 0.05)).sum()), int(((d.dif_pp > 0) & (d.p_holm < 0.05)).sum())
+        ax.text(1.55, y0, f"{nb} better, {nw} worse of {len(d)}", va="center", ha="left", fontsize=6.5, color="0.25")
+    # alternativas nao adaptativas (losangos)
+    alt = []
+    o13 = pd.read_csv(RES / "analise_etapa13_ordem.csv") if (RES / "analise_etapa13_ordem.csv").exists() else None
+    if o13 is not None:
+        for _, r in o13[(o13.a == "FOC_asc") & (o13.b == "U")].iterrows():
+            alt.append(("S13", r.dif_pp))
+    v13 = pd.read_csv(RES / "analise_etapa13_v.csv") if (RES / "analise_etapa13_v.csv").exists() else None
+    if v13 is not None:
+        for _, r in v13[v13.grupo == "familiaB"].iterrows():
+            alt.append(("S13", -r.dif_pp))
+    v14 = pd.read_csv(RES / "analise_etapa14_v.csv") if (RES / "analise_etapa14_v.csv").exists() else None
+    if v14 is not None:
+        for _, r in v14[(v14.grupo == "familiaC") & (v14.a == "FOC_custo")].iterrows():
+            alt.append(("S14", r.dif_pp))
+        for _, r in v14[v14.grupo == "familiaB"].iterrows():
+            alt.append(("S14", -r.dif_pp))
+    pos = {cod: nlin - 1 - k for k, (cod, _r) in enumerate(linhas)}
+    for cod, v in alt:
+        ax.scatter([v], [pos[cod] - 0.38], marker="D", s=16, c="k", zorder=4, linewidths=0)
+    ax.axvline(0, color="0.3", lw=0.8, zorder=1)
+    ax.set_yticks(range(nlin))
+    ax.set_yticklabels([r for _c, r in linhas][::-1])
+    ax.set_xlim(-2.0, 3.4)
+    ax.set_xlabel("Policy minus non-adaptive baseline (pp of gap; negative favors the policy)")
+    ax.set_ylim(-0.7, nlin - 0.4)
+    from matplotlib.lines import Line2D
+    ax.legend(handles=[Line2D([], [], marker="o", ls="", color="#1b9e77", label="policy better (Holm $p<0.05$)"),
+                       Line2D([], [], marker="o", ls="", color="#d95f02", label="policy worse (Holm $p<0.05$)"),
+                       Line2D([], [], marker="o", ls="", color="0.6", label="not significant"),
+                       Line2D([], [], marker="D", ls="", color="k", label="fixed order / smaller pool vs. uniform")],
+              loc="lower center", bbox_to_anchor=(0.42, 1.0), ncol=2, fontsize=6.5, frameon=False)
+    fig.tight_layout()
+    fig.savefig(AQUI / "fig_sintese.pdf")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
-    for f in (fig_forest, fig_estrutura, fig_pool, fig_operadores):
+    for f in (fig_forest, fig_estrutura, fig_pool, fig_operadores, fig_sintese):
         f()
         print("ok", f.__name__)

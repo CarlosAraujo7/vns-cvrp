@@ -4047,6 +4047,7 @@
 "s8_loss_D4x8": "$+$0.54",
 "s8_nbetter": "4",
 "s8_nsig": "4",
+"s8_nsig_hi": "3",
 "s8_nworse": "0",
 "s8_rec_excl1_D4x4": "5",
 "s8_rec_excl1_D4x8": "6",
