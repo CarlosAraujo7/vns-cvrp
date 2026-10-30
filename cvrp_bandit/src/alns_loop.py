@@ -74,7 +74,7 @@ def qrange(n):
 
 
 def rodar_alns(inst, rotas0, rng, orcamento, pol_d, modo_d, pol_r, modo_r, medida, w0=0.05, tf_fator=1e-3,
-               max_rotas=None, on_iteracao=None, destruir=None, reparar=None):
+               max_rotas=None, on_iteracao=None, destruir=None, reparar=None, estado_cls=None):
     """Executa o ALNS ate `orcamento` avaliacoes de distancia (checado antes de cada iteracao).
     `destruir`/`reparar`: tabelas de operadores (default: as do CVRP, alns.DESTRUIR/REPARAR); o Estudo 13 (TSP) passa as suas.
     Retorna (melhor_solucao, info)."""
@@ -100,7 +100,7 @@ def rodar_alns(inst, rotas0, rng, orcamento, pol_d, modo_d, pol_r, modo_r, medid
         q = rng.randint(qmin, qmax)
         jd = pol_d.select_masked(list(range(kd)))
         jr = pol_r.select_masked(list(range(kr)))
-        est = Estado(inst, cur, dmax)
+        est = (Estado if estado_cls is None else estado_cls)(inst, cur, dmax)
         m0 = medida()
         removidos = DESTRUIR_[jd][1](est, q, rng) if jd != 3 else DESTRUIR_[jd][1](est, q, rng, qmax=qmax)
         m1 = medida()
