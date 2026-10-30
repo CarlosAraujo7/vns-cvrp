@@ -139,7 +139,7 @@ def fig_sintese():
               ("S4", "Tuned policies, mixture (S4)"), ("S4val", "Synthetic validation (S4)"), ("S6", "Further policy families (S6)"),
               ("S7", "Inside HGS-CVRP (S7)"), ("S10", "Large instances (S10)"), ("S11", "Efficient SWAP* (S11)"),
               ("S13", "TSP (S13)"), ("S14", "CVRPTW (S14)")]
-    fig, ax = plt.subplots(figsize=(6.4, 4.2))
+    fig, ax = plt.subplots(figsize=(6.4, 3.4))
     rng = np.random.default_rng(5)
     nlin = len(linhas)
     for k, (cod, rot) in enumerate(linhas):
