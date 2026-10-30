@@ -1,0 +1,87 @@
+﻿eval ALNS-TW: 5600 execucoes, inviaveis 0; referencias VND: 2240, inviaveis 0
+=== ALNS-TW: 56 instancias; gap medio (%) ===
+static    1.724
+hgucb     1.818
+pm        1.987
+exp3      2.007
+RP        2.080
+ucb1      2.080
+ts        2.116
+fixrep    2.208
+U         2.248
+eff       3.394
+
+=== primario, secundarios (m=6), terciarios (m=4), melhor nao adaptativo (m=14), estrutura (m=4) ===
+                  id  n_inst  dif_pp   ic_lo   ic_hi  vit_a  der_a  emp  p_bruto  equiv_010  mde_pp  p_holm  signif_005
+                RP-U      56 -0.1679 -0.2774 -0.0604     28     12   16   0.0037      False  0.1566  0.0037        True
+              ucb1-U      56 -0.1686 -0.2948 -0.0496     27     13   16   0.0208      False  0.1755  0.0623       False
+                pm-U      56 -0.2615 -0.4251 -0.1088     30     11   15   0.0020      False  0.2301  0.0080        True
+             hgucb-U      56 -0.4304 -0.7208 -0.1990     29     10   17   0.0004      False  0.3801  0.0021        True
+                ts-U      56 -0.1318 -0.4747  0.1826     22     21   13   0.6121      False  0.4820  0.6121       False
+              exp3-U      56 -0.2408 -0.4275 -0.0756     24     17   15   0.0290      False  0.2584  0.0623       False
+               eff-U      56  1.1461  0.4598  1.8191     14     38    4   0.0006      False  0.9914  0.0029        True
+            static-U      56 -0.5245 -0.8740 -0.2472     26     14   16   0.0010      False  0.4546  0.0040        True
+            fixrep-U      56 -0.0401 -0.2966  0.2048     17     25   14   0.9551      False  0.3621  0.9551       False
+           RP-static      56  0.3567  0.1007  0.6619     16     24   16   0.0266      False  0.4051  0.0797       False
+           RP-fixrep      56 -0.1278 -0.3645  0.1065     27     15   14   0.2907      False  0.3424  0.5814       False
+           RP-static      56  0.3567  0.0972  0.6659     16     24   16   0.0266      False  0.4051  0.2231       False
+           RP-fixrep      56 -0.1278 -0.3616  0.1162     27     15   14   0.2907      False  0.3424  0.8456       False
+         ucb1-static      56  0.3559  0.1120  0.6555     14     26   16   0.0248      False  0.3917  0.2231       False
+         ucb1-fixrep      56 -0.1285 -0.3577  0.1126     29     13   14   0.1384      False  0.3410  0.5537       False
+           pm-static      56  0.2630  0.0668  0.5002     17     24   15   0.0467      False  0.3138  0.2801       False
+           pm-fixrep      56 -0.2214 -0.4347 -0.0121     28     14   14   0.0397      False  0.3012  0.2779       False
+        hgucb-static      56  0.0941 -0.0611  0.2596     20     20   16   0.5015      False  0.2290  0.8456       False
+        hgucb-fixrep      56 -0.3903 -0.6089 -0.1774     32     10   14   0.0016      False  0.3049  0.0191        True
+           ts-static      56  0.3927  0.1506  0.6554     15     29   12   0.0086      False  0.3646  0.0951       False
+           ts-fixrep      56 -0.0918 -0.3890  0.2205     28     18   10   0.2819      False  0.4370  0.8456       False
+         exp3-static      56  0.2837  0.0682  0.5227     14     27   15   0.0168      False  0.3285  0.1681       False
+         exp3-fixrep      56 -0.2007 -0.4158  0.0182     27     16   13   0.0504      False  0.3107  0.2801       False
+          eff-static      56  1.6706  1.1798  2.1840     10     42    4   0.0000      False  0.7319  0.0000        True
+          eff-fixrep      56  1.1861  0.6347  1.7238     10     42    4   0.0000      False  0.7846  0.0001        True
+     alns_U-vnd_U_P9      56 -5.2797 -6.5410 -4.2183     52      0    4   0.0000      False  1.6531  0.0000        True
+     alns_U-vnd_U_P5      56 -4.7815 -5.9549 -3.7485     47      0    9   0.0000      False  1.6041  0.0000        True
+alns_U-vnd_FOC_custo      56 -4.4858 -5.5849 -3.5029     50      0    6   0.0000      False  1.4950  0.0000        True
+   alns_U-vnd_static      56 -4.8312 -5.9113 -3.8719     50      0    6   0.0000      False  1.4784  0.0000        True
+
+VND ao mesmo orcamento (gap medio): {'vnd_FOC_custo': 6.734, 'vnd_U_P5': 7.03, 'vnd_U_P9': 7.528, 'vnd_static': 7.079}
+
+=== exploratorio: por classe de Solomon (sem correcao; rotular) ===
+           id  n_inst  dif_pp   ic_lo   ic_hi  vit_a  der_a  p_bruto
+      RP-U@C1       9  0.0311  0.0000  0.0932      0      1   1.0000
+  static-U@C1       9  0.0344  0.0000  0.1033      0      1   1.0000
+  fixrep-U@C1       9  0.3041  0.0000  0.6807      0      3   0.2500
+ RP-static@C1       9 -0.0034 -0.0101  0.0000      1      0   1.0000
+      RP-U@C2       8  0.0000  0.0000  0.0000      0      0   1.0000
+  static-U@C2       8  0.0000  0.0000  0.0000      0      0   1.0000
+  fixrep-U@C2       8  0.0000  0.0000  0.0000      0      0   1.0000
+ RP-static@C2       8  0.0000  0.0000  0.0000      0      0   1.0000
+      RP-U@R1      12 -0.2483 -0.4070 -0.1029     10      2   0.0093
+  static-U@R1      12  0.0446 -0.1773  0.2508      5      7   0.6221
+  fixrep-U@R1      12  0.5397  0.4074  0.6863      0     12   0.0005
+ RP-static@R1      12 -0.2929 -0.4984 -0.0838     10      2   0.0122
+      RP-U@R2      11 -0.1647 -0.4362  0.1522      7      4   0.1748
+  static-U@R2      11 -1.4917 -1.9658 -1.0580     11      0   0.0010
+  fixrep-U@R2      11 -1.1463 -1.5591 -0.7503     11      0   0.0010
+ RP-static@R2      11  1.3270  0.8775  1.8311      0     11   0.0010
+     RP-U@RC1       8 -0.1461 -0.4294  0.1214      5      3   0.4609
+ static-U@RC1       8  0.0478 -0.2353  0.3491      3      5   0.9453
+ fixrep-U@RC1       8  0.9797  0.5888  1.3724      0      8   0.0078
+RP-static@RC1       8 -0.1939 -0.6632  0.1403      4      4   0.8438
+     RP-U@RC2       8 -0.4649 -0.8890 -0.0218      6      2   0.0781
+ static-U@RC2       8 -1.7739 -3.4539 -0.6163      7      1   0.0156
+ fixrep-U@RC2       8 -0.8358 -1.6255 -0.1738      6      2   0.0547
+RP-static@RC2       8  1.3090  0.3556  2.6941      1      7   0.0156
+
+=== exploratorio: fracao do ganho do RP sobre U capturada ===
+     x  captura  ic_lo  ic_hi
+static    3.125  1.523  7.375
+fixrep    0.239 -1.881  1.811
+
+uso dos reparos (guloso, regret2, barato) e das destruicoes (aleatoria, pior, relacionada, rota), fracao media:
+  U       reparos [0.332, 0.334, 0.334]  destruicoes [0.251, 0.252, 0.249, 0.248]
+  RP      reparos [0.289, 0.403, 0.308]  destruicoes [0.283, 0.244, 0.248, 0.226]
+  static  reparos [0.157, 0.333, 0.511]  destruicoes [0.362, 0.135, 0.446, 0.058]
+  fixrep  reparos [0.0, 0.0, 1.0]  destruicoes [0.252, 0.25, 0.248, 0.25]
+  eff     reparos [0.007, 0.314, 0.679]  destruicoes [0.381, 0.002, 0.002, 0.616]
+  ts      reparos [0.034, 0.928, 0.038]  destruicoes [0.45, 0.103, 0.065, 0.382]
+iteracoes medias (U): 4031; rotas inviaveis por execucao (U): 0.021

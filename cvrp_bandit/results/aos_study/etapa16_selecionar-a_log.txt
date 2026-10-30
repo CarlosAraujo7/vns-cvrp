@@ -1,0 +1,7 @@
+U (referencia, SYN_TUNE_W): 1.3544
+ucb1: escolhida {"C": 4.0} gap_tune=1.3614 (padrao 1.4183)
+pm: escolhida {"gamma": 0.1, "p_min": 0.1} gap_tune=1.1930 (padrao 1.6695)
+hgucb: escolhida {"C": 2.0, "alpha": 0.5} gap_tune=1.1325 (padrao 1.1325)
+RP: escolhida {"rho": 0.1, "segmento": 100} gap_tune=1.1784 (padrao 1.1784)
+reparo unico: {'r2': 1.3635795207482098, 'r1': 2.2871171186621844, 'r0': 3.285120157252552}
+static_A: gen06c1 gap_tune=0.9474 pesos_d=[0.357 0.135 0.448 0.059] pesos_r=[0.158 0.332 0.51 ]

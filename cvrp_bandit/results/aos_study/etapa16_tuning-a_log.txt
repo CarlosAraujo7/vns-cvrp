@@ -1,0 +1,36 @@
+grade ALNS-TW: 36 configuracoes, 2592 execucoes
+    100/2592  2.7 min
+    200/2592  6.7 min
+    300/2592  9.4 min
+    400/2592  13.1 min
+    500/2592  16.1 min
+    600/2592  19.4 min
+    700/2592  22.3 min
+    800/2592  25.6 min
+    900/2592  28.8 min
+    1000/2592  31.7 min
+    1100/2592  35.3 min
+    1200/2592  38.0 min
+    1300/2592  42.1 min
+    1400/2592  45.2 min
+    1500/2592  49.4 min
+    1600/2592  52.4 min
+    1700/2592  56.3 min
+    1800/2592  59.6 min
+    1900/2592  63.1 min
+    2000/2592  66.4 min
+    2100/2592  70.0 min
+    2200/2592  73.3 min
+    2300/2592  76.4 min
+    2400/2592  79.9 min
+    2500/2592  83.1 min
+gen 0: gap 1.4664
+gen 1: melhor filho 1.4086  atual 1.4086  sigma 0.500
+gen 2: melhor filho 1.4826  atual 1.4086  sigma 0.450
+gen 3: melhor filho 1.0436  atual 1.0436  sigma 0.450
+gen 4: melhor filho 1.1988  atual 1.0436  sigma 0.405
+gen 5: melhor filho 1.1729  atual 1.0436  sigma 0.365
+gen 6: melhor filho 0.9474  atual 0.9474  sigma 0.365
+gen 7: melhor filho 1.1272  atual 0.9474  sigma 0.328
+gen 8: melhor filho 0.9847  atual 0.9474  sigma 0.295
+busca estatica (ALNS-TW) concluida
