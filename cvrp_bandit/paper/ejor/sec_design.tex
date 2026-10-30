@@ -1,10 +1,10 @@
 \section{Experimental design}\label{sec:design}
 
 \subsection{Overview of the studies}\label{sec:overview}
-Table~\ref{tab:overview} summarizes the fourteen studies. Each was pre-specified (hypotheses, arms, tests and family size) in a dated research log before its data were produced; the design of each study beyond what follows (instances, arms, budgets, families of tests) is in Section~\ssec{sup:design} of the online supplement.
+Table~\ref{tab:overview} summarizes the fifteen studies. Each was pre-specified (hypotheses, arms, tests and family size) in a dated research log before its data were produced; the design of each study beyond what follows (instances, arms, budgets, families of tests) is in Section~\ssec{sup:design} of the online supplement.
 
 \begin{table}[t]
-\caption{The fourteen studies by regime and problem.}\label{tab:overview}
+\caption{The fifteen studies by regime and problem.}\label{tab:overview}
 \centering\small
 \begin{adjustbox}{max width=\linewidth}
 \begin{tabular}{>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}p{6.3cm}>{\raggedright\arraybackslash}p{4.2cm}}
@@ -16,6 +16,7 @@ Positive control & 8 (13, 14) & Can the protocol detect a gain when useless oper
 Stochastic operators (ALNS), CVRP & 9, 12 & Do adaptive weights help, and is the gain adaptation or a good fixed weighting? & 51 ``at least $K$'' CVRPLIB and 30 synthetic (10, 5) \\
 Traveling salesman problem & 13 & Does it generalize? Descent and ALNS, with positive control and fixed-order controls & 32 TSPLIB (10), 30 synthetic (5) \\
 CVRP with time windows & 14 & A problem with new constraints; descent regime, positive control, shuffled-list test & 56 Solomon (10) \\
+TSP and CVRPTW, nested pools & 15 & Prospective test: does the dead weight of a pool, measured on tuning instances, predict whether policies beat uniform selection? & TSPLIB, Solomon (10) \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
@@ -36,7 +37,7 @@ All arms share one generic loop (Algorithm~S1 of the online supplement) paramete
 In Study 4 the hyperparameters of UCB1 ($C\in\{0.1,0.3,1,2,4\}$), PM ($\gamma\in\{0.05,0.1,0.3\}\times p_{\min}\in\{0.02,0.05,0.1\}$) and HG-UCB ($\alpha\in\{0.1,0.5,2\}\times C\in\{1,2,4\}$) are chosen on the 24 tuning instances (R5 structure, budget $E_1$, five seeds common to all configurations, objective the mean gap, ties resolved toward the default), before any evaluation on the other instances. The static mixture $p_j\propto e^{\theta_j}$ is tuned by a $(1{+}4)$ evolution strategy (15 generations, 61 evaluations, start at $\theta=0$, i.e. uniform). Grids have 5, 9, 9 and 61 points, so tuning effort is not equal across families, and the static mixture has ten free parameters; we report this asymmetry as a limitation.
 
 \subsection{Studies and statistical protocol}
-Table~\stab{tab:studies} of the online supplement summarizes the fourteen studies, each pre-specified (hypotheses, arms, tests and family size) in a dated research log before its data were produced; Table~\stab{tab:hip} lists the hypotheses and their outcomes.
+Table~\stab{tab:studies} of the online supplement summarizes the fifteen studies, each pre-specified (hypotheses, arms, tests and family size) in a dated research log before its data were produced; Table~\stab{tab:hip} lists the hypotheses and their outcomes.
 The unit of analysis is the instance: for each arm the gap to the reference cost is averaged over the seeds (10 for CVRPLIB; 5 for the synthetic validation set, except in Study 7, which uses 10 on both) and arms are compared in pairs on the same instances. The primary test is the two-sided Wilcoxon signed-rank test \citep{wilcoxon1945}, because the paired differences are not normal (Shapiro--Wilk $p<0.05$ in \num{eq_shapiro} of \num{eq_n} audited contrasts); omnibus comparisons use the Friedman test; multiplicity is controlled by the Holm procedure \citep{holm1979} over the family fixed before each study. Every comparison reports the mean paired difference in percentage points with a 95\% bootstrap interval over instances (10\,000 resamples), wins, losses and ties. Because ``no significant difference'' is not evidence of equivalence, claims of no difference are supported by equivalence tests \citep{lakens2017}: two arms are equivalent within $\delta$ when the 90\% bootstrap interval of the mean difference lies within $(-\delta,+\delta)$ (two one-sided tests at 5\%), with $\delta=0.10$~pp as primary margin (about a third of the smallest termination, random-order or pool effect of Sections~\ssec{sec:s2} and~\ssec{sec:s3}, \num{g_struct_lo}~pp) and 0.05, 0.15 and 0.20~pp as sensitivity; Study~7, whose gaps are smaller, uses $\delta=0.05$~pp as specified in its log entry. As checks on pseudoreplication and power we also report 95\% intervals from a two-level bootstrap (instances, then seeds within instance, keeping the pairing by seed) and the minimum detectable effect at 80\% power, $2.8\,\mathrm{SD}_d/\sqrt{n}$. These robustness analyses were chosen after the confirmatory tests and are labeled as such.
 
 \subsection{Verification and use of AI tools}\label{sec:verification}

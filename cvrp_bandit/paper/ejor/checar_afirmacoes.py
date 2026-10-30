@@ -12,6 +12,8 @@ Confere, direto das tabelas de testes confirmatorios, as afirmacoes UNIVERSAIS d
   U2  o HG-UCB (literal ou sensivel a custo) nunca e significativamente melhor que a baseline nao adaptativa nos estudos do CVRP;
   U5  no TSP (Estudo 13), toda politica que supera a uniforme com significancia e, no mesmo cenario, significativamente PIOR que a
       ordem fixa de custo crescente sem aprendizado (analise pos-hoc, Holm sobre a familia pos-hoc);
+  U7  no teste prospectivo (Estudo 15; oito pools aninhados do TSP e do CVRPTW) nenhuma politica e significativamente melhor que a
+      descida de ordem fixa do MESMO pool (familia exploratoria de 6 contrastes por pool);
   U6  no CVRPTW (Estudo 14) politicas superam a uniforme (U1w lista), mas NENHUMA politica e significativamente melhor que a melhor
       alternativa nao adaptativa (a ordem fixa de custo crescente, a de menor gap medio em E1 e E2): nenhum contraste
       politica - FOC_custo com dif < 0 e p ajustado < 0,05 (familia exploratoria de 18 testes);
@@ -137,6 +139,12 @@ def main():
         print(f"U6: politicas significativamente melhores que a ordem fixa de custo crescente: {n6} de {len(foc)} contrastes")
         if n6 > 0 or len(foc) == 0:
             falhas.append("U6")
+    d15 = ler("analise_etapa15_foc.csv")
+    if d15 is not None:
+        n7 = int(((d15.dif_pp < 0) & (d15.p_holm < 0.05)).sum())
+        print(f"U7 (Estudo 15, 8 pools): politicas significativamente melhores que o FOC do mesmo pool: {n7} de {len(d15)} contrastes")
+        if n7 > 0:
+            falhas.append("U7")
     d1 = ler("analise_confirmatoria.csv")
     lit = d1[d1.a == "hgucb_literal"]
     print(f"U3: literal - normalizado: {[round(x, 2) for x in lit.dif_media_pp]} pp, derrotas do literal {list(lit.der_a)} de 74")

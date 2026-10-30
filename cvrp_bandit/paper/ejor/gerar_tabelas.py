@@ -1553,6 +1553,73 @@ def estudo14():
                            + int(int(NUM["s14_h72_n"]) >= 2) + int(NUM["s14_h73_n"] == "0"))
 
 
+def estudo15():
+    """Estudo 15 (teste prospectivo da regra do peso morto do pool). Entradas 118 (pre-registro) e 119 (resultados) do diario."""
+    et = pd.read_csv(RES / "etapa15_eval_t.csv")
+    ew = pd.read_csv(RES / "etapa15_eval_w.csv")
+    pj = json.loads((RES / "etapa15_predicoes.json").read_text())
+    cel = pd.read_csv(RES / "analise_etapa15_celulas.csv")
+    prim = pd.read_csv(RES / "analise_etapa15_prim.csv")
+    foc = pd.read_csv(RES / "analise_etapa15_foc.csv")
+    NUM["s15_nruns_t"], NUM["s15_nruns_w"] = f"{len(et):,}".replace(",", r"\,"), f"{len(ew):,}".replace(",", r"\,")
+    NUM["s15_nruns"] = f"{len(et) + len(ew):,}".replace(",", r"\,")
+    NUM["s15_lim"] = f"{pj['limiar_D_pp']:.2f}"
+    # gaps medios por problema, pool e braco no conjunto primario
+    for prob, e, conj in (("t", et, "TSPLIB"), ("w", ew, "SOLOMON")):
+        d = e[(e.conjunto == conj) & e.viavel]
+        g = d.groupby(["braco", "instancia"]).gap_pct.mean().groupby("braco").mean()
+        for nome, v in g.items():
+            _, pool, arm = nome.split("_", 2)
+            NUM[f"s15_gap_{prob}{pool[1:]}_{arm}"] = f"{v:.3f}"
+    for _, r in prim.iterrows():
+        macros_contraste("s15", f"{r.a}_{r.prob}{r.pool[1:]}", r)
+    for _, r in foc.iterrows():
+        macros_contraste("s15f", f"{r.a}_{r.prob}{r.pool[1:]}", r)
+    ncel = cel[cel.pool != "P9"]
+    for _, r in cel.iterrows():
+        k = f"{r.prob}{r.pool[1:]}"
+        NUM[f"s15_D_{k}"] = sgn(r.D)
+        NUM[f"s15_nb_{k}"], NUM[f"s15_nw_{k}"] = str(int(r.n_melhores)), str(int(r.n_piores))
+        NUM[f"s15_gain_{k}"] = sgn(r.ganho_medio)
+    NUM["s15_nok"], NUM["s15_ncel"] = str(int(ncel.acerto.sum())), str(len(ncel))
+    NUM["s15_binomp"] = f"{cel.binom_p.iloc[0]:.2f}"
+    NUM["s15_rho"], NUM["s15_rhop"] = f"{cel.rho_D_ganho.iloc[0]:.2f}", f"{cel.rho_p.iloc[0]:.2f}"
+    NUM["s15_rho_aval"] = f"{cel.rho_aval.iloc[0]:.2f}"
+    NUM["s15_foc_n"] = str(len(foc))
+    NUM["s15_foc_nb"] = str(int(((foc.dif_pp < 0) & foc.signif_005).sum()))
+    NUM["s15_foc_nw"] = str(int(((foc.dif_pp > 0) & foc.signif_005).sum()))
+    NUM["s15_foc_mde_lo"], NUM["s15_foc_mde_hi"] = f"{foc.mde_pp.min():.2f}", f"{foc.mde_pp.max():.2f}"
+    # hipoteses (entrada 118)
+    sig_b = lambda df: ((df.dif_pp < 0) & df.signif_005)    # noqa: E731
+    p5 = prim[prim.pool == "P5"]
+    h78 = prim[(prim.prob == "t") & (prim.pool == "P8") & (prim.a == "eff")]
+    NUM["s15_h74_ok"] = "yes" if int(ncel.acerto.sum()) >= 7 else "no"
+    NUM["s15_h75_ok"] = "yes" if cel.rho_D_ganho.iloc[0] >= 0.60 else "no"
+    NUM["s15_h76_n"] = str(int(sig_b(p5).sum()))
+    NUM["s15_h77_n"] = NUM["s15_foc_nb"]
+    NUM["s15_h78_ok"] = "yes" if bool(sig_b(h78).any()) else "no"
+    NUM["s15_hconf"] = str(int(NUM["s15_h74_ok"] == "yes") + int(NUM["s15_h75_ok"] == "yes") + int(NUM["s15_h76_n"] == "0")
+                           + int(NUM["s15_h77_n"] == "0") + int(NUM["s15_h78_ok"] == "yes"))
+    # tabela
+    ad = {"t": {6: "Cross($\\le3$)", 7: "Or-opt(4--10)", 8: "3-opt A", 9: "3-opt B"},
+          "w": {6: "Or-opt(2--3)", 7: "Swap-intra", 8: "CROSS($\\le3$)", 9: "CROSS(4--5)"}}
+    lin = []
+    for prob, nome in (("t", "TSP (TSPLIB, $E_1$)"), ("w", "CVRPTW (Solomon, $E_1$)")):
+        lin.append(r"\multicolumn{6}{l}{\emph{" + nome + r"}}")
+        for k in (5, 6, 7, 8, 9):
+            r = cel[(cel.prob == prob) & (cel.pool == f"P{k}")].iloc[0]
+            add = "---" if k == 5 else "$+$" + ad[prob][k]
+            prev = "evaluated earlier" if k == 9 else {"ganho": "gain", "nenhum": "none"}[r.previsao]
+            ok = "---" if k == 9 else ("yes" if r.acerto else "no")
+            lin.append(f"P{k} ({add}) & {sgn(r.D)} & {prev} & {int(r.n_melhores)} / {int(r.n_piores)} & {sgn(r.ganho_medio)} & {ok}")
+    escreve("tab_s15.tex", tabela(
+        "Study 15, prospective test: nested pools of the TSP and of the CVRPTW. $D$: dead weight of the pool (gap of uniform selection minus that over P5), "
+        "measured on the tuning instances before the evaluation; prediction by the pre-registered rule ($D\\ge\\num{s15_lim}$~pp: at least one of the six policies "
+        "significantly better than uniform selection; otherwise none). Better / worse: policies significantly better / worse than uniform selection "
+        "(Holm over six); mean gain: mean over the six policies of the gap of uniform selection minus theirs (pp). P9 was evaluated in Studies 13 and 14 and is not a prediction.",
+        "tab:s15", r"Pool (operator added) & $D$ (pp) & Prediction & Better / worse & Mean gain (pp) & Correct", lin, "lccccc"))
+
+
 def sintese_extra():
     """macros auxiliares da tabela de sintese do texto principal"""
     d = pd.read_csv(RES / "analise_etapa8_confirmatoria.csv")
@@ -1825,6 +1892,8 @@ def main():
         estudo13()
     if (RES / "analise_etapa14_v.csv").exists():
         estudo14()
+    if (RES / "analise_etapa15_celulas.csv").exists():
+        estudo15()
     sintese_extra()
     referencias()
     complementaridade()

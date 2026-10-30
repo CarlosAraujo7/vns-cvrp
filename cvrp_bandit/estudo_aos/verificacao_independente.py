@@ -358,6 +358,55 @@ def verifica_s14(num):
     return nm, nc
 
 
+def verifica_s15(num):
+    """Estudo 15: recomputa, so com a biblioteca padrao, as medias de gap dos macros `s15_gap_*` (conjunto primario, E1) e a diferenca media,
+    vitorias, derrotas e n dos contrastes de analise_etapa15_prim.csv e analise_etapa15_foc.csv, direto dos CSV brutos."""
+    arqs = {"t": (RES / "etapa15_eval_t.csv", "TSPLIB"), "w": (RES / "etapa15_eval_w.csv", "SOLOMON")}
+    if not all(a.exists() for a, _ in arqs.values()) or not (RES / "analise_etapa15_prim.csv").exists():
+        return 0, 0
+    por = defaultdict(list)
+    for prob, (arq, conj) in arqs.items():
+        with open(arq, encoding="utf-8", newline="") as f:
+            for r in csv.DictReader(f):
+                if r["viavel"] != "True":
+                    problemas.append(f"{arq.name}: execucao inviavel {r['braco']} {r['instancia']} {r['seed']}")
+                    continue
+                if r["conjunto"] != conj:
+                    continue
+                ref = float(r["ref"])
+                gap = 100.0 * (float(r["custo"]) - ref) / ref
+                if abs(gap - float(r["gap_pct"])) > 1e-6:
+                    problemas.append(f"{arq.name}: gap gravado divergente {r['braco']} {r['instancia']} {r['seed']}")
+                _, pool, arm = r["braco"].split("_", 2)
+                por[(prob, pool, arm, r["instancia"])].append(gap)
+    medias = {k: statistics.fmean(v) for k, v in por.items()}
+    nm = 0
+    for chave, valor in num.items():
+        if chave.startswith("s15_gap_"):
+            kk, arm = chave[len("s15_gap_"):].split("_", 1)
+            vals = [m for (p_, pool, a, _i), m in medias.items() if p_ == kk[0] and pool == "P" + kk[1:] and a == arm]
+            if not vals:
+                problemas.append(f"macro {chave}: ausente nos CSV do Estudo 15")
+                continue
+            nm += confere(chave, valor, statistics.fmean(vals), 3)
+    nc = 0
+    for nome_an in ("analise_etapa15_prim.csv", "analise_etapa15_foc.csv"):
+        for r in csv.DictReader(open(RES / nome_an, encoding="utf-8")):
+            ia = {i: m for (p_, pool, a, i), m in medias.items() if p_ == r["prob"] and pool == r["pool"] and a == r["a"]}
+            ib = {i: m for (p_, pool, a, i), m in medias.items() if p_ == r["prob"] and pool == r["pool"] and a == r["b"]}
+            inst = sorted(set(ia) & set(ib))
+            dif = [ia[i] - ib[i] for i in inst]
+            dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+            if not dif:
+                problemas.append(f"{nome_an} {r['id']}: sem instancias comuns")
+                continue
+            dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+            if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or len(inst) != int(r["n_inst"]):
+                problemas.append(f"{nome_an} {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs {r['vit_a']}/{r['der_a']}")
+            nc += 1
+    return nm, nc
+
+
 def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csvs=()):
     """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
     diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
@@ -538,6 +587,11 @@ def main():
     cont += n14c
     if n14m or n14c:
         print(f"(2c) Estudo 14 (CVRPTW): {n14m} medias e {n14c} contrastes conferidos")
+    n15m, n15c = verifica_s15(num)
+    outros += n15m
+    cont += n15c
+    if n15m or n15c:
+        print(f"(2c) Estudo 15 (teste prospectivo): {n15m} medias e {n15c} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(
