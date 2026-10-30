@@ -407,6 +407,69 @@ def verifica_s15(num):
     return nm, nc
 
 
+def verifica_s16(num):
+    """Estudo 16 (ALNS no CVRPTW): recomputa, so com a biblioteca padrao, as medias de gap dos macros `s16a_gap_*` e `s16r_gap_*` e a
+    diferenca media, vitorias, derrotas e n de todos os contrastes de analise_etapa16_a.csv e analise_etapa16_classe.csv, direto dos CSV
+    brutos (media das seeds por instancia; braco do ALNS `alns_X` = `s16a_X`; referencias VND `vnd_Y` = `s16r_Y`)."""
+    import re
+    ea, er, an = RES / "etapa16_eval_a.csv", RES / "etapa16_eval_ref.csv", RES / "analise_etapa16_a.csv"
+    if not (ea.exists() and er.exists() and an.exists()):
+        return 0, 0
+    por = defaultdict(list)
+    for arq, pref, nova in ((ea, "s16a_", ""), (er, "s16r_", "vnd_")):
+        with open(arq, encoding="utf-8", newline="") as f:
+            for r in csv.DictReader(f):
+                if r["viavel"] != "True":
+                    problemas.append(f"{arq.name}: execucao inviavel {r['braco']} {r['instancia']} {r['seed']}")
+                    continue
+                ref = float(r["ref"])
+                gap = 100.0 * (float(r["custo"]) - ref) / ref
+                if abs(gap - float(r["gap_pct"])) > 1e-6:
+                    problemas.append(f"{arq.name}: gap gravado divergente {r['braco']} {r['instancia']} {r['seed']}")
+                por[(nova + r["braco"][len(pref):], r["instancia"])].append(gap)
+    medias = {k: statistics.fmean(v) for k, v in por.items()}
+    nm = 0
+    for chave, valor in num.items():
+        if chave.startswith("s16a_gap_"):
+            arm = chave[len("s16a_gap_"):]
+        elif chave.startswith("s16r_gap_"):
+            arm = "vnd_" + chave[len("s16r_gap_"):]
+        else:
+            continue
+        vals = [m for (b, _i), m in medias.items() if b == arm]
+        if not vals:
+            problemas.append(f"macro {chave}: braco ausente nos CSV do Estudo 16")
+            continue
+        nm += confere(chave, valor, statistics.fmean(vals), 3)
+
+    def nome(b):
+        return b[len("alns_"):] if b.startswith("alns_") else b
+
+    def classe(inst):
+        m = re.match(r"([A-Z]+)(\d)", inst)
+        return m.group(1) + m.group(2)
+
+    nc = 0
+    for nome_an in ("analise_etapa16_a.csv", "analise_etapa16_classe.csv"):
+        for r in csv.DictReader(open(RES / nome_an, encoding="utf-8")):
+            ia = {i: m for (b, i), m in medias.items() if b == nome(r["a"])}
+            ib = {i: m for (b, i), m in medias.items() if b == nome(r["b"])}
+            inst = sorted(set(ia) & set(ib))
+            if nome_an.endswith("classe.csv"):
+                inst = [i for i in inst if classe(i) == r["classe"]]
+            dif = [ia[i] - ib[i] for i in inst]
+            dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+            if not dif:
+                problemas.append(f"{nome_an} {r['id']}: sem instancias comuns")
+                continue
+            dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+            if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or len(inst) != int(r["n_inst"]):
+                problemas.append(f"{nome_an} {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs "
+                                 f"{r['vit_a']}/{r['der_a']}; n {len(inst)} vs {r['n_inst']}")
+            nc += 1
+    return nm, nc
+
+
 def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csvs=()):
     """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
     diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
@@ -592,6 +655,11 @@ def main():
     cont += n15c
     if n15m or n15c:
         print(f"(2c) Estudo 15 (teste prospectivo): {n15m} medias e {n15c} contrastes conferidos")
+    n16m, n16c = verifica_s16(num)
+    outros += n16m
+    cont += n16c
+    if n16m or n16c:
+        print(f"(2c) Estudo 16 (ALNS no CVRPTW): {n16m} medias e {n16c} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(

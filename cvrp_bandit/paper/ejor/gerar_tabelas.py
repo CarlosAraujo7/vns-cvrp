@@ -1620,6 +1620,156 @@ def estudo15():
         "tab:s15", r"Pool (operator added) & $D$ (pp) & Prediction & Better / worse & Mean gain (pp) & Correct", lin, "lccccc"))
 
 
+ARMS16 = [("U", "Uniform selection"), ("RP", "Adaptive weights (Ropke--Pisinger)"), ("ucb1", "UCB1"), ("pm", "Probability matching"),
+          ("hgucb", "HG-UCB"), ("ts", "Thompson sampling"), ("exp3", "EXP3"), ("eff", "Efficiency UCB"),
+          ("static", "Static mixture (tuned offline)"), ("fixrep", "Fixed repair (best single repair)")]
+REF16 = [("vnd_U_P9", "VND, uniform selection over P9"), ("vnd_U_P5", "VND, uniform selection over P5"),
+         ("vnd_FOC_custo", "VND, fixed order of increasing cost"), ("vnd_static", "VND, static mixture over P9")]
+
+
+def estudo16():
+    """Estudo 16 (regime ALNS no CVRPTW). Entradas 121 (pre-registro) e 122 (resultados) do diario."""
+    ea = pd.read_csv(RES / "etapa16_eval_a.csv")
+    er = pd.read_csv(RES / "etapa16_eval_ref.csv")
+    aa = pd.read_csv(RES / "analise_etapa16_a.csv")
+    ac = pd.read_csv(RES / "analise_etapa16_classe.csv")
+    ak = pd.read_csv(RES / "analise_etapa16_captura.csv")
+    ta = json.loads((RES / "etapa16_tuning_escolhidas_a.json").read_text())
+
+    def milhar(n):
+        return f"{n:,}".replace(",", r"\,")
+
+    NUM["s16_nruns_a"], NUM["s16_nruns_ref"] = milhar(len(ea)), milhar(len(er))
+    NUM["s16_nruns"] = milhar(len(ea) + len(er))
+    ntune = len(pd.read_csv(RES / "etapa16_tuning_grid_a.csv")) + len(pd.read_csv(RES / "etapa16_tuning_static_a.csv"))
+    NUM["s16_tune_runs"] = milhar(ntune)
+    NUM["s16_pilot_runs"] = milhar(sum(len(pd.read_csv(RES / f)) for f in ("etapa16_piloto_a.csv", "etapa16_piloto_a2.csv", "etapa16_piloto_a3.csv")))
+    NUM["s16_ninv"] = str(int((~ea.viavel).sum() + (~er.viavel).sum()))
+    pa2 = pd.read_csv(RES / "etapa16_piloto_a2.csv")
+    pa2 = pa2[pa2.viavel]
+    for tag, braco in (("U_w002", "pb_U_w0.02"), ("U_w02", "pb_U_w0.2"), ("RP_w02", "pb_RP_w0.2"), ("reg2_w02", "pb_reg2_w0.2")):
+        NUM[f"s16p_{tag}"] = f"{pa2[pa2.braco == braco].gap_pct.mean():.2f}"
+    mean_inst = ea[ea.viavel].groupby(["braco", "instancia"]).gap_pct.mean().unstack(0)
+    mean_inst.columns = [c.replace("s16a_", "") for c in mean_inst.columns]
+    NUM["s16_n"] = str(len(mean_inst))
+    for a in mean_inst.columns:
+        NUM[f"s16a_gap_{a}"] = f"{mean_inst[a].mean():.3f}"
+        NUM[f"s16a_g2_{a}"] = f2(mean_inst[a].mean())
+    tr = er[er.viavel].groupby(["braco", "instancia"]).gap_pct.mean().unstack(0)
+    tr.columns = [c.replace("s16r_", "vnd_") for c in tr.columns]
+    for a in tr.columns:
+        NUM[f"s16r_gap_{a[len('vnd_'):]}"] = f"{tr[a].mean():.3f}"
+        NUM[f"s16r_g2_{a[len('vnd_'):]}"] = f2(tr[a].mean())
+    # contrastes (macros por grupo: s16a primario/secundarios/terciarios, s16m melhor nao adaptativo, s16s estrutura)
+    for _, r in aa.iterrows():
+        if r.grupo == "estrutura":
+            macros_contraste("s16s", f"{r.a.replace('_', '')}_{r.b.replace('vnd_', '').replace('_', '')}", r)
+        elif r.grupo == "melhor_nao_adaptativo":
+            macros_contraste("s16m", r.id.replace("-", "_"), r)
+        else:
+            macros_contraste("s16a", r.id.replace("-", "_"), r)
+            NUM[f"s16apr_{r.id.replace('-', '_')}"] = f"{r.p_bruto:.3f}"
+    sec = aa[aa.grupo == "secundario"]
+    mel = aa[aa.grupo == "melhor_nao_adaptativo"]
+    est = aa[aa.grupo == "estrutura"]
+    sig_b = lambda df: ((df.dif_pp < 0) & df.signif_005)    # noqa: E731
+    sig_w = lambda df: ((df.dif_pp > 0) & df.signif_005)    # noqa: E731
+    NUM["s16_sec_nb"], NUM["s16_sec_nw"] = str(int(sig_b(sec).sum())), str(int(sig_w(sec).sum()))
+    NUM["s16_mel_n"] = str(len(mel))
+    NUM["s16_mel_nb"], NUM["s16_mel_nw"] = str(int(sig_b(mel).sum())), str(int(sig_w(mel).sum()))
+    NUM["s16_mel_mde_lo"], NUM["s16_mel_mde_hi"] = f"{mel.mde_pp.min():.2f}", f"{mel.mde_pp.max():.2f}"
+    NUM["s16_est_nb"] = str(int(sig_b(est).sum()))
+    NUM["s16a_rp_mde"] = f"{aa[aa.id == 'RP-U'].iloc[0].mde_pp:.2f}"
+    NUM["s16_rp_equiv"] = "yes" if bool(aa[aa.id == "RP-U"].iloc[0].equiv_010) else "no"
+    # classes de Solomon (exploratorio, sem correcao)
+    for _, r in ac.iterrows():
+        rr = r.copy()
+        rr["p_holm"] = r.p_bruto
+        macros_contraste("s16c", f"{r.a}_{r.b}_{r.classe}", rr)
+    NUM["s16c_nrpU_nb"] = str(int(((ac.id.str.startswith("RP-U@")) & (ac.dif_pp < 0) & (ac.p_bruto < 0.05)).sum()))
+    NUM["s16c_nrpU_better"] = str(int(((ac.id.str.startswith("RP-U@")) & (ac.dif_pp < 0)).sum()))
+    # captura do ganho do RP
+    for _, r in ak.iterrows():
+        NUM[f"s16_cap_{r.x}"] = f"{100 * r.captura:.0f}"
+        NUM[f"s16_capci_{r.x}"] = f"[{100 * r.ic_lo:.0f}, {100 * r.ic_hi:.0f}]"
+    # uso das operacoes
+    for arm in [a for a, _ in ARMS16]:
+        g = ea[ea.braco == "s16a_" + arm]
+        ud, ur = _soma_pipe(g, "uso_d"), _soma_pipe(g, "uso_r")
+        for j in range(4):
+            NUM[f"s16a_des{j}_{arm}"] = f"{100 * ud[j] / ud.sum():.0f}"
+        for j in range(3):
+            NUM[f"s16a_rep{j}_{arm}"] = f"{100 * ur[j] / ur.sum():.0f}"
+        NUM[f"s16a_iter_{arm}"] = milhar(round(g.iteracoes.mean()))
+        NUM[f"s16a_inv_{arm}"] = f"{g.inviaveis.mean():.2f}"
+    # ajuste
+    NUM["s16a_fix_j"] = str(ta["fixrep"]["j"])
+    NUM["s16a_tune_ucb1_C"] = f"{ta['ucb1']['params']['C']:g}"
+    NUM["s16a_tune_pm_g"], NUM["s16a_tune_pm_p"] = f"{ta['pm']['params']['gamma']:g}", f"{ta['pm']['params']['p_min']:g}"
+    NUM["s16a_tune_hg_a"], NUM["s16a_tune_hg_C"] = f"{ta['hgucb']['params']['alpha']:g}", f"{ta['hgucb']['params']['C']:g}"
+    NUM["s16a_tune_rp_r"], NUM["s16a_tune_rp_s"] = f"{ta['RP']['params']['rho']:g}", f"{ta['RP']['params']['segmento']:g}"
+    for nm_, v in ta["fixrep"]["gaps"].items():
+        NUM[f"s16a_tunefix_{nm_}"] = f"{v:.3f}"
+    NUM["s16a_tune_static"], NUM["s16a_tune_static_eq"] = f"{ta['static']['gap_tune']:.2f}", f"{ta['static']['gap_pesos_iguais']:.2f}"
+    for j, w in enumerate(ta["static"]["pesos_d"]):
+        NUM[f"s16a_wd_{j}"] = f"{100 * w:.0f}"
+    for j, w in enumerate(ta["static"]["pesos_r"]):
+        NUM[f"s16a_wr_{j}"] = f"{100 * w:.0f}"
+    # hipoteses (entrada 121)
+    h79 = bool(sig_b(aa[aa.id == "RP-U"]).any())
+    h81 = bool(sig_b(aa[aa.id == "static-U"]).any())
+    h82 = not bool(sig_b(aa[aa.id == "fixrep-U"]).any())
+    NUM["s16_h79_ok"] = "yes" if h79 else "no"
+    NUM["s16_h80_n"] = NUM["s16_sec_nb"]
+    NUM["s16_h81_ok"] = "yes" if h81 else "no"
+    NUM["s16_h82_ok"] = "yes" if h82 else "no"
+    NUM["s16_h83_n"] = NUM["s16_mel_nb"]
+    NUM["s16_h84_ok"] = "yes" if bool(sig_b(est[est.b == "vnd_U_P9"]).any()) else "no"
+    NUM["s16_h85_n"] = NUM["s16_est_nb"]
+    rp_gain = aa[aa.id == "RP-U"].iloc[0].dif_pp < 0
+    cap_s = float(ak[ak.x == "static"].captura.iloc[0]) if rp_gain else float("nan")
+    NUM["s16_h86_ok"] = ("yes" if cap_s >= 0.70 else "no") if rp_gain else "na"
+    NUM["s16_hconf"] = str(int(h79) + int(int(NUM["s16_h80_n"]) >= 1) + int(h81) + int(h82) + int(int(NUM["s16_h83_n"]) == 0)
+                           + int(NUM["s16_h84_ok"] == "yes") + int(int(NUM["s16_h85_n"]) == 4))
+    # tabela dos bracos
+    contr = {r.id.split("-")[0]: r for _, r in aa[aa.id.str.endswith("-U") & aa.grupo.isin(["primario", "secundario", "terciario"])].iterrows()}
+    lin = []
+    for a, nome in ARMS16:
+        c = [nome, NUM[f"s16a_g2_{a}"]]
+        if a in contr:
+            r = contr[a]
+            c.append(f"{sgn(r.dif_pp)} ({padj(r.p_holm)})")
+            c.append(f"{int(r.vit_a)}/{int(r.der_a)}")
+        else:
+            c += ["---", "---"]
+        c += [NUM[f"s16a_iter_{a}"], "/".join(NUM[f"s16a_rep{j}_{a}"] for j in range(3))]
+        lin.append(" & ".join(c))
+    lin.append(r"\addlinespace")
+    esd = {r.b: r for _, r in est.iterrows()}
+    for v, nome in REF16:
+        r = esd[v]
+        lin.append(f"{nome} & {NUM['s16r_g2_' + v[len('vnd_'):]]} & {sgn(-r.dif_pp)} ({padj(r.p_holm)}) & {int(r.der_a)}/{int(r.vit_a)} & --- & ---")
+    escreve("tab_s16a.tex", tabela(
+        "Study 16 (CVRPTW, ALNS), 56 Solomon instances: mean gap (\\%) and, in parentheses, the paired difference from uniform selection in pp and its adjusted $p$ "
+        "(RP: the primary test, unadjusted; the six other policies: Holm over 6; static mixture and fixed repair: Holm over 4), with wins/losses of the arm. "
+        "Last two columns: mean iterations per run and share of repairs by the greedy / regret-2 / cheapest-insertion operators (\\%). "
+        "Lower block: the VND at the same budget, with the difference of the VND from the ALNS with uniform selection (Holm over 4; positive: the ALNS is better) and wins/losses of the VND.",
+        "tab:s16a", r"Arm & Gap (\%) & $\Delta$ vs.\ uniform (adj.\ $p$) & W/L & Iter./run & Repairs (\%)", lin, "lccccc"))
+    # matriz politica - melhor desenho nao adaptativo
+    lin_m = []
+    md = {(r.a, r.b): r for _, r in mel.iterrows()}
+    for a, nome in ARMS16[1:8]:
+        c = [nome]
+        for b in ("static", "fixrep"):
+            r = md[(a, b)]
+            c.append(f"{cel(r)}; W/L {int(r.vit_a)}/{int(r.der_a)}")
+        lin_m.append(" & ".join(c))
+    escreve("tab_s16m.tex", tabela(
+        "Study 16 (CVRPTW, ALNS): each adaptive policy against the two non-adaptive designs (mean paired difference in pp [95\\% CI]; adjusted $p$ over 14 tests; "
+        "wins/losses of the policy; negative favors the policy).", "tab:s16m",
+        r"Policy $-$ & Static mixture & Fixed repair", lin_m, "lcc"))
+
+
 def sintese_extra():
     """macros auxiliares da tabela de sintese do texto principal"""
     d = pd.read_csv(RES / "analise_etapa8_confirmatoria.csv")
@@ -1894,6 +2044,8 @@ def main():
         estudo14()
     if (RES / "analise_etapa15_celulas.csv").exists():
         estudo15()
+    if (RES / "analise_etapa16_a.csv").exists():
+        estudo16()
     sintese_extra()
     referencias()
     complementaridade()

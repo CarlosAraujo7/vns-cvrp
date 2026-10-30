@@ -119,5 +119,15 @@ H75 & The mean gain of the six policies increases with the dead weight: Spearman
 H76 & In the two pools P5 no policy is significantly better than uniform selection (70\%). & Not confirmed: \num{s15_h76_n} policy is (probability matching in the CVRPTW; HG-UCB is worse). \\
 H77 & Exploratory: in no pool is a policy significantly better than the fixed-order descent of the same pool (70\%). & Confirmed: \num{s15_foc_nb} of \num{s15_foc_n} contrasts. \\
 H78 & Exploratory: in the TSP the efficiency UCB is significantly better than uniform selection in the pool P8 (60\%). & Confirmed: \num{s15d_eff_t8}~pp. \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 16, ALNS on the CVRPTW (log entry 121; committed before its data)}} \\
+H79 & The adaptive weights are significantly better than uniform selection (primary test) (45\%). & Confirmed: \num{s16ad_RP_U}~pp ($p=\num{s16apr_RP_U}$). \\
+H80 & At least one of the six secondary policies is significantly better than uniform selection after Holm (45\%). & Confirmed: \num{s16_h80_n} of 6 (probability matching and HG-UCB). \\
+H81 & The static mixture is significantly better than uniform selection (65\%). & Confirmed: \num{s16ad_static_U}~pp. \\
+H82 & The fixed repair is not significantly better than uniform selection (80\%). & Confirmed: \num{s16ad_fixrep_U}~pp (adjusted $p=\num{s16ap_fixrep_U}$). \\
+H83 & None of the 14 contrasts policy $-$ \{static mixture, fixed repair\} is significantly negative after Holm (70\%). & Not confirmed: \num{s16_h83_n} of 14, HG-UCB $-$ fixed repair (\num{s16md_hgucb_fixrep}~pp, adjusted $p=\num{s16mp_hgucb_fixrep}$). \\
+H84 & The ALNS with uniform selection is significantly better than the VND with uniform selection over P9 (90\%). & Confirmed: \num{s16sd_alnsU_UP9}~pp. \\
+H85 & The ALNS with uniform selection is significantly better than all four VND references (65\%). & Confirmed (\num{s16_h85_n} of 4). \\
+H86 & Exploratory: the static mixture captures at least 70\% of the gain of the adaptive weights over uniform selection (50\%). & Confirmed: \num{s16_cap_static}\%. \\
 \end{longtable}
 \end{center}

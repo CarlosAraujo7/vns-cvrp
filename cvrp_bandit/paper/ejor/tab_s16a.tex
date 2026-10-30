@@ -1,0 +1,28 @@
+\begin{table}[t]
+\caption{Study 16 (CVRPTW, ALNS), 56 Solomon instances: mean gap (\%) and, in parentheses, the paired difference from uniform selection in pp and its adjusted $p$ (RP: the primary test, unadjusted; the six other policies: Holm over 6; static mixture and fixed repair: Holm over 4), with wins/losses of the arm. Last two columns: mean iterations per run and share of repairs by the greedy / regret-2 / cheapest-insertion operators (\%). Lower block: the VND at the same budget, with the difference of the VND from the ALNS with uniform selection (Holm over 4; positive: the ALNS is better) and wins/losses of the VND.}\label{tab:s16a}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccccc}
+\toprule
+Arm & Gap (\%) & $\Delta$ vs.\ uniform (adj.\ $p$) & W/L & Iter./run & Repairs (\%) \\
+\midrule
+Uniform selection & 2.25 & --- & --- & 4\,031 & 33/33/33 \\
+Adaptive weights (Ropke--Pisinger) & 2.08 & $-$0.17 (0.004) & 28/12 & 3\,981 & 29/40/31 \\
+UCB1 & 2.08 & $-$0.17 (0.062) & 27/13 & 3\,963 & 28/42/30 \\
+Probability matching & 1.99 & $-$0.26 (0.008) & 30/11 & 3\,965 & 28/42/30 \\
+HG-UCB & 1.82 & $-$0.43 (0.002) & 29/10 & 3\,877 & 29/41/30 \\
+Thompson sampling & 2.12 & $-$0.13 (0.61) & 22/21 & 4\,827 & 3/93/4 \\
+EXP3 & 2.01 & $-$0.24 (0.062) & 24/17 & 4\,330 & 16/68/17 \\
+Efficiency UCB & 3.39 & $+$1.15 (0.003) & 14/38 & 11\,310 & 1/31/68 \\
+Static mixture (tuned offline) & 1.72 & $-$0.52 (0.004) & 26/14 & 3\,797 & 16/33/51 \\
+Fixed repair (best single repair) & 2.21 & $-$0.04 (0.96) & 17/25 & 6\,710 & 0/0/100 \\
+\addlinespace
+VND, uniform selection over P9 & 7.53 & $+$5.28 (\ensuremath{<10^{-4}}) & 0/52 & --- & --- \\
+VND, uniform selection over P5 & 7.03 & $+$4.78 (\ensuremath{<10^{-4}}) & 0/47 & --- & --- \\
+VND, fixed order of increasing cost & 6.73 & $+$4.49 (\ensuremath{<10^{-4}}) & 0/50 & --- & --- \\
+VND, static mixture over P9 & 7.08 & $+$4.83 (\ensuremath{<10^{-4}}) & 0/50 & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

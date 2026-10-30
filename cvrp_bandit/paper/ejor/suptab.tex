@@ -42,6 +42,8 @@
 \expandafter\gdef\csname sup@tab:s13\endcsname{S40}
 \expandafter\gdef\csname sup@tab:s13a\endcsname{S41}
 \expandafter\gdef\csname sup@tab:s14\endcsname{S42}
+\expandafter\gdef\csname sup@tab:s16a\endcsname{S43}
+\expandafter\gdef\csname sup@tab:s16m\endcsname{S44}
 \expandafter\gdef\csname mref@sec:intro\endcsname{1}
 \expandafter\gdef\csname mref@sec:related\endcsname{2}
 \expandafter\gdef\csname mref@sec:method\endcsname{3}
@@ -66,6 +68,7 @@
 \expandafter\gdef\csname mref@sec:r7\endcsname{5.7}
 \expandafter\gdef\csname mref@sec:discussion\endcsname{6}
 \expandafter\gdef\csname mref@sec:conclusions\endcsname{7}
+\expandafter\gdef\csname ssec@sup:prereg\endcsname{S3}
 \expandafter\gdef\csname ssec@app:operators\endcsname{S6}
 \expandafter\gdef\csname ssec@app:hyper\endcsname{S7}
 \expandafter\gdef\csname ssec@sup:design\endcsname{S8}
@@ -78,6 +81,7 @@
 \expandafter\gdef\csname ssec@sec:s13design\endcsname{S8.7}
 \expandafter\gdef\csname ssec@sec:s14design\endcsname{S8.8}
 \expandafter\gdef\csname ssec@sec:s15design\endcsname{S8.9}
+\expandafter\gdef\csname ssec@sec:s16design\endcsname{S8.10}
 \expandafter\gdef\csname ssec@sup:results\endcsname{S9}
 \expandafter\gdef\csname ssec@sec:s1\endcsname{S9.1}
 \expandafter\gdef\csname ssec@sec:s2\endcsname{S9.2}
@@ -96,6 +100,7 @@
 \expandafter\gdef\csname ssec@sec:robust\endcsname{S9.15}
 \expandafter\gdef\csname ssec@sec:ceiling\endcsname{S9.16}
 \expandafter\gdef\csname ssec@sec:s15\endcsname{S9.17}
+\expandafter\gdef\csname ssec@sec:s16\endcsname{S9.18}
 \makeatother
 \newcommand{\stab}[1]{\ifcsname sup@#1\endcsname\csname sup@#1\endcsname\else\textcolor{red}{??\detokenize{#1}??}\fi}
 \newcommand{\mref}[1]{\ifcsname mref@#1\endcsname\csname mref@#1\endcsname\ of the manuscript\else\textcolor{red}{??\detokenize{#1}??}\fi}

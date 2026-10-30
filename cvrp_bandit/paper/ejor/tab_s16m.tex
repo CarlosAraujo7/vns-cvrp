@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Study 16 (CVRPTW, ALNS): each adaptive policy against the two non-adaptive designs (mean paired difference in pp [95\% CI]; adjusted $p$ over 14 tests; wins/losses of the policy; negative favors the policy).}\label{tab:s16m}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcc}
+\toprule
+Policy $-$ & Static mixture & Fixed repair \\
+\midrule
+Adaptive weights (Ropke--Pisinger) & $+$0.36 [$+$0.10, $+$0.67]; 0.22; W/L 16/24 & $-$0.13 [$-$0.36, $+$0.12]; 0.85; W/L 27/15 \\
+UCB1 & $+$0.36 [$+$0.11, $+$0.66]; 0.22; W/L 14/26 & $-$0.13 [$-$0.36, $+$0.11]; 0.55; W/L 29/13 \\
+Probability matching & $+$0.26 [$+$0.07, $+$0.50]; 0.28; W/L 17/24 & $-$0.22 [$-$0.43, $-$0.01]; 0.28; W/L 28/14 \\
+HG-UCB & $+$0.09 [$-$0.06, $+$0.26]; 0.85; W/L 20/20 & $-$0.39 [$-$0.61, $-$0.18]; 0.019; W/L 32/10 \\
+Thompson sampling & $+$0.39 [$+$0.15, $+$0.66]; 0.095; W/L 15/29 & $-$0.09 [$-$0.39, $+$0.22]; 0.85; W/L 28/18 \\
+EXP3 & $+$0.28 [$+$0.07, $+$0.52]; 0.17; W/L 14/27 & $-$0.20 [$-$0.42, $+$0.02]; 0.28; W/L 27/16 \\
+Efficiency UCB & $+$1.67 [$+$1.18, $+$2.18]; \ensuremath{<10^{-4}}; W/L 10/42 & $+$1.19 [$+$0.63, $+$1.72]; 0.0001; W/L 10/42 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
