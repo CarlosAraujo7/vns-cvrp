@@ -763,6 +763,7 @@ def estudo9():
     for br, g in gm.groupby("braco"):
         a = br.replace("s9_", "")
         NUM[f"s9_gap_{a}"] = f"{g.gap_pct.mean():.3f}"
+        NUM[f"s9_g2_{a}"] = f2(g.gap_pct.mean())
         for s in ("X", "V"):
             NUM[f"s9{s.lower()}_gap_{a}"] = f"{g[g.set == s].gap_pct.mean():.3f}"
     NUM["s9_n_inst"] = str(e.instancia.nunique())
@@ -1779,8 +1780,8 @@ def sintese_extra():
 
 def afirmacoes():
     """contagens das afirmacoes universais (mesma logica de checar_afirmacoes.py)"""
-    from checar_afirmacoes import aos_vs_baseline
-    t = aos_vs_baseline()
+    from checar_afirmacoes import aos_vs_baseline, so_cvrp
+    t = so_cvrp(aos_vs_baseline())   # o texto fala do CVRP: sem o TSP (S13) e o CVRPTW (S14), onde ha politicas melhores
     NUM["u_n"] = str(len(t))
     NUM["u_better"] = str(int(((t.dif_pp < 0) & (t.p_holm < 0.05)).sum()))
     NUM["u_worse"] = str(int(((t.dif_pp > 0) & (t.p_holm < 0.05)).sum()))

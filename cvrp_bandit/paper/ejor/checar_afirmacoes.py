@@ -87,9 +87,14 @@ def aos_vs_baseline():
     return pd.DataFrame(linhas, columns=["estudo", "contraste", "a", "b", "dif_pp", "p_holm"])
 
 
+def so_cvrp(todos):
+    """os contrastes do CVRP (S1-S4, S6, S7, S10, S11): as afirmacoes U1/U2 e as macros u_* do texto valem SO para eles"""
+    return todos[~todos.estudo.isin(["S13", "S14"])]
+
+
 def main():
     todos = aos_vs_baseline()
-    t = todos[~todos.estudo.isin(["S13", "S14"])]
+    t = so_cvrp(todos)
     tsp = todos[todos.estudo == "S13"]
     tw = todos[todos.estudo == "S14"]
     print(f"{len(t)} contrastes 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa' no CVRP (S1-S4, S6, S7, S10, S11)")
@@ -101,6 +106,17 @@ def main():
     piores = t[(t.dif_pp > 0) & (t.p_holm < 0.05)]
     print(f"    contrastes do CVRP com a politica significativamente PIOR: {len(piores)}")
     print(piores.to_string(index=False))
+    # as macros u_* do texto (numeros.json, geradas por gerar_tabelas.py) devem ser EXATAMENTE estas contagens: o texto afirma "nenhum de u_n contrastes"
+    # para o CVRP, e uma versao antiga as calculava tambem com o TSP e o CVRPTW (129 contrastes, 13 deles melhores)
+    import json
+    nj = Path(__file__).resolve().parent / "numeros.json"
+    if nj.exists():
+        num = json.loads(nj.read_text(encoding="utf-8"))
+        esperado = {"u_n": len(t), "u_better": len(melhores), "u_worse": len(piores)}
+        for k, v in esperado.items():
+            if str(num.get(k)) != str(v):
+                print(f"    MACRO {k} = {num.get(k)} no texto, mas o checador conta {v}")
+                falhas.append(f"macro {k}")
     hg = t[t.a.str.contains("hgucb") | (t.a == "hg")]   # "hg" = HG-UCB-lite do Estudo 7
     mh = hg[(hg.dif_pp < 0) & (hg.p_holm < 0.05)]
     print(f"U2: HG-UCB significativamente melhor (CVRP): {len(mh)} de {len(hg)} contrastes; "
