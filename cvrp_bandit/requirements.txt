@@ -4,5 +4,6 @@ scipy==1.18.1
 pandas==3.0.5
 river==0.26.1
 numba==0.68.1   # operadores do CVRPTW (src/tw_neighborhoods.py); Windows/Python 3.12: numba==0.68.0
+pyvrp==0.13.3   # Estudo 17: ILS do PyVRP com selecao adaptativa do conjunto de operadores (src/pyvrp_aos.py); tambem no venv do WSL
 # Apenas para figuras, analises e o manuscrito no Windows (Python 3.12): matplotlib==3.11.1, pypdf==6.16.1, pyvrp==0.13.3 (referencias do CVRPTW), vrplib==2.2.0
 # Solvers de referencia (opcionais; ver direcao1_local/setup.sh): ortools==9.15.6755, torch==2.14.0 (braço neural)
