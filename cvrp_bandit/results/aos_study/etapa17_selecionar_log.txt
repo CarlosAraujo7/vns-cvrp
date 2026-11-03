@@ -1,0 +1,7 @@
+U (referencia, SYN_TUNE): 1.1701
+ucb1: escolhida {"C": 2.0} gap_tune=1.2956 (padrao 1.2956)
+pm: escolhida {"gamma": 0.3, "p_min": 0.1} gap_tune=1.2364 (padrao 1.2696)
+hgucb: escolhida {"C": 2.0, "alpha": 2.0} gap_tune=1.0157 (padrao 1.4166)
+RP: escolhida {"rho": 0.05, "segmento": 100} gap_tune=1.2518 (padrao 1.3511)
+conjuntos fixos (gap de ajuste): {'P3': 0.8802, 'P4': 1.2629, 'P5': 1.3092, 'P7': 1.3862, 'P6': 1.4601, 'P1': 2.2439, 'P2': 2.5687}
+static: gen05c2 gap_tune=0.6714 pesos=[0.197 0.356 0.038 0.073 0.158 0.151 0.027]
