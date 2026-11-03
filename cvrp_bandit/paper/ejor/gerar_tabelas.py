@@ -1617,7 +1617,7 @@ def estudo15():
         "Study 15, prospective test: nested pools of the TSP and of the CVRPTW. $D$: dead weight of the pool (gap of uniform selection minus that over P5), "
         "measured on the tuning instances before the evaluation; prediction by the pre-registered rule ($D\\ge\\num{s15_lim}$~pp: at least one of the six policies "
         "significantly better than uniform selection; otherwise none). Better / worse: policies significantly better / worse than uniform selection "
-        "(Holm over six); mean gain: mean over the six policies of the gap of uniform selection minus theirs (pp). P9 was evaluated in Studies 13 and 14 and is not a prediction.",
+        "(Holm over six); mean gain: mean over the six policies of the gap of uniform selection minus theirs (pp).",
         "tab:s15", r"Pool (operator added) & $D$ (pp) & Prediction & Better / worse & Mean gain (pp) & Correct", lin, "lccccc"))
 
 
@@ -1769,6 +1769,144 @@ def estudo16():
         "Study 16 (CVRPTW, ALNS): each adaptive policy against the two non-adaptive designs (mean paired difference in pp [95\\% CI]; adjusted $p$ over 14 tests; "
         "wins/losses of the policy; negative favors the policy).", "tab:s16m",
         r"Policy $-$ & Static mixture & Fixed repair", lin_m, "lcc"))
+
+
+ARMS17 = [("P3", "Set P3 (three operators)"), ("P4", "Set P4 (four operators)"), ("P5", "Set P5 (five operators)"),
+          ("P6", "Set P6 (PyVRP default)"), ("P7", "Set P7 (default $+$ SWAP*)"), ("U", "Uniform selection over P1--P7"),
+          ("RP", "Adaptive weights (Ropke--Pisinger)"), ("ucb1", "UCB1"), ("pm", "Probability matching"), ("hgucb", "HG-UCB"),
+          ("ts", "Thompson sampling"), ("exp3", "EXP3"), ("eff", "Efficiency UCB"), ("static", "Static mixture (tuned offline)")]
+POL17 = ["RP", "ucb1", "pm", "hgucb", "ts", "exp3", "eff"]
+
+
+def estudo17():
+    """Estudo 17 (selecao adaptativa do conjunto de operadores da busca local no ILS do PyVRP). Entradas 124 (pre-registro) e 125 (resultados)."""
+    ee = pd.read_csv(RES / "etapa17_eval.csv")
+    ee["braco"] = ee.braco.str.replace("s17_", "", regex=False)
+    aa = pd.read_csv(RES / "analise_etapa17_a.csv")
+    ac = pd.read_csv(RES / "analise_etapa17_conjunto.csv")
+    ta = json.loads((RES / "etapa17_tuning_escolhidas.json").read_text())
+    pil = pd.read_csv(RES / "etapa17_piloto.csv")
+    niveis = sorted(ee.nivel.unique())
+
+    def milhar(n):
+        return f"{n:,}".replace(",", r"\,")
+
+    NUM["s17_nruns"] = milhar(len(ee))
+    NUM["s17_pilot_runs"] = milhar(len(pil))
+    NUM["s17_tune_runs"] = milhar(len(pd.read_csv(RES / "etapa17_tuning_grid.csv")) + len(pd.read_csv(RES / "etapa17_tuning_static.csv")))
+    NUM["s17_ninv"] = str(int((~ee.viavel).sum()))
+    NUM["s17_nivel_1"], NUM["s17_nivel_2"] = f"{niveis[0]:g}", f"{niveis[1]:g}"
+    pp = pil[pil.viavel & (pil.braco == "pil_P6")].groupby("nivel").gap_pct.mean()
+    for tag, nv in (("a", 0.01), ("b", 0.03), ("c", 0.1)):
+        NUM[f"s17p_P6_{tag}"] = f"{pp[nv]:.2f}"
+    for k, nv in enumerate(niveis, 1):
+        e = ee[ee.nivel == nv]
+        mi = e[e.viavel].groupby(["braco", "instancia"]).gap_pct.mean().unstack(0).dropna()
+        NUM[f"s17_n_{k}"] = str(len(mi))
+        for a in mi.columns:
+            NUM[f"s17_gap_{a}_{k}"] = f"{mi[a].mean():.3f}"
+            NUM[f"s17_g2_{a}_{k}"] = f2(mi[a].mean())
+            NUM[f"s17_iter_{a}_{k}"] = milhar(round(e[e.braco == a].iteracoes.mean()))
+    # contrastes: primario/secundarios/terciarios/padrao (s17a), escada (s17l), melhor desenho nao adaptativo (s17m)
+    pref = {"primario": "s17a", "secundario": "s17a", "terciario": "s17a", "padrao": "s17a", "escada": "s17l",
+            "melhor_nao_adaptativo": "s17m"}
+    for _, r in aa.iterrows():
+        chave = r.id.replace("-", "_").replace("@", "_")
+        macros_contraste(pref[r.grupo], chave, r)
+        if r.grupo != "melhor_nao_adaptativo" and r.grupo != "escada":
+            NUM[f"s17apr_{chave}"] = f"{r.p_bruto:.3f}"
+    for _, r in ac.iterrows():
+        rr = r.copy()
+        rr["p_holm"] = r.p_bruto
+        macros_contraste("s17c", f"{r.a}_{r.b}_{int(r.nivel)}_{r.conjunto}", rr)
+    sig_b = lambda df: ((df.dif_pp < 0) & df.signif_005)    # noqa: E731
+    sig_w = lambda df: ((df.dif_pp > 0) & df.signif_005)    # noqa: E731
+    sec = aa[aa.grupo == "secundario"]
+    mel = aa[aa.grupo == "melhor_nao_adaptativo"]
+    esc = aa[aa.grupo == "escada"]
+    NUM["s17_sec_nb"], NUM["s17_sec_nw"] = str(int(sig_b(sec).sum())), str(int(sig_w(sec).sum()))
+    NUM["s17_mel_n"] = str(len(mel))
+    NUM["s17_mel_nb"], NUM["s17_mel_nw"] = str(int(sig_b(mel).sum())), str(int(sig_w(mel).sum()))
+    for k in (1, 2):
+        NUM[f"s17_mel_nb_{k}"], NUM[f"s17_mel_nw_{k}"] = str(int(sig_b(mel[mel.nivel == k]).sum())), str(int(sig_w(mel[mel.nivel == k]).sum()))
+    NUM["s17_mel_nb_pad"] = str(int(sig_b(mel[mel.b.isin(["P6", "P7"])]).sum()))
+    NUM["s17_mel_nb_static"] = str(int(sig_b(mel[mel.b == "static"]).sum()))
+    NUM["s17_mel_mde_lo"], NUM["s17_mel_mde_hi"] = f"{mel.mde_pp.min():.2f}", f"{mel.mde_pp.max():.2f}"
+    NUM["s17_esc_npos"], NUM["s17_esc_nneg"] = str(int(sig_w(esc).sum())), str(int(sig_b(esc).sum()))
+    # uso dos conjuntos
+    for a in ["U"] + POL17 + ["static"]:
+        g = ee[(ee.braco == a) & ee.viavel]
+        u = pd.DataFrame(g.uso.str.split("|").apply(lambda v: [float(x) for x in v]).tolist()).mean()
+        for j in range(7):
+            NUM[f"s17_use{j + 1}_{a}"] = f"{100 * u[j] / u.sum():.0f}"
+    # ajuste
+    NUM["s17_tune_ucb1_C"] = f"{ta['ucb1']['params']['C']:g}"
+    NUM["s17_tune_pm_g"], NUM["s17_tune_pm_p"] = f"{ta['pm']['params']['gamma']:g}", f"{ta['pm']['params']['p_min']:g}"
+    NUM["s17_tune_hg_a"], NUM["s17_tune_hg_C"] = f"{ta['hgucb']['params']['alpha']:g}", f"{ta['hgucb']['params']['C']:g}"
+    NUM["s17_tune_rp_r"], NUM["s17_tune_rp_s"] = f"{ta['RP']['params']['rho']:g}", f"{ta['RP']['params']['segmento']:g}"
+    for nm_, v in ta["fixo"]["gaps"].items():
+        NUM[f"s17_tunefix_{nm_}"] = f"{v:.2f}"
+    NUM["s17_tunefix_best"] = ta["fixo"]["melhor"]
+    gg = pd.read_csv(RES / "etapa17_tuning_grid.csv")
+    NUM["s17_tune_U"] = f2(gg[gg.viavel & (gg.braco == "tune17_U")].gap_pct.mean())
+    NUM["s17_tune_hg_g"], NUM["s17_tune_hg_gd"] = f2(ta["hgucb"]["gap_tune"]), f2(ta["hgucb"]["gap_padrao"])
+    for k in (1, 2):
+        fx = [float(NUM[f"s17_gap_P{j}_{k}"]) for j in range(3, 8)]
+        NUM[f"s17_rng_{k}"] = f"{max(fx) - min(fx):.2f}"
+    NUM["s17_tune_static"], NUM["s17_tune_static_eq"] = f"{ta['static']['gap_tune']:.2f}", f"{ta['static']['gap_pesos_iguais']:.2f}"
+    for j, w in enumerate(ta["static"]["pesos"]):
+        NUM[f"s17_w{j + 1}"] = f"{100 * w:.0f}"
+    # hipoteses (entrada 124)
+    ida = lambda i: aa[aa.id == i]          # noqa: E731
+    h87 = bool(sig_b(ida("U-P6@1")).any())
+    h88 = bool(sig_w(esc).any())
+    h89 = bool(sig_b(ida("RP-U@1")).any())
+    h90 = bool(sig_b(ida("static-U@1")).any())
+    h91 = int(sig_b(mel[mel.b.isin(["P6", "P7"])]).sum()) == 0
+    h92 = int(sig_b(mel[mel.b == "static"]).sum()) == 0
+    h93 = not bool(sig_b(aa[aa.id.isin(["hgucb-U@1", "hgucb-U@2"])]).any())
+    h94 = bool(sig_b(ida("eff-U@1")).any())
+    h95 = bool(sig_b(ida("static-P6@1")).any())
+    for n_, v in (("87", h87), ("88", h88), ("89", h89), ("90", h90), ("91", h91), ("92", h92), ("93", h93), ("94", h94), ("95", h95)):
+        NUM[f"s17_h{n_}_ok"] = "yes" if v else "no"
+    NUM["s17_hconf"] = str(sum((h87, h88, h89, h90, h91, h92, h93, h94, h95)))
+    # tabela dos bracos
+    lin = []
+    for a, nome in ARMS17:
+        c = [nome, NUM[f"s17_g2_{a}_1"]]
+        for k in (1, 2):
+            rid = f"{a}-U@{k}"
+            r = aa[aa.id == rid]
+            if k == 2:
+                c.append(NUM[f"s17_g2_{a}_2"])
+            if len(r):
+                r = r.iloc[0]
+                c += [f"{sgn(r.dif_pp)} ({padj(r.p_holm)})", f"{int(r.vit_a)}/{int(r.der_a)}"]
+            else:
+                c += ["---", "---"]
+        lin.append(" & ".join([c[0], c[1], c[2], c[3], c[4], c[5], c[6]]))
+    escreve("tab_s17a.tex", tabela(
+        "Study 17 (PyVRP, CVRP), 104 instances: mean gap (\\%) at the two budgets (" + NUM["s17_nivel_1"] + " and " + NUM["s17_nivel_2"] +
+        " s per customer) and, in parentheses, the paired difference from uniform selection over the seven sets in pp and its adjusted $p$ "
+        "(RP at the first budget: the primary test, unadjusted; the other policies and the static mixture: Holm over 15), with wins/losses of the arm. "
+        "Fixed sets are not tested against uniform selection (Table~\\stab{tab:s17m} and the text).",
+        "tab:s17a", r"Arm & Gap 1 (\%) & $\Delta$ vs.\ U 1 (adj.\ $p$) & W/L & Gap 2 (\%) & $\Delta$ vs.\ U 2 (adj.\ $p$) & W/L",
+        lin, "lccccccc"))
+    # politica - desenho nao adaptativo
+    md = {(r.a, r.b, int(r.nivel)): r for _, r in mel.iterrows()}
+    lin_m = []
+    for a in POL17:
+        nome = dict(ARMS17)[a]
+        c = [nome]
+        for k in (1, 2):
+            for b in ("P6", "P7", "static"):
+                r = md[(a, b, k)]
+                c.append(f"{sgn(r.dif_pp)} ({padj(r.p_holm)})")
+        lin_m.append(" & ".join(c))
+    escreve("tab_s17m.tex", tabela(
+        "Study 17 (PyVRP, CVRP): each adaptive policy against the three non-adaptive designs (mean paired difference in pp and adjusted $p$ over 21 tests "
+        "per budget; negative favors the policy). P6 is the default operator set of PyVRP, P7 adds SWAP*.", "tab:s17m",
+        r"Policy $-$ & P6 (1) & P7 (1) & Static (1) & P6 (2) & P7 (2) & Static (2)", lin_m, "lcccccc"))
 
 
 def sintese_extra():
@@ -2047,6 +2185,8 @@ def main():
         estudo15()
     if (RES / "analise_etapa16_a.csv").exists():
         estudo16()
+    if (RES / "analise_etapa17_a.csv").exists():
+        estudo17()
     sintese_extra()
     referencias()
     complementaridade()

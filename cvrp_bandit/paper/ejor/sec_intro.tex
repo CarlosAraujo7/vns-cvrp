@@ -8,12 +8,12 @@ This paper audits the learning component of one recent, representative method. \
 \begin{description}
 \item[RQ1 (reproduction)] Does the published improvement replicate, and what in the reward design determines the policy's behavior?
 \item[RQ2 (structure)] How large are the effects of structural choices of the search (inner-loop termination, acceptance, operator order, operator pool) relative to learning?
-\item[RQ3 (deterministic operators)] Under an equal budget, does adaptive selection beat non-adaptive (uniform) selection, and does the answer survive tuning, further policy families, larger instances, an efficient implementation of the costliest operator, a state-of-the-art solver and a positive control that shows the protocol can see a gain?
+\item[RQ3 (deterministic operators)] Under an equal budget, does adaptive selection beat non-adaptive (uniform) selection, and does the answer survive tuning, further policy families, larger instances, an efficient implementation of the costliest operator, two high-performance solvers (HGS-CVRP and PyVRP) and a positive control that shows the protocol can see a gain?
 \item[RQ4 (stochastic operators)] With the stochastic operators of an adaptive large neighborhood search (CVRP and CVRP with time windows), does adaptive selection help, and is the gain adaptation or merely a good fixed weighting of the operators?
 \item[RQ5 (generality)] Do the findings hold for another problem (the traveling salesman problem) and for one with new constraints (the CVRP with time windows), and where do they not?
 \end{description}
 
-We answer them with sixteen studies, each pre-specified in a dated research log before its data were produced, using 74 CVRP benchmark instances, 32 TSPLIB instances, 56 Solomon instances and 164 synthetic ones, ten random seeds (five on most synthetic sets), budgets measured in operator applications, in distance evaluations or in generations, paired nonparametric tests with Holm correction, bootstrap intervals, equivalence tests, a positive control and a state-of-the-art reference solver.
+We answer them with seventeen studies, each pre-specified in a dated research log before its data were produced, using 74 CVRP benchmark instances, 32 TSPLIB instances, 56 Solomon instances and 164 synthetic ones, ten random seeds (five on most synthetic sets), budgets measured in operator applications, in distance evaluations or in generations, paired nonparametric tests with Holm correction, bootstrap intervals, equivalence tests, a positive control and a state-of-the-art reference solver.
 
 \paragraph{Contributions}
 \begin{enumerate}

@@ -14,6 +14,8 @@ Confere, direto das tabelas de testes confirmatorios, as afirmacoes UNIVERSAIS d
       ordem fixa de custo crescente sem aprendizado (analise pos-hoc, Holm sobre a familia pos-hoc);
   U7  no teste prospectivo (Estudo 15; oito pools aninhados do TSP e do CVRPTW) nenhuma politica e significativamente melhor que a
       descida de ordem fixa do MESMO pool (familia exploratoria de 6 contrastes por pool);
+  U9  no ILS do PyVRP (Estudo 17, CVRP) nenhuma politica adaptativa e significativamente melhor que o conjunto padrao P6, o padrao com SWAP* (P7)
+      nem a mistura estatica ajustada (familia pre-registrada de 42 contrastes, Holm m=21 por nivel); contra a uniforme (familia de 16) tambem nenhuma;
   U8  no ALNS sob janelas de tempo (Estudo 16) nenhuma politica adaptativa e significativamente melhor que a mistura estatica
       ajustada (0 de 7); em relacao ao reparo unico fixo a afirmacao e FALSA para exatamente uma politica, o HG-UCB (H83 refutada,
       familia pre-registrada de 14 contrastes politica - {static, fixrep}, Holm); o script lista a excecao e falha se o conjunto de
@@ -75,6 +77,11 @@ def aos_vs_baseline():
     if d11 is not None:
         for _, r in d11[d11.grupo == "familiaA"].iterrows():
             linhas.append(("S11", f"{r.a} {r.cenario}", r.a, r.b, r.dif_pp, r.p_holm))
+    d17 = ler("analise_etapa17_a.csv")
+    if d17 is not None:
+        # Estudo 17 (ILS do PyVRP, CVRP): o primario e os 15 secundarios, politica (ou mistura estatica) - uniforme sobre os 7 conjuntos
+        for _, r in d17[d17.grupo.isin(["primario", "secundario"])].iterrows():
+            linhas.append(("S17", r.id, r.a, r.b, r.dif_pp, r.p_holm))
     d14 = ler("analise_etapa14_v.csv")
     if d14 is not None:
         for _, r in d14[d14.grupo == "familiaA"].iterrows():
@@ -97,7 +104,7 @@ def main():
     t = so_cvrp(todos)
     tsp = todos[todos.estudo == "S13"]
     tw = todos[todos.estudo == "S14"]
-    print(f"{len(t)} contrastes 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa' no CVRP (S1-S4, S6, S7, S10, S11)")
+    print(f"{len(t)} contrastes 'politica adaptativa (ou mistura estatica) - baseline nao adaptativa' no CVRP (S1-S4, S6, S7, S10, S11, S17)")
     melhores = t[(t.dif_pp < 0) & (t.p_holm < 0.05)]
     print("U1: contrastes do CVRP com a politica significativamente MELHOR:", len(melhores))
     if len(melhores):
@@ -165,6 +172,13 @@ def main():
         print(f"U7 (Estudo 15, 8 pools): politicas significativamente melhores que o FOC do mesmo pool: {n7} de {len(d15)} contrastes")
         if n7 > 0:
             falhas.append("U7")
+    d17 = ler("analise_etapa17_a.csv")
+    if d17 is not None:
+        m17 = d17[d17.grupo == "melhor_nao_adaptativo"]
+        n9 = int(((m17.dif_pp < 0) & (m17.p_holm < 0.05)).sum())
+        print(f"U9 (Estudo 17, PyVRP): politicas significativamente melhores que P6, P7 ou a mistura estatica: {n9} de {len(m17)} contrastes")
+        if n9 > 0 or len(m17) != 42:
+            falhas.append("U9")
     d16 = ler("analise_etapa16_a.csv")
     if d16 is not None:
         m16 = d16[d16.grupo == "melhor_nao_adaptativo"]

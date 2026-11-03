@@ -129,5 +129,16 @@ H83 & None of the 14 contrasts policy $-$ \{static mixture, fixed repair\} is si
 H84 & The ALNS with uniform selection is significantly better than the VND with uniform selection over P9 (90\%). & Confirmed: \num{s16sd_alnsU_UP9}~pp. \\
 H85 & The ALNS with uniform selection is significantly better than all four VND references (65\%). & Confirmed (\num{s16_h85_n} of 4). \\
 H86 & Exploratory: the static mixture captures at least 70\% of the gain of the adaptive weights over uniform selection (50\%). & Confirmed: \num{s16_cap_static}\%. \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 17, PyVRP ILS (log entry 124; committed before its data)}} \\
+H87 & Uniform selection over the sets is significantly better than the default set P6 at the first budget (65\%). & Confirmed: \num{s17ad_U_P6_1}~pp (adjusted $p=\num{s17ap_U_P6_1}$). \\
+H88 & The ladder of sets is not monotone: at least one of the 8 adjacent contrasts is significantly positive (60\%). & Not confirmed (\num{s17_esc_npos} of 8; P5 is better than P4 at the second budget, \num{s17ld_P5_P4_2}~pp). \\
+H89 & The adaptive weights are significantly better than uniform selection at the first budget (primary test) (20\%). & Not confirmed: \num{s17ad_RP_U_1}~pp ($p=\num{s17apr_RP_U_1}$). \\
+H90 & The static mixture is significantly better than uniform selection at the first budget after Holm (75\%). & Not confirmed: \num{s17ad_static_U_1}~pp (adjusted $p=\num{s17ap_static_U_1}$). \\
+H91 & None of the 28 contrasts adaptive policy $-$ \{P6, P7\} is significantly negative after Holm (70\%). & Confirmed (\num{s17_mel_nb_pad} of 28). \\
+H92 & None of the 14 contrasts adaptive policy $-$ static mixture is significantly negative after Holm (80\%). & Confirmed (\num{s17_mel_nb_static} of 14). \\
+H93 & HG-UCB is not significantly better than uniform selection at either budget (90\%). & Confirmed: it is significantly worse (\num{s17ad_hgucb_U_1} and \num{s17ad_hgucb_U_2}~pp). \\
+H94 & The efficiency UCB is significantly better than uniform selection at the first budget (30\%). & Not confirmed: \num{s17ad_eff_U_1}~pp (adjusted $p=\num{s17ap_eff_U_1}$). \\
+H95 & The static mixture is significantly better than the default set P6 at the first budget (60\%). & Not confirmed: \num{s17ad_static_P6_1}~pp (adjusted $p=\num{s17ap_static_P6_1}$). \\
 \end{longtable}
 \end{center}

@@ -1,0 +1,27 @@
+\begin{table}[t]
+\caption{Study 17 (PyVRP, CVRP), 104 instances: mean gap (\%) at the two budgets (0.03 and 0.1 s per customer) and, in parentheses, the paired difference from uniform selection over the seven sets in pp and its adjusted $p$ (RP at the first budget: the primary test, unadjusted; the other policies and the static mixture: Holm over 15), with wins/losses of the arm. Fixed sets are not tested against uniform selection (Table~\stab{tab:s17m} and the text).}\label{tab:s17a}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccccccc}
+\toprule
+Arm & Gap 1 (\%) & $\Delta$ vs.\ U 1 (adj.\ $p$) & W/L & Gap 2 (\%) & $\Delta$ vs.\ U 2 (adj.\ $p$) & W/L \\
+\midrule
+Set P3 (three operators) & 1.00 & --- & --- & 0.31 & --- & --- \\
+Set P4 (four operators) & 1.04 & --- & --- & 0.32 & --- & --- \\
+Set P5 (five operators) & 0.96 & --- & --- & 0.28 & --- & --- \\
+Set P6 (PyVRP default) & 0.93 & --- & --- & 0.26 & --- & --- \\
+Set P7 (default $+$ SWAP*) & 0.91 & --- & --- & 0.28 & --- & --- \\
+Uniform selection over P1--P7 & 0.83 & --- & --- & 0.24 & --- & --- \\
+Adaptive weights (Ropke--Pisinger) & 0.85 & $+$0.02 (0.80) & 44/46 & 0.24 & 0.00 (1.0) & 37/37 \\
+UCB1 & 0.85 & $+$0.02 (1.0) & 41/45 & 0.27 & $+$0.03 (0.40) & 26/46 \\
+Probability matching & 0.82 & $-$0.01 (1.0) & 46/43 & 0.26 & $+$0.01 (1.0) & 34/41 \\
+HG-UCB & 0.97 & $+$0.14 (0.003) & 29/60 & 0.34 & $+$0.10 (\ensuremath{<10^{-4}}) & 18/61 \\
+Thompson sampling & 0.92 & $+$0.09 (1.0) & 40/47 & 0.27 & $+$0.03 (1.0) & 35/41 \\
+EXP3 & 0.89 & $+$0.06 (1.0) & 44/46 & 0.29 & $+$0.05 (1.0) & 33/44 \\
+Efficiency UCB & 0.90 & $+$0.07 (1.0) & 40/48 & 0.30 & $+$0.06 (0.37) & 29/45 \\
+Static mixture (tuned offline) & 0.80 & $-$0.03 (1.0) & 37/51 & 0.28 & $+$0.03 (0.043) & 27/48 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

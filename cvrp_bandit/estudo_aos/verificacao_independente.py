@@ -470,6 +470,82 @@ def verifica_s16(num):
     return nm, nc
 
 
+def verifica_s17(num):
+    """Estudo 17 (PyVRP): recomputa, so com a biblioteca padrao, as medias de gap dos macros `s17_gap_<braco>_<nivel>` e a diferenca media,
+    vitorias, derrotas e n de todos os contrastes de analise_etapa17_a.csv e analise_etapa17_conjunto.csv, direto de etapa17_eval.csv
+    (media das seeds VIAVEIS por instancia; execucoes inviaveis sao excluidas pela regra pre-registrada e contadas, nao sao erro)."""
+    ev, an = RES / "etapa17_eval.csv", RES / "analise_etapa17_a.csv"
+    if not (ev.exists() and an.exists()):
+        return 0, 0
+    por, niveis = defaultdict(list), set()
+    with open(ev, encoding="utf-8", newline="") as f:
+        for r in csv.DictReader(f):
+            niveis.add(float(r["nivel"]))
+            if r["viavel"] != "True":
+                continue
+            ref = float(r["ref"])
+            gap = 100.0 * (float(r["custo"]) - ref) / ref
+            if abs(gap - float(r["gap_pct"])) > 1e-6:
+                problemas.append(f"etapa17_eval.csv: gap gravado divergente {r['braco']} {r['instancia']} {r['seed']}")
+            por[(float(r["nivel"]), r["braco"][len("s17_"):], r["instancia"])].append(gap)
+    ordem = {nv: k for k, nv in enumerate(sorted(niveis), 1)}
+    medias = {(ordem[nv], b, i): statistics.fmean(vs) for (nv, b, i), vs in por.items()}
+    nm = 0
+    for chave, valor in num.items():
+        if not chave.startswith("s17_gap_"):
+            continue
+        resto = chave[len("s17_gap_"):]
+        arm, k = resto.rsplit("_", 1)
+        # so as instancias com TODOS os bracos (como `pivo` da analise): intersecao
+        por_braco = defaultdict(dict)
+        for (kk, b, i), m in medias.items():
+            if kk == int(k):
+                por_braco[b][i] = m
+        comuns = set.intersection(*[set(d) for d in por_braco.values()])
+        vals = [por_braco[arm][i] for i in comuns]
+        if not vals:
+            problemas.append(f"macro {chave}: braco ausente nos CSV do Estudo 17")
+            continue
+        nm += confere(chave, valor, statistics.fmean(vals), 3)
+
+    def familia(inst):
+        return "SYN_VAL" if inst.startswith("X-syn") else ("CMT" if inst.startswith("CMT") else inst[0])
+
+    nc = 0
+    for nome_an in ("analise_etapa17_a.csv", "analise_etapa17_conjunto.csv"):
+        for r in csv.DictReader(open(RES / nome_an, encoding="utf-8")):
+            k = int(r["nivel"])
+            ia = {i: m for (kk, b, i), m in medias.items() if kk == k and b == r["a"]}
+            ib = {i: m for (kk, b, i), m in medias.items() if kk == k and b == r["b"]}
+            comuns = set(ia) & set(ib)
+            # a analise usa so as instancias com todos os bracos do nivel (dropna): replica a intersecao completa
+            todos = defaultdict(set)
+            for (kk, b, i), m in medias.items():
+                if kk == k:
+                    todos[b].add(i)
+            comuns &= set.intersection(*todos.values())
+            if nome_an.endswith("conjunto.csv"):
+                cj = r["conjunto"]
+                if cj == "CVRPLIB":
+                    comuns = {i for i in comuns if familia(i) != "SYN_VAL"}
+                elif cj == "SYN_VAL":
+                    comuns = {i for i in comuns if familia(i) == "SYN_VAL"}
+                else:
+                    comuns = {i for i in comuns if familia(i) == cj}
+            inst = sorted(comuns)
+            dif = [ia[i] - ib[i] for i in inst]
+            dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+            if not dif:
+                problemas.append(f"{nome_an} {r['id']}: sem instancias comuns")
+                continue
+            dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+            if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or len(inst) != int(r["n_inst"]):
+                problemas.append(f"{nome_an} {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs "
+                                 f"{r['vit_a']}/{r['der_a']}; n {len(inst)} vs {r['n_inst']}")
+            nc += 1
+    return nm, nc
+
+
 def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csvs=()):
     """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
     diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
@@ -660,6 +736,11 @@ def main():
     cont += n16c
     if n16m or n16c:
         print(f"(2c) Estudo 16 (ALNS no CVRPTW): {n16m} medias e {n16c} contrastes conferidos")
+    n17m, n17c = verifica_s17(num)
+    outros += n17m
+    cont += n17c
+    if n17m or n17c:
+        print(f"(2c) Estudo 17 (PyVRP): {n17m} medias e {n17c} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(

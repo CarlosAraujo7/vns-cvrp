@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Study 17 (PyVRP, CVRP): each adaptive policy against the three non-adaptive designs (mean paired difference in pp and adjusted $p$ over 21 tests per budget; negative favors the policy). P6 is the default operator set of PyVRP, P7 adds SWAP*.}\label{tab:s17m}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccccc}
+\toprule
+Policy $-$ & P6 (1) & P7 (1) & Static (1) & P6 (2) & P7 (2) & Static (2) \\
+\midrule
+Adaptive weights (Ropke--Pisinger) & $-$0.08 (0.41) & $-$0.05 (1.0) & $+$0.05 (1.0) & $-$0.02 (1.0) & $-$0.04 (1.0) & $-$0.03 (0.090) \\
+UCB1 & $-$0.08 (1.0) & $-$0.06 (1.0) & $+$0.04 (1.0) & $+$0.01 (1.0) & $-$0.01 (1.0) & $-$0.01 (1.0) \\
+Probability matching & $-$0.12 (0.15) & $-$0.09 (1.0) & $+$0.01 (1.0) & $-$0.01 (1.0) & $-$0.02 (1.0) & $-$0.02 (1.0) \\
+HG-UCB & $+$0.04 (1.0) & $+$0.06 (0.41) & $+$0.17 (0.004) & $+$0.07 (0.0009) & $+$0.06 (\ensuremath{<10^{-4}}) & $+$0.06 (0.10) \\
+Thompson sampling & $-$0.01 (1.0) & $+$0.01 (1.0) & $+$0.12 (1.0) & $+$0.01 (1.0) & $-$0.01 (1.0) & $-$0.01 (1.0) \\
+EXP3 & $-$0.04 (1.0) & $-$0.02 (1.0) & $+$0.08 (1.0) & $+$0.03 (1.0) & $+$0.01 (0.42) & $+$0.01 (1.0) \\
+Efficiency UCB & $-$0.03 (1.0) & $-$0.01 (1.0) & $+$0.10 (1.0) & $+$0.03 (1.0) & $+$0.02 (1.0) & $+$0.02 (1.0) \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
