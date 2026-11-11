@@ -42,9 +42,9 @@ Todos os números do texto de Resultados são gerados por script (`paper/ejor/ge
 | "Tempo e custo estimados" das Entradas 64-65 | Erradas por ~5x (Entrada 67). |
 | `paper/main.tex` (rascunho IEEE antigo) e `paper/cec_rascunho_antigo.tex` | Versão antiga; o manuscrito vigente é `paper/ejor/main.tex`. |
 
-## Pendências (ver Entrada 92-94 e o PONTO DE RETOMADA do `cvrp_bandit/CLAUDE.md`)
-1. Dezessete estudos concluídos e integrados (Entradas 112-125); o manuscrito foi REESTRUTURADO e compila com 34 páginas, com cerca de uma linha de folga na última (limite do EJOR: 35; o texto por estudo está nas Seções 8-9 do suplemento, com 50 páginas); verificação independente OK (894 contrastes). As auditorias dos Estudos 13 e 14 foram feitas (Entradas 115 e 117); falta o ciclo final sobre o conjunto e as decisões do pesquisador abaixo. Opcional: outros problemas ou outros solvers.
-2. Manuscrito EJOR em `cvrp_bandit/paper/ejor/` compila no WSL (`ferramentas/tectonic`); limite de 35 páginas (11 pt, 1,5) — verificar a contagem final.
-3. Autoria, CRediT, declaração de IA, financiamento, conflitos, DOI do repositório: preenchimento genérico (`\authorpend{}`) a ser editado pelo pesquisador.
-4. Licença do repositório (sugestão: MIT para o código, CC BY 4.0 para dados) — decisão do pesquisador.
-5. Implicação do guia do EJOR ("extended versions of papers published in copyrighted conference proceedings are not considered"): submeter o EJOR primeiro; qualquer versão CEC deve ser claramente distinta — decisão do pesquisador.
+## Pendências (ver o PONTO DE RETOMADA do `cvrp_bandit/CLAUDE.md`)
+1. Dezessete estudos concluídos e integrados (Entradas 112-125); o manuscrito compila com 34 páginas, com cerca de uma linha de folga na última (limite do EJOR: 35; o texto por estudo está nas Seções 8-9 do suplemento, com 50 páginas); verificação independente OK (894 contrastes).
+2. **Do Claude (delegado em 11/11/2026, com liberdade para baixar dados):** (a) estudo de seleção por instância; (b) estudo de políticas com estado rico (contexto/fase da busca); (c) simulação de revisão com árbitros independentes e carta de apresentação ao EJOR. Andamento nas Entradas 126 e seguintes do diário.
+3. **Do pesquisador, feitos MANUALMENTE (não são pendências do Claude):** edição humana da prosa e corte de páginas; contato com os autores originais; repositório anonimizado com DOI, licença e registro externo; autoria, CRediT, financiamento e declaração de IA.
+4. Estratégia de venue — decisão do pesquisador. Guia do EJOR ("extended versions of papers published in copyrighted conference proceedings are not considered"): submeter o EJOR primeiro; qualquer versão CEC deve ser claramente distinta.
+5. Remoto git: `https://github.com/CarlosAraujo7/vns-cvrp.git` (público). Regra: o Claude não aparece como autor/coautor/contribuidor (ver `CLAUDE.md`).

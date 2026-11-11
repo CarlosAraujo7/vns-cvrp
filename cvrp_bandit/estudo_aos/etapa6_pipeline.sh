@@ -1,5 +1,5 @@
 #!/bin/bash
-# Pipeline da Etapa 6 (pre-registro: diario, Entrada 91, commit 02e58d3). Espera a Etapa 5 terminar (a CPU esta
+# Pipeline da Etapa 6 (pre-registro: diario, Entrada 91, commit 4b8fa86). Espera a Etapa 5 terminar (a CPU esta
 # saturada por ela), roda as 74 instancias (E1 e E2) e depois a validacao sintetica exploratoria. Resumivel: cada
 # runner pula as chaves ja gravadas; basta relancar este script.  Roda no WSL (venv de direcao1_local).
 cd "$(dirname "$0")" || exit 1
