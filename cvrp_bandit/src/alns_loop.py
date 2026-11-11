@@ -77,6 +77,11 @@ def rodar_alns(inst, rotas0, rng, orcamento, pol_d, modo_d, pol_r, modo_r, medid
                max_rotas=None, on_iteracao=None, destruir=None, reparar=None, estado_cls=None):
     """Executa o ALNS ate `orcamento` avaliacoes de distancia (checado antes de cada iteracao).
     `destruir`/`reparar`: tabelas de operadores (default: as do CVRP, alns.DESTRUIR/REPARAR); o Estudo 13 (TSP) passa as suas.
+    GANCHO DE CONTEXTO (Estudo 18, opt-in): se `pol_d`/`pol_r` tem o metodo `set_context(ctx)`, ele e chamado no inicio de cada iteracao,
+    depois de sorteado o tamanho q da destruicao e ANTES da selecao, com ctx = {frac: fracao do orcamento gasta; estag: iteracoes desde
+    a ultima nova melhor solucao; gap_cur: (custo corrente - melhor)/melhor; ult: resultado da iteracao anterior (0 rejeitada, 1 aceita
+    pior = sigma3, 2 melhora a corrente = sigma2, 3 nova melhor = sigma1); q: posicao de q na faixa [qmin, qmax], em [0,1]}.
+    O gancho so le variaveis do laco: nao consome numeros aleatorios e nao altera a busca de politicas sem `set_context`.
     Retorna (melhor_solucao, info)."""
     DESTRUIR_, REPARAR_ = (DESTRUIR if destruir is None else destruir), (REPARAR if reparar is None else reparar)
     n = inst.n_customers
@@ -93,11 +98,18 @@ def rodar_alns(inst, rotas0, rng, orcamento, pol_d, modo_d, pol_r, modo_r, medid
     calld, callr = [0] * kd, [0] * kr
     it = 0
     inviaveis = 0
+    pols_ctx = [p for p in (pol_d, pol_r) if hasattr(p, "set_context")]
+    estag, ult = 0, 0
     while medida() < orcamento:
         it += 1
         frac = min(1.0, medida() / orcamento)
         T = T0 * (tf_fator ** frac)
         q = rng.randint(qmin, qmax)
+        if pols_ctx:
+            ctx = {"frac": frac, "estag": estag, "gap_cur": (cur_c - best_c) / best_c if best_c > 0 else 0.0, "ult": ult,
+                   "q": (q - qmin) / max(1, qmax - qmin)}
+            for p in pols_ctx:
+                p.set_context(ctx)
         jd = pol_d.select_masked(list(range(kd)))
         jr = pol_r.select_masked(list(range(kr)))
         est = (Estado if estado_cls is None else estado_cls)(inst, cur, dmax)
@@ -134,6 +146,8 @@ def rodar_alns(inst, rotas0, rng, orcamento, pol_d, modo_d, pol_r, modo_r, medid
                 inviaveis += 1
         else:
             inviaveis += 1
+        estag = 0 if sigma == SIGMA1 else estag + 1
+        ult = 0 if sigma == 0 else (3 if sigma == SIGMA1 else (2 if sigma == SIGMA2 else 1))
         if sigma > 0:
             sucd[jd] += sigma
             sucr[jr] += sigma
