@@ -1,0 +1,39 @@
+=== (1)+(2) oraculo otimista e oraculo com validacao cruzada (split das seeds, 200 divisoes) ===
+E17 nivel 1 (0.03 s/cliente) [P3-P7, U, estatica]: 104 instancias | SBS 0.822 | por instancia (cv) 0.828 | ganho cv -0.007 pp [-0.102, +0.070] | oraculo otimista +0.239 pp
+      CVRPLIB: 74 instancias | SBS 0.608 | por instancia (cv) 0.645 | ganho cv -0.037 pp [-0.144, +0.064] | oraculo otimista +0.181 pp
+      SYN_VAL: 30 instancias | SBS 1.310 | por instancia (cv) 1.288 | ganho cv +0.022 pp [-0.126, +0.163] | oraculo otimista +0.348 pp
+E17 nivel 1 (0.03 s/cliente) [todos os 14]: 104 instancias | SBS 0.833 | por instancia (cv) 0.829 | ganho cv +0.004 pp [-0.095, +0.098] | oraculo otimista +0.299 pp
+      CVRPLIB: 74 instancias | SBS 0.629 | por instancia (cv) 0.666 | ganho cv -0.037 pp [-0.152, +0.082] | oraculo otimista +0.231 pp
+      SYN_VAL: 30 instancias | SBS 1.334 | por instancia (cv) 1.235 | ganho cv +0.099 pp [-0.051, +0.245] | oraculo otimista +0.461 pp
+E17 nivel 2 (0.10 s/cliente) [P3-P7, U, estatica]: 103 instancias | SBS 0.255 | por instancia (cv) 0.252 | ganho cv +0.003 pp [-0.032, +0.050] | oraculo otimista +0.112 pp
+      CVRPLIB: 73 instancias | SBS 0.188 | por instancia (cv) 0.173 | ganho cv +0.014 pp [-0.012, +0.049] | oraculo otimista +0.091 pp
+      SYN_VAL: 30 instancias | SBS 0.443 | por instancia (cv) 0.445 | ganho cv -0.002 pp [-0.079, +0.090] | oraculo otimista +0.190 pp
+E17 nivel 2 (0.10 s/cliente) [todos os 14]: 102 instancias | SBS 0.255 | por instancia (cv) 0.253 | ganho cv +0.003 pp [-0.036, +0.049] | oraculo otimista +0.133 pp
+      CVRPLIB: 72 instancias | SBS 0.186 | por instancia (cv) 0.172 | ganho cv +0.015 pp [-0.013, +0.044] | oraculo otimista +0.103 pp
+      SYN_VAL: 30 instancias | SBS 0.442 | por instancia (cv) 0.450 | ganho cv -0.007 pp [-0.106, +0.124] | oraculo otimista +0.226 pp
+E16 ALNS-TW [todos os 10 bracos]: 56 instancias | SBS 1.740 | por instancia (cv) 1.705 | ganho cv +0.035 pp [-0.115, +0.199] | oraculo otimista +0.497 pp
+E16 ALNS-TW [sem eficiencia]: 56 instancias | SBS 1.740 | por instancia (cv) 1.783 | ganho cv -0.043 pp [-0.191, +0.138] | oraculo otimista +0.422 pp
+E16 ALNS-TW [U, static, fixrep, RP, pm]: 56 instancias | SBS 1.719 | por instancia (cv) 1.764 | ganho cv -0.045 pp [-0.197, +0.082] | oraculo otimista +0.279 pp
+E16 ALNS-TW [U, static, fixrep, RP, pm]: ganho cv da escolha por CLASSE sobre o melhor desenho unico +0.061 pp [-0.093, +0.130]
+
+=== (3) componentes de variancia (limite superior sem vies do vencedor) ===
+E17 nivel 1 [P3-P7, U, static] todas: K=7, I=104 | dp do ruido da media de celula 0.304 | dp da interacao 0.160 [0.000, 0.220] | margem verdadeira (limite superior de qualquer seletor) 0.126 pp [0.000, 0.197]
+E17 nivel 1 CVRPLIB: K=7, I=74 | dp do ruido da media de celula 0.299 | dp da interacao 0.156 [0.000, 0.247] | margem verdadeira (limite superior de qualquer seletor) 0.109 pp [-0.000, 0.193]
+E17 nivel 1 SYN_VAL: K=7, I=30 | dp do ruido da media de celula 0.316 | dp da interacao 0.163 [0.000, 0.244] | margem verdadeira (limite superior de qualquer seletor) 0.118 pp [0.000, 0.216]
+E17 nivel 2 [P3-P7, U, static] todas: K=7, I=103 | dp do ruido da media de celula 0.130 | dp da interacao 0.093 [0.056, 0.123] | margem verdadeira (limite superior de qualquer seletor) 0.091 pp [0.042, 0.131]
+E17 nivel 2 CVRPLIB: K=7, I=73 | dp do ruido da media de celula 0.100 | dp da interacao 0.071 [0.029, 0.104] | margem verdadeira (limite superior de qualquer seletor) 0.076 pp [0.016, 0.110]
+E17 nivel 2 SYN_VAL: K=7, I=30 | dp do ruido da media de celula 0.183 | dp da interacao 0.129 [0.000, 0.179] | margem verdadeira (limite superior de qualquer seletor) 0.112 pp [0.000, 0.174]
+E16 ALNS-TW [U, static, fixrep, RP, pm]: K=5, I=56 | dp do ruido da media de celula 0.380 | dp da interacao 0.463 [0.273, 0.644] | margem verdadeira (limite superior de qualquer seletor) 0.272 pp [0.137, 0.392]
+E16 ALNS-TW [U, static, fixrep]: K=3, I=56 | dp do ruido da media de celula 0.374 | dp da interacao 0.598 [0.343, 0.859] | margem verdadeira (limite superior de qualquer seletor) 0.234 pp [0.090, 0.361]
+
+=== calibracao por simulacao (K=7, I=104, 5 seeds; ruido por celula como no E17 nivel 1) ===
+   tau = 0.00: margem verdadeira 0.000 pp | ganho do oraculo cv -0.090 pp (dp 0.079)
+   tau = 0.05: margem verdadeira 0.017 pp | ganho do oraculo cv -0.082 pp (dp 0.088)
+   tau = 0.10: margem verdadeira 0.062 pp | ganho do oraculo cv -0.056 pp (dp 0.080)
+   tau = 0.20: margem verdadeira 0.176 pp | ganho do oraculo cv +0.007 pp (dp 0.071)
+   tau = 0.30: margem verdadeira 0.300 pp | ganho do oraculo cv +0.125 pp (dp 0.085)
+
+=== controle positivo (INCONCLUSIVO): w0 do ALNS por instancia (SYN_TUNE_W, 3 seeds, 7 valores) ===
+   w0 por instancia (U, 24 inst., 7 valores): w0 unico 1.637 | por instancia (cv) 1.800 | ganho cv -0.163 pp | oraculo otimista +1.325 pp
+   w0 por instancia (RP, 24 inst., 7 valores): w0 unico 1.402 | por instancia (cv) 1.408 | ganho cv -0.006 pp | oraculo otimista +1.091 pp
+   w0 por instancia (reg2, 24 inst., 7 valores): w0 unico 1.884 | por instancia (cv) 1.693 | ganho cv +0.191 pp | oraculo otimista +1.292 pp
