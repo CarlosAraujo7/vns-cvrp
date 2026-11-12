@@ -1617,7 +1617,7 @@ def estudo15():
         "Study 15, prospective test: nested pools of the TSP and of the CVRPTW. $D$: dead weight of the pool (gap of uniform selection minus that over P5), "
         "measured on the tuning instances before the evaluation; prediction by the pre-registered rule ($D\\ge\\num{s15_lim}$~pp: at least one of the six policies "
         "significantly better than uniform selection; otherwise none). Better / worse: policies significantly better / worse than uniform selection "
-        "(Holm over six); mean gain: mean over the six policies of the gap of uniform selection minus theirs (pp).",
+        "(Holm over six); mean gain: mean over the six policies of the gap of uniform selection minus theirs.",
         "tab:s15", r"Pool (operator added) & $D$ (pp) & Prediction & Better / worse & Mean gain (pp) & Correct", lin, "lccccc"))
 
 
@@ -1909,6 +1909,44 @@ def estudo17():
         r"Policy $-$ & P6 (1) & P7 (1) & Static (1) & P6 (2) & P7 (2) & Static (2)", lin_m, "lcccccc"))
 
 
+def margem():
+    """Margem da selecao por instancia (analise EXPLORATORIA pos hoc de estudo_aos/margem_instancia.py): macros hr_* e a tabela tab_margem."""
+    j = json.loads((RES / "margem_instancia.json").read_text())
+    ci = lambda lo, hi: f"[{plano(lo)}, {plano(hi)}]"  # noqa: E731
+    linhas = []
+    for chave, rot, des in (("e17a", "Study 17, 0.03~s per customer", "P3--P7, U, static"),
+                            ("e17b", "Study 17, 0.10~s per customer", "P3--P7, U, static"),
+                            ("e16", "Study 16 (ALNS, time windows)", "U, static, fixed repair, RP, PM")):
+        c = j["cenarios"][chave]
+        NUM[f"hr_{chave}_I"], NUM[f"hr_{chave}_K"] = str(c["I"]), str(c["K"])
+        NUM[f"hr_{chave}_sdu"] = f"{c['sd_u']:.2f}"
+        NUM[f"hr_{chave}_ub"] = f"{c['ub']:.2f}"
+        NUM[f"hr_{chave}_ub_ci"] = ci(c["ub_lo"], c["ub_hi"])
+        NUM[f"hr_{chave}_cv"] = plano(c["cv"])
+        NUM[f"hr_{chave}_cv_ci"] = ci(c["cv_lo"], c["cv_hi"])
+        NUM[f"hr_{chave}_opt"] = f"{c['opt']:.2f}"
+        linhas.append(" & ".join([rot, f"{des} ({c['K']})", str(c["I"]), f"{c['sd_u']:.2f}", f"{c['ub']:.2f} {ci(c['ub_lo'], c['ub_hi'])}",
+                                  f"{plano(c['cv'])} {ci(c['cv_lo'], c['cv_hi'])}", f"{c['opt']:.2f}"]))
+    e16 = j["cenarios"]["e16"]
+    NUM["hr_e16_cls"], NUM["hr_e16_cls_ci"] = plano(e16["cls"]), ci(e16["cls_lo"], e16["cls_hi"])
+    NUM["hr_e16_opt10"] = f"{e16['opt10']:.2f}"
+    for c in j["calibracao"]:
+        t = f"t{int(round(100 * c['tau']))}"
+        NUM[f"hr_cal_m_{t}"], NUM[f"hr_cal_g_{t}"] = f"{c['margem']:.2f}", plano(c["ganho_cv"])
+    w = j["controle_w0"]
+    for pol, d in w.items():
+        NUM[f"hr_w0_cv_{pol}"] = plano(d["ganho_cv"])
+    NUM["hr_w0_opt_min"] = f"{min(d['opt'] for d in w.values()):.1f}"
+    NUM["hr_w0_opt_max"] = f"{max(d['opt'] for d in w.values()):.1f}"
+    cap = ("Exploratory headroom of instance-aware selection (post hoc; no new runs). Gap points (pp). $\\mathrm{SD}(u)$: standard deviation of the "
+           "instance$\\times$design interaction, after discounting seed noise. Upper bound: expected gain over the best single design of an oracle "
+           "that knows every instance$\\times$design mean, by simulation (95\\% bootstrap interval over instances). Cross-validated oracle: gain of "
+           "choosing the design per instance on half of the seeds and scoring on the other half, over the best single design chosen the same way "
+           "(95\\% interval over 200 splits). Optimistic oracle: choosing and scoring on the same runs (selection bias, not a gain).")
+    escreve("tab_margem.tex", tabela(cap, "tab:margem", "Setting & Designs ($K$) & Inst. & $\\mathrm{SD}(u)$ & Upper bound [95\\% CI] & Cross-validated oracle [95\\% CI] & Optimistic",
+                                     linhas, "llrrccr"))
+
+
 def sintese_extra():
     """macros auxiliares da tabela de sintese do texto principal"""
     d = pd.read_csv(RES / "analise_etapa8_confirmatoria.csv")
@@ -2187,6 +2225,8 @@ def main():
         estudo16()
     if (RES / "analise_etapa17_a.csv").exists():
         estudo17()
+    if (RES / "margem_instancia.json").exists():
+        margem()
     sintese_extra()
     referencias()
     complementaridade()

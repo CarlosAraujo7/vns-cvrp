@@ -19,9 +19,10 @@ Diagnostico EXPLORATORIO (pos hoc, nao pre-registrado; diario, Entrada 126) da m
   oraculo com validacao cruzada so enxerga a margem quando tau >= 0,2 (margem verdadeira >= 0,175 pp), isto e, e um estimador CONSERVADOR.
   CONTROLE POSITIVO (inconclusivo, relatado como tal): escolher a temperatura inicial w0 do ALNS por instancia (SYN_TUNE_W, 3 seeds).
 
-Saida: results/aos_study/margem_instancia.txt (stdout). Semente fixa. Uso: python estudo_aos/margem_instancia.py
+Saida: results/aos_study/margem_instancia.txt (stdout) e margem_instancia.json (numeros para o manuscrito, lidos por
+paper/ejor/gerar_tabelas.py). Semente fixa. Uso: python estudo_aos/margem_instancia.py > results/aos_study/margem_instancia.txt
 """
-import io
+import json
 import re
 import sys
 from pathlib import Path
@@ -31,6 +32,7 @@ import pandas as pd
 
 RES = Path(__file__).resolve().parent.parent / "results" / "aos_study"
 rng = np.random.default_rng(1)
+OUT = {"cenarios": {}, "calibracao": [], "controle_w0": {}}
 
 
 def cubo(d, arms):
@@ -61,8 +63,11 @@ def margem_cv(cub, rotulo, nsplit=200):
         res.append((B[:, sbs].mean(), B[np.arange(len(insts)), A.argmin(axis=1)].mean(), B.min(axis=1).mean()))
     r = np.array(res)
     g = r[:, 0] - r[:, 1]
-    print(f"{rotulo}: {len(insts)} instancias | SBS {r[:, 0].mean():.3f} | por instancia (cv) {r[:, 1].mean():.3f} | ganho cv {g.mean():+.3f} pp "
-          f"[{np.percentile(g, 2.5):+.3f}, {np.percentile(g, 97.5):+.3f}] | oraculo otimista {np.mean(r[:, 0] - r[:, 2]):+.3f} pp")
+    d = dict(I=len(insts), K=int(next(iter(cub.values())).shape[0]), sbs=float(r[:, 0].mean()), vbs_cv=float(r[:, 1].mean()),
+             cv=float(g.mean()), cv_lo=float(np.percentile(g, 2.5)), cv_hi=float(np.percentile(g, 97.5)), opt=float(np.mean(r[:, 0] - r[:, 2])))
+    print(f"{rotulo}: {d['I']} instancias | SBS {d['sbs']:.3f} | por instancia (cv) {d['vbs_cv']:.3f} | ganho cv {d['cv']:+.3f} pp "
+          f"[{d['cv_lo']:+.3f}, {d['cv_hi']:+.3f}] | oraculo otimista {d['opt']:+.3f} pp")
+    return d
 
 
 def margem_cv_classe(cub, rotulo, nsplit=200):
@@ -85,8 +90,9 @@ def margem_cv_classe(cub, rotulo, nsplit=200):
             m = classes == c
             escolha[m] = A[m].mean(axis=0).argmin()
         res.append(B[:, sbs].mean() - B[np.arange(len(insts)), escolha].mean())
-    print(f"{rotulo}: ganho cv da escolha por CLASSE sobre o melhor desenho unico {np.mean(res):+.3f} pp "
-          f"[{np.percentile(res, 2.5):+.3f}, {np.percentile(res, 97.5):+.3f}]")
+    d = dict(cls=float(np.mean(res)), cls_lo=float(np.percentile(res, 2.5)), cls_hi=float(np.percentile(res, 97.5)))
+    print(f"{rotulo}: ganho cv da escolha por CLASSE sobre o melhor desenho unico {d['cls']:+.3f} pp [{d['cls_lo']:+.3f}, {d['cls_hi']:+.3f}]")
+    return d
 
 
 # ------------------------------------------------------------------------------------------ (3)
@@ -119,9 +125,12 @@ def margem_vc(cub, rotulo, nboot=300):
         v, _, mub, _ = estima(sub)
         sus.append(np.sqrt(v))
         hs.append(margem_verdadeira(v, mub, 3000))
-    print(f"{rotulo}: K={K}, I={len(insts)} | dp do ruido da media de celula {np.sqrt(var_e):.3f} | dp da interacao {np.sqrt(var_u):.3f} "
-          f"[{np.percentile(sus, 2.5):.3f}, {np.percentile(sus, 97.5):.3f}] | margem verdadeira (limite superior de qualquer seletor) {h:.3f} pp "
-          f"[{np.percentile(hs, 2.5):.3f}, {np.percentile(hs, 97.5):.3f}]")
+    d = dict(sd_ruido=float(np.sqrt(var_e)), sd_u=float(np.sqrt(var_u)), sd_u_lo=float(np.percentile(sus, 2.5)), sd_u_hi=float(np.percentile(sus, 97.5)),
+             ub=float(h), ub_lo=float(np.percentile(hs, 2.5)), ub_hi=float(np.percentile(hs, 97.5)))
+    print(f"{rotulo}: K={K}, I={len(insts)} | dp do ruido da media de celula {d['sd_ruido']:.3f} | dp da interacao {d['sd_u']:.3f} "
+          f"[{d['sd_u_lo']:.3f}, {d['sd_u_hi']:.3f}] | margem verdadeira (limite superior de qualquer seletor) {d['ub']:.3f} pp "
+          f"[{d['ub_lo']:.3f}, {d['ub_hi']:.3f}]")
+    return d
 
 
 def main():
@@ -129,29 +138,32 @@ def main():
     e["braco"] = e.braco.str.replace("s17_", "", regex=False)
     fixos = ["P3", "P4", "P5", "P6", "P7", "U", "static"]
     print("=== (1)+(2) oraculo otimista e oraculo com validacao cruzada (split das seeds, 200 divisoes) ===")
-    for nv, lab in ((0.03, "E17 nivel 1 (0.03 s/cliente)"), (0.1, "E17 nivel 2 (0.10 s/cliente)")):
+    for nv, lab, chave in ((0.03, "E17 nivel 1 (0.03 s/cliente)", "e17a"), (0.1, "E17 nivel 2 (0.10 s/cliente)", "e17b")):
         d = e[e.nivel == nv]
         for nome, arms in (("P3-P7, U, estatica", fixos), ("todos os 14", sorted(d.braco.unique()))):
             cub = cubo(d, arms)
-            margem_cv(cub, f"{lab} [{nome}]")
+            r = margem_cv(cub, f"{lab} [{nome}]")
             margem_cv({i: v for i, v in cub.items() if not i.startswith("X-syn")}, "      CVRPLIB")
             margem_cv({i: v for i, v in cub.items() if i.startswith("X-syn")}, "      SYN_VAL")
+            if arms is fixos:
+                OUT["cenarios"].setdefault(chave, {}).update(r)
     a = pd.read_csv(RES / "etapa16_eval_a.csv")
     a["braco"] = a.braco.str.replace("s16a_", "", regex=False)
     arms16 = sorted(a.braco.unique())
-    margem_cv(cubo(a, arms16), "E16 ALNS-TW [todos os 10 bracos]")
+    r10 = margem_cv(cubo(a, arms16), "E16 ALNS-TW [todos os 10 bracos]")
     margem_cv(cubo(a, [x for x in arms16 if x != "eff"]), "E16 ALNS-TW [sem eficiencia]")
     c5 = cubo(a, ["U", "static", "fixrep", "RP", "pm"])
-    margem_cv(c5, "E16 ALNS-TW [U, static, fixrep, RP, pm]")
-    margem_cv_classe(c5, "E16 ALNS-TW [U, static, fixrep, RP, pm]")
+    OUT["cenarios"].setdefault("e16", {}).update(margem_cv(c5, "E16 ALNS-TW [U, static, fixrep, RP, pm]"))
+    OUT["cenarios"]["e16"].update(margem_cv_classe(c5, "E16 ALNS-TW [U, static, fixrep, RP, pm]"))
+    OUT["cenarios"]["e16"]["opt10"] = float(r10["opt"])     # otimista com os 10 bracos (citado no texto)
 
     print("\n=== (3) componentes de variancia (limite superior sem vies do vencedor) ===")
-    for nv, lab in ((0.03, "E17 nivel 1"), (0.1, "E17 nivel 2")):
+    for nv, lab, chave in ((0.03, "E17 nivel 1", "e17a"), (0.1, "E17 nivel 2", "e17b")):
         cub = cubo(e[e.nivel == nv], fixos)
-        margem_vc(cub, f"{lab} [P3-P7, U, static] todas")
+        OUT["cenarios"][chave].update(margem_vc(cub, f"{lab} [P3-P7, U, static] todas"))
         margem_vc({i: v for i, v in cub.items() if not i.startswith("X-syn")}, f"{lab} CVRPLIB")
         margem_vc({i: v for i, v in cub.items() if i.startswith("X-syn")}, f"{lab} SYN_VAL")
-    margem_vc(c5, "E16 ALNS-TW [U, static, fixrep, RP, pm]")
+    OUT["cenarios"]["e16"].update(margem_vc(c5, "E16 ALNS-TW [U, static, fixrep, RP, pm]"))
     margem_vc(cubo(a, ["U", "static", "fixrep"]), "E16 ALNS-TW [U, static, fixrep]")
 
     print("\n=== calibracao por simulacao (K=7, I=104, 5 seeds; ruido por celula como no E17 nivel 1) ===")
@@ -168,6 +180,7 @@ def main():
             sbs = A.mean(axis=0).argmin()
             ganhos.append(B[:, sbs].mean() - B[np.arange(I), A.argmin(axis=1)].mean())
             verd.append(mu1.min() - (mu1[None, :] + u).min(axis=1).mean())
+        OUT["calibracao"].append(dict(tau=tau, margem=float(np.mean(verd)), ganho_cv=float(np.mean(ganhos)), dp=float(np.std(ganhos))))
         print(f"   tau = {tau:.2f}: margem verdadeira {np.mean(verd):.3f} pp | ganho do oraculo cv {np.mean(ganhos):+.3f} pp (dp {np.std(ganhos):.3f})")
 
     print("\n=== controle positivo (INCONCLUSIVO): w0 do ALNS por instancia (SYN_TUNE_W, 3 seeds, 7 valores) ===")
@@ -192,8 +205,10 @@ def main():
             sbs = A.mean(axis=0).argmin()
             res.append((Bv[:, sbs].mean(), Bv[np.arange(len(insts)), A.argmin(axis=1)].mean(), Bv.min(axis=1).mean()))
         r = np.array(res).mean(axis=0)
+        OUT["controle_w0"][pol] = dict(I=len(insts), nw=len(ws), unico=float(r[0]), por_inst=float(r[1]), ganho_cv=float(r[0] - r[1]), opt=float(r[0] - r[2]))
         print(f"   w0 por instancia ({pol}, {len(insts)} inst., {len(ws)} valores): w0 unico {r[0]:.3f} | por instancia (cv) {r[1]:.3f} | "
               f"ganho cv {r[0] - r[1]:+.3f} pp | oraculo otimista {r[0] - r[2]:+.3f} pp")
+    (RES / "margem_instancia.json").write_text(json.dumps(OUT, indent=1))
 
 
 if __name__ == "__main__":

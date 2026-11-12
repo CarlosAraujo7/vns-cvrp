@@ -1,0 +1,16 @@
+\begin{table}[t]
+\caption{Exploratory headroom of instance-aware selection (post hoc; no new runs). Gap points (pp). $\mathrm{SD}(u)$: standard deviation of the instance$\times$design interaction, after discounting seed noise. Upper bound: expected gain over the best single design of an oracle that knows every instance$\times$design mean, by simulation (95\% bootstrap interval over instances). Cross-validated oracle: gain of choosing the design per instance on half of the seeds and scoring on the other half, over the best single design chosen the same way (95\% interval over 200 splits). Optimistic oracle: choosing and scoring on the same runs (selection bias, not a gain).}\label{tab:margem}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{llrrccr}
+\toprule
+Setting & Designs ($K$) & Inst. & $\mathrm{SD}(u)$ & Upper bound [95\% CI] & Cross-validated oracle [95\% CI] & Optimistic \\
+\midrule
+Study 17, 0.03~s per customer & P3--P7, U, static (7) & 104 & 0.16 & 0.13 [0.00, 0.20] & $-$0.01 [$-$0.10, 0.07] & 0.24 \\
+Study 17, 0.10~s per customer & P3--P7, U, static (7) & 103 & 0.09 & 0.09 [0.04, 0.13] & 0.00 [$-$0.03, 0.05] & 0.11 \\
+Study 16 (ALNS, time windows) & U, static, fixed repair, RP, PM (5) & 56 & 0.46 & 0.27 [0.14, 0.39] & $-$0.05 [$-$0.20, 0.08] & 0.28 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
