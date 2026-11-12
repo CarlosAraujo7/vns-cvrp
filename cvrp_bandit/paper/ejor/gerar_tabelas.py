@@ -1965,6 +1965,15 @@ def afirmacoes():
     NUM["u_hg_n"] = str(len(hg))
     NUM["u_hg_worse"] = str(int(((hg.dif_pp > 0) & (hg.p_holm < 0.05)).sum()))
     NUM["u_hg_better"] = str(int(((hg.dif_pp < 0) & (hg.p_holm < 0.05)).sum()))
+    # robustez pos hoc: uma segunda correcao de Holm sobre TODOS os contrastes (aplicada aos p ja ajustados por estudo: conservadora)
+    p = t.p_holm.values
+    ordem, aj, corr = np.argsort(p), np.empty(len(p)), 0.0
+    for rank, idx in enumerate(ordem):
+        corr = max(corr, min(1.0, (len(p) - rank) * p[idx]))
+        aj[idx] = corr
+    NUM["u_glob_worse"] = str(int(((t.dif_pp.values > 0) & (aj < 0.05)).sum()))
+    NUM["u_glob_better"] = str(int(((t.dif_pp.values < 0) & (aj < 0.05)).sum()))
+    NUM["u_minp_better"] = f"{t[t.dif_pp < 0].p_holm.min():.2f}"
 
 
 def estouro():

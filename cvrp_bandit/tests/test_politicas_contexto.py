@@ -209,6 +209,8 @@ def teste_capacidade():
     for amb in AMBIENTES:
         res[amb] = {nome: float(np.mean([jogar(f(s), T, 1000 + s, amb, esc) for s in range(S)])) for nome, (f, esc) in fabricas.items()}
         print(f"(4) {amb}: fracao de jogadas do melhor braco (T = 3000, 8 repeticoes):", {k: round(v, 3) for k, v in res[amb].items()})
+    import json                                     # numeros do manuscrito (gerar_tabelas.estudo18 le este arquivo)
+    (ROOT / "results" / "aos_study" / "etapa18_capacidade.json").write_text(json.dumps(res, indent=1))
     a, b = res["troca de fase"], res["estagnacao alternante"]
     for nome in ("CtxUCB", "LinUCB", "QLearn"):
         assert a[nome] > 0.7, ("troca de fase", nome, a)
