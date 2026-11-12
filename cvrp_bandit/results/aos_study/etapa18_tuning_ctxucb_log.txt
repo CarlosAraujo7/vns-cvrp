@@ -1,0 +1,35 @@
+ajuste ctxucb: 33 configuracoes, 3168 execucoes
+    100/3168  1.6 min
+    200/3168  3.3 min
+    300/3168  5.0 min
+    400/3168  6.6 min
+    500/3168  8.3 min
+    600/3168  9.9 min
+    700/3168  11.6 min
+    800/3168  13.3 min
+    900/3168  14.7 min
+    1000/3168  16.2 min
+    1100/3168  17.7 min
+    1200/3168  19.2 min
+    1300/3168  20.8 min
+    1400/3168  22.3 min
+    1500/3168  23.7 min
+    1600/3168  25.2 min
+    1700/3168  26.7 min
+    1800/3168  28.1 min
+    1900/3168  29.7 min
+    2000/3168  31.2 min
+    2100/3168  32.7 min
+    2200/3168  34.2 min
+    2300/3168  35.6 min
+    2400/3168  37.2 min
+    2500/3168  38.7 min
+    2600/3168  40.2 min
+    2700/3168  41.7 min
+    2800/3168  43.2 min
+    2900/3168  44.7 min
+    3000/3168  46.3 min
+    3100/3168  47.7 min
+ajuste ctxucb concluido
+ajuste ctxucb: 33 configuracoes, 3168 execucoes
+ajuste ctxucb concluido

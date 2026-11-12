@@ -1,0 +1,11 @@
+loglin gen 0: gap 1.0470
+loglin gen 1: melhor filho 1.1228  atual 1.0470  sigma 0.270
+loglin gen 2: melhor filho 1.2140  atual 1.0470  sigma 0.243
+loglin gen 3: melhor filho 1.1455  atual 1.0470  sigma 0.219
+loglin gen 4: melhor filho 1.0847  atual 1.0470  sigma 0.197
+loglin gen 5: melhor filho 1.2556  atual 1.0470  sigma 0.177
+loglin gen 6: melhor filho 1.0958  atual 1.0470  sigma 0.159
+loglin gen 7: melhor filho 1.1463  atual 1.0470  sigma 0.143
+loglin gen 8: melhor filho 1.0889  atual 1.0470  sigma 0.129
+busca ES (loglin) concluida
+ajuste loglin concluido

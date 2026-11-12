@@ -1,0 +1,16 @@
+{
+ "troca de fase": {
+  "UCB1 (sem estado)": 0.8919166666666667,
+  "RP (sem estado)": 0.34975,
+  "CtxUCB": 0.7750833333333333,
+  "LinUCB": 0.9217916666666667,
+  "QLearn": 0.7745416666666667
+ },
+ "estagnacao alternante": {
+  "UCB1 (sem estado)": 0.5601666666666666,
+  "RP (sem estado)": 0.2823333333333333,
+  "CtxUCB": 0.76525,
+  "LinUCB": 0.84325,
+  "QLearn": 0.7502916666666666
+ }
+}

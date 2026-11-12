@@ -1,0 +1,13 @@
+static18 gen 0: gap 1.7515
+static18 gen 1: melhor filho 1.6471  atual 1.6471  sigma 0.500
+static18 gen 2: melhor filho 1.2842  atual 1.2842  sigma 0.500
+static18 gen 3: melhor filho 1.2196  atual 1.2196  sigma 0.500
+static18 gen 4: melhor filho 1.3538  atual 1.2196  sigma 0.450
+static18 gen 5: melhor filho 1.0470  atual 1.0470  sigma 0.450
+static18 gen 6: melhor filho 1.1600  atual 1.0470  sigma 0.405
+static18 gen 7: melhor filho 1.1951  atual 1.0470  sigma 0.365
+static18 gen 8: melhor filho 1.1073  atual 1.0470  sigma 0.328
+busca ES (static18) concluida
+ajuste static18 concluido
+busca ES (static18) concluida
+ajuste static18 concluido

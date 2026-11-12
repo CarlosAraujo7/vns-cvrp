@@ -1,0 +1,17 @@
+validacao (instancias de ajuste, seeds novas): 768 execucoes
+    100/768  1.4 min
+    200/768  2.7 min
+    300/768  4.0 min
+    400/768  5.3 min
+    500/768  6.6 min
+    600/768  7.9 min
+    700/768  9.2 min
+braco
+s18_tilt        1.0529
+s18_sched       1.1574
+s18_loglin      1.2564
+s18_static18    1.2564
+s18_qlearn      1.4823
+s18_linucb      1.5768
+s18_ctxucb      1.6323
+s18_RP18        1.7851

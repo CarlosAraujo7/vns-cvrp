@@ -1,0 +1,11 @@
+hipotese,confirmada
+H96 static18 - static16 nao significativo,True
+H97 RP18 - RP16 nao significativamente negativo,True
+H98 static18 - RP18 significativamente negativo,False
+H99 sched - static18 significativamente negativo,False
+H100 loglin - static18 significativamente negativo,False
+"H101 algum {ctxucb,linucb,qlearn} - U significativamente negativo",True
+"H102 algum {ctxucb,linucb,qlearn} - RP18 significativamente negativo",False
+H103 nenhum dos 15 contrastes online - offline significativamente negativo,False
+H104 tilt - static18 significativamente negativo,False
+H105 primario nao significativamente negativo,True

@@ -1,0 +1,2 @@
+REGRESSAO EXATA: OK (18 execucoes do Estudo 16 reproduzidas: custo, iteracoes, avaliacoes, usos e escores)
+REGRESSAO EXATA: OK (18 execucoes do Estudo 16 reproduzidas: custo, iteracoes, avaliacoes, usos e escores)

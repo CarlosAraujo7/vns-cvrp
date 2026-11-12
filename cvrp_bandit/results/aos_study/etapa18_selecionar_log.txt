@@ -1,0 +1,8 @@
+static18: config gen05c0  gap_tune 1.0470  (inicio 1.7515)  n_configs 33
+sched: config gen04c0  gap_tune 1.0148  (inicio 1.0470)  n_configs 33
+loglin: config gen00  gap_tune 1.0470  (inicio 1.0470)  n_configs 33
+RP18: config r25  gap_tune 1.2189  (padrao 1.5483)  n_configs 33
+tilt: config r05  gap_tune 0.9092  (padrao 1.1136)  n_configs 33
+ctxucb: config r23  gap_tune 1.3582  (padrao 1.3733)  n_configs 33
+linucb: config r30  gap_tune 1.6813  (padrao 2.1648)  n_configs 33
+qlearn: config r22  gap_tune 1.3115  (padrao 1.6664)  n_configs 33

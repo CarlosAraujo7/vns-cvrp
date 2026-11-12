@@ -1,0 +1,11 @@
+sched gen 0: gap 1.0470
+sched gen 1: melhor filho 1.2582  atual 1.0470  sigma 0.270
+sched gen 2: melhor filho 1.1706  atual 1.0470  sigma 0.243
+sched gen 3: melhor filho 1.1364  atual 1.0470  sigma 0.219
+sched gen 4: melhor filho 1.0148  atual 1.0148  sigma 0.219
+sched gen 5: melhor filho 1.0369  atual 1.0148  sigma 0.197
+sched gen 6: melhor filho 1.2012  atual 1.0148  sigma 0.177
+sched gen 7: melhor filho 1.2036  atual 1.0148  sigma 0.159
+sched gen 8: melhor filho 1.1928  atual 1.0148  sigma 0.143
+busca ES (sched) concluida
+ajuste sched concluido

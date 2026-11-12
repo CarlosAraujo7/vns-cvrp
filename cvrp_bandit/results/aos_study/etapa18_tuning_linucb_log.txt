@@ -1,0 +1,35 @@
+ajuste linucb: 33 configuracoes, 3168 execucoes
+    100/3168  1.7 min
+    200/3168  3.5 min
+    300/3168  5.3 min
+    400/3168  7.0 min
+    500/3168  8.7 min
+    600/3168  10.3 min
+    700/3168  12.0 min
+    800/3168  13.6 min
+    900/3168  15.2 min
+    1000/3168  16.7 min
+    1100/3168  18.3 min
+    1200/3168  19.9 min
+    1300/3168  21.4 min
+    1400/3168  23.1 min
+    1500/3168  24.8 min
+    1600/3168  26.5 min
+    1700/3168  28.1 min
+    1800/3168  29.7 min
+    1900/3168  31.3 min
+    2000/3168  33.1 min
+    2100/3168  34.6 min
+    2200/3168  36.2 min
+    2300/3168  37.8 min
+    2400/3168  39.5 min
+    2500/3168  41.0 min
+    2600/3168  42.6 min
+    2700/3168  44.1 min
+    2800/3168  45.8 min
+    2900/3168  47.7 min
+    3000/3168  49.3 min
+    3100/3168  51.0 min
+ajuste linucb concluido
+ajuste linucb: 33 configuracoes, 3168 execucoes
+ajuste linucb concluido
