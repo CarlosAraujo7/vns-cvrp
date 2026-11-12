@@ -18,3 +18,6 @@ cvrp_bandit/ferramentas/
 cvrp_bandit/paper/ejor/build/
 *.aux
 *.log
+
+# material de submissao (cartas, pareceres simulados, formularios): fica fora do repositorio publico
+cvrp_bandit/paper/submissao/
