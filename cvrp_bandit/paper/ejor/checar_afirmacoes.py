@@ -20,6 +20,10 @@ Confere, direto das tabelas de testes confirmatorios, as afirmacoes UNIVERSAIS d
       ajustada (0 de 7); em relacao ao reparo unico fixo a afirmacao e FALSA para exatamente uma politica, o HG-UCB (H83 refutada,
       familia pre-registrada de 14 contrastes politica - {static, fixrep}, Holm); o script lista a excecao e falha se o conjunto de
       excecoes mudar;
+  U10 no ALNS sob janelas de tempo com ESFORCO DE AJUSTE IGUAL (Estudo 18; 33 avaliacoes por metodo) nenhuma politica online, inclusive as que
+      enxergam o estado da busca (UCB1 contextual, LinUCB, Q-learning), nem o RP retunado nem o RP sobre o prior (tilt), e significativamente melhor
+      que a mistura estatica retunada nem que as misturas offline por fase e log-linear (familia pre-registrada D de 15 contrastes, Holm m=15);
+      o script lista as excecoes e falha se o conjunto mudar (ESPERADO_U10, preenchido DEPOIS de ver os resultados do Estudo 18);
   U6  no CVRPTW (Estudo 14) politicas superam a uniforme (U1w lista), mas NENHUMA politica e significativamente melhor que a melhor
       alternativa nao adaptativa (a ordem fixa de custo crescente, a de menor gap medio em E1 e E2): nenhum contraste
       politica - FOC_custo com dif < 0 e p ajustado < 0,05 (familia exploratoria de 18 testes);
@@ -34,6 +38,7 @@ import pandas as pd
 
 RES = Path(__file__).resolve().parent.parent.parent / "results" / "aos_study"
 falhas = []
+ESPERADO_U10 = []      # pares (a, b) esperados como excecoes de U10; vazio ate os resultados do Estudo 18 serem conhecidos
 
 
 def ler(nome):
@@ -188,6 +193,16 @@ def main():
             print(f"    excecao: {r.a} - {r.b} = {r.dif_pp:.2f} pp (p Holm {r.p_holm:.4f})")
         if len(m16) != 14 or sorted(zip(m8.a, m8.b)) != [("hgucb", "fixrep")]:
             falhas.append("U8")
+    d18 = ler("analise_etapa18.csv")
+    if d18 is not None:
+        m18 = d18[d18.grupo == "D"]
+        m10 = m18[(m18.dif_pp < 0) & (m18.p_holm < 0.05)]
+        print(f"U10 (Estudo 18, ALNS no CVRPTW, ajuste igual): politicas online significativamente melhores que a mistura estatica retunada ou as misturas "
+              f"por fase/estado: {len(m10)} de {len(m18)} contrastes")
+        for _, r in m10.iterrows():
+            print(f"    excecao: {r.a} - {r.b} = {r.dif_pp:.2f} pp (p Holm {r.p_holm:.4f})")
+        if len(m18) != 15 or sorted(zip(m10.a, m10.b)) != sorted(ESPERADO_U10):
+            falhas.append("U10")
     d1 = ler("analise_confirmatoria.csv")
     lit = d1[d1.a == "hgucb_literal"]
     print(f"U3: literal - normalizado: {[round(x, 2) for x in lit.dif_media_pp]} pp, derrotas do literal {list(lit.der_a)} de 74")
