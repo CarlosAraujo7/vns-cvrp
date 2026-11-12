@@ -1909,6 +1909,166 @@ def estudo17():
         r"Policy $-$ & P6 (1) & P7 (1) & Static (1) & P6 (2) & P7 (2) & Static (2)", lin_m, "lcccccc"))
 
 
+ARMS18 = [("U", "Uniform selection"), ("RP16", "Adaptive weights, Study 16 tuning"), ("RP18", "Adaptive weights, equal-effort tuning"),
+          ("tilt", "Adaptive weights tilted by the tuned mixture"), ("ctxucb", "Contextual UCB1"), ("linucb", "LinUCB"),
+          ("qlearn", "Q-learning"), ("static16", "Static mixture, Study 16 tuning"), ("static18", "Static mixture, equal-effort tuning"),
+          ("sched", "Mixture by phase of the budget"), ("loglin", "Log-linear mixture (budget, stagnation)"), ("fixrep", "Fixed repair (Study 16)")]
+METODOS18 = ["static18", "RP18", "ctxucb", "linucb", "qlearn", "sched", "loglin", "tilt"]
+ONLINE18 = ["RP18", "tilt", "ctxucb", "linucb", "qlearn"]
+OFFLINE18 = [("static18", "Static mixture"), ("sched", "Mixture by phase"), ("loglin", "Log-linear mixture")]
+
+
+def estudo18():
+    """Estudo 18 (politicas com estado e esforco de ajuste igual, ALNS no CVRPTW). Entradas 127 (pre-registro) e 128 (resultados)."""
+    e18, e16 = pd.read_csv(RES / "etapa18_eval.csv"), pd.read_csv(RES / "etapa16_eval_a.csv")
+    aa = pd.read_csv(RES / "analise_etapa18.csv")
+    ac = pd.read_csv(RES / "analise_etapa18_classe.csv")
+    aj = pd.read_csv(RES / "analise_etapa18_ajuste.csv")
+    hy = pd.read_csv(RES / "analise_etapa18_hipoteses.csv")
+    esc = json.loads((RES / "etapa18_tuning_escolhidas.json").read_text())
+    cap = json.loads((RES / "etapa18_capacidade.json").read_text())
+    val = pd.read_csv(RES / "etapa18_validacao.csv")
+    t16 = json.loads((RES / "etapa16_tuning_escolhidas_a.json").read_text())
+    tun = {m: pd.read_csv(RES / f"etapa18_tuning_{m}.csv") for m in METODOS18}
+
+    def milhar(n):
+        return f"{n:,}".replace(",", r"\,")
+
+    NUM["s18_nruns"], NUM["s18_valid_runs"] = milhar(len(e18)), milhar(len(val))
+    NUM["s18_tune_runs"] = milhar(sum(len(d) for d in tun.values()))
+    NUM["s18_ninv"] = str(int((~e18.viavel).sum()))
+    NUM["s18_ninv_tune"] = str(int(sum((~d.viavel).sum() for d in tun.values())))
+    c = cap["estagnacao alternante"]
+    for k, tag in (("CtxUCB", "ctx"), ("LinUCB", "lin"), ("QLearn", "q"), ("UCB1 (sem estado)", "ucb")):
+        NUM[f"s18_cap_{tag}"] = f"{100 * c[k]:.0f}\\%"
+
+    def piv(df, pref, ren):
+        m = df[df.viavel].groupby(["braco", "instancia"]).gap_pct.mean().unstack(0)
+        m.columns = [ren.get(x[len(pref):], x[len(pref):]) for x in m.columns]
+        return m
+
+    t = piv(e16, "s16a_", {"RP": "RP16", "static": "static16"}).join(piv(e18, "s18_", {}), how="inner").dropna()
+    NUM["s18_n"] = str(len(t))
+    for a in t.columns:
+        NUM[f"s18_gap_{a}"] = f"{t[a].mean():.3f}"
+        NUM[f"s18_g2_{a}"] = f2(t[a].mean())
+        d = t[a] - t["U"]
+        NUM[f"s18_dU_{a}"] = sgn(d.mean())
+    # contrastes
+    for _, r in aa.iterrows():
+        chave = f"{r.grupo}_{r.id.replace('-', '_')}"
+        macros_contraste("s18", chave, r)
+        NUM[f"s18apr_{chave}"] = f"{r.p_bruto:.3f}"
+        NUM[f"s18mde_{chave}"] = f"{r.mde_pp:.2f}"
+    prim = aa[aa.grupo == "primario"].iloc[0]
+    macros_contraste("s18", "prim", prim)
+    NUM["s18_prim_on"], NUM["s18_prim_off"] = prim.a, prim.b
+    NUM["s18apr_prim"] = f"{prim.p_bruto:.3f}"
+    sig_b = lambda df: ((df.dif_pp < 0) & df.signif_005)    # noqa: E731
+    sig_w = lambda df: ((df.dif_pp > 0) & df.signif_005)    # noqa: E731
+    for g in ("A", "B", "C", "D"):
+        df = aa[aa.grupo == g]
+        NUM[f"s18_{g}_n"], NUM[f"s18_{g}_nb"], NUM[f"s18_{g}_nw"] = str(len(df)), str(int(sig_b(df).sum())), str(int(sig_w(df).sum()))
+        NUM[f"s18_{g}_mde_lo"], NUM[f"s18_{g}_mde_hi"] = f"{df.mde_pp.min():.2f}", f"{df.mde_pp.max():.2f}"
+    # hipoteses (pre-registro, Entrada 127)
+    for i, (_, r) in enumerate(hy.iterrows()):
+        NUM[f"s18_h{96 + i}_ok"] = "yes" if bool(r.confirmada) else "no"
+    NUM["s18_hconf"] = str(int(hy.confirmada.sum()))
+    # classes (exploratorio, sem correcao)
+    for _, r in ac.iterrows():
+        rr = r.copy()
+        rr["p_holm"] = r.p_bruto
+        macros_contraste("s18c", f"{r.a}_{r.b}_{r.classe}", rr)
+    # ajuste: ajuste -> validacao -> avaliacao
+    for _, r in aj.iterrows():
+        NUM[f"s18_tune_{r.braco}"], NUM[f"s18_val_{r.braco}"], NUM[f"s18_evalg_{r.braco}"] = f"{r.gap_ajuste:.2f}", f"{r.gap_validacao:.2f}", f"{r.gap_avaliacao:.2f}"
+        NUM[f"s18_opt_{r.braco}"] = f"{r.gap_validacao - r.gap_ajuste:.2f}"
+    for m in ("sched", "loglin"):
+        NUM[f"s18_esgain_{m}"] = f"{esc['static18']['gap_tune'] - esc[m]['gap_tune']:.2f}"       # ganho dentro da amostra de ajuste sobre static18
+        NUM[f"s18_esgain_val_{m}"] = f"{float(aj[aj.braco == 'static18'].gap_validacao.iloc[0]) - float(aj[aj.braco == m].gap_validacao.iloc[0]):.2f}"
+    NUM["s18_static_gain_tune"] = f"{esc['static18']['gap_inicio'] - esc['static18']['gap_tune']:.2f}"
+    # hiperparametros escolhidos
+    for m in ("RP18", "tilt"):
+        NUM[f"s18_hp_{m}_rho"], NUM[f"s18_hp_{m}_seg"] = f"{esc[m]['params']['rho']:g}", f"{esc[m]['params']['segmento']:g}"
+    for k, v in esc["ctxucb"]["params"].items():
+        NUM[f"s18_hp_ctxucb_{k}"] = f"{v:g}"
+    for k, v in esc["linucb"]["params"].items():
+        NUM[f"s18_hp_linucb_{k}"] = f"{v:g}"
+    for k, v in esc["qlearn"]["params"].items():
+        NUM[f"s18_hp_qlearn_{k}"] = f"{v:g}"
+    # pesos das misturas (destruicoes: aleatoria, pior, relacionada, rota; reparos: guloso, regret-2, barato)
+    mix = {"static16": (t16["static"]["pesos_d"], t16["static"]["pesos_r"]), "static18": (esc["static18"]["pesos_d"], esc["static18"]["pesos_r"])}
+    sm = lambda v: (np.exp(v) / np.exp(v).sum()).tolist()    # noqa: E731
+    for f in range(3):
+        mix[f"sched{f + 1}"] = (sm(np.array(esc["sched"]["logits_d"][f])), sm(np.array(esc["sched"]["logits_r"][f])))
+    for nm_, (pd_, pr_) in mix.items():
+        for j, w in enumerate(pd_):
+            NUM[f"s18_wd_{nm_}_{j}"] = f"{100 * w:.0f}"
+        for j, w in enumerate(pr_):
+            NUM[f"s18_wr_{nm_}_{j}"] = f"{100 * w:.0f}"
+    # uso medio de operadores por fase (bracos novos)
+    ph = {}
+    for a in METODOS18:
+        g = e18[e18.braco == f"s18_{a}"]
+        for col, tag, k in (("uso_d_fase", "d", 4), ("uso_r_fase", "r", 3)):
+            m = np.array([[[float(x) for x in p.split("|")] for p in s.split(";")] for s in g[col]]).mean(axis=0)
+            m = m / m.sum(axis=1, keepdims=True)
+            ph[(a, tag)] = m
+            for f in range(3):
+                for j in range(k):
+                    NUM[f"s18_fase{tag}_{a}_{f + 1}_{j}"] = f"{100 * m[f, j]:.0f}"
+        NUM[f"s18_iter_{a}"] = milhar(round(g.iteracoes.mean()))
+    # tabela dos bracos: ajuste, validacao, avaliacao e diferenca de U
+    lin = []
+    for a, nome in ARMS18:
+        d = t[a] - t["U"]
+        if a in ("U", "RP16", "static16", "fixrep"):
+            c_ = [nome, "---", "---", f"{t[a].mean():.2f}"]
+        else:
+            r_ = aj[aj.braco == a].iloc[0]
+            c_ = [nome, f"{r_.gap_ajuste:.2f}", f"{r_.gap_validacao:.2f}", f"{t[a].mean():.2f}"]
+        c_ += ["---", "---"] if a == "U" else [sgn(d.mean()), f"{int((d < -1e-9).sum())}/{int((d > 1e-9).sum())}"]
+        lin.append(" & ".join(c_))
+    escreve("tab_s18a.tex", tabela(
+        "Study 18 (CVRPTW, ALNS), 56 Solomon instances: tuning gap (best of 33 evaluations on 48 synthetic instances), validation gap (same instances, new seeds) and "
+        "evaluation gap (\\%) of each arm, difference of the evaluation gap from uniform selection (pp, descriptive) and wins/losses of the arm. Rows 2, 8 and 12 are "
+        "the arms of Study 16, reused without new runs.", "tab:s18a",
+        r"Arm & Tuning & Validation & Evaluation & $\Delta$ vs.\ uniform & W/L", lin, "lccccc"))
+    # matriz online x offline (familia D)
+    md = {(r.a, r.b): r for _, r in aa[aa.grupo == "D"].iterrows()}
+    lin_m = []
+    for a in ONLINE18:
+        nome = dict(ARMS18)[a]
+        c_ = [nome]
+        for b, _ in OFFLINE18:
+            r = md[(a, b)]
+            c_.append(f"{cel(r)}; W/L {int(r.vit_a)}/{int(r.der_a)}")
+        lin_m.append(" & ".join(c_))
+    escreve("tab_s18m.tex", tabela(
+        "Study 18: each online arm against each offline design with equal tuning effort (mean paired difference in pp [95\\% CI]; adjusted $p$ over 15 tests; "
+        "wins/losses of the online arm; negative favors the online arm).", "tab:s18m",
+        r"Online arm $-$ & " + " & ".join(n for _, n in OFFLINE18), lin_m, "lccc"))
+    # familias A, B, C e o primario
+    lin_f = []
+    for g, rotulo in (("primario", "Primary"), ("A", "A, equal effort"), ("B", "B, structure"), ("C", "C, state vs.\\ no state")):
+        for _, r in aa[aa.grupo == g].iterrows():
+            lin_f.append(" & ".join([rotulo, r.id.replace("-", " $-$ "), cel(r) if g != "primario" else f"{sgn(r.dif_pp)} [{sgn(r.ic_lo)}, {sgn(r.ic_hi)}]; {padj(r.p_bruto)}",
+                                     f"{int(r.vit_a)}/{int(r.der_a)}"]))
+    escreve("tab_s18f.tex", tabela(
+        "Study 18: confirmatory contrasts of the primary test and of families A, B and C (mean paired difference in pp [95\\% CI]; adjusted $p$ within the family; "
+        "wins/losses of the first-named arm; the primary test is unadjusted).", "tab:s18f",
+        r"Family & Contrast & $\Delta$ [CI]; $p$ & W/L", lin_f, "llcc"))
+    # mixturas encontradas (destruicoes e reparos)
+    lin_w = []
+    for nm_, nome in (("static16", "Static mixture, Study 16"), ("static18", "Static mixture, Study 18"), ("sched1", "By phase, first third"),
+                      ("sched2", "By phase, second third"), ("sched3", "By phase, last third")):
+        lin_w.append(" & ".join([nome] + [NUM[f"s18_wd_{nm_}_{j}"] for j in range(4)] + [NUM[f"s18_wr_{nm_}_{j}"] for j in range(3)]))
+    escreve("tab_s18w.tex", tabela(
+        "Study 18: probabilities (\\%) of the destroy operators (random, worst, related, route) and repair operators (greedy, regret-2, cheapest insertion) in the "
+        "tuned mixtures.", "tab:s18w",
+        r"Mixture & Random & Worst & Related & Route & Greedy & Regret-2 & Cheapest", lin_w, "lccccccc"))
+
+
 def margem():
     """Margem da selecao por instancia (analise EXPLORATORIA pos hoc de estudo_aos/margem_instancia.py): macros hr_* e a tabela tab_margem."""
     j = json.loads((RES / "margem_instancia.json").read_text())
@@ -2234,6 +2394,8 @@ def main():
         estudo16()
     if (RES / "analise_etapa17_a.csv").exists():
         estudo17()
+    if (RES / "analise_etapa18.csv").exists():
+        estudo18()
     if (RES / "margem_instancia.json").exists():
         margem()
     sintese_extra()

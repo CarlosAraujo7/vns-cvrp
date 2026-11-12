@@ -23,6 +23,7 @@
 15 & Does the dead weight of a pool predict whether policies beat uniform selection (prospective test)? & VND, nested pools P5--P8 of the TSP and the CVRPTW & $E_1$; TSPLIB, Solomon (+30 synthetic); 10 & 6 per pool (8 pools) + 6 per pool (fixed order) \\
 16 & Does the stochastic regime replicate with time windows? & ALNS (4 destroy $\times$ 3 repair, time-window feasible); VND references & $1500n^2$; 56 Solomon; 10 & 1 + 6 + 4 + 14 + 4 \\
 17 & Does selection of the operator set help inside a modern solver (PyVRP)? & ILS of PyVRP; seven nested operator sets P1--P7, policies and fixed sets & wall time $0.03n$ and $0.1n$ s; 74 CVRPLIB + 30 synthetic; 10 and 5 & 1 + 15 + 8 + 4 + 2 + 21 + 21 \\
+18 & Do policies that observe the state of the search, with the same tuning effort as the tuned designs, beat a static mixture? & ALNS (4 destroy $\times$ 3 repair, time windows); contextual UCB1, LinUCB, Q-learning; mixtures by phase and by state; adaptive weights tilted by the tuned mixture & $1500n^2$; 56 Solomon (tuning on 48 synthetic); 10 & 1 + 3 + 2 + 6 + 15 \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}

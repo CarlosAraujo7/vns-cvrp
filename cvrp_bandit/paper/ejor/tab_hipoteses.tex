@@ -140,5 +140,17 @@ H92 & None of the 14 contrasts adaptive policy $-$ static mixture is significant
 H93 & HG-UCB is not significantly better than uniform selection at either budget (90\%). & Confirmed: it is significantly worse (\num{s17ad_hgucb_U_1} and \num{s17ad_hgucb_U_2}~pp). \\
 H94 & The efficiency UCB is significantly better than uniform selection at the first budget (30\%). & Not confirmed: \num{s17ad_eff_U_1}~pp (adjusted $p=\num{s17ap_eff_U_1}$). \\
 H95 & The static mixture is significantly better than the default set P6 at the first budget (60\%). & Not confirmed: \num{s17ad_static_P6_1}~pp (adjusted $p=\num{s17ap_static_P6_1}$). \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 18, state-aware policies and equal tuning effort (log entry 127; committed before its data)}} \\
+H96 & The stationary mixture retuned with equal effort does not differ significantly from that of Study 16 (75\%). & Confirmed: \num{s18d_A_static18_static16}~pp (adjusted $p=\num{s18p_A_static18_static16}$). \\
+H97 & The adaptive weights retuned with 33 evaluations are not significantly better than those of Study 16 (70\%). & Confirmed: \num{s18d_A_RP18_RP16}~pp (adjusted $p=\num{s18p_A_RP18_RP16}$). \\
+H98 & The retuned stationary mixture is significantly better than the retuned adaptive weights (60\%). & Not confirmed after Holm: \num{s18d_A_static18_RP18}~pp (unadjusted $p=\num{s18apr_A_static18_RP18}$, adjusted $p=\num{s18p_A_static18_RP18}$). \\
+H99 & The mixture by phase of the budget is significantly better than the stationary one (30\%). & Not confirmed: \num{s18d_B_sched_static18}~pp (adjusted $p=\num{s18p_B_sched_static18}$). \\
+H100 & The log-linear mixture in the budget fraction and the stagnation is significantly better than the stationary one (30\%). & Not confirmed: the search found no candidate better than the stationary mixture (difference exactly zero). \\
+H101 & At least one of the three state-aware learners is significantly better than uniform selection (65\%). & Confirmed: contextual UCB1 (\num{s18d_C_ctxucb_U}~pp) and Q-learning (\num{s18d_C_qlearn_U}~pp). \\
+H102 & At least one of the three is significantly better than the retuned adaptive weights (20\%). & Not confirmed (best: \num{s18d_C_ctxucb_RP18}~pp, adjusted $p=\num{s18p_C_ctxucb_RP18}$). \\
+H103 & None of the 15 contrasts online arm $-$ offline design is significantly negative (60\%). & Not confirmed: \num{s18_D_nb} of 15, the tilted weights against the phase mixture (\num{s18d_D_tilt_sched}~pp). \\
+H104 & The adaptive weights tilted by the tuned mixture are significantly better than the mixture (20\%). & Not confirmed after Holm: \num{s18d_D_tilt_static18}~pp (unadjusted $p=\num{s18apr_D_tilt_static18}$, adjusted $p=\num{s18p_D_tilt_static18}$). \\
+H105 & The primary contrast (best state-aware learner minus best offline design, chosen on validation) is not significantly negative (70\%). & Confirmed: \num{s18d_prim}~pp (unadjusted $p=\num{s18p_prim}$). \\
 \end{longtable}
 \end{center}

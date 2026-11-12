@@ -1,0 +1,25 @@
+\begin{table}[t]
+\caption{Study 18 (CVRPTW, ALNS), 56 Solomon instances: tuning gap (best of 33 evaluations on 48 synthetic instances), validation gap (same instances, new seeds) and evaluation gap (\%) of each arm, difference of the evaluation gap from uniform selection (pp, descriptive) and wins/losses of the arm. Rows 2, 8 and 12 are the arms of Study 16, reused without new runs.}\label{tab:s18a}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccccc}
+\toprule
+Arm & Tuning & Validation & Evaluation & $\Delta$ vs.\ uniform & W/L \\
+\midrule
+Uniform selection & --- & --- & 2.25 & --- & --- \\
+Adaptive weights, Study 16 tuning & --- & --- & 2.08 & $-$0.17 & 28/12 \\
+Adaptive weights, equal-effort tuning & 1.22 & 1.79 & 2.07 & $-$0.17 & 25/15 \\
+Adaptive weights tilted by the tuned mixture & 0.91 & 1.05 & 1.46 & $-$0.79 & 31/9 \\
+Contextual UCB1 & 1.36 & 1.63 & 1.88 & $-$0.37 & 29/11 \\
+LinUCB & 1.68 & 1.58 & 2.18 & $-$0.07 & 19/22 \\
+Q-learning & 1.31 & 1.48 & 1.92 & $-$0.32 & 33/8 \\
+Static mixture, Study 16 tuning & --- & --- & 1.72 & $-$0.52 & 26/14 \\
+Static mixture, equal-effort tuning & 1.05 & 1.26 & 1.60 & $-$0.65 & 24/17 \\
+Mixture by phase of the budget & 1.01 & 1.16 & 1.69 & $-$0.56 & 25/17 \\
+Log-linear mixture (budget, stagnation) & 1.05 & 1.26 & 1.60 & $-$0.65 & 24/17 \\
+Fixed repair (Study 16) & --- & --- & 2.21 & $-$0.04 & 17/25 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

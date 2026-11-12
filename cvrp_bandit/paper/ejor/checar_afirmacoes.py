@@ -22,8 +22,10 @@ Confere, direto das tabelas de testes confirmatorios, as afirmacoes UNIVERSAIS d
       excecoes mudar;
   U10 no ALNS sob janelas de tempo com ESFORCO DE AJUSTE IGUAL (Estudo 18; 33 avaliacoes por metodo) nenhuma politica online, inclusive as que
       enxergam o estado da busca (UCB1 contextual, LinUCB, Q-learning), nem o RP retunado nem o RP sobre o prior (tilt), e significativamente melhor
-      que a mistura estatica retunada nem que as misturas offline por fase e log-linear (familia pre-registrada D de 15 contrastes, Holm m=15);
-      o script lista as excecoes e falha se o conjunto mudar (ESPERADO_U10, preenchido DEPOIS de ver os resultados do Estudo 18);
+      que a mistura estatica retunada nem que as misturas offline por fase e log-linear (familia pre-registrada D de 15 contrastes, Holm m=15).
+      Resultado: a afirmacao pre-registrada e FALSA em exatamente um contraste, o hibrido `tilt` (pesos de Ropke e Pisinger modulados pela mistura
+      ajustada) contra a mistura por FASE (-0,23 pp), que e numericamente PIOR que a mistura estatica; contra a mistura estatica o `tilt` nao e
+      significativo apos Holm (-0,14 pp, p aj. 0,17; indicio levado ao Estudo 19). O script lista as excecoes e falha se o conjunto mudar (ESPERADO_U10);
   U6  no CVRPTW (Estudo 14) politicas superam a uniforme (U1w lista), mas NENHUMA politica e significativamente melhor que a melhor
       alternativa nao adaptativa (a ordem fixa de custo crescente, a de menor gap medio em E1 e E2): nenhum contraste
       politica - FOC_custo com dif < 0 e p ajustado < 0,05 (familia exploratoria de 18 testes);
@@ -38,7 +40,7 @@ import pandas as pd
 
 RES = Path(__file__).resolve().parent.parent.parent / "results" / "aos_study"
 falhas = []
-ESPERADO_U10 = []      # pares (a, b) esperados como excecoes de U10; vazio ate os resultados do Estudo 18 serem conhecidos
+ESPERADO_U10 = [("tilt", "sched")]      # excecoes conhecidas de U10 (Estudo 18, familia D): o hibrido tilt contra a mistura por fase
 
 
 def ler(nome):
