@@ -1,0 +1,1 @@
+REGRESSAO EXATA: OK (12 execucoes do Estudo 18 / 16 reproduzidas com as configuracoes congeladas)

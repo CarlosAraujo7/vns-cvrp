@@ -1,0 +1,6 @@
+hipotese,confirmada
+H106 tilt - static18 em SYN significativamente negativo (primario),False
+H107 tilt - static18 em SOL (seeds novas) significativamente negativo (Holm),True
+H108 static18 - RP18 em SYN significativamente negativo (Holm),False
+H109 static18 - RP18 em SOL significativamente negativo (Holm),False
+H110 (explor.) tilt - static18 combinado: IC95% exclui zero e e negativo,True
