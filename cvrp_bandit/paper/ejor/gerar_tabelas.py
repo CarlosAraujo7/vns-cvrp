@@ -2069,6 +2069,55 @@ def estudo18():
         r"Mixture & Random & Worst & Related & Route & Greedy & Regret-2 & Cheapest", lin_w, "lccccccc"))
 
 
+def estudo19():
+    """Estudo 19 (replica confirmatoria do indicio do Estudo 18: pesos adaptativos modulados pela mistura ajustada). Entradas 129 (pre-registro) e 130."""
+    e = pd.read_csv(RES / "etapa19_eval.csv")
+    e["braco"] = e.braco.str.replace("s19_", "", regex=False)
+    aa = pd.read_csv(RES / "analise_etapa19.csv")
+    ac = pd.read_csv(RES / "analise_etapa19_classe.csv")
+    hy = pd.read_csv(RES / "analise_etapa19_hipoteses.csv")
+
+    def milhar(n):
+        return f"{n:,}".replace(",", r"\,")
+
+    NUM["s19_nruns"], NUM["s19_ninv"] = milhar(len(e)), str(int((~e.viavel).sum()))
+    for tag, conj in (("syn", "SYN_VAL_W"), ("sol", "SOLOMON")):
+        m = e[(e.conjunto == conj) & e.viavel].groupby(["braco", "instancia"]).gap_pct.mean().unstack(0)
+        NUM[f"s19_n_{tag}"] = str(len(m))
+        for a in m.columns:
+            NUM[f"s19_gap_{tag}_{a}"] = f"{m[a].mean():.3f}"
+            NUM[f"s19_g2_{tag}_{a}"] = f2(m[a].mean())
+    for _, r in aa.iterrows():
+        chave = r.id.replace("-", "_").replace("@", "_")
+        macros_contraste("s19", chave, r)
+        NUM[f"s19apr_{chave}"] = f"{r.p_bruto:.3f}"
+        NUM[f"s19mde_{chave}"] = f"{r.mde_pp:.2f}"
+    for i, (_, r) in enumerate(hy.iterrows()):
+        NUM[f"s19_h{106 + i}_ok"] = "yes" if bool(r.confirmada) else "no"
+    NUM["s19_hconf"] = str(int(hy.confirmada.iloc[:4].sum()))
+    for _, r in ac.iterrows():
+        rr = r.copy()
+        rr["p_holm"] = r.p_bruto
+        macros_contraste("s19c", f"{r.conjunto}_{r.classe}", rr)
+    rot = {"tilt-static18@SYN": ("Primary", r"tilt $-$ static18, 48 new synthetic"), "tilt-static18@SOL": ("Secondary", r"tilt $-$ static18, Solomon, new seeds"),
+           "static18-RP18@SYN": ("Secondary", r"static18 $-$ RP18, 48 new synthetic"), "static18-RP18@SOL": ("Secondary", r"static18 $-$ RP18, Solomon, new seeds"),
+           "tilt-RP18@SYN": ("Exploratory", r"tilt $-$ RP18, 48 new synthetic"), "tilt-RP18@SOL": ("Exploratory", r"tilt $-$ RP18, Solomon, new seeds"),
+           "tilt-U@SYN": ("Exploratory", r"tilt $-$ uniform, 48 new synthetic"), "tilt-U@SOL": ("Exploratory", r"tilt $-$ uniform, Solomon, new seeds"),
+           "static18-U@SYN": ("Exploratory", r"static18 $-$ uniform, 48 new synthetic"), "static18-U@SOL": ("Exploratory", r"static18 $-$ uniform, Solomon, new seeds"),
+           "RP18-U@SYN": ("Exploratory", r"RP18 $-$ uniform, 48 new synthetic"), "RP18-U@SOL": ("Exploratory", r"RP18 $-$ uniform, Solomon, new seeds"),
+           "tilt-static18@combinado": ("Exploratory", r"tilt $-$ static18, pooled (Solomon with 20 seeds, and the 48 synthetic)"),
+           "tilt-static18@replicacao": ("Post hoc", r"tilt $-$ static18, pooled replication only (Solomon, new seeds, and the 48 synthetic)")}
+    lin = []
+    for cid, (g, nome) in rot.items():
+        r = aa[aa.id == cid].iloc[0]
+        p = f"{padj(r.p_bruto)}" if g in ("Primary", "Exploratory", "Post hoc") else f"{padj(r.p_holm)}"
+        lin.append(" & ".join([g, nome, f"{sgn(r.dif_pp)} [{sgn(r.ic_lo)}, {sgn(r.ic_hi)}]", p, f"{int(r.vit_a)}/{int(r.der_a)}", f"{r.mde_pp:.2f}"]))
+    escreve("tab_s19.tex", tabela(
+        "Study 19: replication of the hint of Study 18 with frozen configurations (mean paired difference in pp [95\\% CI]; unadjusted $p$ for the primary and the "
+        "exploratory contrasts, Holm over three for the secondary ones; wins/losses of the first-named arm; MDE: minimum detectable effect at 80\\% power).", "tab:s19",
+        r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
+
+
 def margem():
     """Margem da selecao por instancia (analise EXPLORATORIA pos hoc de estudo_aos/margem_instancia.py): macros hr_* e a tabela tab_margem."""
     j = json.loads((RES / "margem_instancia.json").read_text())
@@ -2396,6 +2445,8 @@ def main():
         estudo17()
     if (RES / "analise_etapa18.csv").exists():
         estudo18()
+    if (RES / "analise_etapa19.csv").exists():
+        estudo19()
     if (RES / "margem_instancia.json").exists():
         margem()
     sintese_extra()

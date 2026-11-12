@@ -152,5 +152,12 @@ H102 & At least one of the three is significantly better than the retuned adapti
 H103 & None of the 15 contrasts online arm $-$ offline design is significantly negative (60\%). & Not confirmed: \num{s18_D_nb} of 15, the tilted weights against the phase mixture (\num{s18d_D_tilt_sched}~pp). \\
 H104 & The adaptive weights tilted by the tuned mixture are significantly better than the mixture (20\%). & Not confirmed after Holm: \num{s18d_D_tilt_static18}~pp (unadjusted $p=\num{s18apr_D_tilt_static18}$, adjusted $p=\num{s18p_D_tilt_static18}$). \\
 H105 & The primary contrast (best state-aware learner minus best offline design, chosen on validation) is not significantly negative (70\%). & Confirmed: \num{s18d_prim}~pp (unadjusted $p=\num{s18p_prim}$). \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 19, replication of the hint of Study 18 (log entry 129; committed before its data)}} \\
+H106 & The adaptive weights tilted by the tuned mixture are significantly better than the mixture on 48 new synthetic instances (primary test) (50\%). & Not confirmed: \num{s19d_tilt_static18_SYN}~pp ($p=\num{s19p_tilt_static18_SYN}$). \\
+H107 & The same contrast is significantly negative on Solomon with new seeds, after Holm (55\%). & Confirmed: \num{s19d_tilt_static18_SOL}~pp (adjusted $p=\num{s19p_tilt_static18_SOL}$). \\
+H108 & The retuned mixture is significantly better than the retuned adaptive weights on the new synthetic instances, after Holm (65\%). & Not confirmed: \num{s19d_static18_RP18_SYN}~pp (adjusted $p=\num{s19p_static18_RP18_SYN}$). \\
+H109 & The same on Solomon with new seeds, after Holm (55\%). & Not confirmed: \num{s19d_static18_RP18_SOL}~pp (adjusted $p=\num{s19p_static18_RP18_SOL}$). \\
+H110 & Exploratory: the pooled estimate of the tilted weights against the mixture over 104 instances excludes zero (60\%). & Confirmed: \num{s19d_tilt_static18_combinado}~pp \num{s19ci_tilt_static18_combinado}. \\
 \end{longtable}
 \end{center}

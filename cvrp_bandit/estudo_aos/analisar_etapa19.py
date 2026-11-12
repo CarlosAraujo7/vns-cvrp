@@ -89,6 +89,14 @@ def main():
         for col, k in (("uso_d_fase", 4), ("uso_r_fase", 3)):
             m = np.array([[[float(x) for x in p.split("|")] for p in s.split(";")] for s in h[col]]).mean(axis=0)
             print(f"  {a:9s} {col[4]}: {(m / m.sum(axis=1, keepdims=True)).round(2).tolist()}")
+    # POS HOC (nao pre-registrado; acrescentado depois de ver os resultados): estimativa combinada SO da replicacao (Solomon com seeds novas e as
+    # 48 sinteticas novas, 104 instancias), sem os dados do Estudo 18 que sugeriram o efeito; entra no fim para nao alterar nenhuma linha anterior
+    rep = pd.concat([sol[["tilt", "static18"]], syn[["tilt", "static18"]]])
+    ph = pd.DataFrame([contraste(rep, "tilt-static18@replicacao", "tilt", "static18", rng, "posthoc")])
+    ph["p_holm"], ph["signif_005"] = ph.p_bruto, ph.p_bruto < 0.05
+    print("\n=== POS HOC: tilt - static18, so os dados da replicacao (104 instancias) ===")
+    print(ph.drop(columns=["grupo", "a", "b"]).round(4).to_string(index=False))
+    r = pd.concat([r, ph], ignore_index=True)
     r.to_csv(RES / "analise_etapa19.csv", index=False)
     exc.to_csv(RES / "analise_etapa19_classe.csv", index=False)
     pd.DataFrame([dict(hipotese=k, confirmada=bool(ok)) for k, ok in H.items()]).to_csv(RES / "analise_etapa19_hipoteses.csv", index=False)
