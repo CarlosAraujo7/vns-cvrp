@@ -106,12 +106,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tempo", type=float, default=20)
     ap.add_argument("--workers", type=int, default=8)
+    # Estudo 18: conjunto adicional de ajuste (SYN_TUNE_W2 = instancias k0..k0+6*reps-1 da MESMA sequencia de sementes, SEMENTE + k);
+    # os defaults reproduzem exatamente o Estudo 14 (SYN_TUNE_W, k = 0..23).
+    ap.add_argument("--conjunto", default="SYN_TUNE_W")
+    ap.add_argument("--k0", type=int, default=0)
+    ap.add_argument("--reps", type=int, default=4)
     a = ap.parse_args()
-    dest = RAIZ / "instances" / "SYN_TUNE_W"
+    dest = RAIZ / "instances" / a.conjunto
     dest.mkdir(parents=True, exist_ok=True)
     nomes = []
-    k = 0
-    for rep in range(4):
+    k = a.k0
+    for rep in range(a.reps):
         for tipo in FAMILIAS:
             nome = f"W-synt{k:02d}-{tipo}"
             (dest / f"{nome}.txt").write_text(gera(nome, tipo, 100, SEMENTE + k))
