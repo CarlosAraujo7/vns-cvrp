@@ -1,0 +1,6 @@
+REGRESSAO EXATA: OK (18 execucoes dos Estudos 9, 12 e 13 reproduzidas: custo, iteracoes, avaliacoes, usos e escores)
+IDENTIDADE CVRP: tilt(rho=0) == static OK em X-synt01-n51 (custo 6028.0000, 252 iteracoes)
+IDENTIDADE CVRP: tilt(p0 uniforme) == RP OK em X-synt01-n51 (custo 6028.0000, 265 iteracoes)
+IDENTIDADE TSP: tilt(rho=0) == static OK em T-synt00-n50-uni (custo 5982.0000, 261 iteracoes)
+IDENTIDADE TSP: tilt(p0 uniforme) == RP OK em T-synt00-n50-uni (custo 5818.0000, 180 iteracoes)
+REG20 FIM 0
