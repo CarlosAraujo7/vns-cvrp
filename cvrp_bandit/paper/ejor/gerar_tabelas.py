@@ -2031,8 +2031,8 @@ def estudo18():
         lin.append(" & ".join(c_))
     escreve("tab_s18a.tex", tabela(
         "Study 18 (CVRPTW, ALNS), 56 Solomon instances: tuning gap (best of 33 evaluations on 48 synthetic instances), validation gap (same instances, new seeds) and "
-        "evaluation gap (\\%) of each arm, difference of the evaluation gap from uniform selection (pp, descriptive) and wins/losses of the arm. Rows 2, 8 and 12 are "
-        "the arms of Study 16, reused without new runs.", "tab:s18a",
+        "evaluation gap (\\%) of each arm, difference of the evaluation gap from uniform selection (pp, descriptive) and wins/losses of the arm. Uniform selection, the adaptive weights, "
+        "the static mixture and the fixed repair of Study 16 are reused without new runs.", "tab:s18a",
         r"Arm & Tuning & Validation & Evaluation & $\Delta$ vs.\ uniform & W/L", lin, "lccccc"))
     # matriz online x offline (familia D)
     md = {(r.a, r.b): r for _, r in aa[aa.grupo == "D"].iterrows()}
