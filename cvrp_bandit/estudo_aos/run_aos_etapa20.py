@@ -16,6 +16,8 @@ Bracos NOVOS (por problema):
   static65 a mistura estatica com o DOBRO do esforco de ajuste: a busca (1+4)-ES do Estudo 12/13 continuada de 8 para 16 geracoes (65 avaliacoes), mesmas
           instancias de ajuste, mesmas seeds (3000-3002) e mesma sequencia de sementes do ES (controle de esforco total; se a continuacao nao achar
           melhora, static65 = static e o braco nao e executado)
+  tilt65  (EMENDA 1, Entrada 133, antes de qualquer dado de avaliacao) o hibrido com os hiperparametros PADRAO sobre a mistura static65 (esforco total 65);
+          so existe se static65 mudou (senao e o tilt0)
 Ajuste: SYN_TUNE (CVRP) / SYN_TUNE_T (TSP), 24 instancias, seeds 3000-3002 (72 execucoes por avaliacao); validacao (diagnostico) com seeds 3003-3005.
 Modos: --regressao | --tuning {RP,tilt,static65} | --selecionar | --validar | --eval, sempre com --problema CVRP|TSP (retomaveis por chave).
 Uso (WSL): python3 -u run_aos_etapa20.py --problema TSP --tuning RP --workers 11
@@ -271,7 +273,10 @@ def specs_eval(prob, com_static=False):
           p("tilt0"): spec20(prob, p("tilt0"), "tilt", params=dict(r18.PADRAO_RS["tilt"]), pesos_d=pd33, pesos_r=pr33)}
     if esc["static65"]["mudou"]:
         sp[p("static65")] = spec20(prob, p("static65"), "static", pesos_d=esc["static65"]["pesos_d"], pesos_r=esc["static65"]["pesos_r"])
-    if com_static:                                                              # so na validacao (a avaliacao reutiliza o dos Estudos 12/13)
+        # EMENDA 1 (Entrada 133, antes de qualquer dado de avaliacao): o hibrido sobre a mistura de 65 avaliacoes, hiperparametros padrao (esforco 65)
+        sp[p("tilt65")] = spec20(prob, p("tilt65"), "tilt", params=dict(r18.PADRAO_RS["tilt"]), pesos_d=esc["static65"]["pesos_d"],
+                                 pesos_r=esc["static65"]["pesos_r"])
+    if com_static:                                                            # so na validacao (a avaliacao reutiliza o dos Estudos 12/13)
         sp[p("static")] = spec20(prob, p("static"), "static", pesos_d=pd33, pesos_r=pr33)
     return sp
 

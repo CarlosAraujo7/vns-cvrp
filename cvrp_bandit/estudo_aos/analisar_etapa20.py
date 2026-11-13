@@ -7,9 +7,11 @@ dif = gap(a) - gap(b); negativo = a melhor. Unidade = instancia (media das seeds
 empate |dif| < 1e-9; MDE = 2,8 DP / raiz(n). Conjuntos: CVRP = X (21 instancias, seeds 1000-1009) + SYN_VAL (30, seeds 1000-1004); TSP = TSPLIB (32, seeds
 1000-1009) + SYN_VAL_T (30, seeds 1000-1004); AGREGADO = 113 instancias (cada instancia pesa o mesmo; a diferenca e em pontos percentuais de gap).
 Bracos: U e static (a mistura estatica de 33 avaliacoes dos Estudos 12 e 13) REUTILIZADOS dos Estudos 9, 12 e 13; novos: RP (33), tilt (33 + 33), tilt0
-(33), static65 (65 avaliacoes; se o ES nao achou melhora, static65 = static e a coluna e copiada).
+(33), static65 (65 avaliacoes) e tilt65 (emenda 1: hibrido padrao sobre static65; 65). Se o ES nao achou melhora, static65 = static e tilt65 = tilt0 (colunas copiadas).
 
   Primario (sem correcao, alfa 0,05)  : H111 tilt - static, agregado
+  Segundo primario (EMENDA 1, Entrada 133, antes de qualquer dado de avaliacao; sem correcao, alfa 0,05; cada afirmacao fica presa a UM teste):
+                                        H119 tilt65 - static65, agregado (o hibrido sobre a mistura de 65 avaliacoes, hiperparametros padrao, contra ela: esforco 65 e 65)
   Secundarios (Holm m=4)              : H112 tilt - static65, agregado; H113 tilt0 - static, agregado; H114 tilt - static, CVRP; H115 tilt - static, TSP
   Terciarios (Holm m=3)               : H116 static65 - static, agregado; H117 tilt - RP, agregado; H118 RP - static, agregado (confirmada se RP e PIOR)
   Exploratorios (rotular)             : cada braco contra U; contrastes por conjunto; equivalencia (IC90% em +-0,10pp); MDE; metanalise de efeitos aleatorios
@@ -31,7 +33,7 @@ AQUI = Path(__file__).resolve().parent
 RES = AQUI.parent / "results" / "aos_study"
 COLS = ["braco", "conjunto", "instancia", "n_customers", "seed", "viavel", "gap_pct", "uso_d", "uso_r"]
 PROBS = ("CVRP", "TSP")
-NOVOS = ("RP", "tilt", "tilt0", "static65")
+NOVOS = ("RP", "tilt", "tilt0", "static65", "tilt65")
 
 
 def referencias():
@@ -43,7 +45,7 @@ def referencias():
 
 def fabricar(ref, rng):
     """ENSAIO: bracos novos fabricados a partir do static (efeitos conhecidos + ruido) para exercitar o codigo."""
-    efeito = {"RP": 0.25, "tilt": -0.12, "tilt0": -0.06, "static65": -0.03}
+    efeito = {"RP": 0.25, "tilt": -0.12, "tilt0": -0.06, "static65": -0.03, "tilt65": -0.05}
     out = {}
     for p in PROBS:
         st = ref[p][ref[p].braco == "static"]
@@ -94,10 +96,10 @@ def main(ensaio=False):
     for p in PROBS:
         d = dados[p]
         if "static65" not in set(d.braco):
-            print(f"[{p}] static65 ausente: a continuacao do ES nao achou melhora (static65 = static); coluna copiada de static")
-            d = pd.concat([d, d[d.braco == "static"].assign(braco="static65")], ignore_index=True)
+            print(f"[{p}] static65 ausente: a continuacao do ES nao achou melhora (static65 = static, tilt65 = tilt0); colunas copiadas")
+            d = pd.concat([d, d[d.braco == "static"].assign(braco="static65"), d[d.braco == "tilt0"].assign(braco="tilt65")], ignore_index=True)
         t = pivo(d)
-        assert set(t.columns) == {"U", "static", "RP", "tilt", "tilt0", "static65"}, (p, list(t.columns))
+        assert set(t.columns) == {"U", "static", "RP", "tilt", "tilt0", "static65", "tilt65"}, (p, list(t.columns))
         piv[p] = t
         conjuntos[p] = d[d.braco == "static"].groupby("instancia").conjunto.first().reindex(t.index)
         print(f"=== {p}: {len(t)} instancias (execucoes inviaveis nos bracos novos: {int((~novos[p].viavel).sum())}); gap medio (%) ===\n"
@@ -105,7 +107,8 @@ def main(ensaio=False):
     agr = pd.concat([piv["CVRP"], piv["TSP"]], keys=list(PROBS))
     print(f"=== AGREGADO: {len(agr)} instancias; gap medio (%) ===\n{agr.mean().round(3).sort_values().to_string()}")
 
-    prim = pd.DataFrame([contraste(agr, "H111 tilt-static@agregado", "tilt", "static", rng, "primario")])
+    prim = pd.DataFrame([contraste(agr, "H111 tilt-static@agregado", "tilt", "static", rng, "primario"),
+                         contraste(agr, "H119 tilt65-static65@agregado", "tilt65", "static65", rng, "primario2")])
     prim["p_holm"], prim["signif_005"] = prim.p_bruto, prim.p_bruto < 0.05
     sec = com_holm([contraste(agr, "H112 tilt-static65@agregado", "tilt", "static65", rng, "secundario"),
                     contraste(agr, "H113 tilt0-static@agregado", "tilt0", "static", rng, "secundario"),
@@ -116,12 +119,17 @@ def main(ensaio=False):
                     contraste(agr, "H118 RP-static@agregado", "RP", "static", rng, "terciario")], 3)
     expl = []
     for nome, t in (("agregado", agr), ("CVRP", piv["CVRP"]), ("TSP", piv["TSP"])):
-        for a, b in (("tilt", "U"), ("tilt0", "U"), ("static", "U"), ("static65", "U"), ("RP", "U"), ("tilt", "tilt0"), ("tilt", "static65")):
+        for a, b in (("tilt", "U"), ("tilt0", "U"), ("static", "U"), ("static65", "U"), ("RP", "U"), ("tilt65", "U"), ("tilt", "tilt0"),
+                     ("tilt", "static65"), ("tilt65", "static65"), ("tilt65", "static"), ("tilt65", "tilt0"), ("tilt65", "tilt")):
+            if nome == "agregado" and (a, b) == ("tilt65", "static65"):
+                continue                                                   # e a H119 (ja esta no bloco primario)
+            if (a, b) == ("tilt", "static65") and nome == "agregado":
+                continue                                                   # e a H112
             expl.append(contraste(t, f"{a}-{b}@{nome}", a, b, rng, "explor"))
     for p in PROBS:
         for c in sorted(conjuntos[p].unique()):
             t = piv[p][(conjuntos[p] == c).values]
-            for a, b in (("tilt", "static"), ("tilt0", "static"), ("RP", "static")):
+            for a, b in (("tilt", "static"), ("tilt0", "static"), ("RP", "static"), ("static65", "static"), ("tilt65", "static65")):
                 expl.append(contraste(t, f"{a}-{b}@{c}", a, b, rng, "explor_conjunto", conjunto=c))
     ex = pd.DataFrame(expl)
     ex["p_holm"], ex["signif_005"] = ex.p_bruto, ex.p_bruto < 0.05
@@ -140,11 +148,13 @@ def main(ensaio=False):
         "H116 static65 - static (agregado) significativamente negativo (Holm m=3)": neg(g("H116")),
         "H117 tilt - RP (agregado) significativamente negativo (Holm m=3)": neg(g("H117")),
         "H118 RP - static (agregado) significativamente POSITIVO, RP pior (Holm m=3)": bool(g("H118").p_holm < 0.05 and g("H118").dif_pp > 0),
+        "H119 tilt65 - static65 (agregado) significativamente negativo (segundo primario, emenda 1, sem correcao)":
+            bool(g("H119").p_bruto < 0.05 and g("H119").dif_pp < 0),
     }
-    print("\n=== hipoteses (pre-registro, Entrada 132) ===")
+    print("\n=== hipoteses (pre-registro, Entrada 132; emenda 1, Entrada 133) ===")
     for k, ok in H.items():
         print(f"  {'CONFIRMADA' if ok else 'REFUTADA  '}  {k}")
-    print(f"  confirmadas: {sum(H.values())} de 8 (esperado no pre-registro: 3,5)")
+    print(f"  confirmadas: {sum(H.values())} de 9 (esperado no pre-registro e na emenda: 3,75)")
 
     # metanalise exploratoria de tilt - static: replicacao do Estudo 19 (SYN, SOL com seeds novas) e os dois problemas do Estudo 20
     efs = dict(estudo19())
