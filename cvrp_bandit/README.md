@@ -2,8 +2,8 @@
 
 Code, instances, raw results and analysis scripts for the study *"Does adaptive operator selection help? A controlled,
 pre-specified study of bandit-guided variable neighborhood search for the capacitated vehicle routing problem"*
-(manuscript in `paper/ejor/`; fourteen studies on the CVRP, the TSP and the CVRP with time windows). The research log with the dated pre-specification of every study is
-`../diario_pesquisa.md` (Portuguese; entries 64, 71, 77, 83, 89, 91 and 97 are the pre-registrations of Studies 1-7; entries 101, 103 (amended by 107), 104, 106, 109, 113 and 116 those of Studies 8, 9, 10, 11, 12, 13 and 14).
+(manuscript in `paper/ejor/`; twenty studies on the CVRP, the TSP and the CVRP with time windows). The research log with the dated pre-specification of every study is
+`../diario_pesquisa.md` (Portuguese; entries 64, 71, 77, 83, 89, 91 and 97 are the pre-registrations of Studies 1-7; entries 101, 103 (amended by 107), 104, 106, 109, 113 and 116 those of Studies 8, 9, 10, 11, 12, 13 and 14, and entries 118, 121, 124, 127, 129 and 132 (amended by 133) those of Studies 15 to 20; the results and audits are in the entries that follow each pre-registration).
 
 ## Quick path: regenerate every table, number and figure of the manuscript from the shipped raw results
 
@@ -15,7 +15,7 @@ python gerar_tabelas.py        # tables (tab_*.tex), numeros.tex/json, suptab.te
 python gerar_figuras.py        # figures
 python gerar_suplemento.py     # supplementary per-instance tables
 python checar_macros.py        # every \num{} key exists; abstract length; no control bytes
-python checar_afirmacoes.py    # universal claims (U1-U6) checked against the confirmatory tables
+python checar_afirmacoes.py    # universal claims (U1-U11) checked against the confirmatory tables
 bash compilar.sh               # manuscript and supplement (Tectonic)
 ```
 
