@@ -6300,6 +6300,8 @@
 "s20_g2_TSP_tilt": "0.94",
 "s20_g2_TSP_tilt0": "1.02",
 "s20_g2_TSP_tilt65": "0.69",
+"s20_gain65_CVRP": "0.03",
+"s20_gain65_TSP": "0.21",
 "s20_gap_ALL_RP": "1.456",
 "s20_gap_ALL_U": "1.515",
 "s20_gap_ALL_static": "1.097",

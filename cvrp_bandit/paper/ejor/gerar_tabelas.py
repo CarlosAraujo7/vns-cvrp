@@ -2199,6 +2199,7 @@ def estudo20():
         NUM[f"s20_es_{p}_gap33"], NUM[f"s20_es_{p}_gap65"] = f"{e['static65']['gap_tune_33']:.3f}", f"{e['static65']['gap_tune_65']:.3f}"
         NUM[f"s20_es_{p}_gain"] = f"{e['static65']['gap_tune_33'] - e['static65']['gap_tune_65']:.2f}"
         NUM[f"s20_es_{p}_nev"] = str(e["static65"]["n_avaliacoes"])
+        NUM[f"s20_gain65_{p}"] = f"{pv[p]['static'].mean() - pv[p]['static65'].mean():.2f}"
         for m in ("RP", "tilt"):
             NUM[f"s20_hp_{p}_{m}_rho"], NUM[f"s20_hp_{p}_{m}_seg"] = f"{e[m]['params']['rho']:g}", f"{e[m]['params']['segmento']:g}"
             NUM[f"s20_hp_{p}_{m}_cfg"] = e[m]["config_id"].replace("_", r"\_")
