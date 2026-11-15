@@ -26,6 +26,11 @@ Confere, direto das tabelas de testes confirmatorios, as afirmacoes UNIVERSAIS d
       Resultado: a afirmacao pre-registrada e FALSA em exatamente um contraste, o hibrido `tilt` (pesos de Ropke e Pisinger modulados pela mistura
       ajustada) contra a mistura por FASE (-0,23 pp), que e numericamente PIOR que a mistura estatica; contra a mistura estatica o `tilt` nao e
       significativo apos Holm (-0,14 pp, p aj. 0,17; indicio levado ao Estudo 19). O script lista as excecoes e falha se o conjunto mudar (ESPERADO_U10);
+  U11 no ALNS do CVRP e do TSP com esforco total de ajuste controlado (Estudo 20) nenhuma politica online (o RP retunado, o hibrido `tilt`, o hibrido
+      com hiperparametros padrao e o hibrido sobre a mistura de 65 avaliacoes) e significativamente melhor que a mistura estatica de esforco igual ou
+      menor: nenhum dos cinco contrastes pre-registrados H111, H112, H113, H118 e H119 (agregado de 113 instancias) tem dif < 0 com p < 0,05 (H111 e
+      H119 sem correcao, H112 e H113 com Holm m=4, H118 com Holm m=3); o script lista os significativamente PIORES (H112, o hibrido ajustado contra a
+      mistura de 65 avaliacoes, e H118, o RP contra a mistura) e falha se o conjunto mudar (ESPERADO_U11_PIOR);
   U6  no CVRPTW (Estudo 14) politicas superam a uniforme (U1w lista), mas NENHUMA politica e significativamente melhor que a melhor
       alternativa nao adaptativa (a ordem fixa de custo crescente, a de menor gap medio em E1 e E2): nenhum contraste
       politica - FOC_custo com dif < 0 e p ajustado < 0,05 (familia exploratoria de 18 testes);
@@ -41,6 +46,7 @@ import pandas as pd
 RES = Path(__file__).resolve().parent.parent.parent / "results" / "aos_study"
 falhas = []
 ESPERADO_U10 = [("tilt", "sched")]      # excecoes conhecidas de U10 (Estudo 18, familia D): o hibrido tilt contra a mistura por fase
+ESPERADO_U11_PIOR = ["H112", "H118"]  # contrastes de U11 (Estudo 20) em que a politica e significativamente PIOR que a mistura (nenhum e melhor)
 
 
 def ler(nome):
@@ -205,6 +211,18 @@ def main():
             print(f"    excecao: {r.a} - {r.b} = {r.dif_pp:.2f} pp (p Holm {r.p_holm:.4f})")
         if len(m18) != 15 or sorted(zip(m10.a, m10.b)) != sorted(ESPERADO_U10):
             falhas.append("U10")
+    d20 = ler("analise_etapa20.csv")
+    if d20 is not None:
+        c11 = d20[d20.id.str.match(r"H(111|112|113|118|119) ")].copy()
+        c11["h"] = c11.id.str.split(" ").str[0]
+        melhor = c11[(c11.dif_pp < 0) & (c11.p_holm < 0.05)]
+        pior = c11[(c11.dif_pp > 0) & (c11.p_holm < 0.05)]
+        print(f"U11 (Estudo 20, ALNS do CVRP e do TSP, esforco total controlado): politicas online significativamente melhores que a mistura: "
+              f"{len(melhor)} de {len(c11)} contrastes; significativamente piores: {sorted(pior.h)}")
+        for _, r in pior.iterrows():
+            print(f"    pior: {r.id} = {r.dif_pp:+.3f} pp (p {r.p_holm:.4f})")
+        if len(c11) != 5 or len(melhor) != 0 or sorted(pior.h) != sorted(ESPERADO_U11_PIOR):
+            falhas.append("U11")
     d1 = ler("analise_confirmatoria.csv")
     lit = d1[d1.a == "hgucb_literal"]
     print(f"U3: literal - normalizado: {[round(x, 2) for x in lit.dif_media_pp]} pp, derrotas do literal {list(lit.der_a)} de 74")

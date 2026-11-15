@@ -2166,6 +2166,7 @@ def estudo20():
         macros_contraste("s20", chave, r)
         NUM[f"s20apr_{chave}"] = f"{r.p_bruto:.3f}"
         NUM[f"s20mde_{chave}"] = f"{r.mde_pp:.2f}"
+        NUM[f"s20loa_{chave}"], NUM[f"s20hia_{chave}"] = f"{abs(r.ic_lo):.2f}", f"{abs(r.ic_hi):.2f}"
     hy = pd.read_csv(RES / "analise_etapa20_hipoteses.csv")
     for i, (_, r) in enumerate(hy.iterrows()):
         NUM[f"s20_h{111 + i}_ok"] = "yes" if bool(r.confirmada) else "no"
@@ -2181,6 +2182,15 @@ def estudo20():
         if tag != "raw":
             NUM[f"s20_{tag}_ci"] = f"[{plano(r.ic_lo)}, {plano(r.ic_hi)}]"
             NUM[f"s20_{tag}_tau2"], NUM[f"s20_{tag}_I2"], NUM[f"s20_{tag}_pQ"] = f"{r.tau2:.4f}", f"{100 * r.I2:.0f}", f"{r.p_Q:.2f}"
+    rb = pd.read_csv(RES / "analise_etapa20_robustez.csv")
+    for _, r in rb[rb.grupo == "robustez"].iterrows():
+        h = r.id.split(" ")[0]
+        NUM[f"s20rob_{h}_pt"], NUM[f"s20rob_{h}_pperm"] = padj(r.p_t), padj(r.p_perm)
+        NUM[f"s20rob_{h}_ci2"] = f"[{plano(r.ic2_lo)}, {plano(r.ic2_hi)}]"
+    for h in ("H111", "H119"):
+        x = rb[(rb.grupo == "robustez_sem_conjunto") & rb.id.str.startswith(h)]
+        NUM[f"s20rob_{h}_loo_lo"], NUM[f"s20rob_{h}_loo_hi"] = sgn(x.dif_pp.min()), sgn(x.dif_pp.max())
+        NUM[f"s20rob_{h}_loo_minp"] = padj(x.p_wilcoxon.min())
     tm = pd.read_csv(RES / "analise_etapa20_tamanho.csv").iloc[0]
     NUM["s20_size_rho"], NUM["s20_size_p"] = f"{tm.rho:+.2f}".replace("-", "$-$"), padj(tm.p)
     # ajuste, selecao, validacao
@@ -2195,6 +2205,13 @@ def estudo20():
             NUM[f"s20_hp_{p}_{m}_gain"] = f"{e[m]['gap_padrao'] - e[m]['gap_tune']:.2f}"
         for a, g in val[p][val[p].viavel].groupby("braco").gap_pct.mean().items():
             NUM[f"s20_val_{p}_{a}"] = f"{g:.3f}"
+        tun_ = {"static": e["static65"]["gap_tune_33"], "static65": e["static65"]["gap_tune_65"], "RP": e["RP"]["gap_tune"],
+                "tilt0": e["tilt"]["gap_padrao"], "tilt": e["tilt"]["gap_tune"]}
+        for a, g in tun_.items():
+            NUM[f"s20_tune_{p}_{a}"] = f"{g:.3f}"
+            vkey = "s20_val_" + p + "_" + a
+            if vkey in NUM:
+                NUM["s20_opt_" + p + "_" + a] = f"{float(NUM[vkey]) - g:.2f}"
     # uso de operadores (fracao media por execucao, %), destruicoes e reparos
     for p in probs:
         for a in sorted(set(dados[p].braco)):

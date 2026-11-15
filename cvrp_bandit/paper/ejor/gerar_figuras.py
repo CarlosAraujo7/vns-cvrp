@@ -233,7 +233,7 @@ def fig_hibrido():
     vals = [v for t in todas if t[4] != "sep" for v in (t[2], t[3])]
     ax.set_xlim(min(min(vals), -0.1) - 0.02, max(max(vals), 0.1) + 0.02)
     if baixo:
-        ax.text(ax.get_xlim()[0], n - 1 - len(linhas), "equal total tuning effort", ha="left", va="center", fontsize=6, color="0.35", style="italic")
+        ax.text(ax.get_xlim()[0] + 0.008, n - 1 - len(linhas), "equal total tuning effort", ha="left", va="center", fontsize=6, color="0.35", style="italic")
     ax.set_xlabel("Difference in gap (pp); negative favors the first arm; 95% CI", fontsize=7)
     ax.set_ylim(-0.7, n - 0.4)
     fig.tight_layout()

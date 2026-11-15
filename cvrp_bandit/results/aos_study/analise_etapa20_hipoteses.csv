@@ -1,0 +1,10 @@
+hipotese,confirmada
+"H111 tilt - static (agregado, 113 inst.) significativamente negativo (primario)",False
+H112 tilt - static65 (agregado) significativamente negativo (Holm m=4),False
+H113 tilt0 - static (agregado) significativamente negativo (Holm m=4),False
+H114 tilt - static no CVRP significativamente negativo (Holm m=4),False
+H115 tilt - static no TSP significativamente negativo (Holm m=4),False
+H116 static65 - static (agregado) significativamente negativo (Holm m=3),True
+H117 tilt - RP (agregado) significativamente negativo (Holm m=3),True
+"H118 RP - static (agregado) significativamente POSITIVO, RP pior (Holm m=3)",True
+"H119 tilt65 - static65 (agregado) significativamente negativo (segundo primario, emenda 1, sem correcao)",False

@@ -1,0 +1,29 @@
+\begin{table}[t]
+\caption{Study 20: tuning effort (evaluations of the hyperparameters or of the mixture), tuning gap (best configuration on the 24 synthetic tuning instances), validation gap (same instances, three new seeds) and evaluation gap (\%) of each arm in the ALNS of the CVRP and of the TSP, difference of the evaluation gap from uniform selection (pp, descriptive) and wins/losses of the arm. Uniform selection and the 33-evaluation mixture are reused from Studies 9, 12 and 13 without new runs; the tuning gap of the default hybrid is that of its first configuration on the tuning instances.}\label{tab:s20a}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccccc}
+\toprule
+Arm & Evaluations & Tuning & Validation & Evaluation & $\Delta$ vs.\ uniform & W/L \\
+\midrule
+\multicolumn{7}{l}{\emph{CVRP, 51 instances}} \\
+Uniform selection & 0 & --- & --- & 1.70 & --- & --- \\
+Adaptive weights, tuned & 33 & 0.72 & 0.94 & 1.36 & $-$0.34 & 43/8 \\
+Static mixture, 33 evaluations & 33 & 0.79 & 0.85 & 1.33 & $-$0.37 & 42/9 \\
+Static mixture, 65 evaluations & 65 & 0.75 & 0.86 & 1.30 & $-$0.40 & 43/8 \\
+Tilted weights, default & 33 & 0.85 & 0.98 & 1.34 & $-$0.36 & 44/7 \\
+Tilted weights, tuned & 66 & 0.70 & 0.86 & 1.25 & $-$0.45 & 46/5 \\
+Tilted weights, default, on the 65-evaluation mixture & 65 & --- & 1.00 & 1.36 & $-$0.34 & 43/8 \\
+\multicolumn{7}{l}{\emph{TSP, 62 instances}} \\
+Uniform selection & 0 & --- & --- & 1.36 & --- & --- \\
+Adaptive weights, tuned & 33 & 1.06 & 1.20 & 1.54 & $+$0.18 & 23/38 \\
+Static mixture, 33 evaluations & 33 & 0.64 & 0.76 & 0.91 & $-$0.46 & 53/9 \\
+Static mixture, 65 evaluations & 65 & 0.38 & 0.58 & 0.69 & $-$0.67 & 55/7 \\
+Tilted weights, default & 33 & 0.70 & 0.70 & 1.02 & $-$0.34 & 49/13 \\
+Tilted weights, tuned & 66 & 0.59 & 0.82 & 0.94 & $-$0.42 & 51/11 \\
+Tilted weights, default, on the 65-evaluation mixture & 65 & --- & 0.49 & 0.69 & $-$0.67 & 58/4 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
