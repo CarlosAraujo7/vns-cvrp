@@ -1,0 +1,11 @@
+CVRP/static65: controle de continuidade OK (gap 0.791196 = 0.791196 do Estudo 12/13)
+CVRP/static65: controle de continuidade OK (gap 0.791196 = 0.791196 do Estudo 12/13)
+CVRP/static65 gen 9: melhor filho 0.7482  atual 0.7482  sigma 0.295
+CVRP/static65 gen 10: melhor filho 0.8109  atual 0.7482  sigma 0.266
+CVRP/static65 gen 11: melhor filho 0.7796  atual 0.7482  sigma 0.239
+CVRP/static65 gen 12: melhor filho 0.8113  atual 0.7482  sigma 0.215
+CVRP/static65 gen 13: melhor filho 0.8216  atual 0.7482  sigma 0.194
+CVRP/static65 gen 14: melhor filho 0.8043  atual 0.7482  sigma 0.174
+CVRP/static65 gen 15: melhor filho 0.7614  atual 0.7482  sigma 0.157
+CVRP/static65 gen 16: melhor filho 0.7600  atual 0.7482  sigma 0.141
+busca ES (CVRP/static65) concluida

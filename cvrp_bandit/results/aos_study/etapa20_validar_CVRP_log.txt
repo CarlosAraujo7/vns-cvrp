@@ -1,0 +1,12 @@
+validacao CVRP (instancias de ajuste, seeds novas): 432 execucoes
+    100/432  2.0 min
+    200/432  3.5 min
+    300/432  5.3 min
+    400/432  6.9 min
+braco
+s20_CVRP_static      0.8497
+s20_CVRP_static65    0.8581
+s20_CVRP_tilt        0.8634
+s20_CVRP_RP          0.9393
+s20_CVRP_tilt0       0.9784
+s20_CVRP_tilt65      1.0004

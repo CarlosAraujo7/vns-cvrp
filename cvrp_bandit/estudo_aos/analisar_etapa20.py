@@ -86,6 +86,21 @@ def estudo19():
     return out
 
 
+def boot2(runs, chaves, a, b, rng, nb=2000):
+    """IC95% bootstrap de DOIS niveis da diferenca media a - b: reamostra as instancias e, dentro de cada instancia sorteada, as seeds de cada braco
+    (independentemente), de modo que a variancia entre seeds entra no intervalo (EXPLORATORIO)."""
+    ga, gb = [runs[k][a] for k in chaves], [runs[k][b] for k in chaves]
+    n = len(chaves)
+    out = np.empty(nb)
+    for r in range(nb):
+        s = 0.0
+        for i in rng.integers(0, n, n):
+            xa, xb = ga[i], gb[i]
+            s += xa[rng.integers(0, len(xa), len(xa))].mean() - xb[rng.integers(0, len(xb), len(xb))].mean()
+        out[r] = s / n
+    return np.percentile(out, [2.5, 97.5])
+
+
 def main(ensaio=False):
     rng = np.random.default_rng(0)
     pd.set_option("display.width", 250)
@@ -98,6 +113,7 @@ def main(ensaio=False):
         if "static65" not in set(d.braco):
             print(f"[{p}] static65 ausente: a continuacao do ES nao achou melhora (static65 = static, tilt65 = tilt0); colunas copiadas")
             d = pd.concat([d, d[d.braco == "static"].assign(braco="static65"), d[d.braco == "tilt0"].assign(braco="tilt65")], ignore_index=True)
+        dados[p] = d
         t = pivo(d)
         assert set(t.columns) == {"U", "static", "RP", "tilt", "tilt0", "static65", "tilt65"}, (p, list(t.columns))
         piv[p] = t
@@ -136,6 +152,31 @@ def main(ensaio=False):
     r = pd.concat([prim, sec, ter, ex], ignore_index=True)
     print("\n=== primario (sem correcao), secundarios (Holm m=4), terciarios (Holm m=3) e exploratorios ===")
     print(r.drop(columns=["grupo", "a", "b"]).round(4).to_string(index=False))
+
+    # EXPLORATORIO (rotular; nao altera nenhum teste pre-registrado): robustez dos contrastes agregados H111, H119, H112 e H113 a (i) o teste (t pareado,
+    # permutacao por troca de sinais), (ii) a variancia entre seeds (bootstrap de dois niveis) e (iii) a retirada de cada um dos quatro conjuntos de instancias
+    runs = {}
+    for p in PROBS:
+        for (arm, inst), gg in dados[p][dados[p].viavel].groupby(["braco", "instancia"]).gap_pct:
+            runs.setdefault((p, inst), {})[arm] = gg.values
+    conj_all = pd.concat([conjuntos[p] for p in PROBS], keys=list(PROBS)).reindex(agr.index)
+    rob = []
+    for cid, a, b in (("H111", "tilt", "static"), ("H119", "tilt65", "static65"), ("H112", "tilt", "static65"), ("H113", "tilt0", "static")):
+        dif = np.where(np.abs((agr[a] - agr[b]).values) < 1e-9, 0.0, (agr[a] - agr[b]).values)
+        sinais = rng.choice([-1.0, 1.0], size=(10000, len(dif)))
+        perm = (sinais * dif).mean(axis=1)
+        lo2, hi2 = boot2(runs, list(agr.index), a, b, rng)
+        rob.append(dict(grupo="robustez", id=f"{cid} {a}-{b}@agregado", n_inst=len(dif), dif_pp=dif.mean(),
+                        p_wilcoxon=stats.wilcoxon(dif).pvalue if np.any(dif != 0) else 1.0, p_t=stats.ttest_1samp(dif, 0).pvalue,
+                        p_perm=(1 + int((np.abs(perm) >= abs(dif.mean()) - 1e-12).sum())) / 10001, ic2_lo=lo2, ic2_hi=hi2))
+    for c in sorted(set(conj_all)):
+        sub = agr[(conj_all != c).values]
+        for cid, a, b in (("H111", "tilt", "static"), ("H119", "tilt65", "static65")):
+            x = contraste(sub, f"{cid} {a}-{b}@sem_{c}", a, b, rng, "robustez_sem_conjunto")
+            rob.append(dict(grupo=x["grupo"], id=x["id"], n_inst=x["n_inst"], dif_pp=x["dif_pp"], p_wilcoxon=x["p_bruto"], ic_lo=x["ic_lo"], ic_hi=x["ic_hi"]))
+    rob = pd.DataFrame(rob)
+    print("\n=== exploratorio: robustez dos contrastes agregados (t pareado, permutacao, bootstrap de dois niveis, sem cada conjunto) ===")
+    print(rob.drop(columns=["grupo"]).round(4).to_string(index=False))
 
     g = lambda cid: r[r.id.str.startswith(cid)].iloc[0]  # noqa: E731
     neg = lambda x: bool(x.p_holm < 0.05 and x.dif_pp < 0)  # noqa: E731
@@ -200,6 +241,7 @@ def main(ensaio=False):
         est.to_csv(RES / "analise_etapa20_replicacoes.csv", index=False)
         meta.to_csv(RES / "analise_etapa20_meta.csv", index=False)
         tamdf.to_csv(RES / "analise_etapa20_tamanho.csv", index=False)
+        rob.to_csv(RES / "analise_etapa20_robustez.csv", index=False)
         pd.DataFrame([dict(hipotese=k, confirmada=bool(ok)) for k, ok in H.items()]).to_csv(RES / "analise_etapa20_hipoteses.csv", index=False)
 
 

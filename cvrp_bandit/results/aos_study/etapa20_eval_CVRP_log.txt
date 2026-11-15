@@ -1,0 +1,20 @@
+eval Estudo 20 CVRP: 1800 execucoes (s20_CVRP_RP, s20_CVRP_tilt, s20_CVRP_tilt0, s20_CVRP_static65, s20_CVRP_tilt65)
+    100/1800  11.5 min
+    200/1800  25.2 min
+    300/1800  33.9 min
+    400/1800  39.5 min
+    500/1800  43.8 min
+    600/1800  49.1 min
+    700/1800  53.1 min
+    800/1800  58.5 min
+    900/1800  61.1 min
+    1000/1800  64.0 min
+    1100/1800  67.5 min
+    1200/1800  69.7 min
+    1300/1800  72.6 min
+    1400/1800  74.0 min
+    1500/1800  75.7 min
+    1600/1800  77.3 min
+    1700/1800  79.4 min
+    1800/1800  81.1 min
+eval Estudo 20 CVRP concluido

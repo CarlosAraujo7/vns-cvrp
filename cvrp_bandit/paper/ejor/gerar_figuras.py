@@ -187,7 +187,61 @@ def fig_sintese():
     plt.close(fig)
 
 
+def fig_hibrido():
+    """Floresta do hibrido (pesos adaptativos modulados pela mistura ajustada) contra a mistura, nos estudos 18, 19 e 20 (diferenca media pareada em pp, IC95%
+    bootstrap sobre instancias; negativo favorece o hibrido), e, no bloco de baixo, os contrastes de esforco total igual do Estudo 20. Sem os arquivos do
+    Estudo 20, so o bloco dos Estudos 18 e 19."""
+    linhas = []                                     # (rotulo, dif, lo, hi, tipo) tipo: 'descoberta', 'replicacao', 'agregado', 'meta'
+    a18 = pd.read_csv(RES / "analise_etapa18.csv")
+    r = a18[(a18.grupo == "D") & (a18.a == "tilt") & (a18.b == "static18")].iloc[0]
+    linhas.append(("Study 18, Solomon (discovery)", r.dif_pp, r.ic_lo, r.ic_hi, "descoberta"))
+    a19 = pd.read_csv(RES / "analise_etapa19.csv")
+    for cid, rot in (("tilt-static18@SYN", "Study 19, 48 new synthetic"), ("tilt-static18@SOL", "Study 19, Solomon, new seeds")):
+        r = a19[a19.id == cid].iloc[0]
+        linhas.append((rot, r.dif_pp, r.ic_lo, r.ic_hi, "replicacao"))
+    baixo = []
+    f20 = RES / "analise_etapa20.csv"
+    if f20.exists():
+        a20 = pd.read_csv(f20)
+        pick = lambda pref: a20[a20.id.str.startswith(pref)].iloc[0]  # noqa: E731
+        for pref, rot in (("H114 ", "Study 20, CVRP (51)"), ("H115 ", "Study 20, TSP (62)")):
+            r = pick(pref)
+            linhas.append((rot, r.dif_pp, r.ic_lo, r.ic_hi, "replicacao"))
+        r = pick("H111 ")
+        linhas.append(("Study 20, both problems (113)", r.dif_pp, r.ic_lo, r.ic_hi, "agregado"))
+        m = pd.read_csv(RES / "analise_etapa20_meta.csv").set_index("id").loc["4 conjuntos"]
+        linhas.append(("Random-effects pool of the four replication sets", m.mu_re, m.ic_lo, m.ic_hi, "meta"))
+        for pref, rot, tipo in (("H112 ", "tilt $-$ static65, both problems", "agregado"), ("tilt65-static65@CVRP", "tilt65 $-$ static65, CVRP", "replicacao"),
+                                ("tilt65-static65@TSP", "tilt65 $-$ static65, TSP", "replicacao"), ("H119 ", "tilt65 $-$ static65, both problems", "agregado")):
+            r = pick(pref)
+            baixo.append((rot, r.dif_pp, r.ic_lo, r.ic_hi, tipo))
+    todas = linhas + ([("", np.nan, np.nan, np.nan, "sep")] + baixo if baixo else [])
+    fig, ax = plt.subplots(figsize=(6.4, 0.30 * len(todas) + 0.9))
+    n = len(todas)
+    for k, (rot, d, lo, hi, tipo) in enumerate(todas):
+        y = n - 1 - k
+        if tipo == "sep":
+            continue
+        cor = {"descoberta": "0.55", "replicacao": "k", "agregado": "#1b5e9b", "meta": "#d95f02"}[tipo]
+        ax.plot([lo, hi], [y, y], color=cor, lw=1.3, zorder=2)
+        ax.scatter([d], [y], marker="D" if tipo == "meta" else "o", s=26 if tipo != "descoberta" else 22, facecolors="white" if tipo == "descoberta" else cor,
+                   edgecolors=cor, zorder=3)
+    ax.axvline(0, color="k", lw=0.8)
+    ax.axvspan(-0.1, 0.1, color="0.92", zorder=0)
+    ax.set_yticks(range(n))
+    ax.set_yticklabels([t[0] for t in todas][::-1], fontsize=6.5)
+    vals = [v for t in todas if t[4] != "sep" for v in (t[2], t[3])]
+    ax.set_xlim(min(min(vals), -0.1) - 0.02, max(max(vals), 0.1) + 0.02)
+    if baixo:
+        ax.text(ax.get_xlim()[0], n - 1 - len(linhas), "equal total tuning effort", ha="left", va="center", fontsize=6, color="0.35", style="italic")
+    ax.set_xlabel("Difference in gap (pp); negative favors the first arm; 95% CI", fontsize=7)
+    ax.set_ylim(-0.7, n - 0.4)
+    fig.tight_layout()
+    fig.savefig(AQUI / "fig_hibrido.pdf")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
-    for f in (fig_forest, fig_estrutura, fig_pool, fig_operadores, fig_sintese):
+    for f in (fig_forest, fig_estrutura, fig_pool, fig_operadores, fig_sintese, fig_hibrido):
         f()
         print("ok", f.__name__)
