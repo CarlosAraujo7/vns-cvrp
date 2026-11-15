@@ -175,6 +175,9 @@ def main(ensaio=False):
     d_ts = agr["tilt"] - agr["static"]
     rho_, p_ = stats.spearmanr(tam.reindex(d_ts.index).values, d_ts.values)
     print(f"  rho {rho_:+.3f} (p {p_:.3f}), n {len(d_ts)}")
+    meta = pd.DataFrame([dict(id="4 conjuntos", **m_all), dict(id="so Estudo 20", **m_20),
+                         dict(id="bruta", k=len(todas), mu_re=float(todas.mean()), mu_fixo=float(todas.mean()))])
+    tamdf = pd.DataFrame([dict(rho=float(rho_), p=float(p_), n=len(d_ts))])
 
     print("\n=== exploratorio: uso medio de operadores (fracao), destruicoes | reparos ===")
     for p in PROBS:
@@ -195,6 +198,8 @@ def main(ensaio=False):
                   f"static65 mudou={esc['static65']['mudou']} (gap_tune {esc['static65']['gap_tune_33']:.4f} -> {esc['static65']['gap_tune_65']:.4f})")
         r.to_csv(RES / "analise_etapa20.csv", index=False)
         est.to_csv(RES / "analise_etapa20_replicacoes.csv", index=False)
+        meta.to_csv(RES / "analise_etapa20_meta.csv", index=False)
+        tamdf.to_csv(RES / "analise_etapa20_tamanho.csv", index=False)
         pd.DataFrame([dict(hipotese=k, confirmada=bool(ok)) for k, ok in H.items()]).to_csv(RES / "analise_etapa20_hipoteses.csv", index=False)
 
 

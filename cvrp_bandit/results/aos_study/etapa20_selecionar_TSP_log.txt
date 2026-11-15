@@ -1,0 +1,3 @@
+TSP/static65: MUDOU  gap_tune 0.6449 -> 0.3803  (65 avaliacoes)
+TSP/RP: config r12  gap_tune 1.0562  (padrao 1.1096)  n_configs 33  params {'rho': 0.06143, 'segmento': 100}
+TSP/tilt: config r32  gap_tune 0.5943  (padrao 0.6978)  n_configs 33  params {'rho': 0.02628, 'segmento': 100}

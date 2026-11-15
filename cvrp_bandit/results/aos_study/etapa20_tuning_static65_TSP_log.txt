@@ -1,0 +1,10 @@
+TSP/static65: controle de continuidade OK (gap 0.644851 = 0.644851 do Estudo 12/13)
+TSP/static65 gen 9: melhor filho 0.4707  atual 0.4707  sigma 0.295
+TSP/static65 gen 10: melhor filho 0.4189  atual 0.4189  sigma 0.295
+TSP/static65 gen 11: melhor filho 0.3803  atual 0.3803  sigma 0.295
+TSP/static65 gen 12: melhor filho 0.4136  atual 0.3803  sigma 0.266
+TSP/static65 gen 13: melhor filho 0.3877  atual 0.3803  sigma 0.239
+TSP/static65 gen 14: melhor filho 0.4104  atual 0.3803  sigma 0.215
+TSP/static65 gen 15: melhor filho 0.4545  atual 0.3803  sigma 0.194
+TSP/static65 gen 16: melhor filho 0.3992  atual 0.3803  sigma 0.174
+busca ES (TSP/static65) concluida

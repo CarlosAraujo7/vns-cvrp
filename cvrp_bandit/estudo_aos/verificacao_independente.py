@@ -671,6 +671,72 @@ def verifica_s19(num):
     return nm, nc
 
 
+def verifica_s20(num):
+    """Estudo 20 (generalidade do hibrido no ALNS do CVRP e do TSP): recomputa, so com a biblioteca padrao, as medias dos macros `s20_gap_<CVRP|TSP|ALL>_<braco>`
+    e a diferenca media, vitorias, derrotas e n de todos os contrastes de analise_etapa20.csv (sufixos @agregado, @CVRP, @TSP e @<conjunto>) direto dos CSV
+    brutos (media das seeds por instancia; U e static dos Estudos 9, 12 e 13; se static65 e tilt65 nao foram executados, valem static e tilt0)."""
+    fontes = {"CVRP": [("etapa9_eval.csv", "s9_U", "U"), ("etapa12_eval.csv", "s12_static", "static"), ("etapa20_eval_CVRP.csv", "s20_CVRP_", None)],
+              "TSP": [("etapa13_eval_a.csv", "s13a_U", "U"), ("etapa13_eval_a.csv", "s13a_static", "static"), ("etapa20_eval_TSP.csv", "s20_TSP_", None)]}
+    an = RES / "analise_etapa20.csv"
+    if not (an.exists() and all((RES / f"etapa20_eval_{p}.csv").exists() for p in fontes)):
+        return 0, 0
+    por, conj_de = defaultdict(list), {}
+    for p, lst in fontes.items():
+        for arq, pref, novo in lst:
+            with open(RES / arq, encoding="utf-8", newline="") as f:
+                for r in csv.DictReader(f):
+                    if novo is None:
+                        if not r["braco"].startswith(pref):
+                            continue
+                        nome = r["braco"][len(pref):]
+                    else:
+                        if r["braco"] != pref:
+                            continue
+                        nome = novo
+                    if r["viavel"] != "True":
+                        problemas.append(f"{arq}: execucao inviavel {r['braco']} {r['instancia']} {r['seed']}")
+                        continue
+                    ref = float(r["ref"])
+                    gap = 100.0 * (float(r["custo"]) - ref) / ref
+                    if abs(gap - float(r["gap_pct"])) > 1e-6:
+                        problemas.append(f"{arq}: gap gravado divergente {r['braco']} {r['instancia']} {r['seed']}")
+                    por[(p, nome, r["instancia"])].append(gap)
+                    conj_de[(p, r["instancia"])] = r["conjunto"]
+    medias = {k: statistics.fmean(v) for k, v in por.items()}
+    for p in fontes:                                           # o ES nao melhorou neste problema: static65 = static, tilt65 = tilt0
+        if not any(b == "static65" for (pp, b, _i) in medias if pp == p):
+            for (pp, b, i), m in list(medias.items()):
+                if pp == p and b in ("static", "tilt0"):
+                    medias[(p, "static65" if b == "static" else "tilt65", i)] = m
+    bracos = ("U", "static", "RP", "tilt", "tilt0", "static65", "tilt65")
+    completas = {(p, i) for (p, b, i) in medias if b == "U" and all((p, a, i) in medias for a in bracos)}   # a analise faz dropna() sobre as colunas
+    nm = 0
+    for chave, valor in num.items():
+        if not chave.startswith("s20_gap_"):
+            continue
+        _, _, tag, arm = chave.split("_", 3)
+        vals = [medias[(p, arm, i)] for (p, i) in completas if tag in ("ALL", p)]
+        if not vals:
+            problemas.append(f"macro {chave}: braco ausente nos CSV do Estudo 20")
+            continue
+        nm += confere(chave, valor, statistics.fmean(vals), 3)
+    nc = 0
+    for r in csv.DictReader(open(an, encoding="utf-8")):
+        _corpo, _, suf = r["id"].partition("@")
+        inst = [(p, i) for (p, i) in sorted(completas) if suf == "agregado" or suf == p or conj_de[(p, i)] == suf]
+        dif = [medias[(p, r["a"], i)] - medias[(p, r["b"], i)] for (p, i) in inst]
+        dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+        if not dif:
+            problemas.append(f"analise_etapa20.csv {r['id']}: sem instancias comuns")
+            continue
+        dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+        if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or len(inst) != int(r["n_inst"]):
+            problemas.append(f"analise_etapa20.csv {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs {r['vit_a']}/{r['der_a']}; "
+                             f"n {len(inst)} vs {r['n_inst']}")
+        nc += 1
+    return nm, nc
+
+
 def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csvs=()):
     """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
     diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
@@ -876,6 +942,11 @@ def main():
     cont += n19c
     if n19m or n19c:
         print(f"(2c) Estudo 19 (replica confirmatoria): {n19m} medias e {n19c} contrastes conferidos")
+    n20m, n20c = verifica_s20(num)
+    outros += n20m
+    cont += n20c
+    if n20m or n20c:
+        print(f"(2c) Estudo 20 (generalidade do hibrido no CVRP e no TSP): {n20m} medias e {n20c} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(

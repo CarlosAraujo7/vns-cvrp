@@ -1,0 +1,12 @@
+validacao TSP (instancias de ajuste, seeds novas): 432 execucoes
+    100/432  1.6 min
+    200/432  2.7 min
+    300/432  4.1 min
+    400/432  5.5 min
+braco
+s20_TSP_tilt65      0.4886
+s20_TSP_static65    0.5849
+s20_TSP_tilt0       0.7044
+s20_TSP_static      0.7596
+s20_TSP_tilt        0.8229
+s20_TSP_RP          1.2039

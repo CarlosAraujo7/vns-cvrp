@@ -2118,6 +2118,159 @@ def estudo19():
         r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
 
 
+def estudo20():
+    """Estudo 20 (generalidade do hibrido `tilt` no ALNS do CVRP e do TSP, esforco total de ajuste controlado). Entradas 132 (pre-registro), 133 (emenda 1)
+    e a de resultados. Bracos U e static reutilizados dos Estudos 9, 12 e 13; novos: RP, tilt, tilt0, static65, tilt65."""
+    import re
+    probs = ("CVRP", "TSP")
+    cols = ["braco", "conjunto", "instancia", "n_customers", "seed", "viavel", "gap_pct", "uso_d", "uso_r"]
+    e9, e12, e13 = (pd.read_csv(RES / f) for f in ("etapa9_eval.csv", "etapa12_eval.csv", "etapa13_eval_a.csv"))
+    sel = lambda d, b, novo: d[d.braco == b][cols].assign(braco=novo)  # noqa: E731
+    ref = {"CVRP": pd.concat([sel(e9, "s9_U", "U"), sel(e12, "s12_static", "static")], ignore_index=True),
+           "TSP": pd.concat([sel(e13, "s13a_U", "U"), sel(e13, "s13a_static", "static")], ignore_index=True)}
+    ev, val, esc, dados = {}, {}, {}, {}
+    for p in probs:
+        ev[p] = pd.read_csv(RES / f"etapa20_eval_{p}.csv")
+        ev[p]["braco"] = ev[p].braco.str.replace(f"s20_{p}_", "", regex=False)
+        val[p] = pd.read_csv(RES / f"etapa20_validacao_{p}.csv")
+        val[p]["braco"] = val[p].braco.str.replace(f"s20_{p}_", "", regex=False)
+        esc[p] = json.loads((RES / f"etapa20_tuning_escolhidas_{p}.json").read_text())
+        d = pd.concat([ref[p], ev[p][cols]], ignore_index=True)
+        mudou = bool(esc[p]["static65"]["mudou"])
+        NUM[f"s20_mudou_{p}"] = "yes" if mudou else "no"
+        if not mudou:                                   # o ES nao melhorou: static65 = static e tilt65 = tilt0 (colunas copiadas, como na analise)
+            d = pd.concat([d, d[d.braco == "static"].assign(braco="static65"), d[d.braco == "tilt0"].assign(braco="tilt65")], ignore_index=True)
+        dados[p] = d
+
+    def milhar(n):
+        return f"{n:,}".replace(",", r"\,")
+
+    def piv(d):
+        return d[d.viavel].groupby(["braco", "instancia"]).gap_pct.mean().unstack(0).dropna()
+
+    pv = {p: piv(dados[p]) for p in probs}
+    agr = pd.concat([pv["CVRP"], pv["TSP"]], keys=list(probs))
+    NUM["s20_nruns"], NUM["s20_valid_runs"] = milhar(sum(len(ev[p]) for p in probs)), milhar(sum(len(val[p]) for p in probs))
+    NUM["s20_tune_runs"] = milhar(sum(len(pd.read_csv(RES / f"etapa20_tuning_{m}_{p}.csv")) for m in ("static65", "RP", "tilt") for p in probs))
+    NUM["s20_ninv"] = str(int(sum((~ev[p].viavel).sum() for p in probs)))
+    NUM["s20_n_all"], NUM["s20_n_CVRP"], NUM["s20_n_TSP"] = str(len(agr)), str(len(pv["CVRP"])), str(len(pv["TSP"]))
+    for tag, t in (("CVRP", pv["CVRP"]), ("TSP", pv["TSP"]), ("ALL", agr)):
+        for a in t.columns:
+            NUM[f"s20_gap_{tag}_{a}"] = f"{t[a].mean():.3f}"
+            NUM[f"s20_g2_{tag}_{a}"] = f2(t[a].mean())
+            NUM[f"s20_dU_{tag}_{a}"] = sgn((t[a] - t["U"]).mean())
+    # contrastes (confirmatorios pelo numero H e exploratorios pelo identificador)
+    aa = pd.read_csv(RES / "analise_etapa20.csv")
+    for _, r in aa.iterrows():
+        chave = r.id.split(" ")[0] if re.match(r"H\d+ ", r.id) else r.id.replace("-", "_").replace("@", "_")
+        macros_contraste("s20", chave, r)
+        NUM[f"s20apr_{chave}"] = f"{r.p_bruto:.3f}"
+        NUM[f"s20mde_{chave}"] = f"{r.mde_pp:.2f}"
+    hy = pd.read_csv(RES / "analise_etapa20_hipoteses.csv")
+    for i, (_, r) in enumerate(hy.iterrows()):
+        NUM[f"s20_h{111 + i}_ok"] = "yes" if bool(r.confirmada) else "no"
+    NUM["s20_hconf"] = str(int(hy.confirmada.sum()))
+    # replicacao e metanalise exploratoria
+    rep = pd.read_csv(RES / "analise_etapa20_replicacoes.csv")
+    for _, r in rep.iterrows():
+        k = r.conjunto.replace("-", "_")
+        NUM[f"s20_rep_{k}_n"], NUM[f"s20_rep_{k}_d"], NUM[f"s20_rep_{k}_se"] = str(int(r.n)), sgn(r.dif_pp), f"{r.ep:.3f}"
+    for _, r in pd.read_csv(RES / "analise_etapa20_meta.csv").iterrows():
+        tag = {"4 conjuntos": "m4", "so Estudo 20": "m20", "bruta": "raw"}[r.id]
+        NUM[f"s20_{tag}_mu"], NUM[f"s20_{tag}_k"] = sgn(r.mu_re), str(int(r.k))
+        if tag != "raw":
+            NUM[f"s20_{tag}_ci"] = f"[{plano(r.ic_lo)}, {plano(r.ic_hi)}]"
+            NUM[f"s20_{tag}_tau2"], NUM[f"s20_{tag}_I2"], NUM[f"s20_{tag}_pQ"] = f"{r.tau2:.4f}", f"{100 * r.I2:.0f}", f"{r.p_Q:.2f}"
+    tm = pd.read_csv(RES / "analise_etapa20_tamanho.csv").iloc[0]
+    NUM["s20_size_rho"], NUM["s20_size_p"] = f"{tm.rho:+.2f}".replace("-", "$-$"), padj(tm.p)
+    # ajuste, selecao, validacao
+    for p in probs:
+        e = esc[p]
+        NUM[f"s20_es_{p}_gap33"], NUM[f"s20_es_{p}_gap65"] = f"{e['static65']['gap_tune_33']:.3f}", f"{e['static65']['gap_tune_65']:.3f}"
+        NUM[f"s20_es_{p}_gain"] = f"{e['static65']['gap_tune_33'] - e['static65']['gap_tune_65']:.2f}"
+        NUM[f"s20_es_{p}_nev"] = str(e["static65"]["n_avaliacoes"])
+        for m in ("RP", "tilt"):
+            NUM[f"s20_hp_{p}_{m}_rho"], NUM[f"s20_hp_{p}_{m}_seg"] = f"{e[m]['params']['rho']:g}", f"{e[m]['params']['segmento']:g}"
+            NUM[f"s20_hp_{p}_{m}_cfg"] = e[m]["config_id"].replace("_", r"\_")
+            NUM[f"s20_hp_{p}_{m}_gain"] = f"{e[m]['gap_padrao'] - e[m]['gap_tune']:.2f}"
+        for a, g in val[p][val[p].viavel].groupby("braco").gap_pct.mean().items():
+            NUM[f"s20_val_{p}_{a}"] = f"{g:.3f}"
+    # uso de operadores (fracao media por execucao, %), destruicoes e reparos
+    for p in probs:
+        for a in sorted(set(dados[p].braco)):
+            g = dados[p][dados[p].braco == a]
+            for col, tag in (("uso_d", "d"), ("uso_r", "r")):
+                m = pd.DataFrame(g[col].str.split("|").apply(lambda v: [float(x) for x in v]).tolist()).mean()
+                m = 100 * m / m.sum()
+                for j, w in enumerate(m):
+                    NUM[f"s20_u{tag}_{p}_{a}_{j}"] = f"{w:.0f}"
+    # tabela dos bracos: ajuste, validacao e avaliacao
+    ARM20 = [("U", "Uniform selection", 0), ("RP", "Adaptive weights, tuned", 33), ("static", "Static mixture, 33 evaluations", 33),
+             ("static65", "Static mixture, 65 evaluations", 65), ("tilt0", "Tilted weights, default", 33), ("tilt", "Tilted weights, tuned", 66),
+             ("tilt65", "Tilted weights, default, on the 65-evaluation mixture", 65)]
+    lin = []
+    for p in probs:
+        t, e = pv[p], esc[p]
+        lin.append(r"\multicolumn{7}{l}{\emph{" + ("CVRP" if p == "CVRP" else "TSP") + f", {len(t)} instances" + r"}}")
+        tun = {"static": e["static65"]["gap_tune_33"], "static65": e["static65"]["gap_tune_65"], "RP": e["RP"]["gap_tune"],
+               "tilt0": e["tilt"]["gap_padrao"], "tilt": e["tilt"]["gap_tune"]}
+        for a, nome, nev in ARM20:
+            if a in ("static65", "tilt65") and not e["static65"]["mudou"]:
+                continue
+            vg = val[p][val[p].viavel & (val[p].braco == a)].gap_pct.mean() if (val[p].braco == a).any() else None
+            d = t[a] - t["U"]
+            lin.append(" & ".join([nome, str(nev), f"{tun[a]:.2f}" if a in tun else "---", f"{vg:.2f}" if vg is not None and vg == vg else "---", f"{t[a].mean():.2f}"]
+                                  + (["---", "---"] if a == "U" else [sgn(d.mean()), f"{int((d < -1e-9).sum())}/{int((d > 1e-9).sum())}"])))
+    escreve("tab_s20a.tex", tabela(
+        "Study 20: tuning effort (evaluations of the hyperparameters or of the mixture), tuning gap (best configuration on the 24 synthetic tuning instances), validation gap "
+        "(same instances, three new seeds) and evaluation gap (\\%) of each arm in the ALNS of the CVRP and of the TSP, difference of the evaluation gap from uniform selection "
+        "(pp, descriptive) and wins/losses of the arm. Uniform selection and the 33-evaluation mixture are reused from Studies 9, 12 and 13 without new runs; the tuning gap of the "
+        "default hybrid is that of its first configuration on the tuning instances.", "tab:s20a",
+        r"Arm & Evaluations & Tuning & Validation & Evaluation & $\Delta$ vs.\ uniform & W/L", lin, "lcccccc"))
+    # contrastes confirmatorios e alguns exploratorios
+    rot = [("H111", "Primary", r"tilt $-$ static, both problems"), ("H119", "Primary", r"tilt65 $-$ static65, both problems"),
+           ("H112", "Secondary", r"tilt $-$ static65, both problems"), ("H113", "Secondary", r"tilt0 $-$ static, both problems"),
+           ("H114", "Secondary", r"tilt $-$ static, CVRP"), ("H115", "Secondary", r"tilt $-$ static, TSP"),
+           ("H116", "Tertiary", r"static65 $-$ static, both problems"), ("H117", "Tertiary", r"tilt $-$ RP, both problems"),
+           ("H118", "Tertiary", r"RP $-$ static, both problems"),
+           ("tilt65-static65@CVRP", "Exploratory", r"tilt65 $-$ static65, CVRP"), ("tilt65-static65@TSP", "Exploratory", r"tilt65 $-$ static65, TSP"),
+           ("tilt-U@agregado", "Exploratory", r"tilt $-$ uniform, both problems"), ("static-U@agregado", "Exploratory", r"static $-$ uniform, both problems"),
+           ("static65-U@agregado", "Exploratory", r"static65 $-$ uniform, both problems"), ("tilt65-U@agregado", "Exploratory", r"tilt65 $-$ uniform, both problems")]
+    lin = []
+    for cid, g, nome in rot:
+        r = aa[aa.id.str.startswith(cid + " ") | (aa.id == cid)].iloc[0]
+        p_txt = padj(r.p_bruto) if g in ("Primary", "Exploratory") else padj(r.p_holm)
+        lin.append(" & ".join([g, nome, f"{sgn(r.dif_pp)} [{sgn(r.ic_lo)}, {sgn(r.ic_hi)}]", p_txt, f"{int(r.vit_a)}/{int(r.der_a)}", f"{r.mde_pp:.2f}"]))
+    escreve("tab_s20f.tex", tabela(
+        "Study 20: confirmatory and selected exploratory contrasts (mean paired difference in pp [95\\% CI]; unadjusted $p$ for the primary and the exploratory contrasts, "
+        "Holm over four for the secondary and over three for the tertiary ones; wins/losses of the first-named arm; MDE: minimum detectable effect at 80\\% power).", "tab:s20f",
+        r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
+    # os quatro conjuntos de replicacao e a metanalise
+    nomes_rep = {"E19-SYN": "Study 19, 48 new synthetic (CVRPTW)", "E19-SOL": "Study 19, Solomon, new seeds (CVRPTW)", "E20-CVRP": "Study 20, CVRP",
+                 "E20-TSP": "Study 20, TSP"}
+    lin = [" & ".join([nomes_rep[r.conjunto], str(int(r.n)), sgn(r.dif_pp), f"{r.ep:.3f}"]) for _, r in rep.iterrows()]
+    mt = pd.read_csv(RES / "analise_etapa20_meta.csv").set_index("id")
+    for k, nome in (("4 conjuntos", "Random-effects pool of the four sets"), ("so Estudo 20", "Random-effects pool of the two sets of Study 20")):
+        r = mt.loc[k]
+        lin.append(" & ".join([nome, "---", f"{sgn(r.mu_re)} [{plano(r.ic_lo)}, {plano(r.ic_hi)}]", f"$I^2$ {100 * r.I2:.0f}\\%"]))
+    escreve("tab_s20m.tex", tabela(
+        "Study 20 (exploratory): tilted weights $-$ static mixture in the four replication sets, mean paired difference in pp with its standard error, and the DerSimonian--Laird "
+        "random-effects pools (the pooled rows show the estimate [95\\% CI] and the heterogeneity). Solomon with new seeds reuses the 56 instances of the discovery sample.",
+        "tab:s20m", r"Set & Instances & $\Delta$ (pp) & SE", lin, "lccc"))
+    # misturas estaticas (destruicoes: aleatoria, pior, relacionada, rota/segmento; reparos: guloso, regret-2, barato)
+    lin = []
+    for p in probs:
+        for k, nome in (("static", f"{p}, 33 evaluations"), ("static65", f"{p}, 65 evaluations")):
+            if k == "static65" and not esc[p]["static65"]["mudou"]:
+                continue
+            e = esc[p][k]
+            lin.append(" & ".join([nome] + [f"{100 * w:.0f}" for w in e["pesos_d"]] + [f"{100 * w:.0f}" for w in e["pesos_r"]]))
+    escreve("tab_s20w.tex", tabela(
+        "Study 20: probabilities (\\%) of the destroy operators (random, worst, related, and route removal in the CVRP or segment removal in the TSP) and of the repair operators "
+        "(greedy, regret-2, cheapest insertion) in the tuned static mixtures.", "tab:s20w",
+        r"Mixture & Destroy 1 & 2 & 3 & 4 & Greedy & Regret-2 & Cheapest", lin, "lccccccc"))
+
+
 def margem():
     """Margem da selecao por instancia (analise EXPLORATORIA pos hoc de estudo_aos/margem_instancia.py): macros hr_* e a tabela tab_margem."""
     j = json.loads((RES / "margem_instancia.json").read_text())
@@ -2447,6 +2600,8 @@ def main():
         estudo18()
     if (RES / "analise_etapa19.csv").exists():
         estudo19()
+    if (RES / "analise_etapa20.csv").exists():
+        estudo20()
     if (RES / "margem_instancia.json").exists():
         margem()
     sintese_extra()
