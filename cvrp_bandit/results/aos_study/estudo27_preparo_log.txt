@@ -1,0 +1,505 @@
+[11:19:48] SYN_CAP
+120 variantes escritas (40 instancias-base); rodando HGS de referencia...
+  X-synq01-n101-r04      n=100 Q=  296 Kmin= 25 ref=23618 K_ref=26
+  X-synq01-n101-r10      n=100 Q=  739 Kmin= 10 ref=12438 K_ref=11
+  X-synq01-n101-r25      n=100 Q= 1847 Kmin=  4 ref=8564 K_ref=5
+  X-synq02-n101-r04      n=100 Q=   82 Kmin= 10 ref=18712 K_ref=10
+  X-synq02-n101-r10      n=100 Q=   82 Kmin= 10 ref=18712 K_ref=10
+  X-synq02-n101-r25      n=100 Q=  200 Kmin=  4 ref=10353 K_ref=4
+  X-synq03-n101-r04      n=100 Q=  292 Kmin= 25 ref=25018 K_ref=27
+  X-synq03-n101-r10      n=100 Q=  730 Kmin= 10 ref=13006 K_ref=11
+  X-synq03-n101-r25      n=100 Q= 1824 Kmin=  4 ref=8974 K_ref=5
+  X-synq04-n101-r04      n=100 Q=    4 Kmin= 25 ref=20781 K_ref=25
+  X-synq04-n101-r10      n=100 Q=   10 Kmin= 10 ref=10381 K_ref=10
+  X-synq04-n101-r25      n=100 Q=   25 Kmin=  4 ref=6367 K_ref=4
+  X-synq05-n101-r04      n=100 Q=  307 Kmin= 25 ref=42001 K_ref=26
+  X-synq05-n101-r10      n=100 Q=  767 Kmin= 10 ref=19121 K_ref=11
+  X-synq05-n101-r25      n=100 Q= 1917 Kmin=  4 ref=10416 K_ref=5
+  X-synq06-n101-r04      n=100 Q=   24 Kmin= 25 ref=23619 K_ref=26
+  X-synq06-n101-r10      n=100 Q=   60 Kmin= 10 ref=12409 K_ref=11
+  X-synq06-n101-r25      n=100 Q=  148 Kmin=  4 ref=8581 K_ref=5
+  X-synq07-n101-r04      n=100 Q=  217 Kmin= 25 ref=50562 K_ref=26
+  X-synq07-n101-r10      n=100 Q=  541 Kmin= 10 ref=21800 K_ref=10
+  X-synq07-n101-r25      n=100 Q= 1352 Kmin=  4 ref=10937 K_ref=4
+  X-synq08-n101-r04      n=100 Q=  198 Kmin= 25 ref=30683 K_ref=26
+  X-synq08-n101-r10      n=100 Q=  493 Kmin= 10 ref=15182 K_ref=11
+  X-synq08-n101-r25      n=100 Q= 1232 Kmin=  4 ref=9355 K_ref=5
+  X-synq09-n101-r04      n=100 Q=  223 Kmin= 25 ref=25054 K_ref=27
+  X-synq09-n101-r10      n=100 Q=  557 Kmin= 10 ref=13493 K_ref=11
+  X-synq09-n101-r25      n=100 Q= 1391 Kmin=  4 ref=9518 K_ref=5
+  X-synq10-n101-r04      n=100 Q=   30 Kmin= 25 ref=44954 K_ref=25
+  X-synq10-n101-r10      n=100 Q=   75 Kmin= 10 ref=20428 K_ref=10
+  X-synq10-n101-r25      n=100 Q=  186 Kmin=  4 ref=10826 K_ref=4
+  X-synq11-n101-r04      n=100 Q=    4 Kmin= 25 ref=33859 K_ref=25
+  X-synq11-n101-r10      n=100 Q=   10 Kmin= 10 ref=16775 K_ref=10
+  X-synq11-n101-r25      n=100 Q=   25 Kmin=  4 ref=10006 K_ref=4
+  X-synq12-n101-r04      n=100 Q=   23 Kmin= 24 ref=24925 K_ref=25
+  X-synq12-n101-r10      n=100 Q=   56 Kmin= 10 ref=12896 K_ref=10
+  X-synq12-n101-r25      n=100 Q=  138 Kmin=  4 ref=8467 K_ref=4
+  X-synq13-n101-r04      n=100 Q=   22 Kmin= 25 ref=41265 K_ref=25
+  X-synq13-n101-r10      n=100 Q=   53 Kmin= 10 ref=19642 K_ref=10
+  X-synq13-n101-r25      n=100 Q=  133 Kmin=  4 ref=10742 K_ref=4
+  X-synq14-n101-r04      n=100 Q=  313 Kmin= 25 ref=52159 K_ref=26
+  X-synq14-n101-r10      n=100 Q=  782 Kmin= 10 ref=23150 K_ref=11
+  X-synq14-n101-r25      n=100 Q= 1954 Kmin=  4 ref=11648 K_ref=4
+  X-synq15-n101-r04      n=100 Q=    4 Kmin= 25 ref=36606 K_ref=25
+  X-synq15-n101-r10      n=100 Q=   10 Kmin= 10 ref=16853 K_ref=10
+  X-synq15-n101-r25      n=100 Q=   25 Kmin=  4 ref=9232 K_ref=4
+  X-synq16-n101-r04      n=100 Q=   23 Kmin= 25 ref=43909 K_ref=25
+  X-synq16-n101-r10      n=100 Q=   56 Kmin= 10 ref=20628 K_ref=10
+  X-synq16-n101-r25      n=100 Q=  139 Kmin=  4 ref=11492 K_ref=4
+  X-synq17-n101-r04      n=100 Q=  124 Kmin= 25 ref=33633 K_ref=25
+  X-synq17-n101-r10      n=100 Q=  310 Kmin= 10 ref=14493 K_ref=10
+  X-synq17-n101-r25      n=100 Q=  773 Kmin=  4 ref=7401 K_ref=4
+  X-synq18-n101-r04      n=100 Q=  202 Kmin= 25 ref=42834 K_ref=26
+  X-synq18-n101-r10      n=100 Q=  505 Kmin= 10 ref=19668 K_ref=11
+  X-synq18-n101-r25      n=100 Q= 1262 Kmin=  4 ref=10826 K_ref=5
+  X-synq19-n101-r04      n=100 Q=    4 Kmin= 25 ref=40837 K_ref=25
+  X-synq19-n101-r10      n=100 Q=   10 Kmin= 10 ref=19423 K_ref=10
+  X-synq19-n101-r25      n=100 Q=   25 Kmin=  4 ref=11000 K_ref=4
+  X-synq20-n101-r04      n=100 Q=    4 Kmin= 25 ref=23469 K_ref=25
+  X-synq20-n101-r10      n=100 Q=   10 Kmin= 10 ref=12297 K_ref=10
+  X-synq20-n101-r25      n=100 Q=   25 Kmin=  4 ref=8733 K_ref=4
+  X-synq21-n201-r04      n=200 Q=   23 Kmin= 50 ref=44092 K_ref=50
+  X-synq21-n201-r10      n=200 Q=   57 Kmin= 20 ref=21900 K_ref=21
+  X-synq21-n201-r25      n=200 Q=  143 Kmin=  8 ref=13282 K_ref=8
+  X-synq22-n201-r04      n=200 Q=   97 Kmin= 32 ref=55824 K_ref=32
+  X-synq22-n201-r10      n=200 Q=  151 Kmin= 20 ref=37443 K_ref=20
+  X-synq22-n201-r25      n=200 Q=  377 Kmin=  8 ref=17418 K_ref=8
+  X-synq23-n201-r04      n=200 Q=   31 Kmin= 49 ref=87357 K_ref=49
+  X-synq23-n201-r10      n=200 Q=   76 Kmin= 20 ref=37721 K_ref=20
+  X-synq23-n201-r25      n=200 Q=  190 Kmin=  8 ref=18099 K_ref=8
+  X-synq24-n201-r04      n=200 Q=  105 Kmin= 50 ref=71449 K_ref=59
+  X-synq24-n201-r10      n=200 Q=  261 Kmin= 20 ref=29665 K_ref=21
+  X-synq24-n201-r25      n=200 Q=  652 Kmin=  8 ref=15989 K_ref=9
+  X-synq25-n201-r04      n=200 Q=   30 Kmin= 50 ref=83507 K_ref=50
+  X-synq25-n201-r10      n=200 Q=   74 Kmin= 20 ref=37351 K_ref=20
+  X-synq25-n201-r25      n=200 Q=  185 Kmin=  8 ref=19102 K_ref=8
+  X-synq26-n201-r04      n=200 Q=    4 Kmin= 50 ref=41933 K_ref=50
+  X-synq26-n201-r10      n=200 Q=   10 Kmin= 20 ref=19706 K_ref=20
+  X-synq26-n201-r25      n=200 Q=   25 Kmin=  8 ref=10999 K_ref=8
+  X-synq27-n201-r04      n=200 Q=   23 Kmin= 50 ref=85547 K_ref=50
+  X-synq27-n201-r10      n=200 Q=   58 Kmin= 20 ref=37689 K_ref=20
+  X-synq27-n201-r25      n=200 Q=  143 Kmin=  8 ref=19427 K_ref=8
+  X-synq28-n201-r04      n=200 Q=    4 Kmin= 50 ref=42383 K_ref=50
+  X-synq28-n201-r10      n=200 Q=   10 Kmin= 20 ref=21135 K_ref=20
+  X-synq28-n201-r25      n=200 Q=   25 Kmin=  8 ref=13070 K_ref=8
+  X-synq29-n201-r04      n=200 Q=   23 Kmin= 49 ref=40048 K_ref=49
+  X-synq29-n201-r10      n=200 Q=   56 Kmin= 20 ref=19042 K_ref=20
+  X-synq29-n201-r25      n=200 Q=  140 Kmin=  8 ref=10540 K_ref=8
+  X-synq30-n201-r04      n=200 Q=  300 Kmin= 50 ref=53617 K_ref=51
+  X-synq30-n201-r10      n=200 Q=  749 Kmin= 20 ref=23074 K_ref=21
+  X-synq30-n201-r25      n=200 Q= 1873 Kmin=  8 ref=10594 K_ref=8
+  X-synq31-n201-r04      n=200 Q=    4 Kmin= 50 ref=39753 K_ref=50
+  X-synq31-n201-r10      n=200 Q=   10 Kmin= 20 ref=18999 K_ref=20
+  X-synq31-n201-r25      n=200 Q=   25 Kmin=  8 ref=10842 K_ref=8
+  X-synq32-n201-r04      n=200 Q=  105 Kmin= 50 ref=93218 K_ref=50
+  X-synq32-n201-r10      n=200 Q=  261 Kmin= 20 ref=38865 K_ref=20
+  X-synq32-n201-r25      n=200 Q=  651 Kmin=  8 ref=16980 K_ref=8
+  X-synq33-n201-r04      n=200 Q=  197 Kmin= 50 ref=44847 K_ref=51
+  X-synq33-n201-r10      n=200 Q=  493 Kmin= 20 ref=19996 K_ref=20
+  X-synq33-n201-r25      n=200 Q= 1231 Kmin=  8 ref=10411 K_ref=8
+  X-synq34-n201-r04      n=200 Q=    4 Kmin= 50 ref=83790 K_ref=50
+  X-synq34-n201-r10      n=200 Q=   10 Kmin= 20 ref=36426 K_ref=20
+  X-synq34-n201-r25      n=200 Q=   25 Kmin=  8 ref=17399 K_ref=8
+  X-synq35-n201-r04      n=200 Q=  199 Kmin= 50 ref=90880 K_ref=51
+  X-synq35-n201-r10      n=200 Q=  496 Kmin= 20 ref=38855 K_ref=20
+  X-synq35-n201-r25      n=200 Q= 1240 Kmin=  8 ref=18254 K_ref=8
+  X-synq36-n201-r04      n=200 Q=   23 Kmin= 50 ref=76141 K_ref=50
+  X-synq36-n201-r10      n=200 Q=   58 Kmin= 20 ref=33606 K_ref=20
+  X-synq36-n201-r25      n=200 Q=  144 Kmin=  8 ref=17122 K_ref=8
+  X-synq37-n201-r04      n=200 Q=   24 Kmin= 49 ref=43697 K_ref=49
+  X-synq37-n201-r10      n=200 Q=   59 Kmin= 20 ref=21897 K_ref=20
+  X-synq37-n201-r25      n=200 Q=  147 Kmin=  8 ref=13564 K_ref=8
+  X-synq38-n201-r04      n=200 Q=  225 Kmin= 50 ref=45257 K_ref=52
+  X-synq38-n201-r10      n=200 Q=  563 Kmin= 20 ref=21630 K_ref=21
+  X-synq38-n201-r25      n=200 Q= 1406 Kmin=  8 ref=13242 K_ref=9
+  X-synq39-n201-r04      n=200 Q=   99 Kmin= 35 ref=31751 K_ref=36
+  X-synq39-n201-r10      n=200 Q=  173 Kmin= 20 ref=21097 K_ref=20
+  X-synq39-n201-r25      n=200 Q=  432 Kmin=  8 ref=13037 K_ref=8
+  X-synq40-n201-r04      n=200 Q=   30 Kmin= 50 ref=60839 K_ref=51
+  X-synq40-n201-r10      n=200 Q=   75 Kmin= 20 ref=28334 K_ref=20
+  X-synq40-n201-r25      n=200 Q=  187 Kmin=  8 ref=15735 K_ref=8
+SYN_CAP pronto
+[12:06:07] solucoes iniciais
+  A-n32-k5: ja existe, mantido
+  A-n33-k5: ja existe, mantido
+  A-n33-k6: ja existe, mantido
+  A-n34-k5: ja existe, mantido
+  A-n36-k5: ja existe, mantido
+  A-n37-k5: ja existe, mantido
+  A-n37-k6: ja existe, mantido
+  A-n38-k5: ja existe, mantido
+  A-n39-k5: ja existe, mantido
+  A-n39-k6: ja existe, mantido
+  A-n44-k6: ja existe, mantido
+  A-n45-k6: ja existe, mantido
+  A-n45-k7: ja existe, mantido
+  A-n46-k7: ja existe, mantido
+  A-n48-k7: ja existe, mantido
+  A-n53-k7: ja existe, mantido
+  A-n54-k7: ja existe, mantido
+  A-n55-k9: ja existe, mantido
+  A-n60-k9: ja existe, mantido
+  A-n61-k9: ja existe, mantido
+  A-n62-k8: ja existe, mantido
+  A-n63-k10: ja existe, mantido
+  A-n63-k9: ja existe, mantido
+  A-n64-k9: ja existe, mantido
+  A-n65-k9: ja existe, mantido
+  A-n69-k9: ja existe, mantido
+  B-n31-k5: ja existe, mantido
+  B-n34-k5: ja existe, mantido
+  B-n35-k5: ja existe, mantido
+  B-n38-k6: ja existe, mantido
+  B-n39-k5: ja existe, mantido
+  B-n41-k6: ja existe, mantido
+  B-n43-k6: ja existe, mantido
+  B-n44-k7: ja existe, mantido
+  B-n45-k5: ja existe, mantido
+  B-n45-k6: ja existe, mantido
+  B-n50-k7: ja existe, mantido
+  B-n50-k8: ja existe, mantido
+  B-n51-k7: ja existe, mantido
+  B-n52-k7: ja existe, mantido
+  B-n56-k7: ja existe, mantido
+  B-n57-k7: ja existe, mantido
+  B-n57-k9: ja existe, mantido
+  B-n63-k10: ja existe, mantido
+  B-n64-k9: ja existe, mantido
+  B-n66-k9: ja existe, mantido
+  B-n67-k10: ja existe, mantido
+  B-n68-k9: ja existe, mantido
+  B-n78-k10: ja existe, mantido
+  CMT1: ja existe, mantido
+  CMT11: ja existe, mantido
+  CMT2: ja existe, mantido
+  CMT3: ja existe, mantido
+  X-n101-k25: ja existe, mantido
+  X-n106-k14: ja existe, mantido
+  X-n110-k13: ja existe, mantido
+  X-n115-k10: ja existe, mantido
+  X-n120-k6: ja existe, mantido
+  X-n125-k30: ja existe, mantido
+  X-n129-k18: ja existe, mantido
+  X-n134-k13: ja existe, mantido
+  X-n139-k10: ja existe, mantido
+  X-n143-k7: ja existe, mantido
+  X-n148-k46: ja existe, mantido
+  X-n153-k22: ja existe, mantido
+  X-n157-k13: ja existe, mantido
+  X-n162-k11: ja existe, mantido
+  X-n167-k10: ja existe, mantido
+  X-n172-k51: ja existe, mantido
+  X-n176-k26: ja existe, mantido
+  X-n181-k23: ja existe, mantido
+  X-n186-k15: ja existe, mantido
+  X-n190-k8: ja existe, mantido
+  X-n195-k51: ja existe, mantido
+  X-synt01-n51: ja existe, mantido
+  X-synt02-n51: ja existe, mantido
+  X-synt03-n51: ja existe, mantido
+  X-synt04-n51: ja existe, mantido
+  X-synt05-n51: ja existe, mantido
+  X-synt06-n51: ja existe, mantido
+  X-synt07-n51: ja existe, mantido
+  X-synt08-n51: ja existe, mantido
+  X-synt09-n101: ja existe, mantido
+  X-synt10-n101: ja existe, mantido
+  X-synt11-n101: ja existe, mantido
+  X-synt12-n101: ja existe, mantido
+  X-synt13-n101: ja existe, mantido
+  X-synt14-n101: ja existe, mantido
+  X-synt15-n101: ja existe, mantido
+  X-synt16-n101: ja existe, mantido
+  X-synt17-n151: ja existe, mantido
+  X-synt18-n151: ja existe, mantido
+  X-synt19-n151: ja existe, mantido
+  X-synt20-n151: ja existe, mantido
+  X-synt21-n151: ja existe, mantido
+  X-synt22-n151: ja existe, mantido
+  X-synt23-n151: ja existe, mantido
+  X-synt24-n151: ja existe, mantido
+  X-synv01-n101: ja existe, mantido
+  X-synv02-n101: ja existe, mantido
+  X-synv03-n101: ja existe, mantido
+  X-synv04-n101: ja existe, mantido
+  X-synv05-n101: ja existe, mantido
+  X-synv06-n101: ja existe, mantido
+  X-synv07-n101: ja existe, mantido
+  X-synv08-n101: ja existe, mantido
+  X-synv09-n101: ja existe, mantido
+  X-synv10-n101: ja existe, mantido
+  X-synv11-n201: ja existe, mantido
+  X-synv12-n201: ja existe, mantido
+  X-synv13-n201: ja existe, mantido
+  X-synv14-n201: ja existe, mantido
+  X-synv15-n201: ja existe, mantido
+  X-synv16-n201: ja existe, mantido
+  X-synv17-n201: ja existe, mantido
+  X-synv18-n201: ja existe, mantido
+  X-synv19-n201: ja existe, mantido
+  X-synv20-n201: ja existe, mantido
+  X-synv21-n301: ja existe, mantido
+  X-synv22-n301: ja existe, mantido
+  X-synv23-n301: ja existe, mantido
+  X-synv24-n301: ja existe, mantido
+  X-synv25-n301: ja existe, mantido
+  X-synv26-n301: ja existe, mantido
+  X-synv27-n301: ja existe, mantido
+  X-synv28-n301: ja existe, mantido
+  X-synv29-n301: ja existe, mantido
+  X-synv30-n301: ja existe, mantido
+  X-syntl01-n201: ja existe, mantido
+  X-syntl02-n201: ja existe, mantido
+  X-syntl03-n201: ja existe, mantido
+  X-syntl04-n201: ja existe, mantido
+  X-syntl05-n301: ja existe, mantido
+  X-syntl06-n301: ja existe, mantido
+  X-syntl07-n301: ja existe, mantido
+  X-syntl08-n301: ja existe, mantido
+  X-syntl09-n401: ja existe, mantido
+  X-syntl10-n401: ja existe, mantido
+  X-syntl11-n401: ja existe, mantido
+  X-syntl12-n401: ja existe, mantido
+  X-synvl01-n201: ja existe, mantido
+  X-synvl02-n201: ja existe, mantido
+  X-synvl03-n201: ja existe, mantido
+  X-synvl04-n201: ja existe, mantido
+  X-synvl05-n201: ja existe, mantido
+  X-synvl06-n301: ja existe, mantido
+  X-synvl07-n301: ja existe, mantido
+  X-synvl08-n301: ja existe, mantido
+  X-synvl09-n301: ja existe, mantido
+  X-synvl10-n301: ja existe, mantido
+  X-synvl11-n401: ja existe, mantido
+  X-synvl12-n401: ja existe, mantido
+  X-synvl13-n401: ja existe, mantido
+  X-synvl14-n401: ja existe, mantido
+  X-synvl15-n401: ja existe, mantido
+  X-synvl16-n501: ja existe, mantido
+  X-synvl17-n501: ja existe, mantido
+  X-synvl18-n501: ja existe, mantido
+  X-synvl19-n501: ja existe, mantido
+  X-synvl20-n501: ja existe, mantido
+  X-synr01-n101: ja existe, mantido
+  X-synr02-n101: ja existe, mantido
+  X-synr03-n101: ja existe, mantido
+  X-synr04-n101: ja existe, mantido
+  X-synr05-n101: ja existe, mantido
+  X-synr06-n101: ja existe, mantido
+  X-synr07-n101: ja existe, mantido
+  X-synr08-n101: ja existe, mantido
+  X-synr09-n101: ja existe, mantido
+  X-synr10-n101: ja existe, mantido
+  X-synr11-n101: ja existe, mantido
+  X-synr12-n101: ja existe, mantido
+  X-synr13-n101: ja existe, mantido
+  X-synr14-n101: ja existe, mantido
+  X-synr15-n101: ja existe, mantido
+  X-synr16-n101: ja existe, mantido
+  X-synr17-n101: ja existe, mantido
+  X-synr18-n101: ja existe, mantido
+  X-synr19-n101: ja existe, mantido
+  X-synr20-n101: ja existe, mantido
+  X-synr21-n201: ja existe, mantido
+  X-synr22-n201: ja existe, mantido
+  X-synr23-n201: ja existe, mantido
+  X-synr24-n201: ja existe, mantido
+  X-synr25-n201: ja existe, mantido
+  X-synr26-n201: ja existe, mantido
+  X-synr27-n201: ja existe, mantido
+  X-synr28-n201: ja existe, mantido
+  X-synr29-n201: ja existe, mantido
+  X-synr30-n201: ja existe, mantido
+  X-synr31-n201: ja existe, mantido
+  X-synr32-n201: ja existe, mantido
+  X-synr33-n201: ja existe, mantido
+  X-synr34-n201: ja existe, mantido
+  X-synr35-n201: ja existe, mantido
+  X-synr36-n201: ja existe, mantido
+  X-synr37-n201: ja existe, mantido
+  X-synr38-n201: ja existe, mantido
+  X-synr39-n201: ja existe, mantido
+  X-synr40-n201: ja existe, mantido
+  X-synr41-n301: ja existe, mantido
+  X-synr42-n301: ja existe, mantido
+  X-synr43-n301: ja existe, mantido
+  X-synr44-n301: ja existe, mantido
+  X-synr45-n301: ja existe, mantido
+  X-synr46-n301: ja existe, mantido
+  X-synr47-n301: ja existe, mantido
+  X-synr48-n301: ja existe, mantido
+  X-synr49-n301: ja existe, mantido
+  X-synr50-n301: ja existe, mantido
+  X-synr51-n301: ja existe, mantido
+  X-synr52-n301: ja existe, mantido
+  X-synr53-n301: ja existe, mantido
+  X-synr54-n301: ja existe, mantido
+  X-synr55-n301: ja existe, mantido
+  X-synr56-n301: ja existe, mantido
+  X-synr57-n301: ja existe, mantido
+  X-synr58-n301: ja existe, mantido
+  X-synr59-n301: ja existe, mantido
+  X-synr60-n301: ja existe, mantido
+  X-n200-k36: ja existe, mantido
+  X-n204-k19: ja existe, mantido
+  X-n209-k16: ja existe, mantido
+  X-n214-k11: ja existe, mantido
+  X-n219-k73: ja existe, mantido
+  X-n223-k34: ja existe, mantido
+  X-n228-k23: ja existe, mantido
+  X-n233-k16: ja existe, mantido
+  X-n237-k14: ja existe, mantido
+  X-n242-k48: ja existe, mantido
+  X-n247-k50: ja existe, mantido
+  X-n251-k28: ja existe, mantido
+  X-n256-k16: ja existe, mantido
+  X-n261-k13: ja existe, mantido
+  X-n266-k58: ja existe, mantido
+  X-n270-k35: ja existe, mantido
+  X-n275-k28: ja existe, mantido
+  X-n280-k17: ja existe, mantido
+  X-n284-k15: ja existe, mantido
+  X-n289-k60: ja existe, mantido
+  X-n294-k50: ja existe, mantido
+  X-n298-k31: ja existe, mantido
+  X-n303-k21: ja existe, mantido
+  X-n308-k13: ja existe, mantido
+  X-n313-k71: ja existe, mantido
+  X-n317-k53: ja existe, mantido
+  X-n322-k28: ja existe, mantido
+  X-n327-k20: ja existe, mantido
+  X-n331-k15: ja existe, mantido
+  X-n336-k84: ja existe, mantido
+  X-n344-k43: ja existe, mantido
+  X-n351-k40: ja existe, mantido
+  X-n359-k29: ja existe, mantido
+  X-n367-k17: ja existe, mantido
+  X-n376-k94: ja existe, mantido
+  X-n384-k52: ja existe, mantido
+  X-n393-k38: ja existe, mantido
+  X-n401-k29: ja existe, mantido
+  X-synq01-n101-r04 K= 28 custo=   24613.0 fallback=False
+  X-synq01-n101-r10 K= 11 custo=   12938.0 fallback=False
+  X-synq01-n101-r25 K=  5 custo=    9612.0 fallback=False
+  X-synq02-n101-r04 K= 10 custo=   20254.0 fallback=False
+  X-synq02-n101-r10 K= 10 custo=   20254.0 fallback=False
+  X-synq02-n101-r25 K=  5 custo=   12334.0 fallback=False
+  X-synq03-n101-r04 K= 28 custo=   26091.0 fallback=False
+  X-synq03-n101-r10 K= 11 custo=   13952.0 fallback=False
+  X-synq03-n101-r25 K=  5 custo=    9624.0 fallback=False
+  X-synq04-n101-r04 K= 25 custo=   21084.0 fallback=False
+  X-synq04-n101-r10 K= 10 custo=   10716.0 fallback=False
+  X-synq04-n101-r25 K=  4 custo=    7362.0 fallback=False
+  X-synq05-n101-r04 K= 27 custo=   43821.0 fallback=False
+  X-synq05-n101-r10 K= 11 custo=   20329.0 fallback=False
+  X-synq05-n101-r25 K=  5 custo=   11715.0 fallback=False
+  X-synq06-n101-r04 K= 27 custo=   24629.0 fallback=False
+  X-synq06-n101-r10 K= 11 custo=   13290.0 fallback=False
+  X-synq06-n101-r25 K=  5 custo=    9756.0 fallback=False
+  X-synq07-n101-r04 K= 27 custo=   52964.0 fallback=False
+  X-synq07-n101-r10 K= 11 custo=   23350.0 fallback=False
+  X-synq07-n101-r25 K=  5 custo=   11949.0 fallback=False
+  X-synq08-n101-r04 K= 28 custo=   32990.0 fallback=False
+  X-synq08-n101-r10 K= 11 custo=   16528.0 fallback=False
+  X-synq08-n101-r25 K=  5 custo=   10716.0 fallback=False
+  X-synq09-n101-r04 K= 28 custo=   25888.0 fallback=False
+  X-synq09-n101-r10 K= 11 custo=   14024.0 fallback=False
+  X-synq09-n101-r25 K=  5 custo=   10122.0 fallback=False
+  X-synq10-n101-r04 K= 27 custo=   47101.0 fallback=False
+  X-synq10-n101-r10 K= 10 custo=   21391.0 fallback=False
+  X-synq10-n101-r25 K=  5 custo=   11536.0 fallback=False
+  X-synq11-n101-r04 K= 25 custo=   34576.0 fallback=False
+  X-synq11-n101-r10 K= 10 custo=   17434.0 fallback=False
+  X-synq11-n101-r25 K=  4 custo=   11073.0 fallback=False
+  X-synq12-n101-r04 K= 25 custo=   25738.0 fallback=False
+  X-synq12-n101-r10 K= 10 custo=   13950.0 fallback=False
+  X-synq12-n101-r25 K=  5 custo=    8986.0 fallback=False
+  X-synq13-n101-r04 K= 26 custo=   43018.0 fallback=False
+  X-synq13-n101-r10 K= 11 custo=   20642.0 fallback=False
+  X-synq13-n101-r25 K=  4 custo=   12055.0 fallback=False
+  X-synq14-n101-r04 K= 27 custo=   54358.0 fallback=False
+  X-synq14-n101-r10 K= 11 custo=   24511.0 fallback=False
+  X-synq14-n101-r25 K=  5 custo=   13489.0 fallback=False
+  X-synq15-n101-r04 K= 25 custo=   37472.0 fallback=False
+  X-synq15-n101-r10 K= 10 custo=   18062.0 fallback=False
+  X-synq15-n101-r25 K=  4 custo=   10199.0 fallback=False
+  X-synq16-n101-r04 K= 26 custo=   46064.0 fallback=False
+  X-synq16-n101-r10 K= 11 custo=   21713.0 fallback=False
+  X-synq16-n101-r25 K=  4 custo=   13045.0 fallback=False
+  X-synq17-n101-r04 K= 27 custo=   35273.0 fallback=False
+  X-synq17-n101-r10 K= 11 custo=   15723.0 fallback=False
+  X-synq17-n101-r25 K=  5 custo=    8547.0 fallback=False
+  X-synq18-n101-r04 K= 27 custo=   44388.0 fallback=False
+  X-synq18-n101-r10 K= 11 custo=   20956.0 fallback=False
+  X-synq18-n101-r25 K=  5 custo=   11796.0 fallback=False
+  X-synq19-n101-r04 K= 25 custo=   41624.0 fallback=False
+  X-synq19-n101-r10 K= 10 custo=   20949.0 fallback=False
+  X-synq19-n101-r25 K=  4 custo=   12381.0 fallback=False
+  X-synq20-n101-r04 K= 25 custo=   24321.0 fallback=False
+  X-synq20-n101-r10 K= 10 custo=   13347.0 fallback=False
+  X-synq20-n101-r25 K=  4 custo=    9264.0 fallback=False
+  X-synq21-n201-r04 K= 52 custo=   46168.0 fallback=False
+  X-synq21-n201-r10 K= 21 custo=   22589.0 fallback=False
+  X-synq21-n201-r25 K=  9 custo=   15032.0 fallback=False
+  X-synq22-n201-r04 K= 32 custo=   56981.0 fallback=False
+  X-synq22-n201-r10 K= 22 custo=   40688.0 fallback=False
+  X-synq22-n201-r25 K=  9 custo=   19426.0 fallback=False
+  X-synq23-n201-r04 K= 52 custo=   92213.0 fallback=False
+  X-synq23-n201-r10 K= 21 custo=   40038.0 fallback=False
+  X-synq23-n201-r25 K=  8 custo=   19324.0 fallback=False
+  X-synq24-n201-r04 K= 59 custo=   72269.0 fallback=False
+  X-synq24-n201-r10 K= 21 custo=   31237.0 fallback=False
+  X-synq24-n201-r25 K=  9 custo=   17661.0 fallback=False
+  X-synq25-n201-r04 K= 53 custo=   87639.0 fallback=False
+  X-synq25-n201-r10 K= 21 custo=   39962.0 fallback=False
+  X-synq25-n201-r25 K=  9 custo=   22395.0 fallback=False
+  X-synq26-n201-r04 K= 50 custo=   42555.0 fallback=False
+  X-synq26-n201-r10 K= 20 custo=   21038.0 fallback=False
+  X-synq26-n201-r25 K=  8 custo=   12300.0 fallback=False
+  X-synq27-n201-r04 K= 52 custo=   88106.0 fallback=False
+  X-synq27-n201-r10 K= 20 custo=   39093.0 fallback=False
+  X-synq27-n201-r25 K=  8 custo=   21936.0 fallback=False
+  X-synq28-n201-r04 K= 51 custo=   43150.0 fallback=False
+  X-synq28-n201-r10 K= 20 custo=   22791.0 fallback=False
+  X-synq28-n201-r25 K=  8 custo=   14806.0 fallback=False
+  X-synq29-n201-r04 K= 52 custo=   42339.0 fallback=False
+  X-synq29-n201-r10 K= 21 custo=   20665.0 fallback=False
+  X-synq29-n201-r25 K=  8 custo=   12241.0 fallback=False
+  X-synq30-n201-r04 K= 56 custo=   58078.0 fallback=False
+  X-synq30-n201-r10 K= 21 custo=   24427.0 fallback=False
+  X-synq30-n201-r25 K=  9 custo=   12014.0 fallback=False
+  X-synq31-n201-r04 K= 50 custo=   40477.0 fallback=False
+  X-synq31-n201-r10 K= 21 custo=   20349.0 fallback=False
+  X-synq31-n201-r25 K=  9 custo=   12662.0 fallback=False
+  X-synq32-n201-r04 K= 53 custo=   98026.0 fallback=False
+  X-synq32-n201-r10 K= 21 custo=   40688.0 fallback=False
+  X-synq32-n201-r25 K=  9 custo=   19076.0 fallback=False
+  X-synq33-n201-r04 K= 54 custo=   47330.0 fallback=False
+  X-synq33-n201-r10 K= 21 custo=   21155.0 fallback=False
+  X-synq33-n201-r25 K=  9 custo=   11804.0 fallback=False
+  X-synq34-n201-r04 K= 50 custo=   84908.0 fallback=False
+  X-synq34-n201-r10 K= 20 custo=   37813.0 fallback=False
+  X-synq34-n201-r25 K=  8 custo=   18918.0 fallback=False
+  X-synq35-n201-r04 K= 54 custo=   95234.0 fallback=False
+  X-synq35-n201-r10 K= 21 custo=   40315.0 fallback=False
+  X-synq35-n201-r25 K=  9 custo=   20059.0 fallback=False
+  X-synq36-n201-r04 K= 53 custo=   79080.0 fallback=False
+  X-synq36-n201-r10 K= 20 custo=   35152.0 fallback=False
+  X-synq36-n201-r25 K=  8 custo=   19149.0 fallback=False
+  X-synq37-n201-r04 K= 53 custo=   46140.0 fallback=False
+  X-synq37-n201-r10 K= 21 custo=   23215.0 fallback=False
+  X-synq37-n201-r25 K=  9 custo=   14606.0 fallback=False
+  X-synq38-n201-r04 K= 55 custo=   47210.0 fallback=False
+  X-synq38-n201-r10 K= 22 custo=   23309.0 fallback=False
+  X-synq38-n201-r25 K=  9 custo=   14613.0 fallback=False
+  X-synq39-n201-r04 K= 37 custo=   33436.0 fallback=False
+  X-synq39-n201-r10 K= 22 custo=   22903.0 fallback=False
+  X-synq39-n201-r25 K=  9 custo=   14551.0 fallback=False
+  X-synq40-n201-r04 K= 53 custo=   63180.0 fallback=False
+  X-synq40-n201-r10 K= 21 custo=   29915.0 fallback=False
+  X-synq40-n201-r25 K=  9 custo=   17465.0 fallback=False
+
+120 solucoes gravadas; com fallback: []
+[12:06:26] PREPARO DO ESTUDO 27 CONCLUIDO
