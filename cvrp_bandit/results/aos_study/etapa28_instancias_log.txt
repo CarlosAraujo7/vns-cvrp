@@ -1,3 +1,6 @@
 SYN_TUNE_W: 24 instancias de 100 clientes com solucao inicial viavel
 SOLOMON: 56 instancias de 100 clientes com solucao inicial viavel
 INSTANCIAS: OK
+SYN_TUNE_W: 24 instancias de 100 clientes com solucao inicial viavel
+SOLOMON: 56 instancias de 100 clientes com solucao inicial viavel
+INSTANCIAS: OK
