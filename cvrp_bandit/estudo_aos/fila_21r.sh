@@ -3,7 +3,7 @@
 # fila_21.sh; RETOMAVEL (o ES retoma pelo arquivo de estado; cada modo pula o que ja esta no CSV). ESPERA o fim de fila_23.sh, fila_21c.sh e fila_21b.sh. NUNCA dois runners no mesmo CSV.
 cd "$(dirname "$0")/.." || exit 1
 sleep 480
-while pgrep -f "fila_23\.sh|fila_21c\.sh|fila_21b\.sh|fila_22\.sh|fila_26\.sh|fila_27\.sh|fila_24\.sh|fila_25\.sh" > /dev/null; do sleep 60; done
+while pgrep -f "fila_23\.sh|fila_21c\.sh|fila_21b\.sh|fila_22\.sh|fila_26\.sh|fila_27\.sh|fila_28\.sh|fila_24\.sh|fila_25\.sh" > /dev/null; do sleep 60; done
 source direcao1_local/venv/bin/activate
 set -e
 R=results/aos_study

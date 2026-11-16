@@ -3,7 +3,7 @@
 # Uso (PowerShell): wsl -e bash -lc "cd /mnt/c/Pesquisas/learnheuristica/cvrp_bandit && (nohup setsid bash estudo_aos/fila_25.sh >> results/aos_study/etapa25_fila_log.txt 2>&1 < /dev/null &)"
 cd "$(dirname "$0")/.." || exit 1
 sleep 600
-while pgrep -f "fila_22\.sh|fila_26\.sh|fila_27\.sh|fila_24\.sh" > /dev/null; do sleep 60; done
+while pgrep -f "fila_22\.sh|fila_26\.sh|fila_27\.sh|fila_28\.sh|fila_24\.sh" > /dev/null; do sleep 60; done
 source direcao1_local/venv/bin/activate
 set -e
 R=results/aos_study

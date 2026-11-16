@@ -10,7 +10,7 @@ R=results/aos_study
 if pgrep -f "fila_2" > /dev/null; then echo "filas ja rodando:"; pgrep -af "fila_2" | cut -c1-70; exit 0; fi
 for f in $R/etapa21_ajuste_static_P12.csv $R/etapa21_ajuste_RP_P12.csv $R/etapa21_validacao_P12.csv $R/etapa21_eval_P12.csv $R/etapa21_eval_P21.csv \
          $R/etapa21b_ajuste_static_P21.csv $R/etapa21c_eval_P21.csv $R/etapa23_eval_p21.csv \
-         $R/etapa22_eval_longabc.csv $R/etapa22_eval_longx.csv $R/etapa26_eval.csv $R/etapa27_eval.csv $R/etapa24_eval_P21.csv $R/etapa25_eval_acc.csv $R/etapa25_eval_short.csv; do
+         $R/etapa22_eval_longabc.csv $R/etapa22_eval_longx.csv $R/etapa26_eval.csv $R/etapa27_eval.csv $R/etapa28_ajuste_static.csv $R/etapa28_validacao.csv $R/etapa28_eval.csv $R/etapa24_eval_P21.csv $R/etapa25_eval_acc.csv $R/etapa25_eval_short.csv; do
   if [ -f "$f" ]; then $PY estudo_aos/verifica_csv.py "$f" || echo "(a verificacao de $f falhou)"; fi
 done
 echo "estado do ES de P12:"; cat $R/etapa21_ajuste_static_P12_estado.json 2>/dev/null; echo
@@ -26,6 +26,7 @@ lanca fila_21b.sh etapa21b_fila_log.txt "FILA 21b CONCLUIDA"
 lanca fila_22.sh etapa22_fila_log.txt "FILA 22 CONCLUIDA"
 lanca fila_26.sh etapa26_fila_log.txt "FILA 26 CONCLUIDA"
 lanca fila_27.sh etapa27_fila_log.txt "FILA 27 CONCLUIDA"
+lanca fila_28.sh etapa28_fila_log.txt "FILA 28 CONCLUIDA"
 lanca fila_24.sh etapa24_fila_log.txt "FILA 24 CONCLUIDA"
 lanca fila_25.sh etapa25_fila_log.txt "FILA 25 CONCLUIDA"
 lanca fila_21r.sh etapa21_fila_log.txt "FILA 21r CONCLUIDA"

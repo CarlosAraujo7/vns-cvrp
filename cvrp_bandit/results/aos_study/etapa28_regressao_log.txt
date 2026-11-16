@@ -1,0 +1,1 @@
+REGRESSAO EXATA: OK (12 execucoes do Estudo 16 reproduzidas com o executor do Estudo 28 em P7)
