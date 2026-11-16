@@ -33,6 +33,7 @@ from pathlib import Path
 AQUI = Path(__file__).resolve().parent
 RES = AQUI.parent / "results" / "aos_study"
 NUMJSON = AQUI.parent / "paper" / "ejor" / "numeros.json"
+ROOT_INST = AQUI.parent / "instances"
 
 # (arquivo, coluna do braco, coluna do nivel, prefixo de grupo). O conjunto de validacao sintetico fica em grupo
 # proprio ("VAL:") para nao misturar as 30 instancias sinteticas com as 74 da CVRPLIB.
@@ -962,6 +963,239 @@ def verifica_s21_24(num):
     return nm, nc
 
 
+def _postos(v):
+    """Postos medios (empates recebem a media dos postos), so biblioteca padrao."""
+    idx = sorted(range(len(v)), key=lambda i: v[i])
+    r = [0.0] * len(v)
+    i = 0
+    while i < len(v):
+        j = i
+        while j + 1 < len(v) and v[idx[j + 1]] == v[idx[i]]:
+            j += 1
+        for k in range(i, j + 1):
+            r[idx[k]] = (i + j) / 2 + 1
+        i = j + 1
+    return r
+
+
+def _pearson(a, b):
+    ma, mb = statistics.fmean(a), statistics.fmean(b)
+    num = sum((x - ma) * (y - mb) for x, y in zip(a, b))
+    return num / (sum((x - ma) ** 2 for x in a) * sum((y - mb) ** 2 for y in b)) ** 0.5
+
+
+def _spearman(x, y):
+    return _pearson(_postos(x), _postos(y))
+
+
+def _parcial(x, y, z):
+    rxy, rxz, ryz = _spearman(x, y), _spearman(x, z), _spearman(y, z)
+    return (rxy - rxz * ryz) / ((1 - rxz ** 2) * (1 - ryz ** 2)) ** 0.5
+
+
+def _confere_linha(an, r, inst_n, dif, problemas_):
+    dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+    if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or inst_n != int(r["n_inst"]):
+        problemas_.append(f"{an} {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs {r['vit_a']}/{r['der_a']}; n {inst_n} vs {r['n_inst']}")
+
+
+def verifica_s25_28(num):
+    """Estudos 25 a 28: recomputa, so com a biblioteca padrao, as medias dos macros `s25_gap_*`, `s26_gap_*` (e por conjunto), a diferenca media, as vitorias, as derrotas e n de todos os contrastes de
+    analise_etapa25.csv a analise_etapa28.csv e as correlacoes de Spearman (e a parcial) dos Estudos 26 e 28, direto dos CSV brutos (media das seeds viaveis por instancia; o Estudo 27 usa o leiaute como unidade)."""
+    nm = nc = 0
+    # ---------------- Estudo 25: rotulos arm@acc, arm@short e arm@ref (os bracos U, RP e S65 do Estudo 21)
+    an = RES / "analise_etapa25.csv"
+    if an.exists():
+        por, cj = defaultdict(list), {}
+        for reg in ("acc", "short"):
+            _le_gaps(f"etapa25_eval_{reg}.csv", lambda b: True, lambda b, reg=reg: f"{b.split('_', 2)[2]}@{reg}", por, cj)
+        _le_gaps("etapa21_eval_P21.csv", lambda b: b[len("s21_P21_"):] in ("U", "RP", "S65"), lambda b: f"{b[len('s21_P21_'):]}@ref", por, cj)
+        med = {k: statistics.fmean(v) for k, v in por.items()}
+        rots = {rot for (rot, _i) in med}
+        por_r = defaultdict(set)
+        for (rot, i) in med:
+            por_r[rot].add(i)
+        uni = sorted(set.intersection(*(por_r[r] for r in rots)))
+        for r in csv.DictReader(open(an, encoding="utf-8")):
+            ex = _expr_contraste(r["id"], "25")
+            if ex is None:
+                problemas.append(f"analise_etapa25.csv: identificador nao reconhecido {r['id']}")
+                continue
+            pos, neg, _conj = ex
+            if any(rot not in rots for rot, _s in pos + neg):
+                problemas.append(f"analise_etapa25.csv {r['id']}: braco ausente nos dados brutos")
+                continue
+            dif = [sum(s * med[(rot, i)] for rot, s in pos) - sum(s * med[(rot, i)] for rot, s in neg) for i in uni] if "DiD" in r["id"] else \
+                  [sum(med[(rot, i)] for rot, _s in pos) - sum(med[(rot, i)] for rot, _s in neg) for i in uni]
+            dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+            _confere_linha("analise_etapa25.csv", r, len(uni), dif, problemas)
+            nc += 1
+        for chave, valor in num.items():
+            if chave.startswith("s25_gap_"):
+                reg, arm = chave[len("s25_gap_"):].split("_", 1)
+                if (f"{arm}@{reg}") in rots:
+                    nm += confere(chave, valor, statistics.fmean([med[(f"{arm}@{reg}", i)] for i in uni]), 3)
+    # ---------------- Estudo 26: bracos U, Uq, RP, S65, HG nas 98 instancias novas
+    an = RES / "analise_etapa26.csv"
+    if an.exists():
+        por, cj, nc_inst = defaultdict(list), {}, {}
+        _le_gaps("etapa26_eval.csv", lambda b: True, lambda b: b[len("s26_"):], por, cj)
+        with open(RES / "etapa26_eval.csv", encoding="utf-8", newline="") as f:
+            for r in csv.DictReader(f):
+                nc_inst[r["instancia"]] = int(r["n_customers"])
+        med = {k: statistics.fmean(v) for k, v in por.items()}
+        rots = {rot for (rot, _i) in med}
+        por_r = defaultdict(set)
+        for (rot, i) in med:
+            por_r[rot].add(i)
+        uni = sorted(set.intersection(*(por_r[r] for r in rots)))
+        ehx = lambda i: i.startswith("X-n")  # noqa: E731
+        K = {}
+        for c in ("X_FRESH", "SYN_REP"):
+            for r in csv.DictReader(open(ROOT_INST / c / "metadata.csv", encoding="utf-8")):
+                K[r["nome"]] = float(r["rotas_ref"])
+        nx_ = sorted(nc_inst[i] for i in uni if ehx(i))
+        q1, q2 = statistics.quantiles(nx_, n=3, method="inclusive") if len(nx_) >= 3 else (None, None)
+        for r in csv.DictReader(open(an, encoding="utf-8")):
+            id_ = re.sub(r"^H\d+ ", "", r["id"])
+            if id_.startswith("Spearman(RP-U, K)"):
+                dif0 = [med[("RP", i)] - med[("U", i)] for i in uni]
+                rho = _spearman([K[i] for i in uni], dif0)
+                if abs(rho - float(r["dif_pp"])) > 1e-6 or len(uni) != int(r["n_inst"]):
+                    problemas.append(f"analise_etapa26.csv {r['id']}: rho {rho:.5f} vs {float(r['dif_pp']):.5f}")
+                nc += 1
+                continue
+            if id_.startswith("Spearman parcial(RP-U, K | n)"):
+                dif0 = [med[("RP", i)] - med[("U", i)] for i in uni]
+                rp = _parcial([K[i] for i in uni], dif0, [float(nc_inst[i]) for i in uni])
+                if abs(rp - float(r["dif_pp"])) > 1e-6:
+                    problemas.append(f"analise_etapa26.csv {r['id']}: rho parcial {rp:.5f} vs {float(r['dif_pp']):.5f}")
+                nc += 1
+                continue
+            m = re.fullmatch(r"([A-Za-z0-9]+)-([A-Za-z0-9]+)(?:@(.+))?", id_)
+            if m is None:
+                problemas.append(f"analise_etapa26.csv: identificador nao reconhecido {r['id']}")
+                continue
+            a, b, sub = m.groups()
+            if sub is None:
+                inst = uni
+            elif sub == "X_FRESH":
+                inst = [i for i in uni if ehx(i)]
+            elif sub == "SYN_REP":
+                inst = [i for i in uni if not ehx(i)]
+            elif sub.startswith("SYN_REP n="):
+                nn = int(sub.split("=")[1])
+                inst = [i for i in uni if not ehx(i) and nc_inst[i] == nn]
+            elif sub in ("X_FRESH menores", "X_FRESH medias", "X_FRESH maiores") and q1 is not None:
+                inst = [i for i in uni if ehx(i) and ((nc_inst[i] <= q1) if sub.endswith("menores") else ((q1 < nc_inst[i] <= q2) if sub.endswith("medias") else (nc_inst[i] > q2)))]
+            else:
+                problemas.append(f"analise_etapa26.csv: subconjunto nao reconhecido {r['id']}")
+                continue
+            if a not in rots or b not in rots:
+                problemas.append(f"analise_etapa26.csv {r['id']}: braco ausente nos dados brutos")
+                continue
+            dif = [0.0 if abs(med[(a, i)] - med[(b, i)]) < 1e-9 else med[(a, i)] - med[(b, i)] for i in inst]
+            _confere_linha("analise_etapa26.csv", r, len(inst), dif, problemas)
+            nc += 1
+        for chave, valor in num.items():
+            if chave.startswith(("s26_gap_", "s26_gx_", "s26_gs_")):
+                pref = chave.split("_")[1]
+                arm = chave[len(f"s26_{pref}_"):]
+                if arm in rots:
+                    inst = uni if pref == "gap" else ([i for i in uni if ehx(i)] if pref == "gx" else [i for i in uni if not ehx(i)])
+                    nm += confere(chave, valor, statistics.fmean([med[(arm, i)] for i in inst]), 3 if pref == "gap" else 2)
+    # ---------------- Estudo 27: unidade = leiaute; as tres variantes de capacidade sao pareadas
+    an = RES / "analise_etapa27.csv"
+    if an.exists():
+        por, cj = defaultdict(list), {}
+        _le_gaps("etapa27_eval.csv", lambda b: True, lambda b: b[len("s27_"):], por, cj)
+        med = {k: statistics.fmean(v) for k, v in por.items()}
+        lay = defaultdict(dict)
+        for (arm, inst), m in med.items():
+            mm = re.fullmatch(r"X-synq(\d+)-n(\d+)-r(\d+)", inst)
+            lay[(mm.group(1), int(mm.group(2)) - 1)].setdefault(int(mm.group(3)), {})[arm] = m
+        L = {k: {r: v[r]["RP"] - v[r]["U"] for r in v if "RP" in v[r] and "U" in v[r]} for k, v in lay.items()}
+        L = {k: v for k, v in L.items() if all(r in v for r in (4, 10, 25))}
+        for r in csv.DictReader(open(an, encoding="utf-8")):
+            id_ = re.sub(r"^H\d+ ", "", r["id"])
+            mm = re.fullmatch(r"(?:DiD\(RP-U\) r(\d+)-r(\d+)|RP-U@r(\d+))(?: @n(\d+))?", id_)
+            if mm is None:
+                problemas.append(f"analise_etapa27.csv: identificador nao reconhecido {r['id']}")
+                continue
+            r1, r0, r2, nn = mm.groups()
+            ks = [k for k in L if nn is None or k[1] == int(nn)]
+            dif = [(L[k][int(r1)] - L[k][int(r0)]) if r1 else L[k][int(r2)] for k in ks]
+            dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+            _confere_linha("analise_etapa27.csv", r, len(ks), dif, problemas)
+            nc += 1
+        for chave, valor in num.items():
+            if chave.startswith("s27_gap_"):
+                rr = int(chave[len("s27_gap_"):])
+                lst = [lay[k][rr]["U"] for k in L if "U" in lay[k][rr]]
+                nm += confere(chave, valor, statistics.fmean(lst), 2)
+    # ---------------- Estudo 28: o ALNS do CVRPTW com 21 operadores; referencia de P7 do Estudo 16 (seeds 1000-1004)
+    an = RES / "analise_etapa28.csv"
+    if an.exists():
+        por, cj = defaultdict(list), {}
+        _le_gaps("etapa28_eval.csv", lambda b: True, lambda b: f"{b[len('s28_'):]}@P21", por, cj)
+        _le_gaps("etapa16_eval_a.csv", lambda b: b in ("s16a_U", "s16a_RP", "s16a_hgucb", "s16a_static"), lambda b: {"s16a_U": "U@P7", "s16a_RP": "RP@P7", "s16a_hgucb": "HG@P7", "s16a_static": "S33@P7"}[b], por, cj)
+        # as seeds 1005-1009 do Estudo 16 nao entram: refaz a leitura do P7 so com as seeds 1000-1004
+        por7 = defaultdict(list)
+        with open(RES / "etapa16_eval_a.csv", encoding="utf-8", newline="") as f:
+            for r in csv.DictReader(f):
+                rot = {"s16a_U": "U@P7", "s16a_RP": "RP@P7", "s16a_hgucb": "HG@P7", "s16a_static": "S33@P7"}.get(r["braco"])
+                if rot is None or int(r["seed"]) >= 1005 or r["viavel"] != "True":
+                    continue
+                por7[(rot, r["instancia"])].append(100.0 * (float(r["custo"]) - float(r["ref"])) / float(r["ref"]))
+        for k in [k for k in por if k[0].endswith("@P7")]:
+            del por[k]
+        por.update(por7)
+        med = {k: statistics.fmean(v) for k, v in por.items()}
+        rots = {rot for (rot, _i) in med}
+        if "S65@P21" not in rots and "S33@P21" in rots:
+            for (rot, i), m in list(med.items()):
+                if rot == "S33@P21":
+                    med[("S65@P21", i)] = m
+            rots.add("S65@P21")
+        por_r = defaultdict(set)
+        for (rot, i) in med:
+            por_r[rot].add(i)
+        uni = sorted(set.intersection(*(por_r[r] for r in rots)))
+        for r in csv.DictReader(open(an, encoding="utf-8")):
+            id_ = re.sub(r"^H\d+ ", "", r["id"])
+            if id_.startswith("Spearman(RP-U, K)"):
+                ins = [i for i in uni if re.match(r"R", i)]
+                Ks = [float(sum(1 for l in (ROOT_INST / "SOLOMON" / "bks" / f"{i}.sol").read_text().splitlines() if l.startswith("Route"))) for i in ins]
+                rho = _spearman(Ks, [med[("RP@P21", i)] - med[("U@P21", i)] for i in ins])
+                if abs(rho - float(r["dif_pp"])) > 1e-6 or len(ins) != int(r["n_inst"]):
+                    problemas.append(f"analise_etapa28.csv {r['id']}: rho {rho:.5f} vs {float(r['dif_pp']):.5f}; n {len(ins)} vs {r['n_inst']}")
+                nc += 1
+                continue
+            mc = re.fullmatch(r"(\w+)-(\w+)@P21 (R1|R2|RC1|RC2)", id_)
+            if mc:
+                a, b, cl = mc.groups()
+                ins = [i for i in uni if re.match(r"^" + cl + r"\d", i) and not (cl == "R1" and i.startswith("RC")) and not (cl == "R2" and i.startswith("RC"))]
+                dif = [med[(f"{a}@P21", i)] - med[(f"{b}@P21", i)] for i in ins]
+                dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+                _confere_linha("analise_etapa28.csv", r, len(ins), dif, problemas)
+                nc += 1
+                continue
+            ex = _expr_contraste(r["id"], "28")
+            if ex is None:
+                problemas.append(f"analise_etapa28.csv: identificador nao reconhecido {r['id']}")
+                continue
+            pos, neg, _conj = ex
+            if any(rot not in rots for rot, _s in pos + neg):
+                problemas.append(f"analise_etapa28.csv {r['id']}: braco ausente nos dados brutos")
+                continue
+            dif = [sum(s * med[(rot, i)] for rot, s in pos) - sum(s * med[(rot, i)] for rot, s in neg) for i in uni] if "DiD" in r["id"] else \
+                  [sum(med[(rot, i)] for rot, _s in pos) - sum(med[(rot, i)] for rot, _s in neg) for i in uni]
+            dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+            _confere_linha("analise_etapa28.csv", r, len(uni), dif, problemas)
+            nc += 1
+    return nm, nc
+
+
 def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csvs=()):
     """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
     diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
@@ -1177,6 +1411,11 @@ def main():
     cont += n2124c
     if n2124m or n2124c:
         print(f"(2c) Estudos 21 a 24 (tamanho do conjunto, deslocamentos, fidelidade, politicas): {n2124m} medias e {n2124c} contrastes conferidos")
+    n2528m, n2528c = verifica_s25_28(num)
+    outros += n2528m
+    cont += n2528c
+    if n2528m or n2528c:
+        print(f"(2c) Estudos 25 a 28 (deslocamentos em instancias com folga, replica em instancias novas, numero de rotas, CVRPTW): {n2528m} medias e {n2528c} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(

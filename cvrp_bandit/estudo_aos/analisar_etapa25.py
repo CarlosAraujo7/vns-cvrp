@@ -82,10 +82,16 @@ def main(ensaio=False):
         print(f"  {'CONFIRMADA' if ok else 'REFUTADA  '}  {k}")
     print(f"  confirmadas: {sum(H.values())} de 4 (esperado no pre-registro: 2,25)")
     folga = []
+    from analisar_folga_metades import metades
     for r_ in ("ref",) + REGS:
         dif, gu = t[f"RP@{r_}"] - t[f"U@{r_}"], t[f"U@{r_}"]
         rho_, p_ = stats.spearmanr(gu, dif)
-        folga.append(dict(regime=r_, rho_gap=float(rho_), p_gap=float(p_), gap_U=float(gu.mean()), dif=float(dif.mean())))
+        mu = dados[(dados.braco == f"U@{r_}") & dados.viavel].pivot_table(index="instancia", columns="seed", values="gap_pct", aggfunc="mean")
+        mr = dados[(dados.braco == f"RP@{r_}") & dados.viavel].pivot_table(index="instancia", columns="seed", values="gap_pct", aggfunc="mean")
+        rho_m, lo_m, hi_m, p_m, _n = metades(mu, mr, np.random.default_rng(0), reps=200)       # metades das seeds: a folga de uma metade, a vantagem da outra (Entrada 145)
+        rho_i, p_i = stats.spearmanr(t[f"S65@{r_}"], dif)                                      # folga medida por um braco que nao compartilha execucoes com U nem com RP
+        folga.append(dict(regime=r_, rho_gap=float(rho_), p_gap=float(p_), gap_U=float(gu.mean()), dif=float(dif.mean()), rho_metades=rho_m, rho_metades_lo=lo_m, rho_metades_hi=hi_m,
+                          rho_indep=float(rho_i), p_indep=float(p_i), rel_mediana=float((dif / gu).median())))
     folga = pd.DataFrame(folga)
     print("\n=== exploratorio: correlacao de RP - U com o gap da uniforme (folga) ===")
     print(folga.round(4).to_string(index=False))

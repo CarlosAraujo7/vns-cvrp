@@ -516,6 +516,10 @@ def estudo25():
     for _, r in pd.read_csv(RES / "analise_etapa25_folga.csv").iterrows():
         NUM[f"s25_hr_rho_{r.regime}"], NUM[f"s25_hr_p_{r.regime}"] = f"{r.rho_gap:+.2f}".replace("-", "$-$"), gt.padj(r.p_gap)
         NUM[f"s25_hr_gap_{r.regime}"] = f"{r.gap_U:.2f}"
+        NUM[f"s25_hr_half_{r.regime}"], NUM[f"s25_hr_halflo_{r.regime}"], NUM[f"s25_hr_halfhi_{r.regime}"] = (f"{r.rho_metades:+.2f}".replace("-", "$-$"), f"{r.rho_metades_lo:+.2f}".replace("-", "$-$"),
+                                                                                                          f"{r.rho_metades_hi:+.2f}".replace("-", "$-$"))
+        NUM[f"s25_hr_ind_{r.regime}"], NUM[f"s25_hr_indp_{r.regime}"] = f"{r.rho_indep:+.2f}".replace("-", "$-$"), gt.padj(r.p_indep)
+        NUM[f"s25_hr_rel_{r.regime}"] = f"{-100 * r.rel_mediana:.0f}"
     nomes = {"ref": "Reference (Study 21): simulated annealing, $1500n^2$", "acc": "Record-to-record travel, $1500n^2$", "short": "Simulated annealing, $375n^2$"}
     lin = []
     for reg in ("ref", "acc", "short"):
@@ -633,9 +637,73 @@ def estudo27():
         "tab:s27f", r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
 
 
+# ------------------------------------------------------------------------------------------------ Estudo 28
+def estudo28():
+    if not (RES / "analise_etapa28.csv").exists():
+        print("estudo28: sem analise_etapa28.csv, nada gerado")
+        return
+    import analisar_etapa28 as a28
+    d = pd.concat([a28.ler28(), a28.referencia_p7()], ignore_index=True)
+    if "S65@P21" not in set(d.braco):
+        d = pd.concat([d, d[d.braco == "S33@P21"].assign(braco="S65@P21")], ignore_index=True)
+    t = piv(d)
+    NUM["s28_nruns"] = milhar(len(pd.read_csv(RES / "etapa28_eval.csv")))
+    NUM["s28_n_inst"] = str(len(t))
+    for a in t.columns:
+        arm, pool = a.split("@")
+        NUM[f"s28_gap_{pool}_{arm}"], NUM[f"s28_g2_{pool}_{arm}"] = f"{t[a].mean():.3f}", gt.f2(t[a].mean())
+    aa = pd.read_csv(RES / "analise_etapa28.csv")
+    macros_linhas("s28", aa)
+    flags_hipoteses("s28", RES / "analise_etapa28_hipoteses.csv", 193)
+    neg = lambda x: f"{x:+.2f}".replace("-", "$-$")  # noqa: E731
+    r198 = aa[aa.id.str.startswith("H198 ")].iloc[0]
+    NUM["s28_rho_K"], NUM["s28_n_RC"] = neg(r198.dif_pp), str(int(r198.n_inst))
+    for _, r in pd.read_csv(RES / "analise_etapa28_classes.csv").iterrows():
+        c = r.classe
+        NUM[f"s28_cl_K_{c}"], NUM[f"s28_cl_gapU_{c}"] = f"{r.K:.0f}", f"{r.gap_U:.2f}"
+        for col in ("RP_U", "S33_U", "HG_U", "RP_S33"):
+            NUM[f"s28_cl_{col}_{c}"] = gt.sgn(r[col])
+        NUM[f"s28_cl_it_{c}"] = f"{r.razao_it:.2f}"
+    for _, r in pd.read_csv(RES / "analise_etapa28_uso.csv").iterrows():
+        NUM[f"s28_it_{r.braco}"] = milhar(int(round(r.iteracoes)))
+    f_esc = RES / "etapa28_ajuste_escolhidas.json"
+    if f_esc.exists():
+        esc = json.loads(f_esc.read_text())
+        NUM["s28_es_gap33"], NUM["s28_es_gap65"] = f"{esc['S33']['gap_ajuste']:.3f}", f"{esc['S65']['gap_ajuste']:.3f}"
+        NUM["s28_es_changed65"] = "yes" if esc["S65"]["mudou"] else "no"
+        tr = {x["geracao"]: x for x in esc["trajetoria"]}
+        NUM["s28_es_gap0"] = f"{tr[0]['gap_ajuste']:.3f}"
+    f_val = RES / "etapa28_validacao.csv"
+    if f_val.exists():
+        v = pd.read_csv(f_val)
+        for arm, g in v[v.viavel].groupby("braco").gap_pct.mean().items():
+            NUM[f"s28_val_{arm[len('s28_'):]}"] = f"{g:.3f}"
+    nomes = [("U", "Uniform selection"), ("RP", "Adaptive weights"), ("S33", "Static mixture, 33 evaluations"), ("S65", "Static mixture, 65 evaluations"), ("HG", "HG-UCB")]
+    lin = []
+    for a, nome in nomes:
+        c21, c7 = f"{a}@P21", f"{a}@P7"
+        lin.append(" & ".join([nome, f"{t[c7].mean():.2f}" if c7 in t.columns else "---", f"{t[c21].mean():.2f}", "---" if a == "U" else gt.sgn((t[c21] - t["U@P21"]).mean()),
+                               "---" if a == "U" else f"{int(((t[c21] - t['U@P21']) < -1e-9).sum())}/{int(((t[c21] - t['U@P21']) > 1e-9).sum())}"]))
+    gt.escreve("tab_s28a.tex", gt.tabela(
+        "Study 28: mean gap (\\%) on the 56 Solomon instances in the ALNS of the CVRPTW with 7 operators (Study 16, the same five seeds) and with 21; difference from uniform selection in the pool of 21 "
+        "(pp, descriptive) and wins/losses.", "tab:s28a", r"Arm & 7 operators (\%) & 21 operators (\%) & $\Delta$ vs.\ uniform (21) & W/L", lin, "lcccc"))
+    rot = [("H193", "Primary", "RP $-$ S33, pool of 21"), ("H194", "Primary", "Difference of (RP $-$ S33) between the pools of 21 and 7"), ("H195", "Primary", "RP $-$ U, pool of 21"),
+           ("H196", "Secondary", "RP $-$ S65, pool of 21"), ("H197", "Secondary", "HG-UCB $-$ U, pool of 21"), ("H198", "Secondary", "Spearman correlation of RP $-$ U with the number of routes (classes R and RC)")]
+    lin = []
+    for cid, g, nome in rot:
+        r = aa[aa.id.str.startswith(cid + " ")].iloc[0]
+        if cid == "H198":
+            lin.append(" & ".join([g, nome, f"$\\rho={gt.sgn(r.dif_pp)}$", gt.padj(r.p_holm), "---", "---"]))
+        else:
+            lin.append(" & ".join([g, nome, f"{gt.sgn(r.dif_pp)} [{gt.sgn(r.ic_lo)}, {gt.sgn(r.ic_hi)}]", gt.padj(r.p_holm), f"{int(r.vit_a)}/{int(r.der_a)}", f"{r.mde_pp:.2f}"]))
+    gt.escreve("tab_s28f.tex", gt.tabela(
+        "Study 28: confirmatory tests (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over three for each family; wins/losses of the first-named arm; MDE: minimum detectable effect at 80\\% power).",
+        "tab:s28f", r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
+
+
 def main():
     fd = RES / "etapa22_rrt_delta0.json"
     if fd.exists():
         NUM["s22_delta0"] = f"{json.loads(fd.read_text())['delta0']:g}"
-    for f in (estudo21, estudo22, estudo23, estudo24, estudo25, estudo26, estudo27):
+    for f in (estudo21, estudo22, estudo23, estudo24, estudo25, estudo26, estudo27, estudo28):
         f()
