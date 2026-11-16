@@ -1,0 +1,3 @@
+eval Estudo 22 longx (P21): 189 execucoes (U, RP, S65)
+    100/189  35.5 min
+eval Estudo 22 longx concluido
