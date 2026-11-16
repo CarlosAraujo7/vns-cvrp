@@ -1,0 +1,12 @@
+eval Estudo 22 longabc (P21): 795 execucoes (U, RP, S65)
+    100/795  38.9 min
+/usr/lib/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-ip_prkqe', '/mp-sh_g6fhc', '/mp-7b4bgy2p', '/mp-isjos9yf', '/mp-0tqklbn_', '/mp-ep5vewtt'}
+  warnings.warn(
+eval Estudo 22 longabc (P21): 795 execucoes (U, RP, S65)
+    100/695  33.8 min
+    200/695  62.5 min
+    300/695  83.7 min
+    400/695  100.7 min
+    500/695  114.2 min
+    600/695  125.0 min
+eval Estudo 22 longabc concluido
