@@ -326,4 +326,16 @@ All \num{s26_nruns} runs are feasible (Tables~\stab{tab:s26a} and~\stab{tab:s26f
 \input{tab_s26a}
 \input{tab_s26f}
 
-% MARCADOR-S27
+\subsection{Study 27: does the number of routes moderate the advantage? A manipulation at fixed layout}\label{sec:s27}
+All \num{s27_nruns} runs are feasible (Tables~\stab{tab:s27a} and~\stab{tab:s27f}, Figure~\ref{fig:replica}c). The \num{s27_nlay} layouts of 100 and 200 customers of the new synthetic set, with coordinates and demands fixed, receive three capacities for mean route sizes of 4, 10 and 25 customers; the reference solutions have \num{s27_K_4}, \num{s27_K_10} and \num{s27_K_25} routes on average (log entry 147, commit \texttt{747d266}). \textbf{Three of the four pre-registered hypotheses are confirmed} (\num{s27_hconf} of \num{s27_hn}; 2.5 expected).
+
+\emph{With many routes the advantage is there; with few it is not (H189--H192).} The adaptive weights are \num{s27d_H190}~pp \num{s27ci_H190} from uniform selection with \num{s27_K_4} routes (H190, adjusted $p=\num{s27p_H190}$), \num{s27d_RP_U_r10}~pp \num{s27ci_RP_U_r10} with \num{s27_K_10} (unadjusted $p=\num{s27apr_RP_U_r10}$) and \num{s27d_RP_U_r25}~pp \num{s27ci_RP_U_r25} with \num{s27_K_25} routes: with few long routes no advantage is detected (the minimum detectable effect is \num{s27mde_RP_U_r25}~pp and the estimate has the opposite sign). The difference of differences between the most and the fewest routes is \num{s27d_H189}~pp \num{s27ci_H189} (H189, adjusted $p=\num{s27p_H189}$) and between 15 and 6 routes \num{s27d_H192}~pp \num{s27ci_H192} (H192, adjusted $p=\num{s27p_H192}$); between 37 and 15 routes it is \num{s27d_H191}~pp \num{s27ci_H191} (H191, not confirmed): the advantage is the same with 37 and with 15 routes and disappears with 6. Within a layout the Spearman correlation of the difference with the number of routes is \num{s27_trend_rho} on average (Wilcoxon $p=\num{s27_trend_p}$ over the \num{s27_nlay} layouts). By size, the difference of differences is \num{s27d_DiD_RP_U_r4_r25_n100}~pp for 100 customers (unadjusted $p=\num{s27apr_DiD_RP_U_r4_r25_n100}$) and \num{s27d_DiD_RP_U_r4_r25_n200}~pp for 200 (unadjusted $p=\num{s27apr_DiD_RP_U_r4_r25_n200}$).
+
+\emph{The headroom does not explain it, and the iterations accompany it.} The gap of uniform selection is \num{s27_gap_4}\%, \num{s27_gap_10}\% and \num{s27_gap_25}\% with the three capacities: it is the largest where the advantage is absent, so the advantage cannot be a matter of room to improve (in the classic Augerat and Christofides instances, with about seven routes, the gap is small and the advantage also absent: Study~22). The adaptive weights make \num{s27_it_4}, \num{s27_it_10} and \num{s27_it_25} times the iterations of uniform selection and give the removal of the smallest route \num{s27_usorp_4}, \num{s27_usorp_10} and \num{s27_usorp_25}\% of their destroy choices; as in Study~23 the iterations are an accompaniment, not a requirement.
+
+\emph{Threats.} Changing the capacity changes the problem (the gap of uniform selection rises as the routes become few); the layouts have 100 and 200 customers and the Uchoa demand structure; the transition between 6 and 15 routes is not resolved and the minimum detectable effect of the difference of differences is \num{s27mde_H189}~pp; two seeds per variant; the restriction to exactly $K$ routes of the sets A and B is not tested.
+
+\input{tab_s27a}
+\input{tab_s27f}
+
+% MARCADOR-S28

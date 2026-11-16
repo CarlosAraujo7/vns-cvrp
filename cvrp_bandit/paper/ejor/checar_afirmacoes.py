@@ -252,6 +252,16 @@ def main():
         print(f"U15 (Estudo 26): a vantagem dos pesos adaptativos sobre a uniforme e sobre a mistura de maior esforco se repete nas 98 instancias novas, em cada conjunto, e acompanha o numero de rotas (H181-H188): {ok15}")
         if not ok15:
             falhas.append("U15")
+    d27 = ler("analise_etapa27.csv")
+    if d27 is not None:
+        # U16 (Estudo 27, capacidade variada a leiaute fixo): a vantagem dos pesos adaptativos sobre a uniforme existe com muitas rotas (H190, r = 4) e a diferenca em diferencas entre
+        # muitas e poucas rotas e significativamente negativa (H189); com poucas rotas (r = 25) a vantagem nao e significativa (exploratorio) e, em dois contrastes, o sinal e oposto
+        h = lambda i: d27[d27.id.str.startswith(i + " ")].iloc[0]  # noqa: E731
+        r25 = d27[d27.id == "RP-U@r25"].iloc[0]
+        ok16 = bool(h("H189").dif_pp < 0 and h("H189").p_holm < 0.05 and h("H190").dif_pp < 0 and h("H190").p_holm < 0.05 and not (r25.dif_pp < 0 and r25.p_holm < 0.05) and r25.dif_pp > 0)
+        print(f"U16 (Estudo 27): a vantagem dos pesos adaptativos existe com muitas rotas e a diferenca para poucas rotas e significativa; com poucas rotas nao ha vantagem (H189, H190): {ok16}")
+        if not ok16:
+            falhas.append("U16")
     d22 = ler("analise_etapa22.csv")
     if d22 is not None:
         # U14 (Estudo 22, implantacao do conjunto de 21 operadores): nenhum dos dez contrastes primarios e secundarios (RP - U e RP - S* em cinco regimes) e significativamente negativo

@@ -1,0 +1,5 @@
+hipotese,confirmada
+"H189 DiD de (RP - U) entre r = 4 e r = 25 significativamente negativa (primario, Holm m=2)",True
+"H190 RP - U com r = 4 significativamente negativo (primario, Holm m=2)",True
+"H191 DiD de (RP - U) entre r = 4 e r = 10 significativamente negativa (secundario, Holm m=2)",False
+"H192 DiD de (RP - U) entre r = 10 e r = 25 significativamente negativa (secundario, Holm m=2)",True

@@ -421,6 +421,9 @@ def fig_replica():
         for r, x in rs:
             ax.annotate(f"r={r}", (res27.loc[r, "K"], x.dif_pp), textcoords="offset points", xytext=(4, 5), fontsize=5.5)
         ax.set_xscale("log")
+        ax.set_xticks([6, 10, 20, 40])
+        ax.set_xticklabels(["6", "10", "20", "40"])
+        ax.minorticks_off()
         ax.axhline(0, color="k", lw=0.8)
         ax.axhspan(-0.1, 0.1, color="0.92", zorder=0)
         ax.set_xlabel("Mean number of routes (capacity varied)", fontsize=7)
