@@ -9,6 +9,7 @@ Gera as figuras do manuscrito (PDF vetorial) a partir dos CSVs brutos:
   fig_operadores.pdf % das avaliacoes de distancia por operador (Estudo 3) e eficiencia (Estudo 4, se existir)
 Uso: python gerar_figuras.py
 """
+import re
 from pathlib import Path
 
 import matplotlib
@@ -241,7 +242,109 @@ def fig_hibrido():
     plt.close(fig)
 
 
+def fig_poolsize():
+    """Estudo 21: (a) diferenca de gap contra a selecao uniforme em funcao do tamanho do conjunto (P7, P12, P21) para os pesos adaptativos, a mistura de 33 e de 65 avaliacoes, o HG-UCB e
+    (em P21) a mistura de 129 avaliacoes, IC95% bootstrap; (b) a diferenca RP - S33 por conjunto; (c) a curva de aprendizado do ajuste (validacao com seeds novas) contra o RP sem ajuste."""
+    f = RES / "analise_etapa21.csv"
+    if not f.exists():
+        return
+    aa = pd.read_csv(f).set_index("id")
+    K = {"P7": 7, "P12": 12, "P21": 21}
+    fig, axs = plt.subplots(1, 3, figsize=(7.4, 2.7))
+    ax = axs[0]
+    estilo = {"RP": ("#1b5e9b", "o", "-", "Adaptive weights"), "S33": ("#d95f02", "s", "-", "Mixture, 33 eval."), "S65": ("#d95f02", "^", "--", "Mixture, 65 eval."),
+              "HG": ("#1b9e77", "D", ":", "HG-UCB")}
+    for arm, (cor, mk, ls, rot) in estilo.items():
+        pts = [(K[p], aa.loc[f"{arm}-U@{p}"]) for p in K if f"{arm}-U@{p}" in aa.index]
+        if not pts:
+            continue
+        ax.errorbar([x for x, _ in pts], [r.dif_pp for _, r in pts], yerr=[[r.dif_pp - r.ic_lo for _, r in pts], [r.ic_hi - r.dif_pp for _, r in pts]], color=cor, marker=mk, ls=ls,
+                    ms=3.5, lw=1, capsize=2, label=rot)
+    fb = RES / "analise_etapa21b.csv"
+    if fb.exists():
+        ab = pd.read_csv(fb).set_index("id")
+        if "S129-U@P21" in ab.index:
+            r = ab.loc["S129-U@P21"]
+            ax.errorbar([21.6], [r.dif_pp], yerr=[[r.dif_pp - r.ic_lo], [r.ic_hi - r.dif_pp]], color="#7b3294", marker="v", ms=3.5, lw=1, capsize=2, label="Mixture, 129 eval.")
+    ax.axhline(0, color="k", lw=0.8)
+    ax.set_xscale("log")
+    ax.set_xticks([7, 12, 21])
+    ax.set_xticklabels(["7", "12", "21"])
+    ax.minorticks_off()
+    ax.set_xlabel("Operators in the pool", fontsize=7)
+    ax.set_ylabel("Gap minus uniform selection (pp)", fontsize=7)
+    ax.legend(fontsize=5.5, frameon=False, loc="lower left")
+    ax.set_title("(a) against uniform selection", fontsize=7)
+    ax = axs[1]
+    pts = [(K[p], aa.loc[f"RP-S33@{p}"]) for p in K if f"RP-S33@{p}" in aa.index]
+    ax.errorbar([x for x, _ in pts], [r.dif_pp for _, r in pts], yerr=[[r.dif_pp - r.ic_lo for _, r in pts], [r.ic_hi - r.dif_pp for _, r in pts]], color="#1b5e9b", marker="o", ms=3.5, lw=1,
+                capsize=2)
+    ax.axhline(0, color="k", lw=0.8)
+    ax.axhspan(-0.1, 0.1, color="0.92", zorder=0)
+    ax.set_xscale("log")
+    ax.set_xticks([7, 12, 21])
+    ax.set_xticklabels(["7", "12", "21"])
+    ax.minorticks_off()
+    ax.set_xlabel("Operators in the pool", fontsize=7)
+    ax.set_ylabel("Adaptive weights minus 33-eval. mixture (pp)", fontsize=7)
+    ax.set_title("(b) negative favors adaptation", fontsize=7)
+    ax = axs[2]
+    fc = RES / "analise_etapa21_curva.csv"
+    if fc.exists():
+        c = pd.read_csv(fc)
+        c21 = c[c.pool == "P21"]
+        fcb = RES / "analise_etapa21b_curva.csv"
+        if fcb.exists():
+            cb = pd.read_csv(fcb)
+            cb = cb[(cb.geracao > 16)]
+            c21 = pd.concat([c21, cb[["pool", "geracao", "n_avaliacoes", "gap_ajuste", "gap_validacao"]]], ignore_index=True)
+        ax.plot(c21.n_avaliacoes, c21.gap_validacao, color="#d95f02", marker="s", ms=3, lw=1, label="Mixture: validation gap of the incumbent")
+        ax.plot(c21[c21.gap_ajuste.notna()].n_avaliacoes, c21[c21.gap_ajuste.notna()].gap_ajuste, color="#d95f02", marker=".", ms=3, lw=0.8, ls=":", label="Mixture: tuning gap (biased)")
+        rp = c[(c.pool == "P21")].gap_validacao_RP.iloc[0]
+        u = c[(c.pool == "P21")].gap_validacao_U.iloc[0]
+        ax.axhline(rp, color="#1b5e9b", lw=1, label="Adaptive weights, no tuning")
+        ax.axhline(u, color="0.4", lw=1, ls="--", label="Uniform selection")
+        ax.legend(fontsize=5.5, frameon=False, loc="upper right")
+    ax.set_xlabel("Tuning evaluations of the mixture (P21)", fontsize=7)
+    ax.set_ylabel("Gap on the tuning instances (%)", fontsize=7)
+    ax.set_title("(c) learning curve of the tuning", fontsize=7)
+    for a in axs:
+        a.tick_params(labelsize=6.5)
+    fig.tight_layout()
+    fig.savefig(AQUI / "fig_poolsize.pdf")
+    plt.close(fig)
+
+
+def fig_deslocamentos():
+    """Estudo 22: floresta de RP - U e de RP - S* (diferenca de gap em pp, IC95% bootstrap) nos cinco regimes de implantacao."""
+    f = RES / "analise_etapa22.csv"
+    if not f.exists():
+        return
+    aa = pd.read_csv(f).set_index("id")
+    regs = [("cls", "A/B/CMT, 1500 n$^2$"), ("short", "A/B/CMT, 375 n$^2$"), ("longabc", "A/B/CMT, 30000 n$^2$"), ("longx", "X, 6000 n$^2$"), ("acc", "A/B/CMT, record-to-record")]
+    fig, ax = plt.subplots(figsize=(6.0, 2.6))
+    n = len(regs)
+    for k, (reg, rot) in enumerate(regs):
+        y = n - 1 - k
+        for off, (cid, cor, mk) in zip((0.14, -0.14), ((f"RP-U@{reg}", "#1b5e9b", "o"), (f"RP-S*@{reg}", "#d95f02", "s"))):
+            m = aa.loc[[i for i in aa.index if re.fullmatch(r"H\d+ " + re.escape(cid), i)]]
+            if not len(m):
+                continue
+            r = m.iloc[0]
+            ax.plot([r.ic_lo, r.ic_hi], [y + off, y + off], color=cor, lw=1.3)
+            ax.scatter([r.dif_pp], [y + off], marker=mk, s=22, color=cor, zorder=3, label="Adaptive weights $-$ uniform" if k == 0 and cor == "#1b5e9b" else ("Adaptive weights $-$ largest mixture" if k == 0 else None))
+    ax.axvline(0, color="k", lw=0.8)
+    ax.axvspan(-0.1, 0.1, color="0.92", zorder=0)
+    ax.set_yticks(range(n))
+    ax.set_yticklabels([r[1] for r in regs][::-1], fontsize=7)
+    ax.set_xlabel("Difference in gap (pp); negative favors the adaptive weights; 95% CI", fontsize=7)
+    ax.legend(fontsize=6, frameon=False, loc="lower right")
+    fig.tight_layout()
+    fig.savefig(AQUI / "fig_deslocamentos.pdf")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
-    for f in (fig_forest, fig_estrutura, fig_pool, fig_operadores, fig_sintese, fig_hibrido):
+    for f in (fig_forest, fig_estrutura, fig_pool, fig_operadores, fig_sintese, fig_hibrido, fig_poolsize, fig_deslocamentos):
         f()
         print("ok", f.__name__)

@@ -3,7 +3,8 @@
 # que ja esta no CSV; o ES retoma pelo arquivo de estado COPIADO). NUNCA dois runners no mesmo CSV.
 # Uso (PowerShell): wsl -e bash -lc "cd /mnt/c/Pesquisas/learnheuristica/cvrp_bandit && (nohup setsid bash estudo_aos/fila_21b.sh >> results/aos_study/etapa21b_fila_log.txt 2>&1 < /dev/null &)"
 cd "$(dirname "$0")/.." || exit 1
-while pgrep -f "fila_21\.sh" > /dev/null; do sleep 60; done
+sleep 240
+while pgrep -f "fila_21c\.sh|fila_23\.sh" > /dev/null; do sleep 60; done
 source direcao1_local/venv/bin/activate
 set -e
 R=results/aos_study

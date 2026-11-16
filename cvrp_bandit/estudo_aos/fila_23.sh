@@ -3,8 +3,7 @@
 # roda ANTES de fila_22.sh; RETOMAVEL (cada modo pula o que ja esta no CSV). Ordem: calibracao da escala de q e conjunto podado -> avaliacao em P21 -> avaliacao em P7. NUNCA dois runners no mesmo CSV.
 # Uso (PowerShell): wsl -e bash -lc "cd /mnt/c/Pesquisas/learnheuristica/cvrp_bandit && (nohup setsid bash estudo_aos/fila_23.sh >> results/aos_study/etapa23_fila_log.txt 2>&1 < /dev/null &)"
 cd "$(dirname "$0")/.." || exit 1
-sleep 240
-while pgrep -f "fila_21\.sh|fila_21b\.sh|fila_21c\.sh" > /dev/null; do sleep 60; done
+sleep 5
 source direcao1_local/venv/bin/activate
 set -e
 R=results/aos_study

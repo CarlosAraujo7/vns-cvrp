@@ -10,12 +10,13 @@ for f in $R/etapa21_ajuste_static_P12.csv $R/etapa21_eval_P21.csv $R/etapa21_aju
   if [ -f "$f" ]; then $PY estudo_aos/verifica_csv.py "$f"; fi
 done
 echo "estado do ES de P12:"; cat $R/etapa21_ajuste_static_P12_estado.json 2>/dev/null; echo
-(nohup setsid bash estudo_aos/fila_21.sh >> $R/etapa21_fila_log.txt 2>&1 < /dev/null &)
+(nohup setsid bash estudo_aos/fila_21r.sh >> $R/etapa21_fila_log.txt 2>&1 < /dev/null &)
 sleep 2
 (nohup setsid bash estudo_aos/fila_21b.sh >> $R/etapa21b_fila_log.txt 2>&1 < /dev/null &)
 (nohup setsid bash estudo_aos/fila_21c.sh >> $R/etapa21c_fila_log.txt 2>&1 < /dev/null &)
 (nohup setsid bash estudo_aos/fila_23.sh >> $R/etapa23_fila_log.txt 2>&1 < /dev/null &)
 (nohup setsid bash estudo_aos/fila_22.sh >> $R/etapa22_fila_log.txt 2>&1 < /dev/null &)
+(nohup setsid bash estudo_aos/fila_24.sh >> $R/etapa24_fila_log.txt 2>&1 < /dev/null &)
 sleep 5
 pgrep -af "fila_2" | cut -c1-70
 date +%H:%M:%S

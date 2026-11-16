@@ -51,6 +51,13 @@ for ni in (nomes[2], nomes[11], nomes[20]):
                 t[1] += int(igual)
                 t[2] += int(viavel)
                 t[3] += n_rem
+import csv
+linhas = []
 print(f"{'destruicao':20s} {'aplicacoes':>10s} {'mesma solucao %':>16s} {'viavel %':>9s} {'clientes removidos (media)':>27s}")
 for nd, (n, ig, vi, nr) in tot.items():
     print(f"{nd:20s} {n:10d} {100 * ig / n:16.1f} {100 * vi / n:9.1f} {nr / n:27.1f}")
+    linhas.append(dict(destruicao=nd, aplicacoes=n, mesma_solucao_pct=100 * ig / n, viavel_pct=100 * vi / n, clientes_removidos=nr / n))
+with open(ROOT / "results" / "aos_study" / "etapa21_diag_noop.csv", "w", newline="", encoding="utf-8") as f_:
+    w_ = csv.DictWriter(f_, fieldnames=list(linhas[0]))
+    w_.writeheader()
+    w_.writerows(linhas)
