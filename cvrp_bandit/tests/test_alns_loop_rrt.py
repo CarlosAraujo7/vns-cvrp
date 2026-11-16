@@ -67,6 +67,43 @@ def main():
         contagem[d0] = sig3[0]
     assert contagem[0.0] == 0 and contagem[0.01] > 0 and contagem[0.05] >= contagem[0.01], contagem
     print(f"(2) rrt: viavel, deterministico, custo final <= inicial; aceitos piores por delta0 {contagem} (delta0 = 0 nao aceita nenhum)")
+    # (3) opcoes do Estudo 23: a pontuacao com novidade nao altera a trajetoria de uma politica sem aprendizado (so os escores), e corta o escore dos candidatos repetidos;
+    #     q_escala = 1 e identico ao padrao; q_escala menor da mais iteracoes; a tabela de P21 funciona com o operador de rota procurado pelo nome
+    import alns_ext as ax
+    from alns_loop_rrt import _chave
+    D21, R21 = ax.POOLS["P21"]
+    ni = escolhidas[1]
+    inst, cws = _instancia("SYN_TUNE", ni)
+
+    def corrida(jd=11, **kw):
+        px = _proxy("SYN_TUNE", ni)
+        px.chamadas = 0
+        w_d = [0.0] * len(D21)
+        w_d[jd] = 1.0                                   # 11 = rota_pequena: quase sempre reconstroi a mesma solucao; 0 = aleatoria (depende de q)
+        w_r = [0.0] * len(R21)
+        w_r[1] = 1.0                                    # regret-2
+        pd_, pr_ = EstaticaPolitica(w_d, rng=random.Random(5)), EstaticaPolitica(w_r, rng=random.Random(6))
+        sig3 = [0]
+
+        def on_it(it, jd, jr, sigma, _s=sig3):
+            _s[0] += int(abs(sigma - SIGMA3) < 1e-12)
+
+        best, info = rodar_alns_aceitacao(px, [list(r) for r in cws], random.Random(7), 150 * px.n_customers ** 2, pd_, "score", pr_, "score", lambda: px.chamadas,
+                                          w0=0.02, tf_fator=1e-3, max_rotas=inst.n_vehicles_ref if inst.vehicles_exact else None, destruir=D21, reparar=R21,
+                                          on_iteracao=on_it, **kw)
+        return best, info, px.chamadas, sig3[0]
+
+    a0 = corrida()
+    a1 = corrida(novidade=True)
+    assert a0[0] == a1[0] and a0[1]["iteracoes"] == a1[1]["iteracoes"] and a0[2] == a1[2] and a0[1]["uso_d"] == a1[1]["uso_d"], "a novidade alterou a trajetoria"
+    assert a1[3] < 0.5 * a0[3], (a0[3], a1[3])
+    e0 = corrida(jd=0)
+    b0 = corrida(jd=0, q_escala=1.0)
+    assert b0[0] == e0[0] and b0[1]["iteracoes"] == e0[1]["iteracoes"] and b0[2] == e0[2]
+    c0 = corrida(jd=0, q_escala=0.5)
+    assert c0[1]["iteracoes"] > e0[1]["iteracoes"] and c0[0] != e0[0]
+    assert _chave([[1, 2, 3], [5, 4]]) == _chave([[4, 5], [3, 2, 1]]) != _chave([[1, 2, 3, 4, 5]])
+    print(f"(3) novidade: trajetoria identica, candidatos aceitos pontuados {a0[3]} -> {a1[3]}; q_escala 1,0 identico ao padrao; q_escala 0,5 (aleatoria): {c0[1]['iteracoes']} iteracoes contra {e0[1]['iteracoes']}; chave canonica")
     print("TODOS OS TESTES PASSARAM")
 
 
