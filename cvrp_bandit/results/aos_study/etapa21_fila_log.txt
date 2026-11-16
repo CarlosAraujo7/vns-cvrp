@@ -1,0 +1,19 @@
+[14:18:55] FILA 21 INICIADA
+[14:19:50] ajuste P21/static
+[15:41:24] ajuste P21/RP
+[16:23:49] validacao P21
+[16:38:56] avaliacao P21
+[19:49:10] FILA 21 INICIADA
+[19:50:22] ajuste P21/static
+[19:50:38] ajuste P21/RP
+[19:51:10] validacao P21
+[19:51:30] avaliacao P21
+[20:21:33] P21 CONCLUIDO
+[20:21:33] ajuste P12/static
+[01:04:18] FILA 21 INICIADA
+[01:06:05] ajuste P21/static
+[01:06:26] ajuste P21/RP
+[01:06:58] validacao P21
+[01:07:18] avaliacao P21
+[01:07:39] P21 CONCLUIDO
+[01:07:39] ajuste P12/static

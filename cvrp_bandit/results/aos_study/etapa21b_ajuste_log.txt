@@ -1,0 +1,17 @@
+P21/static129 gen 17: melhor filho 0.7805  atual 0.7050  sigma 0.127
+P21/static129 gen 18: melhor filho 0.8078  atual 0.7050  sigma 0.114
+P21/static129 gen 19: melhor filho 0.8204  atual 0.7050  sigma 0.103
+P21/static129 gen 20: melhor filho 0.8299  atual 0.7050  sigma 0.093
+P21/static129 gen 21: melhor filho 0.8755  atual 0.7050  sigma 0.083
+P21/static129 gen 22: melhor filho 0.7845  atual 0.7050  sigma 0.075
+P21/static129 gen 23: melhor filho 0.7618  atual 0.7050  sigma 0.068
+P21/static129 gen 24: melhor filho 0.7359  atual 0.7050  sigma 0.061
+P21/static129 gen 25: melhor filho 0.7716  atual 0.7050  sigma 0.055
+P21/static129 gen 26: melhor filho 0.7986  atual 0.7050  sigma 0.049
+P21/static129 gen 27: melhor filho 0.7680  atual 0.7050  sigma 0.044
+P21/static129 gen 28: melhor filho 0.7678  atual 0.7050  sigma 0.040
+P21/static129 gen 29: melhor filho 0.7800  atual 0.7050  sigma 0.036
+P21/static129 gen 30: melhor filho 0.7105  atual 0.7050  sigma 0.032
+P21/static129 gen 31: melhor filho 0.7954  atual 0.7050  sigma 0.029
+P21/static129 gen 32: melhor filho 0.7802  atual 0.7050  sigma 0.026
+busca ES (P21/static129) concluida

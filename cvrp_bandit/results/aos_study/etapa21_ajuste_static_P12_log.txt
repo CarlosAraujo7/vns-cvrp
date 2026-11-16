@@ -1,0 +1,8 @@
+P12/static gen 0: gap 0.8431
+P12/static gen 1: melhor filho 0.6986  atual 0.6986  sigma 0.500
+P12/static gen 2: melhor filho 0.6466  atual 0.6466  sigma 0.500
+P12/static gen 3: melhor filho 0.6287  atual 0.6287  sigma 0.500
+P12/static gen 4: melhor filho 0.6440  atual 0.6287  sigma 0.450
+P12/static gen 5: melhor filho 0.7032  atual 0.6287  sigma 0.405
+/usr/lib/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-mhmer2od', '/mp-38djpuih', '/mp-y3ch02ck', '/mp-o1uvcpvx', '/mp-23r7w7nl', '/mp-j52qanhv'}
+  warnings.warn(

@@ -1,0 +1,26 @@
+eval Estudo 21 P21: 2160 execucoes (s21_P21_U, s21_P21_RP, s21_P21_S33, s21_P21_RPt, s21_P21_S65, s21_P21_HG)
+    100/2160  13.2 min
+    200/2160  26.0 min
+    300/2160  39.1 min
+    400/2160  44.6 min
+    500/2160  52.0 min
+    600/2160  57.3 min
+    700/2160  63.4 min
+    800/2160  67.9 min
+    900/2160  73.1 min
+    1000/2160  79.2 min
+eval Estudo 21 P21: 2160 execucoes (s21_P21_U, s21_P21_RP, s21_P21_S33, s21_P21_RPt, s21_P21_S65, s21_P21_HG)
+    100/1160  3.5 min
+    200/1160  6.9 min
+    300/1160  10.9 min
+    400/1160  13.3 min
+    500/1160  16.2 min
+    600/1160  18.9 min
+    700/1160  20.6 min
+    800/1160  22.6 min
+    900/1160  24.4 min
+    1000/1160  26.5 min
+    1100/1160  28.4 min
+eval Estudo 21 P21 concluido
+eval Estudo 21 P21: 2160 execucoes (s21_P21_U, s21_P21_RP, s21_P21_S33, s21_P21_RPt, s21_P21_S65, s21_P21_HG)
+eval Estudo 21 P21 concluido

@@ -1,0 +1,4 @@
+[01:52:36] FILA 23 INICIADA
+[02:08:28] avaliacao P21
+[04:25:56] avaliacao P7
+FILA 23 CONCLUIDA

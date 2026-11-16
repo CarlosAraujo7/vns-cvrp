@@ -1,0 +1,29 @@
+ajuste P21/RP: 2376 execucoes
+    100/2376  2.2 min
+    200/2376  3.8 min
+    300/2376  5.7 min
+    400/2376  7.5 min
+    500/2376  8.9 min
+    600/2376  11.0 min
+    700/2376  12.7 min
+    800/2376  14.5 min
+    900/2376  16.4 min
+    1000/2376  17.9 min
+    1100/2376  19.9 min
+    1200/2376  21.6 min
+    1300/2376  23.3 min
+    1400/2376  25.1 min
+    1500/2376  26.7 min
+    1600/2376  28.7 min
+    1700/2376  30.4 min
+    1800/2376  31.8 min
+    1900/2376  33.9 min
+    2000/2376  35.5 min
+    2100/2376  37.5 min
+    2200/2376  39.3 min
+    2300/2376  40.7 min
+ajuste P21/RP concluido
+ajuste P21/RP: 2376 execucoes
+ajuste P21/RP concluido
+ajuste P21/RP: 2376 execucoes
+ajuste P21/RP concluido

@@ -1,0 +1,100 @@
+S129@P21 ausente: copiado de S65@P21
+=== 51 instancias; gap medio (%) ===
+braco
+RPh@P21     1.164
+RPsr@P21    1.179
+RP@P21      1.203
+Uq@P21      1.300
+S65@P7      1.303
+S33@P7      1.330
+SRP@P21     1.331
+RP@P7       1.341
+RPt@P7      1.358
+RPh7@P7     1.361
+Upr@P21     1.395
+U@P21       1.415
+S65@P21     1.437
+S129@P21    1.437
+S*@P21      1.437
+HG@P7       1.482
+S33@P21     1.533
+U@P7        1.701
+
+=== primarios (Holm m=3), secundarios (Holm m=6), terciarios (Holm m=4) e exploratorios ===
+              id  n_inst  dif_pp   ic_lo   ic_hi  vit_a  der_a  emp  p_bruto  equiv_010  mde_pp  p_holm  signif_005
+  H154 RPh-U@P21      51 -0.2508 -0.3541 -0.1465     41     10    0   0.0000      False  0.1480  0.0000        True
+ H155 RPh-S*@P21      51 -0.2728 -0.3942 -0.1555     38     13    0   0.0001      False  0.1711  0.0002        True
+H156 RPh7-S33@P7      51  0.0310 -0.1050  0.1895     26     25    0   0.8513      False  0.2115  0.8513       False
+ H157 RPh-RP@P21      51 -0.0391 -0.1179  0.0418     28     23    0   0.3250      False  0.1153  0.9750       False
+ H158 RPh7-RP@P7      51  0.0195 -0.1058  0.1739     27     24    0   0.4879      False  0.2058  0.9758       False
+ H159 RP-SRP@P21      51 -0.1279 -0.2174 -0.0461     33     18    0   0.0040      False  0.1255  0.0240        True
+ H160 RP-Upr@P21      51 -0.1922 -0.4418  0.0186     22     29    0   0.8293      False  0.3339  0.9758       False
+  H161 RP-Uq@P21      51 -0.0972 -0.1974 -0.0016     31     20    0   0.0734      False  0.1393  0.3670       False
+H162 RPsr-RP@P21      51 -0.0246 -0.1334  0.0947     33     18    0   0.2230      False  0.1660  0.8921       False
+  H163 SRP-U@P21      51 -0.0837 -0.1845  0.0212     34     17    0   0.0401      False  0.1469  0.1203       False
+  H164 Upr-U@P21      51 -0.0195 -0.2648  0.2507     35     16    0   0.0934      False  0.3736  0.1203       False
+   H165 Uq-U@P21      51 -0.1145 -0.2124 -0.0173     34     17    0   0.0480      False  0.1428  0.1203       False
+ H166 RPsr-U@P21      51 -0.2363 -0.3576 -0.1101     41     10    0   0.0001      False  0.1763  0.0004        True
+     RPh-S33@P21      51 -0.3687 -0.4682 -0.2653     41     10    0   0.0000      False  0.1474  0.0000        True
+     RPh-S65@P21      51 -0.2728 -0.3928 -0.1540     38     13    0   0.0001      False  0.1711  0.0001        True
+      RPh-S*@P21      51 -0.2728 -0.3947 -0.1544     38     13    0   0.0001      False  0.1711  0.0001        True
+    RPsr-S33@P21      51 -0.3541 -0.4568 -0.2444     41     10    0   0.0000      False  0.1538  0.0000        True
+    RPsr-S65@P21      51 -0.2582 -0.3525 -0.1640     43      8    0   0.0000      False  0.1367  0.0000        True
+     RPsr-S*@P21      51 -0.2582 -0.3568 -0.1657     43      8    0   0.0000      False  0.1367  0.0000        True
+     Upr-S33@P21      51 -0.1374 -0.3487  0.0901     36     15    0   0.0196      False  0.3200  0.0196        True
+     Upr-S65@P21      51 -0.0415 -0.2492  0.1858     32     19    0   0.1313      False  0.3180  0.1313       False
+      Upr-S*@P21      51 -0.0415 -0.2589  0.1835     32     19    0   0.1313      False  0.3180  0.1313       False
+      Uq-S33@P21      51 -0.2324 -0.3218 -0.1359     41     10    0   0.0000      False  0.1325  0.0000        True
+      Uq-S65@P21      51 -0.1365 -0.2302 -0.0449     30     20    1   0.0144      False  0.1320  0.0144        True
+       Uq-S*@P21      51 -0.1365 -0.2274 -0.0454     30     20    1   0.0144      False  0.1320  0.0144        True
+     SRP-S33@P21      51 -0.2016 -0.2866 -0.1104     42      9    0   0.0001      False  0.1276  0.0001        True
+     SRP-S65@P21      51 -0.1057 -0.2005 -0.0111     32     19    0   0.0263      False  0.1379  0.0263        True
+      SRP-S*@P21      51 -0.1057 -0.2011 -0.0112     32     19    0   0.0263      False  0.1379  0.0263        True
+      RP-S33@P21      51 -0.3295 -0.4356 -0.2256     45      6    0   0.0000      False  0.1505  0.0000        True
+      RP-S65@P21      51 -0.2336 -0.3593 -0.1203     39     12    0   0.0003      False  0.1728  0.0003        True
+       RP-S*@P21      51 -0.2336 -0.3589 -0.1173     39     12    0   0.0003      False  0.1728  0.0003        True
+    RPh-RPsr@P21      51 -0.0145 -0.1157  0.0837     26     25    0   0.7217      False  0.1408  0.7217       False
+     Upr-SRP@P21      51  0.0643 -0.1221  0.2798     32     19    0   0.1597      False  0.2888  0.1597       False
+      Uq-SRP@P21      51 -0.0308 -0.1212  0.0557     32     19    0   0.4256      False  0.1277  0.4256       False
+      Upr-Uq@P21      51  0.0950 -0.0950  0.3189     30     21    0   0.3937      False  0.3016  0.3937       False
+     RPh-Upr@P21      51 -0.2313 -0.4570 -0.0309     25     26    0   0.4256      False  0.3074  0.4256       False
+     RPh-SRP@P21      51 -0.1671 -0.2442 -0.0894     37     14    0   0.0001      False  0.1117  0.0001        True
+       RPh7-U@P7      51 -0.3404 -0.4666 -0.2037     43      8    0   0.0000      False  0.1912  0.0000        True
+     RPh7-S65@P7      51  0.0578 -0.0547  0.1862     24     27    0   0.6460      False  0.1705  0.6460       False
+
+=== hipoteses (pre-registro, Entrada 141) ===
+  CONFIRMADA  H154 RPh - U em P21 significativamente negativo (primario, Holm m=3)
+  CONFIRMADA  H155 RPh - S* em P21 significativamente negativo (primario, Holm m=3)
+  REFUTADA    H156 RPh7 - S33 em P7 significativamente negativo (primario, Holm m=3)
+  REFUTADA    H157 RPh - RP em P21 diferente de zero (secundario, Holm m=6)
+  REFUTADA    H158 RPh7 - RP em P7 diferente de zero (secundario, Holm m=6)
+  CONFIRMADA  H159 RP - SRP em P21 significativamente negativo (secundario, Holm m=6)
+  REFUTADA    H160 RP - Upr em P21 significativamente negativo (secundario, Holm m=6)
+  REFUTADA    H161 RP - Uq em P21 significativamente negativo (secundario, Holm m=6)
+  REFUTADA    H162 RPsr - RP em P21 diferente de zero (secundario, Holm m=6)
+  REFUTADA    H163 SRP - U em P21 significativamente negativo (terciario, Holm m=4)
+  REFUTADA    H164 Upr - U em P21 significativamente negativo (terciario, Holm m=4)
+  REFUTADA    H165 Uq - U em P21 significativamente negativo (terciario, Holm m=4)
+  CONFIRMADA  H166 RPsr - U em P21 significativamente negativo (terciario, Holm m=4)
+  confirmadas: 4 de 13 (esperado no pre-registro: 6,6)
+
+=== exploratorio: iteracoes medias por execucao e uso medio (fracao), destruicoes | reparos ===
+  HG@P7      it      nan  d [0.296, 0.234, 0.24, 0.23]  r [0.288, 0.422, 0.29]
+  RP@P21     it    22289  d [0.068, 0.024, 0.029, 0.159, 0.016, 0.016, 0.063, 0.181, 0.018, 0.112, 0.013, 0.302]  r [0.081, 0.152, 0.089, 0.14, 0.102, 0.129, 0.134, 0.074, 0.099]
+  RP@P7      it      nan  d [0.22, 0.09, 0.104, 0.586]  r [0.218, 0.516, 0.265]
+  RPh7@P7    it     8152  d [0.394, 0.172, 0.223, 0.211]  r [0.159, 0.678, 0.164]
+  RPh@P21    it    10345  d [0.143, 0.054, 0.075, 0.074, 0.044, 0.041, 0.15, 0.174, 0.048, 0.114, 0.036, 0.05]  r [0.042, 0.206, 0.043, 0.2, 0.053, 0.175, 0.151, 0.063, 0.066]
+  RPsr@P21   it    15444  d [0.101, 0.036, 0.043, 0.22, 0.024, 0.023, 0.094, 0.255, 0.026, 0.159, 0.019]  r [0.053, 0.187, 0.066, 0.17, 0.089, 0.15, 0.152, 0.046, 0.085]
+  RPt@P7     it      nan  d [0.218, 0.091, 0.105, 0.586]  r [0.226, 0.505, 0.269]
+  S129@P21   it     9976  d [0.053, 0.186, 0.113, 0.024, 0.04, 0.06, 0.025, 0.11, 0.055, 0.148, 0.082, 0.105]  r [0.029, 0.125, 0.077, 0.131, 0.202, 0.106, 0.081, 0.213, 0.037]
+  S33@P21    it     9892  d [0.087, 0.204, 0.087, 0.035, 0.073, 0.046, 0.034, 0.125, 0.058, 0.09, 0.094, 0.067]  r [0.053, 0.081, 0.092, 0.139, 0.272, 0.074, 0.079, 0.16, 0.051]
+  S33@P7     it      nan  d [0.319, 0.181, 0.06, 0.439]  r [0.043, 0.778, 0.18]
+  S65@P21    it     9976  d [0.053, 0.186, 0.113, 0.024, 0.04, 0.06, 0.025, 0.11, 0.055, 0.148, 0.082, 0.105]  r [0.029, 0.125, 0.077, 0.131, 0.202, 0.106, 0.081, 0.213, 0.037]
+  S65@P7     it      nan  d [0.284, 0.185, 0.057, 0.474]  r [0.059, 0.744, 0.196]
+  SRP@P21    it    15741  d [0.091, 0.045, 0.054, 0.092, 0.028, 0.026, 0.083, 0.176, 0.031, 0.139, 0.021, 0.215]  r [0.079, 0.153, 0.089, 0.139, 0.101, 0.129, 0.138, 0.07, 0.101]
+  U@P21      it     9305  d [0.084, 0.083, 0.084, 0.085, 0.084, 0.081, 0.082, 0.083, 0.082, 0.084, 0.083, 0.083]  r [0.111, 0.111, 0.111, 0.111, 0.111, 0.11, 0.111, 0.111, 0.112]
+  U@P7       it      nan  d [0.25, 0.252, 0.248, 0.249]  r [0.333, 0.333, 0.334]
+  Upr@P21    it    25588  d [0.201, 0.201, 0.199, 0.2, 0.2]  r [0.25, 0.25, 0.249, 0.251]
+  Uq@P21     it    16939  d [0.084, 0.083, 0.084, 0.084, 0.084, 0.082, 0.083, 0.083, 0.082, 0.084, 0.083, 0.083]  r [0.111, 0.111, 0.111, 0.111, 0.111, 0.11, 0.111, 0.112, 0.112]
+
+selecao (calibracao de q e conjunto podado): {'c_estrela': 0.6, 'gap_ajuste_Uq': {'0.25': 1.0694855929840594, '0.4': 0.9246998744515044, '0.6': 0.7738364713349273, '1.0': 0.887107130275652}, 'podado_destruir': ['aleatoria', 'rota', 'aleatoria_leve', 'pior_leve', 'rota_pequena'], 'podado_reparar': ['regret2', 'regret3', 'regret4', 'longe_primeiro']}

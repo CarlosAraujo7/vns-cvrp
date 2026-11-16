@@ -1,0 +1,9 @@
+calibracao da escala de q: 288 execucoes
+    100/288  5.4 min
+    200/288  10.1 min
+config_id
+c0.25    1.0695
+c0.4     0.9247
+c0.6     0.7738
+c1.0     0.8871
+c* = 0.6; conjunto podado: destruir ['aleatoria', 'rota', 'aleatoria_leve', 'pior_leve', 'rota_pequena'] reparar ['regret2', 'regret3', 'regret4', 'longe_primeiro']

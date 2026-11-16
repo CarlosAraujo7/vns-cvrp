@@ -1,0 +1,21 @@
+P21/static gen 0: gap 0.8112
+P21/static gen 1: melhor filho 0.8726  atual 0.8112  sigma 0.450
+P21/static gen 2: melhor filho 0.7999  atual 0.7999  sigma 0.450
+P21/static gen 3: melhor filho 0.7825  atual 0.7825  sigma 0.450
+P21/static gen 4: melhor filho 0.8996  atual 0.7825  sigma 0.405
+P21/static gen 5: melhor filho 0.8939  atual 0.7825  sigma 0.365
+P21/static gen 6: melhor filho 0.7980  atual 0.7825  sigma 0.328
+P21/static gen 7: melhor filho 0.8615  atual 0.7825  sigma 0.295
+P21/static gen 8: melhor filho 0.8730  atual 0.7825  sigma 0.266
+busca ES (P21/static) concluida
+P21/static gen 9: melhor filho 0.7992  atual 0.7825  sigma 0.239
+P21/static gen 10: melhor filho 0.7792  atual 0.7792  sigma 0.239
+P21/static gen 11: melhor filho 0.8045  atual 0.7792  sigma 0.215
+P21/static gen 12: melhor filho 0.7884  atual 0.7792  sigma 0.194
+P21/static gen 13: melhor filho 0.8505  atual 0.7792  sigma 0.174
+P21/static gen 14: melhor filho 0.7050  atual 0.7050  sigma 0.174
+P21/static gen 15: melhor filho 0.7569  atual 0.7050  sigma 0.157
+P21/static gen 16: melhor filho 0.8274  atual 0.7050  sigma 0.141
+busca ES (P21/static) concluida
+busca ES (P21/static) concluida
+busca ES (P21/static) concluida

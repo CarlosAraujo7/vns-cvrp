@@ -24,6 +24,7 @@ Sai com codigo 1 se algo divergir. Uso: python verificacao_independente.py
 """
 import csv
 import json
+import re
 import statistics
 import sys
 from collections import defaultdict
@@ -737,6 +738,225 @@ def verifica_s20(num):
     return nm, nc
 
 
+def _le_gaps(arq, filtro_braco, rotulo, destino, conj_de, so_conj=None):
+    """Acrescenta em `destino[(rotulo, instancia)]` os gaps (recalculados de custo e ref) das execucoes viaveis de `arq` cujo braco passa em `filtro_braco`; `rotulo` e funcao do braco bruto."""
+    p = RES / arq
+    if not p.exists() or p.stat().st_size == 0:
+        return 0
+    n = 0
+    with open(p, encoding="utf-8", newline="") as f:
+        for r in csv.DictReader(f):
+            if not filtro_braco(r["braco"]):
+                continue
+            rot = rotulo(r["braco"])
+            if rot is None:
+                continue
+            if so_conj is not None and r["conjunto"] not in so_conj:
+                continue
+            if r["viavel"] != "True":
+                problemas.append(f"{arq}: execucao inviavel {r['braco']} {r['instancia']} {r['seed']}")
+                continue
+            ref = float(r["ref"])
+            gap = 100.0 * (float(r["custo"]) - ref) / ref
+            if abs(gap - float(r["gap_pct"])) > 1e-6:
+                problemas.append(f"{arq}: gap gravado divergente {r['braco']} {r['instancia']} {r['seed']}")
+            destino[(rot, r["instancia"])].append(gap)
+            conj_de[r["instancia"]] = r["conjunto"]
+            n += 1
+    return n
+
+
+def _contraste_generico(medias, universo, conj_de, idc, a_s, b_s):
+    """dif media, vitorias, derrotas e n de um contraste descrito por (a_s, b_s) = listas de (rotulo, sinal) cuja soma ponderada define o valor por instancia."""
+    dif = []
+    for i in universo:
+        v = sum(s * medias[(rot, i)] for rot, s in a_s) - sum(s * medias[(rot, i)] for rot, s in b_s)
+        dif.append(0.0 if abs(v) < 1e-9 else v)
+    return dif
+
+
+def _expr_contraste(idc, estudo):
+    """Traduz o identificador de um contraste (formato dos scripts analisar_etapa21-24) em (positivos, negativos, filtro de conjunto, grupo X?). positivos/negativos: listas de (rotulo, sinal)."""
+    idc = re.sub(r"^H\d+ ", "", idc)
+    S = lambda a: {"S*": "S*"}.get(a, a)  # noqa: E731
+    m = re.fullmatch(r"DiD\((\w+)-(\S+)\)@(P\d+)-P7", idc)
+    if m:                                                                       # Estudo 21: DiD entre conjuntos
+        a, b, p = m.groups()
+        return [(f"{a}@{p}", 1), (f"{b}@{p}", -1)], [(f"{a}@P7", 1), (f"{b}@P7", -1)], None
+    m = re.fullmatch(r"DiD\((\w+)-(\S+)\) (\w+)-(\w+)", idc)
+    if m:                                                                       # Estudo 22: DiD entre regimes
+        a, b, r1, r0 = m.groups()
+        return [(f"{a}@{r1}", 1), (f"{S(b)}@{r1}", -1)], [(f"{a}@{r0}", 1), (f"{S(b)}@{r0}", -1)], None
+    m = re.fullmatch(r"(\w+)@(P\d+)-(\w+)@P7", idc)
+    if m:                                                                       # Estudo 21: efeito do conjunto sobre um braco
+        a, p, a2 = m.groups()
+        return [(f"{a}@{p}", 1)], [(f"{a2}@P7", 1)], None
+    m = re.fullmatch(r"([A-Za-z0-9*]+)@(\w+)-([A-Za-z0-9*]+)@(\w+)", idc)
+    if m:                                                                       # Estudo 22: efeito do regime sobre um braco
+        a, r1, a2, r0 = m.groups()
+        return [(f"{S(a)}@{r1}", 1)], [(f"{S(a2)}@{r0}", 1)], None
+    m = re.fullmatch(r"([A-Za-z0-9*]+)-([A-Za-z0-9*]+)@(\w+)@(\w+)", idc)
+    if m:                                                                       # por conjunto de instancias
+        a, b, reg, conj = m.groups()
+        return [(f"{S(a)}@{reg}", 1)], [(f"{S(b)}@{reg}", 1)], conj
+    m = re.fullmatch(r"([A-Za-z0-9*]+)-([A-Za-z0-9*]+)@(\w+)", idc)
+    if m:                                                                       # contraste simples
+        a, b, reg = m.groups()
+        return [(f"{S(a)}@{reg}", 1)], [(f"{S(b)}@{reg}", 1)], None
+    return None
+
+
+def verifica_s21_24(num):
+    """Estudos 21 a 24: recomputa, so com a biblioteca padrao, as medias dos macros `s21_gap_*`, `s22_gap_*` e `s23_gap_*` e a diferenca media, as vitorias, as derrotas e n de todos os contrastes de
+    analise_etapa21.csv, analise_etapa21b.csv, analise_etapa22.csv, analise_etapa23.csv e analise_etapa24.csv, direto dos CSV brutos (media das seeds viaveis por instancia; os bracos que nao foram
+    executados porque a busca nao achou melhora valem os bracos de que sao copia: RPt = RP, S129 = S65, Uq = U)."""
+    conj_de = {}
+    nm = nc = 0
+    # ---------------- Estudos 21, 23 e 24: rotulos arm@P7 / arm@P12 / arm@P21
+    por = defaultdict(list)
+    for arq, br, rot in (("etapa9_eval.csv", {"s9_U": "U", "s9_RP": "RP", "s9_hgucb": "HG"}, "P7"), ("etapa12_eval.csv", {"s12_static": "S33"}, "P7"),
+                         ("etapa20_eval_CVRP.csv", {"s20_CVRP_RP": "RPt", "s20_CVRP_static65": "S65"}, "P7")):
+        _le_gaps(arq, lambda b, br=br: b in br, lambda b, br=br, rot=rot: f"{br[b]}@{rot}", por, conj_de)
+    novos = [("etapa21_eval_P12.csv", "s21_P12_", "P12"), ("etapa21_eval_P21.csv", "s21_P21_", "P21"), ("etapa23_eval_p21.csv", "s23_p21_", "P21"),
+             ("etapa23_eval_p7.csv", "s23_p7_", "P7"), ("etapa24_eval_P21.csv", "s24_P21_", "P21")]
+    for arq, pref, pool in novos:
+        _le_gaps(arq, lambda b, pref=pref: b.startswith(pref), lambda b, pref=pref, pool=pool: f"{b[len(pref):]}@{pool}", por, conj_de)
+    _le_gaps("etapa21b_eval_P21.csv", lambda b: True, lambda b: "S129@P21", por, conj_de)
+    _le_gaps("etapa21c_eval_P21.csv", lambda b: True, lambda b: "SRP@P21", por, conj_de)
+    medias = {k: statistics.fmean(v) for k, v in por.items()}
+    rotulos = {rot for (rot, _i) in medias}
+    for novo, fonte in (("RPt@P12", "RP@P12"), ("RPt@P21", "RP@P21"), ("S129@P21", "S65@P21"), ("Uq@P21", "U@P21")):
+        if novo not in rotulos and fonte in rotulos:
+            for (rot, i), m in list(medias.items()):
+                if rot == fonte:
+                    medias[(novo, i)] = m
+            rotulos.add(novo)
+    por_rot = defaultdict(set)
+    for (rot, i) in medias:
+        por_rot[rot].add(i)
+    for estudo, an, pref_macro, ro in (("21", "analise_etapa21.csv", "s21_gap_", lambda r: "@P" in r), ("21b", "analise_etapa21b.csv", None, None), ("23", "analise_etapa23.csv", "s23_gap_", None),
+                                       ("24", "analise_etapa24.csv", None, None)):
+        p = RES / an
+        if not p.exists():
+            continue
+        # universo = instancias com TODOS os bracos usados pelas linhas do arquivo (a analise faz dropna sobre o pivo)
+        linhas = list(csv.DictReader(open(p, encoding="utf-8")))
+        usados = set()
+        for r in linhas:
+            ex = _expr_contraste(r["id"], estudo)
+            if ex is None:
+                problemas.append(f"{an}: identificador nao reconhecido {r['id']}")
+                continue
+            for rot, _s in ex[0] + ex[1]:
+                usados.add(rot)
+        arms_do_estudo = {"21": {f"{a}@P7" for a in ("U", "RP", "HG", "S33", "RPt", "S65")} | {f"{a}@P12" for a in ("U", "RP", "RPt", "S33")} |
+                               {f"{a}@P21" for a in ("U", "RP", "RPt", "S33", "S65", "HG")},
+                          "21b": {f"{a}@P21" for a in ("U", "RP", "RPt", "S33", "S65", "HG", "S129")}, "23": None, "24": None}[estudo]
+        if arms_do_estudo is None:                                              # Estudos 23 e 24: as colunas do pivo sao todos os bracos lidos de P7 e P21 do Estudo 23 e 24
+            arms_do_estudo = {rot for rot in rotulos if rot.endswith("@P21") or rot.endswith("@P7")}
+            if estudo == "23":
+                arms_do_estudo -= {rot for rot in rotulos if rot.split("@")[0] in ("PM", "EXP3", "UCB1", "TS", "EFF", "HG", "RPt")}
+        arms_do_estudo = {r for r in arms_do_estudo if r in rotulos}
+        universo = sorted(set.intersection(*(por_rot[r] for r in arms_do_estudo)))
+        if estudo == "21b":
+            nm += 0
+        for r in linhas:
+            ex = _expr_contraste(r["id"], estudo)
+            if ex is None:
+                continue
+            pos, neg, conj = ex
+            inst = [i for i in universo if conj is None or conj_de[i] == conj]
+            if any(rot not in rotulos for rot, _s in pos + neg):
+                problemas.append(f"{an} {r['id']}: braco ausente nos dados brutos")
+                continue
+            if "DiD" in r["id"]:
+                dif = [(sum(s * medias[(rot, i)] for rot, s in pos)) - (sum(s * medias[(rot, i)] for rot, s in neg)) for i in inst]
+                # DiD: (pos soma com sinais) - (neg soma com sinais) ja esta correto porque pos = a-b no regime e neg = a-b na referencia
+            else:
+                dif = [sum(medias[(rot, i)] for rot, _s in pos) - sum(medias[(rot, i)] for rot, _s in neg) for i in inst]
+            dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+            if not dif:
+                problemas.append(f"{an} {r['id']}: sem instancias")
+                continue
+            dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+            if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or len(inst) != int(r["n_inst"]):
+                problemas.append(f"{an} {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs {r['vit_a']}/{r['der_a']}; n {len(inst)} vs {r['n_inst']}")
+            nc += 1
+        if estudo in ("21", "23"):
+            for chave, valor in num.items():
+                if not chave.startswith(pref_macro):
+                    continue
+                p_, arm = chave[len(pref_macro):].split("_", 1)
+                rot = f"{arm}@{p_}"
+                if rot not in rotulos:
+                    problemas.append(f"macro {chave}: braco ausente nos CSV")
+                    continue
+                nm += confere(chave, valor, statistics.fmean([medias[(rot, i)] for i in universo if (rot, i) in medias]), 3)
+    # ---------------- Estudo 22: rotulos arm@regime (ABC) e arm@longx / arm@refx (X)
+    an = RES / "analise_etapa22.csv"
+    if an.exists():
+        por22, cj = defaultdict(list), {}
+        for reg in ("cls", "short", "longabc", "longx", "acc"):
+            _le_gaps(f"etapa22_eval_{reg}.csv", lambda b: True, lambda b, reg=reg: f"{b.split('_', 2)[2]}@{reg}", por22, cj)
+        _le_gaps("etapa21_eval_P21.csv", lambda b: b.startswith("s21_P21_"), lambda b: f"{b[len('s21_P21_'):]}@refx", por22, cj, so_conj=("X",))
+        _le_gaps("etapa21b_eval_P21.csv", lambda b: True, lambda b: "S129@refx", por22, cj, so_conj=("X",))
+        med22 = {k: statistics.fmean(v) for k, v in por22.items()}
+        rot22 = {rot for (rot, _i) in med22}
+        for reg in ("cls", "short", "longabc", "longx", "acc", "refx"):
+            for novo, fonte in (("RPt", "RP"), ("S65", "S33"), ("S129", "S65")):
+                if f"{novo}@{reg}" not in rot22 and f"{fonte}@{reg}" in rot22 and reg in ("cls", "refx") or (f"{novo}@{reg}" not in rot22 and f"{fonte}@{reg}" in rot22 and novo == "S129"):
+                    for (rot, i), m in list(med22.items()):
+                        if rot == f"{fonte}@{reg}":
+                            med22[(f"{novo}@{reg}", i)] = m
+                    rot22.add(f"{novo}@{reg}")
+        for reg in ("cls", "short", "longabc", "longx", "acc", "refx"):          # S* = S129
+            if f"S129@{reg}" in rot22:
+                for (rot, i), m in list(med22.items()):
+                    if rot == f"S129@{reg}":
+                        med22[(f"S*@{reg}", i)] = m
+                rot22.add(f"S*@{reg}")
+        por_r = defaultdict(set)
+        for (rot, i) in med22:
+            por_r[rot].add(i)
+        abc_regs = ("cls", "short", "longabc", "acc")
+        abc_arms = {r for r in rot22 if r.split("@")[1] in abc_regs and r in rot22}
+        x_arms = {r for r in rot22 if r.split("@")[1] in ("longx", "refx")}
+        # o pivo da analise dos conjuntos A, B e CMT so tem as instancias com TODOS os bracos
+        uni_abc = sorted(set.intersection(*(por_r[r] for r in abc_arms))) if abc_arms else []
+        uni_x = sorted(set.intersection(*(por_r[r] for r in x_arms))) if x_arms else []
+        for r in csv.DictReader(open(an, encoding="utf-8")):
+            ex = _expr_contraste(r["id"], "22")
+            if ex is None:
+                problemas.append(f"analise_etapa22.csv: identificador nao reconhecido {r['id']}")
+                continue
+            pos, neg, conj = ex
+            usa_x = any(rot.split("@")[1] in ("longx", "refx") for rot, _s in pos + neg)
+            inst = [i for i in (uni_x if usa_x else uni_abc) if conj is None or cj.get(i) == conj]
+            if any(rot not in rot22 for rot, _s in pos + neg):
+                problemas.append(f"analise_etapa22.csv {r['id']}: braco ausente nos dados brutos")
+                continue
+            dif = [sum(s * med22[(rot, i)] for rot, s in pos) - sum(s * med22[(rot, i)] for rot, s in neg) for i in inst] if "DiD" in r["id"] else \
+                  [sum(med22[(rot, i)] for rot, _s in pos) - sum(med22[(rot, i)] for rot, _s in neg) for i in inst]
+            dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+            if not dif:
+                problemas.append(f"analise_etapa22.csv {r['id']}: sem instancias")
+                continue
+            dm, vit, der = statistics.fmean(dif), sum(x < 0 for x in dif), sum(x > 0 for x in dif)
+            if abs(dm - float(r["dif_pp"])) > 1e-6 or vit != int(r["vit_a"]) or der != int(r["der_a"]) or len(inst) != int(r["n_inst"]):
+                problemas.append(f"analise_etapa22.csv {r['id']}: dif {dm:.5f} vs {float(r['dif_pp']):.5f}; vit/der {vit}/{der} vs {r['vit_a']}/{r['der_a']}; n {len(inst)} vs {r['n_inst']}")
+            nc += 1
+        for chave, valor in num.items():
+            if chave.startswith("s22_gap_"):
+                reg, arm = chave[len("s22_gap_"):].split("_", 1)
+                rot = f"{arm}@{reg}"
+                if rot not in rot22:
+                    problemas.append(f"macro {chave}: braco ausente nos CSV")
+                    continue
+                universo = uni_x if reg in ("longx", "refx") else uni_abc
+                nm += confere(chave, valor, statistics.fmean([med22[(rot, i)] for i in universo if (rot, i) in med22]), 3)
+    return nm, nc
+
+
 def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csvs=()):
     """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
     diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
@@ -947,6 +1167,11 @@ def main():
     cont += n20c
     if n20m or n20c:
         print(f"(2c) Estudo 20 (generalidade do hibrido no CVRP e no TSP): {n20m} medias e {n20c} contrastes conferidos")
+    n2124m, n2124c = verifica_s21_24(num)
+    outros += n2124m
+    cont += n2124c
+    if n2124m or n2124c:
+        print(f"(2c) Estudos 21 a 24 (tamanho do conjunto, deslocamentos, fidelidade, politicas): {n2124m} medias e {n2124c} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(

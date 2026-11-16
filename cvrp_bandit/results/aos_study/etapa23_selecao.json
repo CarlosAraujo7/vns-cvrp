@@ -1,0 +1,47 @@
+{
+ "c_estrela": 0.6,
+ "gap_ajuste_Uq": {
+  "0.25": 1.0694855929840594,
+  "0.4": 0.9246998744515044,
+  "0.6": 0.7738364713349273,
+  "1.0": 0.887107130275652
+ },
+ "podado_destruir": [
+  "aleatoria",
+  "rota",
+  "aleatoria_leve",
+  "pior_leve",
+  "rota_pequena"
+ ],
+ "podado_reparar": [
+  "regret2",
+  "regret3",
+  "regret4",
+  "longe_primeiro"
+ ],
+ "uso_rp_destruir": {
+  "aleatoria": 0.09019930865031926,
+  "pior": 0.04475585687700499,
+  "relacionada": 0.05306801087948784,
+  "rota": 0.09124126132595517,
+  "radial": 0.027725562806982955,
+  "sequencia": 0.02723509409255074,
+  "demanda": 0.08271086047925129,
+  "aleatoria_leve": 0.1762319799682251,
+  "aleatoria_forte": 0.03022836129474353,
+  "pior_leve": 0.14021421045097307,
+  "relacionada_forte": 0.02080971925946264,
+  "rota_pequena": 0.21557977391504327
+ },
+ "uso_rp_reparar": {
+  "guloso": 0.0796366307380733,
+  "regret2": 0.1522858423506828,
+  "barato": 0.08946125883841052,
+  "regret3": 0.13959115091182595,
+  "demanda_dec": 0.10105415572499023,
+  "regret4": 0.12948843409062644,
+  "longe_primeiro": 0.13826524266467666,
+  "barato_ruidoso": 0.0694388709363259,
+  "blink": 0.10077841374438838
+ }
+}

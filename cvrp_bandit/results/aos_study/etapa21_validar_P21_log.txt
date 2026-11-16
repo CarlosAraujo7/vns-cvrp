@@ -1,0 +1,50 @@
+validacao P21 (instancias de ajuste, seeds novas): 864 execucoes
+    100/864  2.1 min
+    200/864  3.6 min
+    300/864  5.6 min
+    400/864  7.3 min
+    500/864  8.7 min
+    600/864  10.7 min
+    700/864  12.3 min
+    800/864  14.0 min
+braco
+s21_P21_RP         0.7687
+s21_P21_S65        0.8078
+s21_P21_HG         0.8425
+val21_P21_gen12    0.8476
+val21_P21_gen00    0.8518
+s21_P21_RPt        0.8519
+val21_P21_gen16    0.8538
+val21_P21_gen08    0.9099
+val21_P21_gen04    0.9099
+val21_P21_gen02    0.9223
+s21_P21_S33        0.9784
+s21_P21_U          0.9835
+validacao P21 (instancias de ajuste, seeds novas): 864 execucoes
+braco
+s21_P21_RP         0.7687
+s21_P21_S65        0.8078
+s21_P21_HG         0.8425
+val21_P21_gen12    0.8476
+val21_P21_gen00    0.8518
+s21_P21_RPt        0.8519
+val21_P21_gen16    0.8538
+val21_P21_gen08    0.9099
+val21_P21_gen04    0.9099
+val21_P21_gen02    0.9223
+s21_P21_S33        0.9784
+s21_P21_U          0.9835
+validacao P21 (instancias de ajuste, seeds novas): 864 execucoes
+braco
+s21_P21_RP         0.7687
+s21_P21_S65        0.8078
+s21_P21_HG         0.8425
+val21_P21_gen12    0.8476
+val21_P21_gen00    0.8518
+s21_P21_RPt        0.8519
+val21_P21_gen16    0.8538
+val21_P21_gen08    0.9099
+val21_P21_gen04    0.9099
+val21_P21_gen02    0.9223
+s21_P21_S33        0.9784
+s21_P21_U          0.9835

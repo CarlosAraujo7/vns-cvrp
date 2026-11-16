@@ -1,0 +1,14 @@
+hipotese,confirmada
+"H154 RPh - U em P21 significativamente negativo (primario, Holm m=3)",True
+"H155 RPh - S* em P21 significativamente negativo (primario, Holm m=3)",True
+"H156 RPh7 - S33 em P7 significativamente negativo (primario, Holm m=3)",False
+"H157 RPh - RP em P21 diferente de zero (secundario, Holm m=6)",False
+"H158 RPh7 - RP em P7 diferente de zero (secundario, Holm m=6)",False
+"H159 RP - SRP em P21 significativamente negativo (secundario, Holm m=6)",True
+"H160 RP - Upr em P21 significativamente negativo (secundario, Holm m=6)",False
+"H161 RP - Uq em P21 significativamente negativo (secundario, Holm m=6)",False
+"H162 RPsr - RP em P21 diferente de zero (secundario, Holm m=6)",False
+"H163 SRP - U em P21 significativamente negativo (terciario, Holm m=4)",False
+"H164 Upr - U em P21 significativamente negativo (terciario, Holm m=4)",False
+"H165 Uq - U em P21 significativamente negativo (terciario, Holm m=4)",False
+"H166 RPsr - U em P21 significativamente negativo (terciario, Holm m=4)",True

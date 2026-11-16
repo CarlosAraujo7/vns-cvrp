@@ -1,0 +1,5 @@
+eval Estudo 23 p7: 360 execucoes (RPh7)
+    100/360  15.7 min
+    200/360  21.3 min
+    300/360  24.4 min
+eval Estudo 23 p7 concluido
