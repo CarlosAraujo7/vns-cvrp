@@ -1,0 +1,14 @@
+hipotese,confirmada
+"H141 RP - U (A/B/CMT) significativamente negativo (primario, Holm m=5)",False
+"H142 RP - U (orcamento 0,25x) significativamente negativo (primario, Holm m=5)",False
+"H143 RP - U (orcamento 20x) significativamente negativo (primario, Holm m=5)",False
+"H144 RP - U (orcamento 4x em X) significativamente negativo (primario, Holm m=5)",False
+"H145 RP - U (record-to-record travel) significativamente negativo (primario, Holm m=5)",False
+"H146 RP - S* (A/B/CMT) significativamente negativo (secundario, Holm m=5)",False
+"H147 RP - S* (orcamento 0,25x) significativamente negativo (secundario, Holm m=5)",False
+"H148 RP - S* (orcamento 20x) significativamente negativo (secundario, Holm m=5)",False
+"H149 RP - S* (orcamento 4x em X) significativamente negativo (secundario, Holm m=5)",False
+"H150 RP - S* (record-to-record travel) significativamente negativo (secundario, Holm m=5)",False
+"H151 HG - U em A/B/CMT significativamente negativo (terciario, Holm m=3)",False
+"H152 S* - U em A/B/CMT significativamente negativo (terciario, Holm m=3)",False
+"H153 S33 - U em A/B/CMT significativamente POSITIVO (terciario, Holm m=3)",False

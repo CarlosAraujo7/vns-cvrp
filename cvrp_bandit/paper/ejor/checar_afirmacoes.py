@@ -243,6 +243,16 @@ def main():
         print(f"U13 (Estudo 23): pontuacao fiel ainda melhor que a uniforme e que a mistura de maior esforco em P21 e sem diferenca da pontuacao anterior (P21 e P7): {ok13}")
         if not ok13:
             falhas.append("U13")
+    d22 = ler("analise_etapa22.csv")
+    if d22 is not None:
+        # U14 (Estudo 22, implantacao do conjunto de 21 operadores): nenhum dos dez contrastes primarios e secundarios (RP - U e RP - S* em cinco regimes) e significativamente negativo
+        # (H141-H150), e os tres terciarios (H151-H153) tambem nao sao significativos
+        h = lambda i: d22[d22.id.str.startswith(i + " ")].iloc[0]  # noqa: E731
+        ids = [f"H{141 + i}" for i in range(10)]
+        ok14 = all(not (h(i).dif_pp < 0 and h(i).p_holm < 0.05) for i in ids) and all(h(f"H{i}").p_holm >= 0.05 for i in (151, 152, 153)) and len(d22[d22.id.str.match(r"H\d+ ")]) == 13
+        print(f"U14 (Estudo 22): nenhum contraste de RP com U ou com a mistura de maior esforco e significativamente negativo em cls, short, longabc, longx e acc, e os terciarios nao sao significativos: {ok14}")
+        if not ok14:
+            falhas.append("U14")
     d1 = ler("analise_confirmatoria.csv")
     lit = d1[d1.a == "hgucb_literal"]
     print(f"U3: literal - normalizado: {[round(x, 2) for x in lit.dif_media_pp]} pp, derrotas do literal {list(lit.der_a)} de 74")

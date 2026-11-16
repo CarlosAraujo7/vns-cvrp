@@ -345,6 +345,8 @@ def estudo22():
     flags_hipoteses("s22", RES / "analise_etapa22_hipoteses.csv", 141)
     tm = pd.read_csv(RES / "analise_etapa22_tamanho.csv").iloc[0]
     NUM["s22_size_rho"], NUM["s22_size_p"] = f"{tm.rho:+.2f}".replace("-", "$-$"), gt.padj(tm.p)
+    for _, r in pd.read_csv(RES / "analise_etapa22_uso.csv").iterrows():
+        NUM[f"s22_it_{r.regime}_{r.braco}"] = milhar(int(round(r.iteracoes)))
     # tabela de bracos por regime
     nomes = {"cls": "A/B/CMT, $1500n^2$", "short": "A/B/CMT, $375n^2$", "longabc": "A/B/CMT, $30000n^2$", "longx": "X, $6000n^2$", "acc": "A/B/CMT, record-to-record"}
     arms = ["U", "RP", "RPt", "S33", "S65", "S129", "HG"]

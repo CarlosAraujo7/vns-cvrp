@@ -269,7 +269,27 @@ All \num{s21_nruns} evaluation runs of the new pools are feasible (Tables~\stab{
 \input{tab_s21c}
 \input{tab_s21w}
 
-% MARCADOR-S22
+\subsection{Study 22: does the advantage of the adaptive weights in the large pool survive deployment shifts?}\label{sec:s22}
+All but \num{s22_ninv} of the \num{s22_nruns} evaluation runs are feasible (Tables~\stab{tab:s22a} and~\stab{tab:s22f}, Figure~\ref{fig:deslocamentos}); the study was amended to the pool of 21 operators before any of its data (log entries 138 and 140) and the regime of $30000\,n^2$ was stopped after 100 runs and resumed from them, as pre-registered (log entry 145). The frozen arms of Study~21 are deployed on the 53 instances of Augerat (A, B) and of Christofides, Mingozzi and Toth (CMT) with 30 to 120 customers, which no ALNS arm had used, and on the 21 instances X at a larger budget. \textbf{None of the 13 pre-registered hypotheses is confirmed} (\num{s22_hconf} of \num{s22_hn}; 6.45 expected): no contrast of the adaptive weights (RP) with uniform selection or with the mixture of greatest tuning effort (S*, the mixture of 65 evaluations, because the continued search to 129 found nothing better) is significant in any of the five regimes (adjusted $p\ge0.56$).
+
+\emph{Another class of instances.} On A, B and CMT at $1500\,n^2$ the gap of uniform selection is \num{s22_g2_cls_U}\%, of the adaptive weights \num{s22_g2_cls_RP}\%, of the mixtures of 33 and 65 evaluations \num{s22_g2_cls_S33}\% and \num{s22_g2_cls_S65}\% and of HG-UCB \num{s22_g2_cls_HG}\%; the adaptive weights are \num{s22d_H141}~pp \num{s22ci_H141} from uniform selection (H141) and \num{s22d_H146}~pp \num{s22ci_H146} from S* (H146). The estimate has the opposite sign to that of Study~21 and the three sets agree (A \num{s22d_RP_U_cls_A}, B \num{s22d_RP_U_cls_B}, CMT \num{s22d_RP_U_cls_CMT}~pp, the last with four instances); the size does not matter either (Spearman correlation of the difference with the number of customers \num{s22_size_rho}, $p=\num{s22_size_p}$). The mixture of 33 evaluations is \num{s22d_H153}~pp from uniform selection (H153: expected worse, not confirmed). In Study~21 the advantage is about a fifth of the gap of uniform selection, which would be 0.06 to 0.09~pp here; the 95\% interval \num{s22ci_H141} lies outside that range, so the absence of an advantage in these instances is not explained by the small gap alone (Section~\ssec{sec:s21}).
+
+\emph{Other budgets and acceptance rule.} With a quarter of the budget ($375\,n^2$; gaps of \num{s22_g2_short_U}\% for uniform selection and \num{s22_g2_short_RP}\% for the adaptive weights) the difference is \num{s22d_H142}~pp \num{s22ci_H142} (H142), equivalent to zero within $\pm0.10$~pp. With twenty times the budget ($30000\,n^2$) the search converges (gaps of \num{s22_g2_longabc_U}\%, \num{s22_g2_longabc_RP}\% and \num{s22_g2_longabc_S65}\%) and the contrasts are \num{s22d_H143}~pp \num{s22ci_H143} (H143) and \num{s22d_H148}~pp \num{s22ci_H148} from S* (H148), again equivalent to zero. With record-to-record travel (deviation $\delta_0=\num{s22_delta0}$, chosen on the tuning instances with uniform selection) the difference is \num{s22d_H145}~pp \num{s22ci_H145} (H145), equivalent to zero. On the 21 instances X with four times the budget ($6000\,n^2$) the gaps are \num{s22_g2_longx_U}\% (uniform selection), \num{s22_g2_longx_RP}\% (adaptive weights) and \num{s22_g2_longx_S65}\% (mixture), against \num{s22_g2_refx_U}\%, \num{s22_g2_refx_RP}\% and \num{s22_g2_refx_S65}\% on the same instances at $1500\,n^2$ (Study~21): the difference between the adaptive weights and uniform selection goes from the advantage of Study~21 to \num{s22d_H144}~pp \num{s22ci_H144} (H144; minimum detectable effect \num{s22mde_H144}~pp), a change of \num{s22d_DiD_RP_U_longx_refx}~pp \num{s22ci_DiD_RP_U_longx_refx} (unadjusted $p=\num{s22apr_DiD_RP_U_longx_refx}$), although the adaptive weights make \num{s22_it_longx_RP} iterations per run against \num{s22_it_longx_U}: with more budget uniform selection converges to the same gap.
+
+\emph{What the study shows.} The advantage that the adaptive weights have in the pool of 21 operators at $1500\,n^2$ on the instances X and the synthetic ones is not found in any of the other situations tried: another class of instances, a quarter and twenty times the budget, another acceptance rule and, in the estimate, four times the budget on the instances X. The study measures no robustness of the advantage; it limits it to the instances and the budget where it was seen, and Study~26 (Section~\ssec{sec:s26design}) asks whether it holds in instances that no arm has used.
+
+\emph{Threats.} The instances A and B have 30 to 77 customers and CMT has four instances; the deviation of record-to-record travel was chosen for uniform selection, not for each policy; the regime on the instances X has three seeds against ten in its reference, so that the difference of differences mixes means of different numbers of seeds and has a minimum detectable effect of \num{s22mde_DiD_RP_U_longx_refx}~pp; the probabilities of the hypotheses were assigned after Study~21 and were too high (6.45 expected, none observed).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{fig_deslocamentos.pdf}
+\caption{Study 22. Difference of mean gap (pp, 95\% bootstrap interval) of the adaptive weights from uniform selection and from the mixture of greatest tuning effort in the five deployment regimes; the shaded band is $\pm0.10$~pp.}\label{fig:deslocamentos}
+\end{figure}
+
+\input{tab_s22a}
+\input{tab_s22f}
+
+
 
 
 \subsection{Study 23: fidelity of the scoring and mechanism of the advantage of the adaptive weights}\label{sec:s23}
