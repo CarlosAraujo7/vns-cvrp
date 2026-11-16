@@ -831,6 +831,11 @@ def verifica_s21_24(num):
                 if rot == fonte:
                     medias[(novo, i)] = m
             rotulos.add(novo)
+    if "S129@P21" in rotulos:                                                    # S* = S129 (ja copiado de S65 se nao executado)
+        for (rot, i), m in list(medias.items()):
+            if rot == "S129@P21":
+                medias[("S*@P21", i)] = m
+        rotulos.add("S*@P21")
     por_rot = defaultdict(set)
     for (rot, i) in medias:
         por_rot[rot].add(i)

@@ -166,6 +166,12 @@ def estudo21():
                 m = 100 * m / m.sum()
                 for j, w in enumerate(m):
                     NUM[f"s21_u{tag}_{p}_{arm}_{j}"] = f"{w:.0f}"
+    fg = RES / "analise_etapa21_expl_folga.csv"
+    if fg.exists():
+        for _, r in pd.read_csv(fg).iterrows():
+            NUM[f"s21_hr_rho_{r.pool}"], NUM[f"s21_hr_p_{r.pool}"] = f"{r.rho_gap:+.2f}".replace("-", "$-$"), gt.padj(r.p_gap)
+            for lab in ("baixo", "medio", "alto"):
+                NUM[f"s21_hr_d_{lab}_{r.pool}"], NUM[f"s21_hr_g_{lab}_{r.pool}"] = gt.sgn(r[f"dif_{lab}"]), f"{r[f"gapU_{lab}"]:.2f}"
     # diagnostico de operadores nulos e perfil de custo
     dg = RES / "etapa21_diag_noop.csv"
     if dg.exists():

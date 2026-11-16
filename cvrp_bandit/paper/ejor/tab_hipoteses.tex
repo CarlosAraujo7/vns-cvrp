@@ -170,5 +170,34 @@ H116 & The mixture with 65 evaluations is significantly better than the one with
 H117 & The tilted weights are significantly better than the retuned adaptive weights, after Holm (90\%). & Confirmed: \num{s20d_H117}~pp (adjusted $p<10^{-4}$). \\
 H118 & The retuned adaptive weights are significantly worse than the 33-evaluation mixture, after Holm (85\%). & Confirmed: \num{s20d_H118}~pp for the weights minus the mixture (adjusted $p<10^{-4}$). \\
 H119 & Amendment 1: the tilted weights with default hyperparameters on the 65-evaluation mixture are significantly better than that mixture (second primary test, unadjusted) (25\%). & Not confirmed: \num{s20d_H119}~pp \num{s20ci_H119} ($p=\num{s20apr_H119}$). \\
+\midrule
+\multicolumn{3}{l}{\emph{Study 21, size of the operator set in the ALNS of the CVRP: 7, 12 and 21 operators (log entry 137, amendment in entry 139; committed before its data)}} \\
+H120 & In the pool of 21 operators the adaptive weights (default hyperparameters) are significantly better than the mixture tuned with 33 evaluations (primary, Holm over two) (35\%). & Confirmed: \num{s21d_H120}~pp \num{s21ci_H120} (adjusted $p=\num{s21p_H120}$). \\
+H121 & The difference of that contrast between the pool of 21 and the pool of 7 operators is significantly negative (primary, Holm over two) (30\%). & Confirmed: \num{s21d_H121}~pp \num{s21ci_H121} (adjusted $p=\num{s21p_H121}$). \\
+H122 & The tuned adaptive weights (33 evaluations) are significantly better than the 33-evaluation mixture in the pool of 21 (Holm over five) (30\%). & Confirmed: \num{s21d_H122}~pp \num{s21ci_H122} (adjusted $p=\num{s21p_H122}$). \\
+H123 & The 65-evaluation mixture is significantly better than the 33-evaluation one in the pool of 21 (50\%). & Confirmed: \num{s21d_H123}~pp \num{s21ci_H123} (adjusted $p=\num{s21p_H123}$). \\
+H124 & The adaptive weights are significantly better than uniform selection in the pool of 21 (90\%). & Confirmed: \num{s21d_H124}~pp \num{s21ci_H124} (adjusted $p=\num{s21p_H124}$). \\
+H125 & The 33-evaluation mixture is significantly better than uniform selection in the pool of 21 (90\%). & Not confirmed, and significantly in the opposite direction: \num{s21d_H125}~pp \num{s21ci_H125} (adjusted $p=\num{s21p_H125}$). \\
+H126 & HG-UCB is significantly better than uniform selection in the pool of 21 (50\%). & Not confirmed: \num{s21d_H126}~pp \num{s21ci_H126} (adjusted $p=\num{s21p_H126}$). \\
+H139 & Amendment 1: the 129-evaluation mixture is significantly better than the adaptive weights in the pool of 21 (unadjusted) (20\%). & Not confirmed, and significantly in the opposite direction; the continued search found nothing better than the 65-evaluation mixture, so the arm is that mixture: \num{s21d_H139}~pp \num{s21ci_H139} ($p=\num{s21apr_H139}$). \\
+H140 & Amendment 1: the 129-evaluation mixture is significantly better than the 65-evaluation one (35\%). & Not confirmed: zero by construction (no incumbent better than the one of 65 evaluations in 16 further generations). \\
+% MARC-H21C
+% MARC-S22HIP
+\midrule
+\multicolumn{3}{l}{\emph{Study 23, fidelity of the scoring and mechanism of the advantage of the adaptive weights (log entry 141; committed before its data)}} \\
+H154 & The adaptive weights with the faithful scoring are significantly better than uniform selection in the pool of 21 (primary, Holm over three) (75\%). & Confirmed: \num{s23d_H154}~pp \num{s23ci_H154} (adjusted $p=\num{s23p_H154}$). \\
+H155 & The same weights are significantly better than the mixture of greatest tuning effort in the pool of 21 (primary) (55\%). & Confirmed: \num{s23d_H155}~pp \num{s23ci_H155} (adjusted $p=\num{s23p_H155}$). \\
+H156 & The faithful scoring is significantly better than the 33-evaluation mixture in the pool of 7 operators (primary) (20\%). & Not confirmed: \num{s23d_H156}~pp \num{s23ci_H156} (adjusted $p=\num{s23p_H156}$). \\
+H157 & The faithful scoring differs significantly from the earlier scoring in the pool of 21 (secondary, Holm over six; either sign) (55\%). & Not confirmed: \num{s23d_H157}~pp \num{s23ci_H157} (adjusted $p=\num{s23p_H157}$). \\
+H158 & The same in the pool of 7 operators (30\%). & Not confirmed: \num{s23d_H158}~pp \num{s23ci_H158} (adjusted $p=\num{s23p_H158}$). \\
+H159 & The adaptive weights are significantly better than the static mixture with their average usage (35\%). & Confirmed: \num{s23d_H159}~pp \num{s23ci_H159} (adjusted $p=\num{s23p_H159}$). \\
+H160 & The adaptive weights are significantly better than uniform selection on the pruned pool (40\%). & Not confirmed: \num{s23d_H160}~pp \num{s23ci_H160} (adjusted $p=\num{s23p_H160}$). \\
+H161 & The adaptive weights are significantly better than uniform selection with a scaled removal size (50\%). & Not confirmed: \num{s23d_H161}~pp \num{s23ci_H161} (adjusted $p=\num{s23p_H161}$). \\
+H162 & The adaptive weights without the smallest-route operator differ significantly from those with it (35\%). & Not confirmed: \num{s23d_H162}~pp \num{s23ci_H162} (adjusted $p=\num{s23p_H162}$). \\
+H163 & The static mixture with the usage of the adaptive weights is significantly better than uniform selection (tertiary, Holm over four) (80\%). & Not confirmed: \num{s23d_H163}~pp \num{s23ci_H163} (adjusted $p=\num{s23p_H163}$). \\
+H164 & Uniform selection on the pruned pool is significantly better than uniform selection (65\%). & Not confirmed: \num{s23d_H164}~pp \num{s23ci_H164} (adjusted $p=\num{s23p_H164}$). \\
+H165 & Uniform selection with a scaled removal size is significantly better than uniform selection (45\%). & Not confirmed: \num{s23d_H165}~pp \num{s23ci_H165} (adjusted $p=\num{s23p_H165}$). \\
+H166 & The adaptive weights without the smallest-route operator are significantly better than uniform selection (75\%). & Confirmed: \num{s23d_H166}~pp \num{s23ci_H166} (adjusted $p=\num{s23p_H166}$). \\
+% MARC-S24HIP
 \end{longtable}
 \end{center}

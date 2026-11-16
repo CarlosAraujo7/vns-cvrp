@@ -223,6 +223,26 @@ def main():
             print(f"    pior: {r.id} = {r.dif_pp:+.3f} pp (p {r.p_holm:.4f})")
         if len(c11) != 5 or len(melhor) != 0 or sorted(pior.h) != sorted(ESPERADO_U11_PIOR):
             falhas.append("U11")
+    d21 = ler("analise_etapa21.csv")
+    if d21 is not None:
+        # U12 (Estudo 21, ALNS do CVRP com 21 operadores): nenhuma mistura estatica ajustada (33 ou 65 avaliacoes; a de 129 e a de 65) e significativamente melhor que a uniforme, e os pesos
+        # adaptativos sem ajuste sao significativamente melhores que cada uma delas; o HG-UCB nao e significativamente melhor que a uniforme.
+        g = lambda i: d21[d21.id == i].iloc[0] if (d21.id == i).any() else d21[d21.id.str.startswith(i + " ")].iloc[0]  # noqa: E731
+        s33u, s65u, rp_s33, rp_s65, hg_u = g("H125"), g("S65-U@P21"), g("H120"), g("RP-S65@P21") if (d21.id == "RP-S65@P21").any() else g("S65-RP@P21"), g("H126")
+        ok12 = bool(not (s33u.dif_pp < 0 and s33u.p_holm < 0.05) and not (s65u.dif_pp < 0 and s65u.p_bruto < 0.05) and rp_s33.dif_pp < 0 and rp_s33.p_holm < 0.05
+                    and not (hg_u.dif_pp < 0 and hg_u.p_holm < 0.05))
+        ok12b = (d21.id == "RP-S65@P21").any() and bool(g("RP-S65@P21").dif_pp < 0 and g("RP-S65@P21").p_bruto < 0.05) or (d21.id == "S65-RP@P21").any() and bool(g("S65-RP@P21").dif_pp > 0 and g("S65-RP@P21").p_bruto < 0.05)
+        print(f"U12 (Estudo 21, P21): nenhuma mistura ajustada melhor que a uniforme, pesos adaptativos melhores que a mistura de 33 (H120) e de 65 avaliacoes, HG-UCB nao melhor que a uniforme: {ok12 and ok12b}")
+        if not (ok12 and ok12b):
+            falhas.append("U12")
+    d23 = ler("analise_etapa23.csv")
+    if d23 is not None:
+        # U13 (Estudo 23): com a pontuacao fiel os pesos adaptativos continuam melhores que a uniforme e que a mistura de maior esforco em P21, e a pontuacao fiel nao difere da anterior
+        h = lambda i: d23[d23.id.str.startswith(i + " ")].iloc[0]  # noqa: E731
+        ok13 = bool(h("H154").dif_pp < 0 and h("H154").p_holm < 0.05 and h("H155").dif_pp < 0 and h("H155").p_holm < 0.05 and h("H157").p_holm >= 0.05 and h("H158").p_holm >= 0.05)
+        print(f"U13 (Estudo 23): pontuacao fiel ainda melhor que a uniforme e que a mistura de maior esforco em P21 e sem diferenca da pontuacao anterior (P21 e P7): {ok13}")
+        if not ok13:
+            falhas.append("U13")
     d1 = ler("analise_confirmatoria.csv")
     lit = d1[d1.a == "hgucb_literal"]
     print(f"U3: literal - normalizado: {[round(x, 2) for x in lit.dif_media_pp]} pp, derrotas do literal {list(lit.der_a)} de 74")
