@@ -31,3 +31,5 @@ eval Estudo 22 cls (P21): 3180 execucoes (U, RP, RPt, S33, S65, HG)
     3000/3180  31.9 min
     3100/3180  32.3 min
 eval Estudo 22 cls concluido
+eval Estudo 22 cls (P21): 3180 execucoes (U, RP, RPt, S33, S65, HG)
+eval Estudo 22 cls concluido

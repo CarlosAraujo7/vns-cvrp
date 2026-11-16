@@ -4,13 +4,15 @@
 # NUNCA dois runners no mesmo CSV.
 # Uso (PowerShell): wsl -e bash -lc "cd /mnt/c/Pesquisas/learnheuristica/cvrp_bandit && (nohup setsid bash estudo_aos/fila_22.sh >> results/aos_study/etapa22_fila_log.txt 2>&1 < /dev/null &)"
 cd "$(dirname "$0")/.." || exit 1
-sleep 360
+sleep 15
 while pgrep -f "fila_21b\.sh|fila_21c\.sh|fila_23\.sh" > /dev/null; do sleep 60; done
 source direcao1_local/venv/bin/activate
 set -e
 R=results/aos_study
 echo "[$(date +%H:%M:%S)] FILA 22 INICIADA"
-python3 -u estudo_aos/run_aos_etapa22.py --regressao --workers 11 >> "$R/etapa22_regressao_log.txt" 2>&1
+if ! grep -q "REGRESSAO EXATA: OK" "$R/etapa22_regressao_log.txt" 2>/dev/null; then       # a regressao exata so roda uma vez (controle de implementacao, nao depende dos dados)
+  python3 -u estudo_aos/run_aos_etapa22.py --regressao --workers 11 >> "$R/etapa22_regressao_log.txt" 2>&1
+fi
 echo "[$(date +%H:%M:%S)] calibracao do RRT"
 python3 -u estudo_aos/run_aos_etapa22.py --calibrar --workers 11 >> "$R/etapa22_calibrar_log.txt" 2>&1
 for reg in cls short acc longabc longx; do

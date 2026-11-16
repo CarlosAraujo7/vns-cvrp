@@ -1,0 +1,19 @@
+eval Estudo 22 acc (P21): 1590 execucoes (U, RP, S65)
+    100/1590  2.6 min
+    200/1590  4.2 min
+    300/1590  5.7 min
+    400/1590  7.1 min
+    500/1590  8.4 min
+    600/1590  9.5 min
+    700/1590  10.5 min
+    800/1590  11.4 min
+    900/1590  12.2 min
+    1000/1590  12.9 min
+    1100/1590  13.6 min
+    1200/1590  14.2 min
+    1300/1590  14.8 min
+    1400/1590  15.3 min
+    1500/1590  15.7 min
+eval Estudo 22 acc concluido
+eval Estudo 22 acc (P21): 1590 execucoes (U, RP, S65)
+eval Estudo 22 acc concluido

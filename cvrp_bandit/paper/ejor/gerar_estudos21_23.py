@@ -172,6 +172,21 @@ def estudo21():
             NUM[f"s21_hr_rho_{r.pool}"], NUM[f"s21_hr_p_{r.pool}"] = f"{r.rho_gap:+.2f}".replace("-", "$-$"), gt.padj(r.p_gap)
             for lab in ("baixo", "medio", "alto"):
                 NUM[f"s21_hr_d_{lab}_{r.pool}"], NUM[f"s21_hr_g_{lab}_{r.pool}"] = gt.sgn(r[f"dif_{lab}"]), f"{r[f"gapU_{lab}"]:.2f}"
+    # folga corrigida (Entrada 145): correlacao em metades das seeds, folga medida por bracos independentes, reducao relativa e validacao por tamanho
+    fm = RES / "analise_folga_metades.csv"
+    if fm.exists():
+        neg = lambda x: f"{x:+.2f}".replace("-", "$-$")  # noqa: E731
+        for _, r in pd.read_csv(fm).iterrows():
+            p = r.pool
+            NUM[f"hm_half_{p}"], NUM[f"hm_lo_{p}"], NUM[f"hm_hi_{p}"] = neg(r.rho_metades), neg(r.rho_metades_lo), neg(r.rho_metades_hi)
+            NUM[f"hm_ind_{p}"], NUM[f"hm_indp_{p}"] = neg(r.rho_outros), gt.padj(r.p_outros)
+            NUM[f"hm_rel_{p}"] = f"{-100 * r.rel_mediana:.0f}"
+            NUM[f"hm_relrho_{p}"], NUM[f"hm_relp_{p}"] = neg(r.rho_rel), gt.padj(r.p_rel)
+    ft = RES / "analise_folga_tamanho.csv"
+    if ft.exists():
+        f = pd.read_csv(ft)
+        v = f[f.conjunto.str.startswith("validacao P21") & (f.classe == "TODAS")].iloc[0]
+        NUM["ft_val_dif"], NUM["ft_val_p"], NUM["ft_val_gap"], NUM["ft_val_rel"] = gt.sgn(v.dif_pp), gt.padj(v.p_wilcoxon), f"{v.gap_u:.2f}", f"{-100 * v.rel:.0f}"
     # diagnostico de operadores nulos e perfil de custo
     dg = RES / "etapa21_diag_noop.csv"
     if dg.exists():
@@ -427,6 +442,103 @@ def estudo23():
         r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
 
 
+# ------------------------------------------------------------------------------------------------ Estudo 24
+def estudo24():
+    if not (RES / "analise_etapa24.csv").exists():
+        print("estudo24: sem analise_etapa24.csv, nada gerado")
+        return
+    import analisar_etapa23 as a23
+    import analisar_etapa24 as a24
+    d = pd.concat([a23.referencias(), a23.ler_novo("p21", a23.NOVOS_P21), a24.ler24()], ignore_index=True)
+    if "Uq@P21" not in set(d.braco):
+        d = pd.concat([d, d[d.braco == "U@P21"].assign(braco="Uq@P21")], ignore_index=True)
+    if "S129@P21" not in set(d.braco):
+        d = pd.concat([d, d[d.braco == "S65@P21"].assign(braco="S129@P21")], ignore_index=True)
+    t = piv(d[d.braco.str.endswith("@P21")])
+    NUM["s24_nruns"] = milhar(len(pd.read_csv(RES / "etapa24_eval_P21.csv")))
+    for a in t.columns:
+        arm = a.split("@")[0]
+        NUM[f"s24_gap_{arm}"] = f"{t[a].mean():.3f}"
+        NUM[f"s24_g2_{arm}"] = gt.f2(t[a].mean())
+        NUM[f"s24_dU_{arm}"] = gt.sgn((t[a] - t["U@P21"]).mean())
+    aa = pd.read_csv(RES / "analise_etapa24.csv")
+    macros_linhas("s24", aa)
+    flags_hipoteses("s24", RES / "analise_etapa24_hipoteses.csv", 167)
+    for arm in a24.POL:
+        h = d[d.braco == f"{arm}@P21"]
+        if len(h) and h.iteracoes.notna().all():
+            NUM[f"s24_it_{arm}"] = milhar(int(round(h.iteracoes.mean())))
+        for col, tag in (("uso_d", "d"), ("uso_r", "r")):
+            m = pd.DataFrame(h[col].str.split("|").apply(lambda x: [float(y) for y in x]).tolist()).mean()
+            m = 100 * m / m.sum()
+            for j, w in enumerate(m):
+                NUM[f"s24_u{tag}_{arm}_{j}"] = f"{w:.0f}"
+    nomes = [("U", "Uniform selection"), ("RPh", "Adaptive weights (faithful scoring)"), ("PM", "Probability matching"), ("EXP3", "EXP3"), ("UCB1", "UCB1"),
+             ("TS", "Thompson sampling"), ("EFF", "Efficiency UCB"), ("HG", "HG-UCB (Study 9)"), ("S65", "Static mixture, 65 evaluations")]
+    lin = []
+    for a, nome in nomes:
+        c = f"{a}@P21"
+        if c in t.columns:
+            dd = t[c] - t["U@P21"]
+            lin.append(" & ".join([nome, f"{t[c].mean():.2f}", "---" if a == "U" else gt.sgn(dd.mean()), "---" if a == "U" else f"{int((dd < -1e-9).sum())}/{int((dd > 1e-9).sum())}"]))
+    gt.escreve("tab_s24a.tex", gt.tabela(
+        "Study 24: mean gap (\\%) on the 51 evaluation instances of the pool of 21 operators of the policy families of Study 9 without tuning and with the faithful scoring, the adaptive "
+        "weights, HG-UCB and the mixture of greatest effort; difference from uniform selection (pp, descriptive) and wins/losses.", "tab:s24a", r"Arm & Gap (\%) & $\Delta$ vs.\ uniform & W/L", lin, "lccc"))
+    rot = [(f"H{167 + i}", "Primary", f"{p} $-$ U") for i, p in enumerate(a24.POL)] + [(f"H{172 + i}", "Secondary", f"RPh $-$ {p}") for i, p in enumerate(a24.POL)]
+    lin = []
+    for cid, g, nome in rot:
+        r = aa[aa.id.str.startswith(cid + " ")].iloc[0]
+        lin.append(" & ".join([g, nome + ", P21", f"{gt.sgn(r.dif_pp)} [{gt.sgn(r.ic_lo)}, {gt.sgn(r.ic_hi)}]", gt.padj(r.p_holm), f"{int(r.vit_a)}/{int(r.der_a)}", f"{r.mde_pp:.2f}"]))
+    gt.escreve("tab_s24f.tex", gt.tabela(
+        "Study 24: confirmatory contrasts (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over five for each family; wins/losses of the first-named arm; MDE: minimum detectable effect "
+        "at 80\\% power). RPh: adaptive weights with the faithful scoring.", "tab:s24f", r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
+
+
+# ------------------------------------------------------------------------------------------------ Estudo 25
+def estudo25():
+    if not (RES / "analise_etapa25.csv").exists():
+        print("estudo25: sem analise_etapa25.csv, nada gerado")
+        return
+    import analisar_etapa25 as a25
+    d = pd.concat([a25.referencia()] + [a25.ler25(r) for r in a25.REGS], ignore_index=True)
+    t = piv(d)
+    NUM["s25_nruns"] = milhar(sum(len(pd.read_csv(RES / f"etapa25_eval_{r}.csv")) for r in a25.REGS))
+    NUM["s25_n_inst"] = str(len(t))
+    for a in t.columns:
+        arm, reg = a.split("@")
+        NUM[f"s25_gap_{reg}_{arm}"] = f"{t[a].mean():.3f}"
+        NUM[f"s25_g2_{reg}_{arm}"] = gt.f2(t[a].mean())
+    aa = pd.read_csv(RES / "analise_etapa25.csv")
+    macros_linhas("s25", aa)
+    flags_hipoteses("s25", RES / "analise_etapa25_hipoteses.csv", 177)
+    for _, r in pd.read_csv(RES / "analise_etapa25_folga.csv").iterrows():
+        NUM[f"s25_hr_rho_{r.regime}"], NUM[f"s25_hr_p_{r.regime}"] = f"{r.rho_gap:+.2f}".replace("-", "$-$"), gt.padj(r.p_gap)
+        NUM[f"s25_hr_gap_{r.regime}"] = f"{r.gap_U:.2f}"
+    nomes = {"ref": "Reference (Study 21): simulated annealing, $1500n^2$", "acc": "Record-to-record travel, $1500n^2$", "short": "Simulated annealing, $375n^2$"}
+    lin = []
+    for reg in ("ref", "acc", "short"):
+        cel = []
+        for a in ("U", "RP", "S65"):
+            c = f"{a}@{reg}"
+            cel.append(f"{t[c].mean():.2f}" if c in t.columns else "---")
+        dd = t[f"RP@{reg}"] - t[f"U@{reg}"]
+        lin.append(" & ".join([nomes[reg]] + cel + [gt.sgn(dd.mean()), f"{int((dd < -1e-9).sum())}/{int((dd > 1e-9).sum())}"]))
+    gt.escreve("tab_s25a.tex", gt.tabela(
+        "Study 25: mean gap (\\%) of the frozen arms of Study 21 (pool of 21 operators) on the 51 evaluation instances in two deployment regimes and in the reference regime of Study 21, and the "
+        "difference of the adaptive weights from uniform selection (pp) with its wins/losses.", "tab:s25a", r"Regime & U & RP & S65 & RP $-$ U & W/L", lin, "lccccc"))
+    rot = [("H177", "Primary", "RP $-$ U, record-to-record"), ("H178", "Primary", "RP $-$ U, $375n^2$"), ("H179", "Secondary", "RP $-$ S65, record-to-record"), ("H180", "Secondary", "RP $-$ S65, $375n^2$")]
+    lin = []
+    for cid, g, nome in rot:
+        r = aa[aa.id.str.startswith(cid + " ")].iloc[0]
+        lin.append(" & ".join([g, nome, f"{gt.sgn(r.dif_pp)} [{gt.sgn(r.ic_lo)}, {gt.sgn(r.ic_hi)}]", gt.padj(r.p_holm), f"{int(r.vit_a)}/{int(r.der_a)}", f"{r.mde_pp:.2f}"]))
+    gt.escreve("tab_s25f.tex", gt.tabela(
+        "Study 25: confirmatory contrasts (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over two for each family; wins/losses of the first-named arm; MDE: minimum detectable effect at "
+        "80\\% power).", "tab:s25f", r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
+
+
 def main():
-    for f in (estudo21, estudo22, estudo23):
+    fd = RES / "etapa22_rrt_delta0.json"
+    if fd.exists():
+        NUM["s22_delta0"] = f"{json.loads(fd.read_text())['delta0']:g}"
+    for f in (estudo21, estudo22, estudo23, estudo24, estudo25):
         f()

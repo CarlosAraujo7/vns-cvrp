@@ -1,3 +1,12 @@
 [07:37:44] FILA 22 INICIADA
 [07:39:22] calibracao do RRT
 [07:52:38] avaliacao cls
+[08:25:46] avaliacao short
+[08:30:47] avaliacao acc
+[08:47:20] avaliacao longabc
+[09:32:10] FILA 22 INICIADA
+[09:32:10] calibracao do RRT
+[09:32:35] avaliacao cls
+[09:33:03] avaliacao short
+[09:33:33] avaliacao acc
+[09:34:01] avaliacao longabc

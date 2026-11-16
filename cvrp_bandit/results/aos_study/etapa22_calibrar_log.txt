@@ -9,3 +9,11 @@ d0.01      0.8475
 d0.02      0.8953
 d0.04      0.9513
 delta0 escolhido: 0.01
+calibracao do desvio do RRT (P21, selecao uniforme): 360 execucoes
+config_id
+d0.0025    1.0162
+d0.005     1.0952
+d0.01      0.8475
+d0.02      0.8953
+d0.04      0.9513
+delta0 escolhido: 0.01

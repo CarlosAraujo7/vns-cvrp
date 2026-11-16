@@ -1,0 +1,19 @@
+eval Estudo 22 short (P21): 1590 execucoes (U, RP, S65)
+    100/1590  0.7 min
+    200/1590  1.2 min
+    300/1590  1.6 min
+    400/1590  1.9 min
+    500/1590  2.3 min
+    600/1590  2.6 min
+    700/1590  3.0 min
+    800/1590  3.2 min
+    900/1590  3.4 min
+    1000/1590  3.7 min
+    1100/1590  3.9 min
+    1200/1590  4.0 min
+    1300/1590  4.2 min
+    1400/1590  4.3 min
+    1500/1590  4.4 min
+eval Estudo 22 short concluido
+eval Estudo 22 short (P21): 1590 execucoes (U, RP, S65)
+eval Estudo 22 short concluido
