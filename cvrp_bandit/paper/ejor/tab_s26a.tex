@@ -1,0 +1,18 @@
+\begin{table}[t]
+\caption{Study 26: mean gap (\%) on the 98 new instances (\num{s26_nx} instances X of 200 to 401 nodes and \num{s26_ns} synthetic instances) of the frozen arms of Study~21; difference from uniform selection (pp, descriptive) and wins/losses over the 98 instances.}\label{tab:s26a}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccccc}
+\toprule
+Arm & X (\%) & Synthetic (\%) & All (\%) & $\Delta$ vs.\ uniform & W/L \\
+\midrule
+Uniform selection & 1.96 & 1.65 & 1.77 & --- & --- \\
+Uniform, scaled removal size & 1.63 & 1.53 & 1.57 & $-$0.20 & 65/32 \\
+Adaptive weights & 1.52 & 1.43 & 1.47 & $-$0.30 & 71/27 \\
+Static mixture, 65 evaluations & 1.77 & 1.50 & 1.60 & $-$0.17 & 56/42 \\
+HG-UCB & 1.84 & 1.44 & 1.60 & $-$0.17 & 57/40 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

@@ -243,6 +243,15 @@ def main():
         print(f"U13 (Estudo 23): pontuacao fiel ainda melhor que a uniforme e que a mistura de maior esforco em P21 e sem diferenca da pontuacao anterior (P21 e P7): {ok13}")
         if not ok13:
             falhas.append("U13")
+    d26 = ler("analise_etapa26.csv")
+    if d26 is not None:
+        # U15 (Estudo 26, replica em 98 instancias novas): RP - U, RP - S65 (primarios), RP - U nas X e nas sinteticas, Uq - U e as duas correlacoes com o numero de rotas sao significativamente
+        # negativos (H181, H182, H184-H188, p ajustado de Holm abaixo de 0,05); HG - U tambem (H183, contra a expectativa do pre-registro)
+        h = lambda i: d26[d26.id.str.startswith(i + " ")].iloc[0]  # noqa: E731
+        ok15 = all(h(f"H{i}").dif_pp < 0 and h(f"H{i}").p_holm < 0.05 for i in range(181, 189))
+        print(f"U15 (Estudo 26): a vantagem dos pesos adaptativos sobre a uniforme e sobre a mistura de maior esforco se repete nas 98 instancias novas, em cada conjunto, e acompanha o numero de rotas (H181-H188): {ok15}")
+        if not ok15:
+            falhas.append("U15")
     d22 = ler("analise_etapa22.csv")
     if d22 is not None:
         # U14 (Estudo 22, implantacao do conjunto de 21 operadores): nenhum dos dez contrastes primarios e secundarios (RP - U e RP - S* em cinco regimes) e significativamente negativo

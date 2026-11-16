@@ -362,16 +362,28 @@ def fig_replica():
     ax = axs[0]
     meta = pd.read_csv(RES / "analise_etapa26_meta.csv") if (RES / "analise_etapa26_meta.csv").exists() else None
     linhas = []
-    for nome, r_u, r_s in (("Study 21\n(51 evaluation)", a21.loc["RP-U@P21"], a21.loc["RP-S65@P21"] if "RP-S65@P21" in a21.index else None),
+    class _Linha:
+        def __init__(self, dif, lo, hi):
+            self.dif_pp, self.ic_lo, self.ic_hi = dif, lo, hi
+
+    def _rp_s65_21():
+        if "RP-S65@P21" in a21.index:
+            return a21.loc["RP-S65@P21"]
+        if "S65-RP@P21" in a21.index:                                       # gravado com o sinal trocado
+            x = a21.loc["S65-RP@P21"]
+            return _Linha(-x.dif_pp, -x.ic_hi, -x.ic_lo)
+        return None
+
+    for nome, r_u, r_s in (("Study 21\n(51 evaluation)", a21.loc["RP-U@P21"], _rp_s65_21()),
                            ("New X\n(200-401 nodes)", row(a26_, "H184 "), None), ("New synthetic", row(a26_, "H185 "), None), ("All 98 new", row(a26_, "H181 "), row(a26_, "H182 "))):
         linhas.append((nome, r_u, r_s))
     ys = np.arange(len(linhas))[::-1]
     for y, (nome, r_u, r_s) in zip(ys, linhas):
         ax.plot([r_u.ic_lo, r_u.ic_hi], [y + 0.13, y + 0.13], color="#1b5e9b", lw=1.3)
-        ax.scatter([r_u.dif_pp], [y + 0.13], color="#1b5e9b", s=16, zorder=3, label="Adaptive weights $-$ uniform" if y == ys[0] else None)
+        ax.scatter([r_u.dif_pp], [y + 0.13], color="#1b5e9b", s=16, zorder=3)
         if r_s is not None:
             ax.plot([r_s.ic_lo, r_s.ic_hi], [y - 0.13, y - 0.13], color="#d95f02", lw=1.3)
-            ax.scatter([r_s.dif_pp], [y - 0.13], color="#d95f02", marker="s", s=16, zorder=3, label="Adaptive weights $-$ 65-eval. mixture" if y == ys[-1] else None)
+            ax.scatter([r_s.dif_pp], [y - 0.13], color="#d95f02", marker="s", s=16, zorder=3)
     if meta is not None and len(meta):
         m = meta.iloc[0]
         ax.plot([m.ic_lo, m.ic_hi], [-1, -1], color="k", lw=1.3)
@@ -381,8 +393,7 @@ def fig_replica():
     ax.set_yticks(list(ys) + ([-1] if meta is not None and len(meta) else []))
     ax.set_yticklabels([l[0] for l in linhas] + (["Combined\n(fixed effect)"] if meta is not None and len(meta) else []), fontsize=6)
     ax.set_xlabel("Difference in gap (pp)", fontsize=7)
-    ax.set_title("(a) replication", fontsize=7)
-    ax.legend(fontsize=5.2, frameon=False, loc="lower left")
+    ax.set_title("(a) replication (blue: vs. uniform; orange: vs. mixture)", fontsize=6.5)
     ax = axs[1]
     d = a26.ler26()
     t = pivo(d)

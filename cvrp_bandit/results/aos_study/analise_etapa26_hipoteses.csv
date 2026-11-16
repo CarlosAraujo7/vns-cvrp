@@ -1,0 +1,9 @@
+hipotese,confirmada
+"H181 RP - U significativamente negativo nas 98 instancias novas (primario, Holm m=3)",True
+"H182 RP - S65 significativamente negativo nas 98 instancias novas (primario, Holm m=3)",True
+"H183 HG - U significativamente negativo nas 98 instancias novas (primario, Holm m=3)",True
+"H184 RP - U significativamente negativo em X_FRESH (secundario, Holm m=5)",True
+"H185 RP - U significativamente negativo em SYN_REP (secundario, Holm m=5)",True
+"H186 Uq - U significativamente negativo nas 98 instancias novas (secundario, Holm m=5)",True
+"H187 correlacao de Spearman de RP - U com o numero de rotas K significativamente negativa (secundario, Holm m=5)",True
+"H188 correlacao parcial de RP - U com K dado o tamanho n significativamente negativa (secundario, Holm m=5)",True

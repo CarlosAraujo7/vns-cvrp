@@ -183,6 +183,14 @@ def main(ensaio=False):
         d21b = (e21["RP@P21"] - e21["S65@P21"]).values
         est, lo, hi, q, pq, i2 = meta_efeito_fixo([d21b, (t["RP"] - t["S65"]).values])
         meta.append(dict(analise="RP-S65: Estudo 21 + 98 novas", estimativa=est, ic_lo=lo, ic_hi=hi, Q=q, p_Q=pq, I2=i2))
+        # POS HOC (acrescentado depois de ver os resultados do Estudo 26; exploratorio, rotulado no diario): HG - U e S65 - U com o Estudo 21, e Uq - U com o Estudo 23 (as mesmas 51 instancias)
+        for nome, a, b in (("HG-U: Estudo 21 + 98 novas", "HG", "U"), ("S65-U: Estudo 21 + 98 novas", "S65", "U")):
+            est, lo, hi, q, pq, i2 = meta_efeito_fixo([(e21[f"{a}@P21"] - e21[f"{b}@P21"]).values, (t[a] - t[b]).values])
+            meta.append(dict(analise=nome, estimativa=est, ic_lo=lo, ic_hi=hi, Q=q, p_Q=pq, I2=i2))
+        e23 = pd.read_csv(RES / "etapa23_eval_p21.csv")
+        uq = e23[(e23.braco == "s23_p21_Uq") & e23.viavel].groupby("instancia").gap_pct.mean().reindex(e21.index)
+        est, lo, hi, q, pq, i2 = meta_efeito_fixo([(uq - e21["U@P21"]).values, (t["Uq"] - t["U"]).values])
+        meta.append(dict(analise="Uq-U: Estudo 23 + 98 novas", estimativa=est, ic_lo=lo, ic_hi=hi, Q=q, p_Q=pq, I2=i2))
     meta = pd.DataFrame(meta)
     if len(meta):
         print("\n=== exploratorio: metanalise de efeito fixo (as duas amostras de instancias sao independentes) ===")

@@ -571,8 +571,9 @@ def estudo26():
         NUM[f"s26_gapU_{c}"] = f"{r.gap_U:.2f}"
     f_meta = RES / "analise_etapa26_meta.csv"
     if f_meta.exists():
-        for k, (_, r) in zip(("meta", "meta3", "metaS"), pd.read_csv(f_meta).iterrows()):
+        for k, (_, r) in zip(("meta", "meta3", "metaS", "metaHG", "metaM", "metaUq"), pd.read_csv(f_meta).iterrows()):
             NUM[f"s26_{k}_est"], NUM[f"s26_{k}_lo"], NUM[f"s26_{k}_hi"] = gt.sgn(r.estimativa), gt.sgn(r.ic_lo), gt.sgn(r.ic_hi)
+            NUM[f"s26_{k}_ci"] = f"[{gt.plano(r.ic_lo)}, {gt.plano(r.ic_hi)}]"
             NUM[f"s26_{k}_i2"], NUM[f"s26_{k}_pq"] = f"{100 * r.I2:.0f}", gt.padj(r.p_Q)
     nomes_mod = {"K": "K", "n": "n", "clientes por rota": "cpr", "log razao de iteracoes RP/U": "lr", "K | n": "Kn", "n | K": "nK", "corr(K, n)": "Kcorr"}
     for _, r in pd.read_csv(RES / "analise_etapa26_moderadores.csv").iterrows():
