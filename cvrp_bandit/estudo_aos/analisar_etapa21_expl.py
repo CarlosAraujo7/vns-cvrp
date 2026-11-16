@@ -72,6 +72,25 @@ def main():
     d = p["s21_P21_RP"] - p["s21_P21_U"]
     rho, pv = stats.spearmanr(n.reindex(d.index), d)
     print(f"\nSpearman(RP - U, tamanho) = {rho:+.2f} (p {pv:.3f}, n {len(d)}); X: {d[d.index.str.startswith('X-n')].mean():+.3f}  SYN_VAL: {d[d.index.str.startswith('X-synv')].mean():+.3f}")
+    # folga da instancia: a vantagem do RP sobre a uniforme cresce com o gap da uniforme? (instancias de avaliacao X e SYN_VAL; P7 do Estudo 9 e P21)
+    import sys as _sys
+    _sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import analisar_etapa21 as a21
+    from analisar_etapa16 import pivo
+    dd = pd.concat([a21.referencias(), a21.ler_novos("P21")], ignore_index=True)
+    tt = pivo(dd)
+    folga = []
+    for pool in ("P7", "P21"):
+        dif, gu = tt[f"RP@{pool}"] - tt[f"U@{pool}"], tt[f"U@{pool}"]
+        rho_, p_ = stats.spearmanr(gu, dif)
+        q = pd.qcut(gu, 3, labels=["baixo", "medio", "alto"])
+        linha = dict(pool=pool, rho_gap=float(rho_), p_gap=float(p_), media=float(dif.mean()))
+        for lab in ("baixo", "medio", "alto"):
+            linha[f"dif_{lab}"], linha[f"gapU_{lab}"], linha[f"n_{lab}"] = float(dif[q == lab].mean()), float(gu[q == lab].mean()), int((q == lab).sum())
+        folga.append(linha)
+    folga = pd.DataFrame(folga)
+    print("\nfolga (RP - U por terco do gap da uniforme):\n" + folga.round(3).to_string(index=False))
+    folga.to_csv(RES / "analise_etapa21_expl_folga.csv", index=False)
     ops.to_csv(RES / "analise_etapa21_expl_operadores.csv", index=False)
     fases.to_csv(RES / "analise_etapa21_expl_fases.csv", index=False)
 

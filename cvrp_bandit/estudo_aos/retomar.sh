@@ -17,6 +17,7 @@ sleep 2
 (nohup setsid bash estudo_aos/fila_23.sh >> $R/etapa23_fila_log.txt 2>&1 < /dev/null &)
 (nohup setsid bash estudo_aos/fila_22.sh >> $R/etapa22_fila_log.txt 2>&1 < /dev/null &)
 (nohup setsid bash estudo_aos/fila_24.sh >> $R/etapa24_fila_log.txt 2>&1 < /dev/null &)
+(nohup setsid bash estudo_aos/fila_25.sh >> $R/etapa25_fila_log.txt 2>&1 < /dev/null &)
 sleep 5
 pgrep -af "fila_2" | cut -c1-70
 date +%H:%M:%S
