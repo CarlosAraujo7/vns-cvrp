@@ -1,3 +1,6 @@
 X_FRESH: 38 instancias; clientes de 199 a 400
 SYN_REP: 60 instancias; clientes de 100 a 300
 INSTANCIAS: OK
+X_FRESH: 38 instancias; clientes de 199 a 400
+SYN_REP: 60 instancias; clientes de 100 a 300
+INSTANCIAS: OK

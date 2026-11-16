@@ -1,0 +1,11 @@
+eval Estudo 26 (P21): 980 execucoes (U, Uq, RP, S65, HG) em 98 instancias
+    100/980  43.5 min
+    200/980  75.4 min
+    300/980  105.5 min
+    400/980  136.0 min
+    500/980  157.5 min
+    600/980  172.9 min
+    700/980  187.3 min
+    800/980  200.2 min
+    900/980  204.9 min
+eval Estudo 26 concluido
