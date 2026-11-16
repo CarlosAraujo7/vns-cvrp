@@ -1,2 +1,4 @@
 REGRESSAO EXATA: OK (18 execucoes dos Estudos 9, 12 e 20 reproduzidas com o laco de aceitacao selecionavel em modo 'sa')
 CONJUNTOS: 53 instancias A, B e CMT com solucao inicial em disco e otimo conhecido
+REGRESSAO EXATA: OK (18 execucoes de P21 do Estudo 21 reproduzidas com o laco de aceitacao selecionavel em modo 'sa')
+CONJUNTOS: 53 instancias A, B e CMT com solucao inicial em disco e otimo conhecido

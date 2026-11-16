@@ -1,1 +1,10 @@
 validacao (emenda 1, P21): 360 execucoes
+    100/360  4.5 min
+    200/360  7.7 min
+    300/360  11.5 min
+braco
+s21_P21_S129       0.8078
+val21_P21_gen20    0.8538
+val21_P21_gen24    0.8538
+val21_P21_gen28    0.8538
+val21_P21_gen32    0.8538

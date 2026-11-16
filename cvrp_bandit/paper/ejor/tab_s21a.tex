@@ -1,0 +1,28 @@
+\begin{table}[t]
+\caption{Study 21: tuning effort (evaluations of the mixture or of the hyperparameters), validation gap (tuning instances, three new seeds; descriptive), evaluation gap (\%) of each arm in each pool, difference from uniform selection (pp, descriptive) and wins/losses. The arms of P7 are reused from Studies 9, 12 and 20; S129 and the usage mixture SRP exist only in P21. An arm that was not run because the search found nothing better is a copy of the arm it equals.}\label{tab:s21a}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccccc}
+\toprule
+Arm & Evaluations & Validation & Evaluation & $\Delta$ vs.\ uniform & W/L \\
+\midrule
+\multicolumn{6}{l}{\emph{P7: 7 operators, 51 instances}} \\
+Uniform selection & 0 & --- & 1.70 & --- & --- \\
+Adaptive weights, default & 0 & --- & 1.34 & $-$0.36 & 42/9 \\
+Adaptive weights, tuned & 33 & --- & 1.36 & $-$0.34 & 43/8 \\
+Static mixture, 33 evaluations & 33 & --- & 1.33 & $-$0.37 & 42/9 \\
+Static mixture, 65 evaluations & 65 & --- & 1.30 & $-$0.40 & 43/8 \\
+HG-UCB (Study 9) & 0 & --- & 1.48 & $-$0.22 & 35/16 \\
+\multicolumn{6}{l}{\emph{P21: 21 operators, 51 instances}} \\
+Uniform selection & 0 & 0.98 & 1.41 & --- & --- \\
+Adaptive weights, default & 0 & 0.77 & 1.20 & $-$0.21 & 36/15 \\
+Adaptive weights, tuned & 33 & 0.85 & 1.23 & $-$0.19 & 37/14 \\
+Static mixture, 33 evaluations & 33 & 0.98 & 1.53 & $+$0.12 & 16/35 \\
+Static mixture, 65 evaluations & 65 & 0.81 & 1.44 & $+$0.02 & 23/28 \\
+Static mixture = usage of RP & 0 & --- & 1.33 & $-$0.08 & 34/17 \\
+HG-UCB (Study 9) & 0 & 0.84 & 1.38 & $-$0.03 & 26/25 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

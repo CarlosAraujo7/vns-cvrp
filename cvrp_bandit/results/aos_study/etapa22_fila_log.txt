@@ -1,0 +1,3 @@
+[07:37:44] FILA 22 INICIADA
+[07:39:22] calibracao do RRT
+[07:52:38] avaliacao cls

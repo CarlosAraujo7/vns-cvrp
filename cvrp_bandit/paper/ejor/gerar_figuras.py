@@ -250,7 +250,7 @@ def fig_poolsize():
         return
     aa = pd.read_csv(f).set_index("id")
     K = {"P7": 7, "P12": 12, "P21": 21}
-    fig, axs = plt.subplots(1, 3, figsize=(7.4, 2.7))
+    fig, axs = plt.subplots(1, 3, figsize=(7.4, 3.3))
     ax = axs[0]
     estilo = {"RP": ("#1b5e9b", "o", "-", "Adaptive weights"), "S33": ("#d95f02", "s", "-", "Mixture, 33 eval."), "S65": ("#d95f02", "^", "--", "Mixture, 65 eval."),
               "HG": ("#1b9e77", "D", ":", "HG-UCB")}
@@ -261,7 +261,7 @@ def fig_poolsize():
         ax.errorbar([x for x, _ in pts], [r.dif_pp for _, r in pts], yerr=[[r.dif_pp - r.ic_lo for _, r in pts], [r.ic_hi - r.dif_pp for _, r in pts]], color=cor, marker=mk, ls=ls,
                     ms=3.5, lw=1, capsize=2, label=rot)
     fb = RES / "analise_etapa21b.csv"
-    if fb.exists():
+    if fb.exists() and (RES / "etapa21b_eval_P21.csv").exists():                # S129 so tem ponto proprio se o braco foi executado
         ab = pd.read_csv(fb).set_index("id")
         if "S129-U@P21" in ab.index:
             r = ab.loc["S129-U@P21"]
@@ -273,7 +273,7 @@ def fig_poolsize():
     ax.minorticks_off()
     ax.set_xlabel("Operators in the pool", fontsize=7)
     ax.set_ylabel("Gap minus uniform selection (pp)", fontsize=7)
-    ax.legend(fontsize=5.5, frameon=False, loc="lower left")
+    ax.legend(fontsize=5.5, frameon=False, loc="upper left")
     ax.set_title("(a) against uniform selection", fontsize=7)
     ax = axs[1]
     pts = [(K[p], aa.loc[f"RP-S33@{p}"]) for p in K if f"RP-S33@{p}" in aa.index]
@@ -304,13 +304,14 @@ def fig_poolsize():
         u = c[(c.pool == "P21")].gap_validacao_U.iloc[0]
         ax.axhline(rp, color="#1b5e9b", lw=1, label="Adaptive weights, no tuning")
         ax.axhline(u, color="0.4", lw=1, ls="--", label="Uniform selection")
-        ax.legend(fontsize=5.5, frameon=False, loc="upper right")
+        ax.legend(fontsize=5.2, frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.30), ncol=1)
     ax.set_xlabel("Tuning evaluations of the mixture (P21)", fontsize=7)
     ax.set_ylabel("Gap on the tuning instances (%)", fontsize=7)
     ax.set_title("(c) learning curve of the tuning", fontsize=7)
     for a in axs:
         a.tick_params(labelsize=6.5)
     fig.tight_layout()
+    fig.subplots_adjust(bottom=0.36)
     fig.savefig(AQUI / "fig_poolsize.pdf")
     plt.close(fig)
 

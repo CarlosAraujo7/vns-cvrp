@@ -17,7 +17,9 @@ import pandas as pd
 AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI.parent.parent / "estudo_aos"))
 sys.path.insert(0, str(AQUI.parent.parent / "src"))
-import gerar_tabelas as gt  # noqa: E402
+import __main__ as _principal  # noqa: E402
+# quando gerar_tabelas.py roda como script, `import gerar_tabelas` criaria uma SEGUNDA copia do modulo (com outro dicionario NUM): usa-se o modulo em execucao
+gt = _principal if str(getattr(_principal, "__file__", "")).endswith("gerar_tabelas.py") else __import__("gerar_tabelas")
 
 RES = gt.RES
 NUM = gt.NUM
@@ -126,10 +128,11 @@ def estudo21():
         if len(x):
             NUM[f"s21rob_{h}_loo_lo"], NUM[f"s21rob_{h}_loo_hi"] = gt.sgn(x.dif_pp.min()), gt.sgn(x.dif_pp.max())
             NUM[f"s21rob_{h}_loo_minp"] = gt.padj(x.p_wilcoxon.max())
-    tr = pd.read_csv(RES / "analise_etapa21_tendencia.csv").iloc[0]
-    NUM["s21_trend_slope"], NUM["s21_trend_p"] = gt.sgn(tr.media), gt.padj(tr.p_wilcoxon)
-    for p in ("P7", "P12", "P21"):
-        NUM[f"s21_delta_{p}"] = gt.sgn(tr[f"delta_{p}"])
+    if (RES / "analise_etapa21_tendencia.csv").exists():
+        tr = pd.read_csv(RES / "analise_etapa21_tendencia.csv").iloc[0]
+        NUM["s21_trend_slope"], NUM["s21_trend_p"] = gt.sgn(tr.media), gt.padj(tr.p_wilcoxon)
+        for p in ("P7", "P12", "P21"):
+            NUM[f"s21_delta_{p}"] = gt.sgn(tr[f"delta_{p}"])
     # ajuste, selecao, validacao, curva de aprendizado
     for p, e in esc.items():
         traj = {x["geracao"]: x for x in e["trajetoria"]}
@@ -207,10 +210,13 @@ def tabelas21(d, t, aa, esc, val):
     ARM = [("U", "Uniform selection", 0), ("RP", "Adaptive weights, default", 0), ("RPt", "Adaptive weights, tuned", 33), ("S33", "Static mixture, 33 evaluations", 33),
            ("S65", "Static mixture, 65 evaluations", 65), ("S129", "Static mixture, 129 evaluations", 129), ("SRP", "Static mixture = usage of RP", 0), ("HG", "HG-UCB (Study 9)", 0)]
     lin = []
+    s129_proprio = (RES / "etapa21b_eval_P21.csv").exists()
     for p in ("P7", "P12", "P21"):
-        lin.append(r"\multicolumn{7}{l}{\emph{" + f"{p}: {POOL_N[p]} operators, {len(t)} instances" + r"}}")
+        if f"U@{p}" not in t.columns:
+            continue
+        lin.append(r"\multicolumn{6}{l}{\emph{" + f"{p}: {POOL_N[p]} operators, {len(t)} instances" + r"}}")
         for a, nome, nev in ARM:
-            if f"{a}@{p}" not in t.columns:
+            if f"{a}@{p}" not in t.columns or (a == "S129" and not s129_proprio):
                 continue
             col = t[f"{a}@{p}"]
             u = t[f"U@{p}"]
@@ -231,7 +237,10 @@ def tabelas21(d, t, aa, esc, val):
            ("H127", "Tertiary", r"RP $-$ S33, P12"), ("H128", "Tertiary", r"RPt $-$ S33, P12"), ("H129", "Tertiary", r"difference of (RP $-$ S33): P12 $-$ P7")]
     lin = []
     for cid, g, nome in rot:
-        r = aa[aa.id.str.startswith(cid + " ")].iloc[0]
+        mm = aa[aa.id.str.startswith(cid + " ")]
+        if not len(mm):
+            continue
+        r = mm.iloc[0]
         lin.append(" & ".join([g, nome, f"{gt.sgn(r.dif_pp)} [{gt.sgn(r.ic_lo)}, {gt.sgn(r.ic_hi)}]", gt.padj(r.p_holm), f"{int(r.vit_a)}/{int(r.der_a)}", f"{r.mde_pp:.2f}"]))
     if (RES / "analise_etapa21b.csv").exists():
         ab = pd.read_csv(RES / "analise_etapa21b.csv")
@@ -383,9 +392,10 @@ def estudo23():
             ("SRP", "Static mixture = usage of RP"), ("Uq", f"Uniform, removal size $\\times${esc['c_estrela']:g}"), ("Upr", "Uniform on the pruned pool"),
             ("RP", "Adaptive weights (scoring of Studies 9--22)"), ("RPsr", "Adaptive weights without the smallest-route operator"), ("RPh", "Adaptive weights, faithful scoring")]
     lin = [r"\multicolumn{4}{l}{\emph{P21: 21 operators}}"]
+    s129_proprio = (RES / "etapa21b_eval_P21.csv").exists()
     for a, nome in arms:
         c = f"{a}@P21"
-        if c in t.columns:
+        if c in t.columns and not (a == "S129" and not s129_proprio):
             dd = t[c] - t["U@P21"]
             lin.append(" & ".join([nome, f"{t[c].mean():.2f}", "---" if a == "U" else gt.sgn(dd.mean()), "---" if a == "U" else f"{int((dd < -1e-9).sum())}/{int((dd > 1e-9).sum())}"]))
     lin.append(r"\multicolumn{4}{l}{\emph{P7: 7 operators}}")

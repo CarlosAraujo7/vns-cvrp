@@ -34,7 +34,7 @@ def main(ensaio=False):
         novos = a21.fabricar(ref, np.random.default_rng(7))
         s129 = novos[novos.braco == "S33@P21"].assign(braco="S129@P21", gap_pct=lambda d: d.gap_pct - 0.12)
     else:
-        novos = pd.concat([a21.ler_novos(p) for p in a21.POOLS], ignore_index=True)
+        novos = pd.concat([a21.ler_novos(p) for p in a21.POOLS if (RES / f"etapa21_eval_{p}.csv").exists()], ignore_index=True)    # so P21 e necessario aqui
         f = RES / "etapa21b_eval_P21.csv"
         if f.exists():
             s129 = pd.read_csv(f)

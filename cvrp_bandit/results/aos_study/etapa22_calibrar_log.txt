@@ -1,0 +1,11 @@
+calibracao do desvio do RRT (P21, selecao uniforme): 360 execucoes
+    100/360  4.4 min
+    200/360  7.7 min
+    300/360  11.4 min
+config_id
+d0.0025    1.0162
+d0.005     1.0952
+d0.01      0.8475
+d0.02      0.8953
+d0.04      0.9513
+delta0 escolhido: 0.01

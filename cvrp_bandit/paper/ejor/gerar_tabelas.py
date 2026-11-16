@@ -2620,6 +2620,8 @@ def main():
         estudo19()
     if (RES / "analise_etapa20.csv").exists():
         estudo20()
+    import gerar_estudos21_23
+    gerar_estudos21_23.main()                       # Estudos 21 a 23 (cada um so roda se a sua analise existe)
     if (RES / "margem_instancia.json").exists():
         margem()
     sintese_extra()

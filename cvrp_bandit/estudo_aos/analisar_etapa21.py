@@ -35,6 +35,9 @@ AQUI = Path(__file__).resolve().parent
 RES = AQUI.parent / "results" / "aos_study"
 COLS = ["braco", "conjunto", "instancia", "n_customers", "seed", "viavel", "gap_pct", "uso_d", "uso_r"]
 POOLS = ("P12", "P21")
+# ANALISE PARCIAL (logistica, nao analitica): enquanto o conjunto P12 nao foi executado (a fila o deixou por ultimo), as hipoteses de P21 (H120-H126) sao analisadas sem ele; as de P12
+# (H127-H129), a tendencia em ln K e os contrastes de P12 so entram quando etapa21_eval_P12.csv existe. Os resultados de P21 nao mudam quando P12 chega (os dados de P21 estao completos).
+PARCIAL = not (Path(__file__).resolve().parent.parent / "results" / "aos_study" / "etapa21_eval_P12.csv").exists()
 K = {"P7": 7, "P12": 12, "P21": 21}
 KD = {"P7": 4, "P12": 7, "P21": 12}
 BRACOS = {"P7": ("U", "RP", "HG", "S33", "RPt", "S65"), "P12": ("U", "RP", "RPt", "S33"), "P21": ("U", "RP", "RPt", "S33", "S65", "HG")}
@@ -88,10 +91,17 @@ def uso_medio(d, braco, col):
 
 
 def main(ensaio=False):
+    global K, BRACOS
+    parcial = PARCIAL and not ensaio
+    PU = ("P21",) if parcial else POOLS                                      # conjuntos novos analisados
+    if parcial:
+        K = {"P7": 7, "P21": 21}
+        BRACOS = {p: BRACOS[p] for p in K}
+        print("ANALISE PARCIAL: P12 ainda nao executado; H127-H129 e a tendencia em ln K ficam para depois")
     rng = np.random.default_rng(0)
     pd.set_option("display.width", 250)
     ref = referencias()
-    novos = fabricar(ref, np.random.default_rng(7)) if ensaio else pd.concat([ler_novos(p) for p in POOLS], ignore_index=True)
+    novos = fabricar(ref, np.random.default_rng(7)) if ensaio else pd.concat([ler_novos(p) for p in PU], ignore_index=True)
     dados = completar(pd.concat([ref, novos], ignore_index=True))
     t = pivo(dados)
     esperadas = {f"{a}@{p}" for p in K for a in BRACOS[p]}
@@ -101,7 +111,7 @@ def main(ensaio=False):
     print(t.mean().round(3).sort_values().to_string())
     # diferencas-em-diferencas (por instancia): inclinacao da diferenca RP - S33 com o tamanho do conjunto
     t = t.copy()
-    for p in POOLS:
+    for p in PU:
         t[f"DiD@{p}"] = (t[f"RP@{p}"] - t[f"S33@{p}"]) - (t["RP@P7"] - t["S33@P7"])
     t["zero"] = 0.0
     C = lambda cid, a, b, g, **kw: contraste(t, cid, a, b, rng, g, **kw)  # noqa: E731
@@ -111,8 +121,8 @@ def main(ensaio=False):
     sec = com_holm([C("H122 RPt-S33@P21", "RPt@P21", "S33@P21", "secundario"), C("H123 S65-S33@P21", "S65@P21", "S33@P21", "secundario"),
                     C("H124 RP-U@P21", "RP@P21", "U@P21", "secundario"), C("H125 S33-U@P21", "S33@P21", "U@P21", "secundario"),
                     C("H126 HG-U@P21", "HG@P21", "U@P21", "secundario")], 5)
-    ter = com_holm([C("H127 RP-S33@P12", "RP@P12", "S33@P12", "terciario"), C("H128 RPt-S33@P12", "RPt@P12", "S33@P12", "terciario"),
-                    C("H129 DiD(RP-S33)@P12-P7", "DiD@P12", "zero", "terciario")], 3)
+    ter = pd.DataFrame() if parcial else com_holm([C("H127 RP-S33@P12", "RP@P12", "S33@P12", "terciario"), C("H128 RPt-S33@P12", "RPt@P12", "S33@P12", "terciario"),
+                                                   C("H129 DiD(RP-S33)@P12-P7", "DiD@P12", "zero", "terciario")], 3)
     expl = []
     for p in K:
         for a in BRACOS[p]:
@@ -127,7 +137,7 @@ def main(ensaio=False):
             expl.append(C(f"S65-RPt@{p}", f"S65@{p}", f"RPt@{p}", "explor"))
         if "HG" in BRACOS[p]:
             expl.append(C(f"HG-RP@{p}", f"HG@{p}", f"RP@{p}", "explor"))
-    for p in POOLS:                                                          # efeito do conjunto sobre cada braco (mesmas instancias, bracos de P7 reutilizados)
+    for p in PU:                                                             # efeito do conjunto sobre cada braco (mesmas instancias, bracos de P7 reutilizados)
         for a in BRACOS[p]:
             expl.append(C(f"{a}@{p}-{a}@P7", f"{a}@{p}", f"{a}@P7", "explor_conjunto"))
     for p in K:
@@ -142,22 +152,24 @@ def main(ensaio=False):
     print(r.drop(columns=["grupo", "a", "b"]).round(4).to_string(index=False))
 
     # tendencia: inclinacao de (RP - S33) em ln K, por instancia (3 pontos)
-    lk = np.log([K["P7"], K["P12"], K["P21"]])
-    dl = np.column_stack([(t[f"RP@{p}"] - t[f"S33@{p}"]).values for p in ("P7", "P12", "P21")])
-    incl = ((dl - dl.mean(axis=1, keepdims=True)) * (lk - lk.mean())).sum(axis=1) / ((lk - lk.mean()) ** 2).sum()
-    tend = pd.DataFrame([dict(id="inclinacao de RP-S33 em ln K (pp por unidade de ln K)", n=len(incl), media=float(incl.mean()),
-                              ep=float(incl.std(ddof=1) / np.sqrt(len(incl))), p_wilcoxon=float(stats.wilcoxon(incl).pvalue),
-                              p_t=float(stats.ttest_1samp(incl, 0).pvalue), delta_P7=float(dl[:, 0].mean()), delta_P12=float(dl[:, 1].mean()),
-                              delta_P21=float(dl[:, 2].mean()))])
-    print("\n=== exploratorio: tendencia de RP - S33 com o tamanho do conjunto ===")
-    print(tend.round(4).to_string(index=False))
+    tend = None
+    if not parcial:
+        lk = np.log([K["P7"], K["P12"], K["P21"]])
+        dl = np.column_stack([(t[f"RP@{p}"] - t[f"S33@{p}"]).values for p in ("P7", "P12", "P21")])
+        incl = ((dl - dl.mean(axis=1, keepdims=True)) * (lk - lk.mean())).sum(axis=1) / ((lk - lk.mean()) ** 2).sum()
+        tend = pd.DataFrame([dict(id="inclinacao de RP-S33 em ln K (pp por unidade de ln K)", n=len(incl), media=float(incl.mean()),
+                                  ep=float(incl.std(ddof=1) / np.sqrt(len(incl))), p_wilcoxon=float(stats.wilcoxon(incl).pvalue),
+                                  p_t=float(stats.ttest_1samp(incl, 0).pvalue), delta_P7=float(dl[:, 0].mean()), delta_P12=float(dl[:, 1].mean()),
+                                  delta_P21=float(dl[:, 2].mean()))])
+        print("\n=== exploratorio: tendencia de RP - S33 com o tamanho do conjunto ===")
+        print(tend.round(4).to_string(index=False))
 
     # robustez de H120 e H121 (exploratorio): t pareado, permutacao de sinais, bootstrap de dois niveis, sem cada conjunto de instancias
     runs = {}
     for (arm, inst), gg in dados[dados.viavel].groupby(["braco", "instancia"]).gap_pct:
         runs.setdefault(inst, {})[arm] = gg.values
     rob = []                                                                 # (a DiD nao e um braco: o bootstrap de dois niveis cobre so os contrastes simples)
-    for cid, a, b in (("H120", "RP@P21", "S33@P21"), ("H122", "RPt@P21", "S33@P21"), ("H127", "RP@P12", "S33@P12")):
+    for cid, a, b in (("H120", "RP@P21", "S33@P21"), ("H122", "RPt@P21", "S33@P21")) + (() if parcial else (("H127", "RP@P12", "S33@P12"),)):
         dif = np.where(np.abs((t[a] - t[b]).values) < 1e-9, 0.0, (t[a] - t[b]).values)
         sinais = rng.choice([-1.0, 1.0], size=(10000, len(dif)))
         perm = (sinais * dif).mean(axis=1)
@@ -189,14 +201,15 @@ def main(ensaio=False):
         "H124 RP - U em P21 significativamente negativo (Holm m=5)": neg(g("H124")),
         "H125 S33 - U em P21 significativamente negativo (Holm m=5)": neg(g("H125")),
         "H126 HG - U em P21 significativamente negativo (Holm m=5)": neg(g("H126")),
-        "H127 RP - S33 em P12 significativamente negativo (Holm m=3)": neg(g("H127")),
-        "H128 RPt - S33 em P12 significativamente negativo (Holm m=3)": neg(g("H128")),
-        "H129 diferenca-em-diferencas P12 vs P7 de (RP - S33) significativamente negativa (Holm m=3)": neg(g("H129")),
     }
+    if not parcial:
+        H.update({"H127 RP - S33 em P12 significativamente negativo (Holm m=3)": neg(g("H127")),
+                  "H128 RPt - S33 em P12 significativamente negativo (Holm m=3)": neg(g("H128")),
+                  "H129 diferenca-em-diferencas P12 vs P7 de (RP - S33) significativamente negativa (Holm m=3)": neg(g("H129"))})
     print("\n=== hipoteses (pre-registro, Entrada 136) ===")
     for k, ok in H.items():
         print(f"  {'CONFIRMADA' if ok else 'REFUTADA  '}  {k}")
-    print(f"  confirmadas: {sum(H.values())} de 10 (esperado no pre-registro: 4,5)")
+    print(f"  confirmadas: {sum(H.values())} de {len(H)} (esperado no pre-registro: 4,5 de 10; analise parcial: H127-H129 pendentes)" if parcial else f"  confirmadas: {sum(H.values())} de 10 (esperado no pre-registro: 4,5)")
 
     print("\n=== exploratorio: uso medio de operadores (fracao de iteracoes), destruicoes | reparos ===")
     uso_rows = []
@@ -221,7 +234,7 @@ def main(ensaio=False):
     if not ensaio:
         curva = []
         print("\n=== exploratorio: validacao (instancias de ajuste, seeds 3003-3005) e curva de aprendizado do ajuste ===")
-        for p in POOLS:
+        for p in PU:
             v = pd.read_csv(RES / f"etapa21_validacao_{p}.csv")
             v = v[v.viavel]
             med = v.groupby("braco").gap_pct.mean()
@@ -239,7 +252,8 @@ def main(ensaio=False):
         print(curva.round(4).to_string(index=False))
         r.to_csv(RES / "analise_etapa21.csv", index=False)
         rob.to_csv(RES / "analise_etapa21_robustez.csv", index=False)
-        tend.to_csv(RES / "analise_etapa21_tendencia.csv", index=False)
+        if tend is not None:
+            tend.to_csv(RES / "analise_etapa21_tendencia.csv", index=False)
         conc.to_csv(RES / "analise_etapa21_uso_concordancia.csv", index=False)
         pd.DataFrame(uso_rows).to_csv(RES / "analise_etapa21_uso.csv", index=False)
         curva.to_csv(RES / "analise_etapa21_curva.csv", index=False)

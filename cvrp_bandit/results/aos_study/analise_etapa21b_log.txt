@@ -1,0 +1,37 @@
+[P12] RPt ausente: o ajuste nao achou configuracao melhor que a padrao (RPt = RP); coluna copiada
+S129 ausente: a continuacao do ES nao achou melhora (S129 = S65); coluna copiada
+=== 51 instancias; gap medio (%) em P21 ===
+braco
+RP@P21      1.203
+RPt@P21     1.227
+HG@P21      1.384
+U@P21       1.415
+S129@P21    1.437
+S65@P21     1.437
+S33@P21     1.533
+               id  n_inst  dif_pp   ic_lo   ic_hi  vit_a  der_a  emp  p_bruto  equiv_010  mde_pp  p_holm  signif_005
+ H139 S129-RP@P21      51  0.2336  0.1164  0.3553     12     39    0   0.0003      False  0.1728  0.0003        True
+H140 S129-S65@P21      51  0.0000  0.0000  0.0000      0      0   51   1.0000       True  0.0000  1.0000       False
+       S129-U@P21      51  0.0220 -0.0833  0.1287     23     28    0   0.7147      False  0.1517  0.7147       False
+     S129-S33@P21      51 -0.0959 -0.1828 -0.0041     36     15    0   0.0102      False  0.1296  0.0102        True
+     S129-RPt@P21      51  0.2100  0.1133  0.3129     15     36    0   0.0003      False  0.1443  0.0003        True
+      S129-HG@P21      51  0.0530 -0.0174  0.1299     26     25    0   0.5486      False  0.1083  0.5486       False
+
+=== hipoteses da emenda 1 (Entrada 139) ===
+  REFUTADA    H139 S129 - RP em P21 significativamente negativo (emenda 1, sem correcao)
+  REFUTADA    H140 S129 - S65 em P21 significativamente negativo (emenda 1, sem correcao)
+  confirmadas: 0 de 2 (esperado: 0,55)
+
+=== exploratorio: curva de aprendizado do ajuste de P21 (validacao: seeds 3003-3005) ===
+pool  geracao  n_avaliacoes  gap_ajuste  gap_validacao
+ P21        0             1      0.8112         0.8518
+ P21        2             9      0.7999         0.9223
+ P21        4            17      0.7825         0.9099
+ P21        8            33      0.7825         0.9099
+ P21       12            49      0.7792         0.8476
+ P21       16            65      0.7050         0.8538
+ P21       20            81      0.7050         0.8538
+ P21       24            97      0.7050         0.8538
+ P21       28           113      0.7050         0.8538
+ P21       32           129      0.7050         0.8538
+validacao de S129 e de RP (padrao): {'S129': 0.8078, 'RP': 0.7687}

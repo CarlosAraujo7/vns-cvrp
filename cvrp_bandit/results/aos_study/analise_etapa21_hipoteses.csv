@@ -1,0 +1,8 @@
+hipotese,confirmada
+"H120 RP - S33 em P21 significativamente negativo (primario, Holm m=2)",True
+"H121 diferenca-em-diferencas P21 vs P7 de (RP - S33) significativamente negativa (primario, Holm m=2)",True
+H122 RPt - S33 em P21 significativamente negativo (Holm m=5),True
+H123 S65 - S33 em P21 significativamente negativo (Holm m=5),True
+H124 RP - U em P21 significativamente negativo (Holm m=5),True
+H125 S33 - U em P21 significativamente negativo (Holm m=5),False
+H126 HG - U em P21 significativamente negativo (Holm m=5),False
