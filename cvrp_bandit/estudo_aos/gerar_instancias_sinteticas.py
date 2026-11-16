@@ -21,6 +21,7 @@ Roda no WSL (binario do HGS e Linux):
     python3 -u gerar_instancias_sinteticas.py
 """
 import csv
+import os
 import random
 import subprocess
 import sys
@@ -39,6 +40,8 @@ CONJUNTOS = {
     # Estudo 10 (instancias GRANDES; diario, Entrada 100): ajuste e validacao em tamanhos maiores que os dos Estudos 4-7
     "SYN_TUNE_L": dict(tag="tl", semente=20261011, tamanhos=[200] * 4 + [300] * 4 + [400] * 4),
     "SYN_VAL_L": dict(tag="vl", semente=20261012, tamanhos=[200] * 5 + [300] * 5 + [400] * 5 + [500] * 5),
+    # Estudo 26 (replica em instancias NOVAS; diario, Entradas 145 e 146): 60 instancias que nenhum braco dos Estudos 21 a 25 usou; mesmo gerador, mesmos tamanhos que SYN_VAL, referencia do HGS como em SYN_VAL
+    "SYN_REP": dict(tag="r", semente=20261601, tamanhos=[100] * 20 + [200] * 20 + [300] * 20),
 }
 
 
@@ -60,12 +63,13 @@ def custo_do_sol(sol_path):
     raise RuntimeError(f"sem linha Cost em {sol_path}")
 
 
-def hgs_melhor(vrp_path, n):
+def hgs_melhor(vrp_path, n, fator=0.2):
+    """Melhor de 2 execucoes do HGS-CVRP (seeds 1 e 2), t = fator x n segundos (fator 0,2 em todos os conjuntos sinteticos; 0,4 nas X do Estudo 26)."""
     melhor = None
     with tempfile.TemporaryDirectory(prefix="hgsref_") as tmp:
         for seed in (1, 2):
             out = Path(tmp) / f"s{seed}.sol"
-            subprocess.run([str(HGS), str(vrp_path), str(out), "-t", f"{0.2 * n:.1f}", "-seed", str(seed),
+            subprocess.run([str(HGS), str(vrp_path), str(out), "-t", f"{fator * n:.1f}", "-seed", str(seed),
                             "-round", "1", "-log", "0"], capture_output=True, text=True)
             if out.exists():
                 c = custo_do_sol(out)
@@ -112,7 +116,7 @@ def main():
             vrp.with_suffix(".sol").write_text(texto)
             return nome, n, comb, cap, custo, texto.count("Route #")
 
-        with ThreadPoolExecutor(max_workers=6) as ex:
+        with ThreadPoolExecutor(max_workers=int(os.environ.get("HGS_THREADS", "6"))) as ex:
             resultados = list(ex.map(ref, itens))
         with open(destino / "metadata.csv", "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)

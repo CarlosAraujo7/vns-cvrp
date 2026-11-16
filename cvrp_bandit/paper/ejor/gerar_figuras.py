@@ -345,7 +345,84 @@ def fig_deslocamentos():
     plt.close(fig)
 
 
+def fig_replica():
+    """Estudos 26 e 27: (a) floresta de RP - U e de RP - S65 (pp, IC95%) nas 51 instancias de avaliacao do Estudo 21, nas 98 novas (X_FRESH e SYN_REP) e na combinacao de efeito fixo; (b) RP - U em cada
+    instancia nova contra o numero de rotas K (escala log), com a media por faixas de K; (c) Estudo 27: RP - U contra o tamanho medio de rota (K manipulado a leiaute fixo), IC95% sobre os leiautes."""
+    f26, f27 = RES / "analise_etapa26.csv", RES / "analise_etapa27.csv"
+    if not f26.exists():
+        return
+    import sys
+    sys.path.insert(0, str(RES.parent.parent / "estudo_aos"))
+    import analisar_etapa26 as a26
+    from analisar_etapa16 import pivo
+    a26_ = pd.read_csv(f26).set_index("id")
+    a21 = pd.read_csv(RES / "analise_etapa21.csv").set_index("id")
+    row = lambda tab, pref: tab.loc[[i for i in tab.index if i.startswith(pref)]].iloc[0]  # noqa: E731
+    fig, axs = plt.subplots(1, 3 if f27.exists() else 2, figsize=(7.4 if f27.exists() else 5.2, 3.0))
+    ax = axs[0]
+    meta = pd.read_csv(RES / "analise_etapa26_meta.csv") if (RES / "analise_etapa26_meta.csv").exists() else None
+    linhas = []
+    for nome, r_u, r_s in (("Study 21\n(51 evaluation)", a21.loc["RP-U@P21"], a21.loc["RP-S65@P21"] if "RP-S65@P21" in a21.index else None),
+                           ("New X\n(200-401 nodes)", row(a26_, "H184 "), None), ("New synthetic", row(a26_, "H185 "), None), ("All 98 new", row(a26_, "H181 "), row(a26_, "H182 "))):
+        linhas.append((nome, r_u, r_s))
+    ys = np.arange(len(linhas))[::-1]
+    for y, (nome, r_u, r_s) in zip(ys, linhas):
+        ax.plot([r_u.ic_lo, r_u.ic_hi], [y + 0.13, y + 0.13], color="#1b5e9b", lw=1.3)
+        ax.scatter([r_u.dif_pp], [y + 0.13], color="#1b5e9b", s=16, zorder=3, label="Adaptive weights $-$ uniform" if y == ys[0] else None)
+        if r_s is not None:
+            ax.plot([r_s.ic_lo, r_s.ic_hi], [y - 0.13, y - 0.13], color="#d95f02", lw=1.3)
+            ax.scatter([r_s.dif_pp], [y - 0.13], color="#d95f02", marker="s", s=16, zorder=3, label="Adaptive weights $-$ 65-eval. mixture" if y == ys[-1] else None)
+    if meta is not None and len(meta):
+        m = meta.iloc[0]
+        ax.plot([m.ic_lo, m.ic_hi], [-1, -1], color="k", lw=1.3)
+        ax.scatter([m.estimativa], [-1], color="k", marker="D", s=16, zorder=3)
+    ax.axvline(0, color="k", lw=0.8)
+    ax.axvspan(-0.1, 0.1, color="0.92", zorder=0)
+    ax.set_yticks(list(ys) + ([-1] if meta is not None and len(meta) else []))
+    ax.set_yticklabels([l[0] for l in linhas] + (["Combined\n(fixed effect)"] if meta is not None and len(meta) else []), fontsize=6)
+    ax.set_xlabel("Difference in gap (pp)", fontsize=7)
+    ax.set_title("(a) replication", fontsize=7)
+    ax.legend(fontsize=5.2, frameon=False, loc="lower left")
+    ax = axs[1]
+    d = a26.ler26()
+    t = pivo(d)
+    K = a26.ler_k().reindex(t.index)
+    dif = t["RP"] - t["U"]
+    ex = t.index.str.startswith("X-n")
+    ax.scatter(K[ex], dif[ex], s=9, color="#1b5e9b", alpha=0.8, linewidths=0, label="New X")
+    ax.scatter(K[~ex], dif[~ex], s=9, color="#d95f02", alpha=0.8, linewidths=0, label="New synthetic")
+    ax.set_xscale("log")
+    ord_ = np.argsort(K.values)
+    kk, dd = K.values[ord_], dif.values[ord_]
+    cortes = np.array_split(np.arange(len(kk)), 5)
+    ax.plot([np.exp(np.mean(np.log(kk[c]))) for c in cortes], [dd[c].mean() for c in cortes], color="k", marker="o", ms=3, lw=1, label="Mean by fifths of K")
+    ax.axhline(0, color="k", lw=0.8)
+    ax.set_xlabel("Routes of the reference solution (K)", fontsize=7)
+    ax.set_ylabel("Adaptive weights $-$ uniform (pp)", fontsize=7)
+    ax.set_title("(b) the advantage grows with K", fontsize=7)
+    ax.legend(fontsize=5.2, frameon=False, loc="lower left")
+    if f27.exists():
+        ax = axs[2]
+        a27 = pd.read_csv(f27).set_index("id")
+        rs = [(4, row(a27, "H190 ")), (10, a27.loc["RP-U@r10"]), (25, a27.loc["RP-U@r25"])]
+        res27 = pd.read_csv(RES / "analise_etapa27_resumo.csv").set_index("r")
+        ax.errorbar([res27.loc[r, "K"] for r, _ in rs], [x.dif_pp for _, x in rs], yerr=[[x.dif_pp - x.ic_lo for _, x in rs], [x.ic_hi - x.dif_pp for _, x in rs]], color="#1b5e9b", marker="o", ms=3.5, lw=1, capsize=2)
+        for r, x in rs:
+            ax.annotate(f"r={r}", (res27.loc[r, "K"], x.dif_pp), textcoords="offset points", xytext=(4, 5), fontsize=5.5)
+        ax.set_xscale("log")
+        ax.axhline(0, color="k", lw=0.8)
+        ax.axhspan(-0.1, 0.1, color="0.92", zorder=0)
+        ax.set_xlabel("Mean number of routes (capacity varied)", fontsize=7)
+        ax.set_ylabel("Adaptive weights $-$ uniform (pp)", fontsize=7)
+        ax.set_title("(c) K manipulated at fixed layout", fontsize=7)
+    for a in axs:
+        a.tick_params(labelsize=6.5)
+    fig.tight_layout()
+    fig.savefig(AQUI / "fig_replica.pdf")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
-    for f in (fig_forest, fig_estrutura, fig_pool, fig_operadores, fig_sintese, fig_hibrido, fig_poolsize, fig_deslocamentos):
+    for f in (fig_forest, fig_estrutura, fig_pool, fig_operadores, fig_sintese, fig_hibrido, fig_poolsize, fig_deslocamentos, fig_replica):
         f()
         print("ok", f.__name__)

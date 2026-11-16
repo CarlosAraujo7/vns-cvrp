@@ -37,9 +37,11 @@ def _marcado(*a, **k):
 construction._pack_exact_k_feasible = _marcado
 
 linhas = []
-for conj in ("A", "B", "CMT", "X", "SYN_TUNE", "SYN_VAL", "SYN_TUNE_L", "SYN_VAL_L"):
+for conj in ("A", "B", "CMT", "X", "SYN_TUNE", "SYN_VAL", "SYN_TUNE_L", "SYN_VAL_L", "SYN_REP", "X_FRESH", "SYN_CAP"):
     if not (ROOT / "instances" / conj / "metadata.csv").exists() and conj.startswith("SYN"):
-        continue   # conjunto ainda nao gerado (Estudo 10)
+        continue   # conjunto ainda nao gerado (Estudos 10, 26 e 27)
+    if conj == "X_FRESH" and not (ROOT / "instances" / conj).exists():
+        continue   # conjunto do Estudo 26 ainda nao baixado
     for inst in load_all(ROOT / "instances" / conj):
         if caminho(inst.name).exists() and not forcar:
             print(f"  {inst.name}: ja existe, mantido")

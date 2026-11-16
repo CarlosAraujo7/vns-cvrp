@@ -536,9 +536,104 @@ def estudo25():
         "80\\% power).", "tab:s25f", r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
 
 
+# ------------------------------------------------------------------------------------------------ Estudo 26
+def estudo26():
+    if not (RES / "analise_etapa26.csv").exists():
+        print("estudo26: sem analise_etapa26.csv, nada gerado")
+        return
+    import analisar_etapa26 as a26
+    d = a26.ler26()
+    t = piv(d)
+    is_x = t.index.str.startswith("X-n")
+    NUM["s26_nruns"] = milhar(len(pd.read_csv(RES / "etapa26_eval.csv")))
+    NUM["s26_n_inst"], NUM["s26_nx"], NUM["s26_ns"] = str(len(t)), str(int(is_x.sum())), str(int((~is_x).sum()))
+    for a in t.columns:
+        NUM[f"s26_gap_{a}"] = f"{t[a].mean():.3f}"
+        NUM[f"s26_gx_{a}"], NUM[f"s26_gs_{a}"] = gt.f2(t[a][is_x].mean()), gt.f2(t[a][~is_x].mean())
+        NUM[f"s26_dU_{a}"] = gt.sgn((t[a] - t["U"]).mean())
+    aa = pd.read_csv(RES / "analise_etapa26.csv")
+    macros_linhas("s26", aa)
+    flags_hipoteses("s26", RES / "analise_etapa26_hipoteses.csv", 181)
+    neg = lambda x: f"{x:+.2f}".replace("-", "$-$")  # noqa: E731
+    for _, r in pd.read_csv(RES / "analise_etapa26_folga.csv").iterrows():
+        c = r.conjunto
+        NUM[f"s26_rel_{c}"] = f"{-100 * r.rel_mediana:.0f}"
+        NUM[f"s26_rhoind_{c}"], NUM[f"s26_pind_{c}"] = neg(r.rho_folga_indep), gt.padj(r.p_folga_indep)
+        NUM[f"s26_rhosame_{c}"], NUM[f"s26_psame_{c}"] = neg(r.rho_folga_mesmas), gt.padj(r.p_folga_mesmas)
+        NUM[f"s26_rhon_{c}"], NUM[f"s26_pn_{c}"] = neg(r.rho_tamanho), gt.padj(r.p_tamanho)
+        NUM[f"s26_relrho_{c}"], NUM[f"s26_relp_{c}"] = neg(r.rho_rel_folga), gt.padj(r.p_rel_folga)
+        NUM[f"s26_gapU_{c}"] = f"{r.gap_U:.2f}"
+    f_meta = RES / "analise_etapa26_meta.csv"
+    if f_meta.exists():
+        for k, (_, r) in zip(("meta", "meta3", "metaS"), pd.read_csv(f_meta).iterrows()):
+            NUM[f"s26_{k}_est"], NUM[f"s26_{k}_lo"], NUM[f"s26_{k}_hi"] = gt.sgn(r.estimativa), gt.sgn(r.ic_lo), gt.sgn(r.ic_hi)
+            NUM[f"s26_{k}_i2"], NUM[f"s26_{k}_pq"] = f"{100 * r.I2:.0f}", gt.padj(r.p_Q)
+    nomes_mod = {"K": "K", "n": "n", "clientes por rota": "cpr", "log razao de iteracoes RP/U": "lr", "K | n": "Kn", "n | K": "nK", "corr(K, n)": "Kcorr"}
+    for _, r in pd.read_csv(RES / "analise_etapa26_moderadores.csv").iterrows():
+        k = nomes_mod.get(r.moderador)
+        if k is not None and pd.notna(r.rho):
+            NUM[f"s26_mod_{r.conjunto}_{k}"], NUM[f"s26_modp_{r.conjunto}_{k}"] = neg(r.rho), gt.padj(r.p)
+    for _, r in pd.read_csv(RES / "analise_etapa26_uso.csv").iterrows():
+        NUM[f"s26_it_{r.conjunto}_{r.braco}"] = milhar(int(round(r.iteracoes)))
+    # tabelas
+    nomes = [("U", "Uniform selection"), ("Uq", "Uniform, scaled removal size"), ("RP", "Adaptive weights"), ("S65", "Static mixture, 65 evaluations"), ("HG", "HG-UCB")]
+    lin = []
+    for a, nome in nomes:
+        dd = t[a] - t["U"]
+        lin.append(" & ".join([nome, f"{t[a][is_x].mean():.2f}", f"{t[a][~is_x].mean():.2f}", f"{t[a].mean():.2f}", "---" if a == "U" else gt.sgn(dd.mean()), "---" if a == "U" else f"{int((dd < -1e-9).sum())}/{int((dd > 1e-9).sum())}"]))
+    gt.escreve("tab_s26a.tex", gt.tabela(
+        "Study 26: mean gap (\\%) on the 98 new instances (\\num{s26_nx} instances X of 200 to 401 nodes and \\num{s26_ns} synthetic instances) of the frozen arms of Study~21; difference from uniform selection "
+        "(pp, descriptive) and wins/losses over the 98 instances.", "tab:s26a", r"Arm & X (\%) & Synthetic (\%) & All (\%) & $\Delta$ vs.\ uniform & W/L", lin, "lccccc"))
+    rot = [("H181", "Primary", "RP $-$ U, 98 instances"), ("H182", "Primary", "RP $-$ S65, 98 instances"), ("H183", "Primary", "HG-UCB $-$ U, 98 instances"), ("H184", "Secondary", "RP $-$ U, instances X"),
+           ("H185", "Secondary", "RP $-$ U, synthetic"), ("H186", "Secondary", "Scaled removal $-$ U, 98 instances"), ("H187", "Secondary", "Spearman correlation of RP $-$ U with the number of routes"),
+           ("H188", "Secondary", "Partial correlation of RP $-$ U with the number of routes given the size")]
+    lin = []
+    for cid, g, nome in rot:
+        r = aa[aa.id.str.startswith(cid + " ")].iloc[0]
+        if cid in ("H187", "H188"):
+            lin.append(" & ".join([g, nome, f"$\\rho={gt.sgn(r.dif_pp)}$", gt.padj(r.p_holm), "---", "---"]))
+        else:
+            lin.append(" & ".join([g, nome, f"{gt.sgn(r.dif_pp)} [{gt.sgn(r.ic_lo)}, {gt.sgn(r.ic_hi)}]", gt.padj(r.p_holm), f"{int(r.vit_a)}/{int(r.der_a)}", f"{r.mde_pp:.2f}"]))
+    gt.escreve("tab_s26f.tex", gt.tabela(
+        "Study 26: confirmatory tests (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over three for the primary and five for the secondary family; wins/losses of the first-named arm; MDE: "
+        "minimum detectable effect at 80\\% power).", "tab:s26f", r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
+
+
+# ------------------------------------------------------------------------------------------------ Estudo 27
+def estudo27():
+    if not (RES / "analise_etapa27.csv").exists():
+        print("estudo27: sem analise_etapa27.csv, nada gerado")
+        return
+    aa = pd.read_csv(RES / "analise_etapa27.csv")
+    macros_linhas("s27", aa)
+    flags_hipoteses("s27", RES / "analise_etapa27_hipoteses.csv", 189)
+    NUM["s27_nruns"] = milhar(len(pd.read_csv(RES / "etapa27_eval.csv")))
+    NUM["s27_nlay"] = str(int(aa[aa.id.str.startswith("H189 ")].iloc[0].n_inst))
+    neg = lambda x: f"{x:+.2f}".replace("-", "$-$")  # noqa: E731
+    lin = []
+    for _, r in pd.read_csv(RES / "analise_etapa27_resumo.csv").iterrows():
+        k = int(r.r)
+        NUM[f"s27_K_{k}"], NUM[f"s27_gap_{k}"], NUM[f"s27_dif_{k}"] = f"{r.K:.0f}", f"{r.gap_U:.2f}", gt.sgn(r.dif)
+        NUM[f"s27_rel_{k}"], NUM[f"s27_it_{k}"], NUM[f"s27_usorp_{k}"] = f"{-100 * r.rel:.0f}", f"{r.razao_it:.2f}", f"{r.uso_rota_pequena:.0f}"
+        lin.append(" & ".join([f"{k}", f"{r.K:.0f}", f"{r.gap_U:.2f}", gt.sgn(r.dif), f"{-100 * r.rel:.0f}\\%", f"{r.razao_it:.2f}"]))
+    gt.escreve("tab_s27a.tex", gt.tabela(
+        "Study 27: effect of the mean route size at fixed layout and demands (\\num{s27_nlay} layouts): mean number of routes of the reference solution, mean gap of uniform selection (\\%), difference of "
+        "the adaptive weights from uniform selection (pp), relative reduction of the gap and ratio of iterations.", "tab:s27a", r"Route size & Routes & Gap U (\%) & RP $-$ U & Reduction & Iterations RP/U", lin, "cccccc"))
+    tr = pd.read_csv(RES / "analise_etapa27_tendencia.csv").iloc[0]
+    NUM["s27_trend_rho"], NUM["s27_trend_p"] = neg(tr.rho_medio), gt.padj(tr.p_wilcoxon)
+    rot = [("H189", "Primary", "RP $-$ U at $r=4$ minus at $r=25$"), ("H190", "Primary", "RP $-$ U at $r=4$"), ("H191", "Secondary", "RP $-$ U at $r=4$ minus at $r=10$"), ("H192", "Secondary", "RP $-$ U at $r=10$ minus at $r=25$")]
+    lin = []
+    for cid, g, nome in rot:
+        r = aa[aa.id.str.startswith(cid + " ")].iloc[0]
+        lin.append(" & ".join([g, nome, f"{gt.sgn(r.dif_pp)} [{gt.sgn(r.ic_lo)}, {gt.sgn(r.ic_hi)}]", gt.padj(r.p_holm), f"{int(r.vit_a)}/{int(r.der_a)}", f"{r.mde_pp:.2f}"]))
+    gt.escreve("tab_s27f.tex", gt.tabela(
+        "Study 27: confirmatory contrasts (mean paired difference in pp [95\\% CI] over the layouts; Holm-adjusted $p$ over two for each family; wins/losses; MDE: minimum detectable effect at 80\\% power).",
+        "tab:s27f", r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
+
+
 def main():
     fd = RES / "etapa22_rrt_delta0.json"
     if fd.exists():
         NUM["s22_delta0"] = f"{json.loads(fd.read_text())['delta0']:g}"
-    for f in (estudo21, estudo22, estudo23, estudo24, estudo25):
+    for f in (estudo21, estudo22, estudo23, estudo24, estudo25, estudo26, estudo27):
         f()
