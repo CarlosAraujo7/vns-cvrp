@@ -1,2 +1,4 @@
 SYN_CAP: 120 instancias; clientes de 100 a 200
 INSTANCIAS: OK
+SYN_CAP: 120 instancias; clientes de 100 a 200
+INSTANCIAS: OK
