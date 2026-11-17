@@ -1,0 +1,10 @@
+validacao (instancias de ajuste, seeds novas): 360 execucoes
+    100/360  3.8 min
+    200/360  7.1 min
+    300/360  10.6 min
+braco
+s28_S65    0.4712
+s28_S33    0.6511
+s28_HG     0.9307
+s28_U      0.9336
+s28_RP     1.0046

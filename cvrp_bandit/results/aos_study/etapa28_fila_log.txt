@@ -1,0 +1,5 @@
+[17:41:13] FILA 28 INICIADA
+[17:41:33] ajuste da mistura
+[20:50:43] validacao
+[21:04:21] avaliacao
+FILA 28 CONCLUIDA
