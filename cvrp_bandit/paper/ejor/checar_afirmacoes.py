@@ -262,6 +262,16 @@ def main():
         print(f"U16 (Estudo 27): a vantagem dos pesos adaptativos existe com muitas rotas e a diferenca para poucas rotas e significativa; com poucas rotas nao ha vantagem (H189, H190): {ok16}")
         if not ok16:
             falhas.append("U16")
+    d28 = ler("analise_etapa28.csv")
+    if d28 is not None:
+        # U17 (Estudo 28, conjunto de 21 operadores no ALNS do CVRPTW): a mistura ajustada (33 e 65 avaliacoes) e significativamente melhor que os pesos adaptativos (H193 e H196: dif > 0 e p ajustado
+        # < 0,05) e nem os pesos adaptativos (H195) nem o HG-UCB (H197) sao significativamente melhores que a uniforme: a excecao do conjunto grande do CVRP nao se repete com janelas de tempo
+        h = lambda i: d28[d28.id.str.startswith(i + " ")].iloc[0]  # noqa: E731
+        ok17 = bool(h("H193").dif_pp > 0 and h("H193").p_holm < 0.05 and h("H196").dif_pp > 0 and h("H196").p_holm < 0.05
+                    and not (h("H195").dif_pp < 0 and h("H195").p_holm < 0.05) and not (h("H197").dif_pp < 0 and h("H197").p_holm < 0.05))
+        print(f"U17 (Estudo 28): no CVRPTW com 21 operadores a mistura ajustada vence os pesos adaptativos (H193, H196) e estes e o HG-UCB nao vencem a uniforme (H195, H197): {ok17}")
+        if not ok17:
+            falhas.append("U17")
     d22 = ler("analise_etapa22.csv")
     if d22 is not None:
         # U14 (Estudo 22, implantacao do conjunto de 21 operadores): nenhum dos dez contrastes primarios e secundarios (RP - U e RP - S* em cinco regimes) e significativamente negativo

@@ -1,0 +1,63 @@
+=== 56 instancias; gap medio (%) por braco ===
+braco
+S33@P21    1.089
+S65@P21    1.227
+RP@P21     1.555
+S33@P7     1.715
+HG@P21     1.729
+U@P21      1.736
+HG@P7      1.745
+RP@P7      2.076
+U@P7       2.271
+
+=== primarios (Holm m=3), secundarios (Holm m=3) e exploratorios ===
+                          id  n_inst  dif_pp   ic_lo   ic_hi  vit_a  der_a  emp  p_bruto  equiv_010  mde_pp  p_holm  signif_005 classe
+             H193 RP-S33@P21      56  0.4659  0.2667  0.6892      9     32   15   0.0000      False  0.3050  0.0001        True    NaN
+     H194 DiD(RP-S33) P21-P7      56  0.1048 -0.2088  0.3984     15     26   15   0.2064      False  0.4343  0.3984       False    NaN
+               H195 RP-U@P21      56 -0.1811 -0.3942  0.0052     23     16   17   0.1992      False  0.2934  0.3984       False    NaN
+             H196 RP-S65@P21      56  0.3283  0.1558  0.5161      7     32   17   0.0004      False  0.2597  0.0012        True    NaN
+               H197 HG-U@P21      56 -0.0078 -0.1921  0.1792     24     16   16   0.5816      False  0.2690  0.5816       False    NaN
+H198 Spearman(RP-U, K) [rho]      39  0.2781     NaN     NaN      0      0    0   0.0864      False     NaN  0.1729       False    NaN
+                   S33-U@P21      56 -0.6470 -0.9482 -0.3888     33      8   15   0.0000      False  0.4109  0.0000        True    NaN
+                   S65-U@P21      56 -0.5095 -0.7535 -0.2965     33      6   17   0.0000      False  0.3344  0.0000        True    NaN
+                   HG-RP@P21      56  0.1734 -0.0231  0.3734     18     22   16   0.0956      False  0.2887  0.0956       False    NaN
+                 S65-S33@P21      56  0.1375  0.0239  0.2630     16     25   15   0.0230      False  0.1727  0.0230        True    NaN
+            DiD(RP-U) P21-P7      56  0.0136 -0.1890  0.2143     20     19   17   0.8451      False  0.2883  0.8451       False    NaN
+                     RP-U@P7      56 -0.1948 -0.3526 -0.0441     27     12   17   0.0164      False  0.2239  0.0164        True    NaN
+                   RP-S33@P7      56  0.3610  0.0368  0.7417     16     24   16   0.1222      False  0.5053  0.1222       False    NaN
+                    S33-U@P7      56 -0.5558 -1.0280 -0.1647     25     15   16   0.0231      False  0.6205  0.0231        True    NaN
+                     HG-U@P7      56 -0.5254 -0.9069 -0.2219     31      8   17   0.0005      False  0.4961  0.0005        True    NaN
+                 RP-U@P21 R1      12 -0.0553 -0.2889  0.1705      7      5    0   0.6772      False  0.3410  0.6772       False     R1
+               RP-S33@P21 R1      12  0.1524 -0.1154  0.3946      3      9    0   0.1763      False  0.3734  0.1763       False     R1
+                 RP-U@P21 R2      11 -0.7148 -1.5689  0.1235      8      3    0   0.2061      False  1.2831  0.2061       False     R2
+               RP-S33@P21 R2      11  1.2020  0.6416  1.8513      0     11    0   0.0010      False  0.9232  0.0010        True     R2
+                RP-U@P21 RC1       8  0.0147 -0.3171  0.2890      3      5    0   0.5469      False  0.4740  0.5469       False    RC1
+              RP-S33@P21 RC1       8  0.6276  0.2198  0.9921      1      7    0   0.0391      False  0.5984  0.0391        True    RC1
+                RP-U@P21 RC2       8 -0.2169 -0.6401  0.2043      5      3    0   0.4609      False  0.6426  0.4609       False    RC2
+              RP-S33@P21 RC2       8  0.7583  0.1093  1.4629      3      5    0   0.1484      False  1.0528  0.1484       False    RC2
+
+=== hipoteses (pre-registro, Entrada 148) ===
+  REFUTADA    H193 RP - S33 em P21 do CVRPTW significativamente negativo (primario, Holm m=3)
+  REFUTADA    H194 DiD de (RP - S33) entre P21 e P7 significativamente negativa (primario, Holm m=3)
+  REFUTADA    H195 RP - U em P21 do CVRPTW significativamente negativo (primario, Holm m=3)
+  REFUTADA    H196 RP - S65 em P21 do CVRPTW significativamente negativo (secundario, Holm m=3)
+  REFUTADA    H197 HG - U em P21 do CVRPTW significativamente negativo (secundario, Holm m=3)
+  REFUTADA    H198 correlacao de Spearman de RP - U com o numero de rotas K significativamente negativa (secundario, Holm m=3)
+  confirmadas: 0 de 6 (esperado no pre-registro: 2,95)
+
+=== exploratorio: por classe de Solomon (pp; medias) ===
+classe  n_inst      K  gap_U   RP_U  S33_U   HG_U  RP_S33  razao_it
+    C1       9 10.000  0.000  0.000  0.002  0.000  -0.002     1.066
+    C2       8  3.000  0.014  0.000  0.003 -0.014  -0.003     1.037
+    R1      12 13.250  1.301 -0.055 -0.208  0.136   0.152     1.147
+    R2      11  5.455  3.476 -0.715 -1.917 -0.427   1.202     1.055
+   RC1       8 12.500  2.344  0.015 -0.613 -0.239   0.628     1.195
+   RC2       8  6.250  3.066 -0.217 -0.975  0.583   0.758     1.066
+
+=== exploratorio: iteracoes e uso ===
+braco   iteracoes                                                                   uso_d                                                 uso_r
+    U 4324.310714 0.085|0.083|0.084|0.086|0.082|0.082|0.081|0.083|0.084|0.083|0.084|0.085   0.112|0.112|0.109|0.11|0.11|0.112|0.111|0.111|0.113
+   RP 4779.389286    0.094|0.081|0.083|0.069|0.06|0.064|0.089|0.116|0.066|0.11|0.06|0.106    0.1|0.132|0.104|0.123|0.106|0.116|0.12|0.095|0.103
+  S33 4159.560714   0.042|0.137|0.012|0.004|0.156|0.197|0.165|0.036|0.052|0.061|0.1|0.039  0.081|0.283|0.064|0.064|0.033|0.029|0.18|0.163|0.102
+  S65 4391.142857     0.049|0.129|0.01|0.003|0.133|0.265|0.135|0.039|0.05|0.045|0.1|0.043 0.064|0.242|0.045|0.061|0.022|0.022|0.254|0.192|0.099
+   HG 4192.757143   0.107|0.098|0.09|0.061|0.063|0.064|0.101|0.095|0.086|0.102|0.073|0.06   0.1|0.134|0.103|0.127|0.104|0.119|0.117|0.095|0.102

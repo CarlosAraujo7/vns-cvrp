@@ -1,5 +1,5 @@
 A published bandit-guided routing heuristic's gain is not reproduced
 Raw-cost rewards saturate the policy; normalizing them recovers over one point
 No policy beats the best fixed design in small pools of operators
-21 operators: untuned adaptive weights win (replicated); gain grows with route count
+CVRP, 21 operators: untuned weights win with many routes, not with time windows
 Search structure drives most gains; pre-specified open protocol, 28 studies

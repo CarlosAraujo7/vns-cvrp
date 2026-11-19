@@ -667,6 +667,15 @@ def estudo28():
         NUM[f"s28_cl_it_{c}"] = f"{r.razao_it:.2f}"
     for _, r in pd.read_csv(RES / "analise_etapa28_uso.csv").iterrows():
         NUM[f"s28_it_{r.braco}"] = milhar(int(round(r.iteracoes)))
+    uso28 = pd.read_csv(RES / "analise_etapa28_uso.csv").set_index("braco")
+    vet28 = lambda x: [float(v) for v in x.split("|")]  # noqa: E731
+    dd, rr = vet28(uso28.loc["RP", "uso_d"]), vet28(uso28.loc["RP", "uso_r"])
+    NUM["s28_rp_d_lo"], NUM["s28_rp_d_hi"] = f"{min(dd):.3f}", f"{max(dd):.3f}"
+    NUM["s28_rp_r_lo"], NUM["s28_rp_r_hi"] = f"{min(rr):.3f}", f"{max(rr):.3f}"
+    sd, sr = vet28(uso28.loc["S33", "uso_d"]), vet28(uso28.loc["S33", "uso_r"])
+    NUM["s28_s33_d_min1"], NUM["s28_s33_d_min2"] = f"{sorted(sd)[0]:.3f}", f"{sorted(sd)[1]:.3f}"
+    NUM["s28_s33_r_max"] = f"{max(sr):.2f}"
+    NUM["s28_it_ratio_RP"] = f"{uso28.loc['RP', 'iteracoes'] / uso28.loc['U', 'iteracoes']:.2f}"
     f_esc = RES / "etapa28_ajuste_escolhidas.json"
     if f_esc.exists():
         esc = json.loads(f_esc.read_text())
