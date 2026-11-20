@@ -1,0 +1,11 @@
+hipotese,confirmada
+"H167 PM - U em P21 significativamente negativo (primario, Holm m=5)",True
+"H168 EXP3 - U em P21 significativamente negativo (primario, Holm m=5)",True
+"H169 UCB1 - U em P21 significativamente negativo (primario, Holm m=5)",True
+"H170 TS - U em P21 significativamente negativo (primario, Holm m=5)",True
+"H171 EFF - U em P21 significativamente negativo (primario, Holm m=5)",False
+"H172 RPh - PM em P21 significativamente negativo (secundario, Holm m=5)",False
+"H173 RPh - EXP3 em P21 significativamente negativo (secundario, Holm m=5)",False
+"H174 RPh - UCB1 em P21 significativamente negativo (secundario, Holm m=5)",True
+"H175 RPh - TS em P21 significativamente negativo (secundario, Holm m=5)",False
+"H176 RPh - EFF em P21 significativamente negativo (secundario, Holm m=5)",True

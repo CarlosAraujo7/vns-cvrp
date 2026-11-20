@@ -262,6 +262,15 @@ def main():
         print(f"U16 (Estudo 27): a vantagem dos pesos adaptativos existe com muitas rotas e a diferenca para poucas rotas e significativa; com poucas rotas nao ha vantagem (H189, H190): {ok16}")
         if not ok16:
             falhas.append("U16")
+    d24 = ler("analise_etapa24.csv")
+    if d24 is not None:
+        # U18 (Estudo 24, outras familias de politica no conjunto de 21 operadores do CVRP, pontuacao fiel, sem ajuste): PM, EXP3, UCB1 e TS vencem a uniforme (H167-H170: dif < 0 e p ajustado < 0,05)
+        # e a eficiencia-UCB e significativamente PIOR (H171: dif > 0 e p ajustado < 0,05)
+        h = lambda i: d24[d24.id.str.startswith(i + " ")].iloc[0]  # noqa: E731
+        ok18 = bool(all(h(f"H{i}").dif_pp < 0 and h(f"H{i}").p_holm < 0.05 for i in range(167, 171)) and h("H171").dif_pp > 0 and h("H171").p_holm < 0.05)
+        print(f"U18 (Estudo 24): PM, EXP3, UCB1 e Thompson vencem a uniforme no conjunto de 21 operadores e a eficiencia-UCB e pior (H167-H171): {ok18}")
+        if not ok18:
+            falhas.append("U18")
     d28 = ler("analise_etapa28.csv")
     if d28 is not None:
         # U17 (Estudo 28, conjunto de 21 operadores no ALNS do CVRPTW): a mistura ajustada (33 e 65 avaliacoes) e significativamente melhor que os pesos adaptativos (H193 e H196: dif > 0 e p ajustado

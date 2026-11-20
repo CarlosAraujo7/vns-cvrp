@@ -1,0 +1,21 @@
+\begin{table}[t]
+\caption{Study 24: mean gap (\%) on the 51 evaluation instances of the pool of 21 operators of the policy families of Study 9 without tuning and with the faithful scoring, the adaptive weights, HG-UCB and the mixture of greatest effort; difference from uniform selection (pp, descriptive) and wins/losses.}\label{tab:s24a}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lccc}
+\toprule
+Arm & Gap (\%) & $\Delta$ vs.\ uniform & W/L \\
+\midrule
+Uniform selection & 1.41 & --- & --- \\
+Adaptive weights (faithful scoring) & 1.16 & $-$0.25 & 41/10 \\
+Probability matching & 1.19 & $-$0.22 & 34/17 \\
+EXP3 & 1.22 & $-$0.20 & 39/12 \\
+UCB1 & 1.30 & $-$0.11 & 35/16 \\
+Thompson sampling & 1.30 & $-$0.12 & 33/18 \\
+Efficiency UCB & 2.23 & $+$0.81 & 5/46 \\
+Static mixture, 65 evaluations & 1.44 & $+$0.02 & 23/28 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

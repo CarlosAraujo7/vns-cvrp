@@ -475,6 +475,10 @@ def estudo24():
             m = 100 * m / m.sum()
             for j, w in enumerate(m):
                 NUM[f"s24_u{tag}_{arm}_{j}"] = f"{w:.0f}"
+    for arm in ("U", "RP", "RPh"):
+        h = d[d.braco == f"{arm}@P21"]
+        if len(h) and h.iteracoes.notna().all():
+            NUM[f"s24_it_{arm}"] = milhar(int(round(h.iteracoes.mean())))
     nomes = [("U", "Uniform selection"), ("RPh", "Adaptive weights (faithful scoring)"), ("PM", "Probability matching"), ("EXP3", "EXP3"), ("UCB1", "UCB1"),
              ("TS", "Thompson sampling"), ("EFF", "Efficiency UCB"), ("HG", "HG-UCB (Study 9)"), ("S65", "Static mixture, 65 evaluations")]
     lin = []
