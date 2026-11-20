@@ -1,0 +1,22 @@
+eval Estudo 24 (P21): 1800 execucoes (PM, EXP3, UCB1, TS, EFF)
+eval Estudo 24 (P21): 1800 execucoes (PM, EXP3, UCB1, TS, EFF)
+    100/1800  13.9 min
+    200/1800  31.8 min
+eval Estudo 24 (P21): 1800 execucoes (PM, EXP3, UCB1, TS, EFF)
+    100/1600  25.4 min
+    200/1600  36.9 min
+    300/1600  46.4 min
+    400/1600  59.5 min
+    500/1600  68.5 min
+    600/1600  80.0 min
+    700/1600  86.2 min
+    800/1600  92.3 min
+    900/1600  100.2 min
+    1000/1600  103.9 min
+    1100/1600  108.7 min
+    1200/1600  111.1 min
+    1300/1600  113.8 min
+    1400/1600  116.5 min
+    1500/1600  119.8 min
+    1600/1600  122.9 min
+eval Estudo 24 concluido
