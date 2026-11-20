@@ -262,6 +262,15 @@ def main():
         print(f"U16 (Estudo 27): a vantagem dos pesos adaptativos existe com muitas rotas e a diferenca para poucas rotas e significativa; com poucas rotas nao ha vantagem (H189, H190): {ok16}")
         if not ok16:
             falhas.append("U16")
+    d25 = ler("analise_etapa25.csv")
+    if d25 is not None:
+        # U19 (Estudo 25, deslocamentos em instancias com folga): com um quarto do orcamento o RP vence a uniforme e a mistura de 65 avaliacoes (H178, H180: dif < 0 e p ajustado < 0,05); com
+        # record-to-record travel a vantagem nao e significativa (H177, H179)
+        h = lambda i: d25[d25.id.str.startswith(i + " ")].iloc[0]  # noqa: E731
+        ok19 = bool(all(h(i).dif_pp < 0 and h(i).p_holm < 0.05 for i in ("H178", "H180")) and all(h(i).p_holm >= 0.05 for i in ("H177", "H179")))
+        print(f"U19 (Estudo 25): com um quarto do orcamento o RP vence a uniforme e a mistura e com record-to-record a vantagem nao e significativa (H177-H180): {ok19}")
+        if not ok19:
+            falhas.append("U19")
     d24 = ler("analise_etapa24.csv")
     if d24 is not None:
         # U18 (Estudo 24, outras familias de politica no conjunto de 21 operadores do CVRP, pontuacao fiel, sem ajuste): PM, EXP3, UCB1 e TS vencem a uniforme (H167-H170: dif < 0 e p ajustado < 0,05)

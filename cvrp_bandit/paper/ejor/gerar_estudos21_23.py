@@ -544,6 +544,13 @@ def estudo25():
     gt.escreve("tab_s25f.tex", gt.tabela(
         "Study 25: confirmatory contrasts (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over two for each family; wins/losses of the first-named arm; MDE: minimum detectable effect at "
         "80\\% power).", "tab:s25f", r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
+    f_eq = RES / "analise_equivalencia_orcamento.csv"
+    if f_eq.exists():
+        eq = pd.read_csv(f_eq)
+        for tag, sub, arm in (("51", "51 instancias", "RP"), ("51S", "51 instancias", "S65"), ("X", "X (21", "RP"), ("XS", "X (21", "S65"), ("ABC", "A, B e CMT (53): 1x contra 0,25x", "RP")):
+            r = eq[(eq.grupo.str.contains(sub, regex=False)) & (eq.braco == arm)].iloc[0]
+            NUM[f"s25_eq{tag}_f"] = f"{r.fator:.2f}"
+            NUM[f"s25_eq{tag}_ci"] = f"[{r.ic_lo:.2f}, {r.ic_hi:.2f}]"
 
 
 # ------------------------------------------------------------------------------------------------ Estudo 26

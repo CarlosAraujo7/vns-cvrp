@@ -1,0 +1,39 @@
+=== 51 instancias; gap medio (%) ===
+braco
+RP@ref       1.203
+RP@acc       1.303
+U@acc        1.402
+S65@acc      1.412
+U@ref        1.415
+S65@ref      1.437
+RP@short     2.197
+S65@short    2.549
+U@short      2.613
+
+=== primarios (Holm m=2), secundarios (Holm m=2) e exploratorios ===
+                   id  n_inst  dif_pp   ic_lo   ic_hi  vit_a  der_a  emp  p_bruto  equiv_010  mde_pp  p_holm  signif_005
+        H177 RP-U@acc      51 -0.0985 -0.2178  0.0242     32     19    0   0.0846      False  0.1725  0.0846       False
+      H178 RP-U@short      51 -0.4159 -0.6097 -0.2208     36     15    0   0.0002      False  0.2798  0.0005        True
+      H179 RP-S65@acc      51 -0.1092 -0.2458  0.0244     31     20    0   0.0648      False  0.1897  0.0648       False
+    H180 RP-S65@short      51 -0.3520 -0.5042 -0.2070     38     13    0   0.0001      False  0.2155  0.0002        True
+             RP-U@ref      51 -0.2117 -0.3230 -0.1017     36     15    0   0.0010      False  0.1628  0.0010        True
+           RP-S65@ref      51 -0.2336 -0.3574 -0.1199     39     12    0   0.0003      False  0.1728  0.0003        True
+            S65-U@acc      51  0.0107 -0.0765  0.1028     25     26    0   1.0000       True  0.1278  1.0000       False
+    DiD(RP-U) acc-ref      51  0.1132 -0.0128  0.2442     20     31    0   0.0863      False  0.1845  0.0863       False
+  DiD(RP-S65) acc-ref      51  0.1245 -0.0353  0.3046     25     26    0   0.3682      False  0.2464  0.3682       False
+          S65-U@short      51 -0.0638 -0.2607  0.1384     27     24    0   0.3885      False  0.2878  0.3885       False
+  DiD(RP-U) short-ref      51 -0.2042 -0.4017 -0.0006     32     19    0   0.0349      False  0.2893  0.0349        True
+DiD(RP-S65) short-ref      51 -0.1184 -0.3001  0.0636     27     24    0   0.2647      False  0.2637  0.2647       False
+
+=== hipoteses (pre-registro, Entrada 144) ===
+  REFUTADA    H177 RP - U em record-to-record travel significativamente negativo (primario, Holm m=2)
+  CONFIRMADA  H178 RP - U com orcamento 0,25x significativamente negativo (primario, Holm m=2)
+  REFUTADA    H179 RP - S65 em record-to-record travel significativamente negativo (secundario, Holm m=2)
+  CONFIRMADA  H180 RP - S65 com orcamento 0,25x significativamente negativo (secundario, Holm m=2)
+  confirmadas: 2 de 4 (esperado no pre-registro: 2,25)
+
+=== exploratorio: correlacao de RP - U com o gap da uniforme (folga) ===
+regime  rho_gap  p_gap  gap_U     dif  rho_metades  rho_metades_lo  rho_metades_hi  rho_indep  p_indep  rel_mediana
+   ref  -0.4127 0.0026 1.4149 -0.2117      -0.2202         -0.3157         -0.1334    -0.2092   0.1406      -0.1934
+   acc  -0.2840 0.0434 1.4015 -0.0985      -0.1258         -0.2106         -0.0512    -0.1556   0.2757      -0.1425
+ short  -0.5240 0.0001 2.6132 -0.4159      -0.1873         -0.2833         -0.0821    -0.1361   0.3409      -0.1923
