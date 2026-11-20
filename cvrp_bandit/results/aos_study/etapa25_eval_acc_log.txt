@@ -1,0 +1,7 @@
+eval Estudo 25 acc: 585 execucoes (U, RP, S65)
+    100/585  23.2 min
+    200/585  32.9 min
+    300/585  41.4 min
+    400/585  47.2 min
+    500/585  50.3 min
+eval Estudo 25 acc concluido

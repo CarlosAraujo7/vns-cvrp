@@ -1,0 +1,4 @@
+[17:24:20] FILA 25 INICIADA
+[17:24:20] avaliacao acc
+[18:17:31] avaliacao short
+FILA 25 CONCLUIDA

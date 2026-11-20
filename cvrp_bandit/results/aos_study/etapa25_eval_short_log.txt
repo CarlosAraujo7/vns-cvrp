@@ -1,0 +1,7 @@
+eval Estudo 25 short: 585 execucoes (U, RP, S65)
+    100/585  4.3 min
+    200/585  6.4 min
+    300/585  8.0 min
+    400/585  9.2 min
+    500/585  10.0 min
+eval Estudo 25 short concluido
