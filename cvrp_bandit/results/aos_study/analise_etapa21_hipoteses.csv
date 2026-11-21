@@ -6,3 +6,6 @@ H123 S65 - S33 em P21 significativamente negativo (Holm m=5),True
 H124 RP - U em P21 significativamente negativo (Holm m=5),True
 H125 S33 - U em P21 significativamente negativo (Holm m=5),False
 H126 HG - U em P21 significativamente negativo (Holm m=5),False
+H127 RP - S33 em P12 significativamente negativo (Holm m=3),False
+H128 RPt - S33 em P12 significativamente negativo (Holm m=3),False
+H129 diferenca-em-diferencas P12 vs P7 de (RP - S33) significativamente negativa (Holm m=3),False

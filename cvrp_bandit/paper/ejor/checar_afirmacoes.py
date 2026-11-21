@@ -235,6 +235,13 @@ def main():
         print(f"U12 (Estudo 21, P21): nenhuma mistura ajustada melhor que a uniforme, pesos adaptativos melhores que a mistura de 33 (H120) e de 65 avaliacoes, HG-UCB nao melhor que a uniforme: {ok12 and ok12b}")
         if not (ok12 and ok12b):
             falhas.append("U12")
+        # U20 (Estudo 21, P12): com 12 operadores os pesos adaptativos e a mistura de 33 avaliacoes sao equivalentes (H127: IC90% em +-0,10 pp) e nenhuma das tres terciarias e significativa
+        if (d21.id.str.startswith("H127 ")).any():
+            h27 = d21[d21.id.str.startswith("H127 ")].iloc[0]
+            ok20 = bool(h27.equiv_010) and all(d21[d21.id.str.startswith(f"H{i} ")].iloc[0].p_holm >= 0.05 for i in (127, 128, 129))
+            print(f"U20 (Estudo 21, P12): com 12 operadores os pesos adaptativos sao equivalentes a mistura de 33 avaliacoes e nenhuma terciaria (H127-H129) e significativa: {ok20}")
+            if not ok20:
+                falhas.append("U20")
     d23 = ler("analise_etapa23.csv")
     if d23 is not None:
         # U13 (Estudo 23): com a pontuacao fiel os pesos adaptativos continuam melhores que a uniforme e que a mistura de maior esforco em P21, e a pontuacao fiel nao difere da anterior

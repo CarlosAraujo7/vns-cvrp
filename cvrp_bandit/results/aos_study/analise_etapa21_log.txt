@@ -1,12 +1,14 @@
-ANALISE PARCIAL: P12 ainda nao executado; H127-H129 e a tendencia em ln K ficam para depois
-[P12] RPt ausente: o ajuste nao achou configuracao melhor que a padrao (RPt = RP); coluna copiada
 === 51 instancias (execucoes inviaveis nos bracos novos: 0); gap medio (%) ===
 braco
+S33@P12    1.158
+RP@P12     1.173
+RPt@P12    1.190
 RP@P21     1.203
 RPt@P21    1.227
 S65@P7     1.303
 S33@P7     1.330
 RP@P7      1.341
+U@P12      1.351
 RPt@P7     1.358
 HG@P21     1.384
 U@P21      1.415
@@ -24,52 +26,74 @@ H121 DiD(RP-S33)@P21-P7      51 -0.3410 -0.4969 -0.1764     40     11    0   0.0
           H124 RP-U@P21      51 -0.2117 -0.3230 -0.1017     36     15    0   0.0010      False  0.1628  0.0040        True      NaN
          H125 S33-U@P21      51  0.1179  0.0379  0.1973     16     35    0   0.0044      False  0.1160  0.0131        True      NaN
           H126 HG-U@P21      51 -0.0310 -0.1212  0.0546     26     25    0   0.7858      False  0.1283  0.7858       False      NaN
-                RP-U@P7      51 -0.3599 -0.4686 -0.2587     42      9    0   0.0000      False  0.1519  0.0000        True      NaN
-                HG-U@P7      51 -0.2192 -0.3405 -0.0994     35     16    0   0.0016      False  0.1741  0.0016        True      NaN
-               S33-U@P7      51 -0.3713 -0.5136 -0.2267     42      9    0   0.0000      False  0.2108  0.0000        True      NaN
-               RPt-U@P7      51 -0.3431 -0.4574 -0.2353     43      8    0   0.0000      False  0.1603  0.0000        True      NaN
-               S65-U@P7      51 -0.3981 -0.5154 -0.2809     43      8    0   0.0000      False  0.1690  0.0000        True      NaN
-               RP-U@P21      51 -0.2117 -0.3264 -0.1020     36     15    0   0.0010      False  0.1628  0.0010        True      NaN
-              RPt-U@P21      51 -0.1880 -0.2826 -0.0980     37     14    0   0.0005      False  0.1339  0.0005        True      NaN
-              S33-U@P21      51  0.1179  0.0374  0.1986     16     35    0   0.0044      False  0.1160  0.0044        True      NaN
-              S65-U@P21      51  0.0220 -0.0840  0.1288     23     28    0   0.7147      False  0.1517  0.7147       False      NaN
-               HG-U@P21      51 -0.0310 -0.1225  0.0540     26     25    0   0.7858      False  0.1283  0.7858       False      NaN
-              RP-S33@P7      51  0.0114 -0.1079  0.1267     24     27    0   0.4041      False  0.1709  0.4041       False      NaN
-             RPt-S33@P7      51  0.0282 -0.1025  0.1631     22     29    0   0.3885      False  0.1915  0.3885       False      NaN
-              RPt-RP@P7      51  0.0167 -0.1008  0.1421     27     24    0   0.8220      False  0.1751  0.8220       False      NaN
-              S65-RP@P7      51 -0.0382 -0.1442  0.0702     29     22    0   0.2728      False  0.1590  0.2728       False      NaN
-             S65-RPt@P7      51 -0.0550 -0.1687  0.0554     31     20    0   0.2647      False  0.1636  0.2647       False      NaN
-               HG-RP@P7      51  0.1406  0.0415  0.2412     20     31    0   0.0148      False  0.1447  0.0148        True      NaN
-             RP-S33@P21      51 -0.3295 -0.4323 -0.2248     45      6    0   0.0000      False  0.1505  0.0000        True      NaN
-            RPt-S33@P21      51 -0.3059 -0.3919 -0.2196     44      7    0   0.0000      False  0.1244  0.0000        True      NaN
-             RPt-RP@P21      51  0.0237 -0.0600  0.1108     23     28    0   0.6326       True  0.1239  0.6326       False      NaN
-             S65-RP@P21      51  0.2336  0.1170  0.3569     12     39    0   0.0003      False  0.1728  0.0003        True      NaN
-            S65-RPt@P21      51  0.2100  0.1135  0.3136     15     36    0   0.0003      False  0.1443  0.0003        True      NaN
-              HG-RP@P21      51  0.1806  0.0744  0.2937     16     35    0   0.0029      False  0.1598  0.0029        True      NaN
-             U@P21-U@P7      51 -0.2860 -0.4441 -0.1453     37     14    0   0.0004      False  0.2142  0.0004        True      NaN
-           RP@P21-RP@P7      51 -0.1379 -0.2642 -0.0147     30     21    0   0.0349      False  0.1792  0.0349        True      NaN
-         RPt@P21-RPt@P7      51 -0.1309 -0.2850  0.0091     30     21    0   0.1009      False  0.2108  0.1009       False      NaN
-         S33@P21-S33@P7      51  0.2031  0.0544  0.3465     16     35    0   0.0073      False  0.2109  0.0073        True      NaN
-         S65@P21-S65@P7      51  0.1340 -0.0082  0.2713     15     36    0   0.0257      False  0.2010  0.0257        True      NaN
-           HG@P21-HG@P7      51 -0.0978 -0.2207  0.0215     30     21    0   0.1313      False  0.1751  0.1313       False      NaN
-      RP-S33@P7@SYN_VAL      30 -0.0299 -0.2206  0.1456     13     17    0   0.7000      False  0.2665  0.7000       False  SYN_VAL
-     RPt-S33@P7@SYN_VAL      30  0.0111 -0.1955  0.2314     13     17    0   0.7611      False  0.3060  0.7611       False  SYN_VAL
-            RP-S33@P7@X      21  0.0706 -0.0369  0.1892     11     10    0   0.5392      False  0.1673  0.5392       False        X
-           RPt-S33@P7@X      21  0.0525 -0.0562  0.1747      9     12    0   0.4948      False  0.1684  0.4948       False        X
-     RP-S33@P21@SYN_VAL      30 -0.3748 -0.5385 -0.2125     25      5    0   0.0002      False  0.2375  0.0002        True  SYN_VAL
-    RPt-S33@P21@SYN_VAL      30 -0.3467 -0.4720 -0.2270     27      3    0   0.0000      False  0.1786  0.0000        True  SYN_VAL
-           RP-S33@P21@X      21 -0.2648 -0.3617 -0.1796     20      1    0   0.0000      False  0.1340  0.0000        True        X
-          RPt-S33@P21@X      21 -0.2474 -0.3536 -0.1350     17      4    0   0.0007      False  0.1603  0.0007        True        X
+        H127 RP-S33@P12      51  0.0149 -0.0869  0.1107     23     27    1   0.5085       True  0.1417  1.0000       False      NaN
+       H128 RPt-S33@P12      51  0.0316 -0.0739  0.1321     24     27    0   0.3390      False  0.1454  1.0000       False      NaN
+H129 DiD(RP-S33)@P12-P7      51  0.0035 -0.1382  0.1462     27     24    0   0.7500      False  0.2073  1.0000       False      NaN
+                RP-U@P7      51 -0.3599 -0.4704 -0.2599     42      9    0   0.0000      False  0.1519  0.0000        True      NaN
+                HG-U@P7      51 -0.2192 -0.3401 -0.1000     35     16    0   0.0016      False  0.1741  0.0016        True      NaN
+               S33-U@P7      51 -0.3713 -0.5165 -0.2245     42      9    0   0.0000      False  0.2108  0.0000        True      NaN
+               RPt-U@P7      51 -0.3431 -0.4593 -0.2344     43      8    0   0.0000      False  0.1603  0.0000        True      NaN
+               S65-U@P7      51 -0.3981 -0.5142 -0.2823     43      8    0   0.0000      False  0.1690  0.0000        True      NaN
+               RP-U@P12      51 -0.1781 -0.2632 -0.0880     37     14    0   0.0002      False  0.1273  0.0002        True      NaN
+              RPt-U@P12      51 -0.1614 -0.2551 -0.0624     39     12    0   0.0008      False  0.1379  0.0008        True      NaN
+              S33-U@P12      51 -0.1931 -0.3005 -0.0850     37     14    0   0.0011      False  0.1548  0.0011        True      NaN
+               RP-U@P21      51 -0.2117 -0.3258 -0.1025     36     15    0   0.0010      False  0.1628  0.0010        True      NaN
+              RPt-U@P21      51 -0.1880 -0.2828 -0.0984     37     14    0   0.0005      False  0.1339  0.0005        True      NaN
+              S33-U@P21      51  0.1179  0.0384  0.1982     16     35    0   0.0044      False  0.1160  0.0044        True      NaN
+              S65-U@P21      51  0.0220 -0.0853  0.1285     23     28    0   0.7147      False  0.1517  0.7147       False      NaN
+               HG-U@P21      51 -0.0310 -0.1195  0.0572     26     25    0   0.7858      False  0.1283  0.7858       False      NaN
+              RP-S33@P7      51  0.0114 -0.1101  0.1267     24     27    0   0.4041      False  0.1709  0.4041       False      NaN
+             RPt-S33@P7      51  0.0282 -0.1034  0.1635     22     29    0   0.3885      False  0.1915  0.3885       False      NaN
+              RPt-RP@P7      51  0.0167 -0.1027  0.1402     27     24    0   0.8220      False  0.1751  0.8220       False      NaN
+              S65-RP@P7      51 -0.0382 -0.1449  0.0726     29     22    0   0.2728      False  0.1590  0.2728       False      NaN
+             S65-RPt@P7      51 -0.0550 -0.1655  0.0616     31     20    0   0.2647      False  0.1636  0.2647       False      NaN
+               HG-RP@P7      51  0.1406  0.0389  0.2422     20     31    0   0.0148      False  0.1447  0.0148        True      NaN
+             RP-S33@P12      51  0.0149 -0.0874  0.1087     23     27    1   0.5085       True  0.1417  0.5085       False      NaN
+            RPt-S33@P12      51  0.0316 -0.0698  0.1324     24     27    0   0.3390      False  0.1454  0.3390       False      NaN
+             RPt-RP@P12      51  0.0167 -0.0636  0.0937     20     30    1   0.2949       True  0.1136  0.2949       False      NaN
+             RP-S33@P21      51 -0.3295 -0.4340 -0.2252     45      6    0   0.0000      False  0.1505  0.0000        True      NaN
+            RPt-S33@P21      51 -0.3059 -0.3924 -0.2175     44      7    0   0.0000      False  0.1244  0.0000        True      NaN
+             RPt-RP@P21      51  0.0237 -0.0615  0.1097     23     28    0   0.6326       True  0.1239  0.6326       False      NaN
+             S65-RP@P21      51  0.2336  0.1181  0.3583     12     39    0   0.0003      False  0.1728  0.0003        True      NaN
+            S65-RPt@P21      51  0.2100  0.1106  0.3147     15     36    0   0.0003      False  0.1443  0.0003        True      NaN
+              HG-RP@P21      51  0.1806  0.0697  0.2954     16     35    0   0.0029      False  0.1598  0.0029        True      NaN
+             U@P12-U@P7      51 -0.3499 -0.5248 -0.2040     40     11    0   0.0000      False  0.2353  0.0000        True      NaN
+           RP@P12-RP@P7      51 -0.1682 -0.2956 -0.0515     34     17    0   0.0092      False  0.1782  0.0092        True      NaN
+         RPt@P12-RPt@P7      51 -0.1682 -0.3396 -0.0099     30     21    0   0.0990      False  0.2387  0.0990       False      NaN
+         S33@P12-S33@P7      51 -0.1717 -0.3192 -0.0396     29     22    0   0.0704      False  0.2023  0.0704       False      NaN
+             U@P21-U@P7      51 -0.2860 -0.4405 -0.1434     37     14    0   0.0004      False  0.2142  0.0004        True      NaN
+           RP@P21-RP@P7      51 -0.1379 -0.2607 -0.0146     30     21    0   0.0349      False  0.1792  0.0349        True      NaN
+         RPt@P21-RPt@P7      51 -0.1309 -0.2793  0.0103     30     21    0   0.1009      False  0.2108  0.1009       False      NaN
+         S33@P21-S33@P7      51  0.2031  0.0559  0.3441     16     35    0   0.0073      False  0.2109  0.0073        True      NaN
+         S65@P21-S65@P7      51  0.1340 -0.0108  0.2698     15     36    0   0.0257      False  0.2010  0.0257        True      NaN
+           HG@P21-HG@P7      51 -0.0978 -0.2212  0.0261     30     21    0   0.1313      False  0.1751  0.1313       False      NaN
+      RP-S33@P7@SYN_VAL      30 -0.0299 -0.2196  0.1452     13     17    0   0.7000      False  0.2665  0.7000       False  SYN_VAL
+     RPt-S33@P7@SYN_VAL      30  0.0111 -0.2012  0.2253     13     17    0   0.7611      False  0.3060  0.7611       False  SYN_VAL
+            RP-S33@P7@X      21  0.0706 -0.0372  0.1899     11     10    0   0.5392      False  0.1673  0.5392       False        X
+           RPt-S33@P7@X      21  0.0525 -0.0560  0.1741      9     12    0   0.4948      False  0.1684  0.4948       False        X
+     RP-S33@P12@SYN_VAL      30  0.0042 -0.1489  0.1512     14     16    0   0.8712      False  0.2203  0.8712       False  SYN_VAL
+    RPt-S33@P12@SYN_VAL      30  0.0574 -0.0993  0.2028     15     15    0   0.4400      False  0.2161  0.4400       False  SYN_VAL
+           RP-S33@P12@X      21  0.0302 -0.0706  0.1296      9     11    1   0.4553      False  0.1458  0.4553       False        X
+          RPt-S33@P12@X      21 -0.0052 -0.1328  0.1070      9     12    0   0.7335      False  0.1753  0.7335       False        X
+     RP-S33@P21@SYN_VAL      30 -0.3748 -0.5340 -0.2097     25      5    0   0.0002      False  0.2375  0.0002        True  SYN_VAL
+    RPt-S33@P21@SYN_VAL      30 -0.3467 -0.4686 -0.2228     27      3    0   0.0000      False  0.1786  0.0000        True  SYN_VAL
+           RP-S33@P21@X      21 -0.2648 -0.3614 -0.1780     20      1    0   0.0000      False  0.1340  0.0000        True        X
+          RPt-S33@P21@X      21 -0.2474 -0.3561 -0.1374     17      4    0   0.0007      False  0.1603  0.0007        True        X
+
+=== exploratorio: tendencia de RP - S33 com o tamanho do conjunto ===
+                                                   id  n   media     ep  p_wilcoxon    p_t  delta_P7  delta_P12  delta_P21
+inclinacao de RP-S33 em ln K (pp por unidade de ln K) 51 -0.3123 0.0741         0.0 0.0001    0.0114     0.0149    -0.3295
 
 === exploratorio: robustez (t pareado, permutacao de sinais, bootstrap de dois niveis, sem cada conjunto) ===
                   id  n_inst  dif_pp  p_wilcoxon    p_t  p_perm  ic2_lo  ic2_hi   ic_lo   ic_hi
- H120 RP@P21-S33@P21      51 -0.3295      0.0000 0.0000  0.0001 -0.4668 -0.1951     NaN     NaN
-H122 RPt@P21-S33@P21      51 -0.3059      0.0000 0.0000  0.0001 -0.4274 -0.1805     NaN     NaN
-        H121 DiD@P21      51 -0.3410      0.0000 0.0001  0.0004     NaN     NaN     NaN     NaN
-    H120 sem_SYN_VAL      21 -0.2648      0.0000    NaN     NaN     NaN     NaN -0.3630 -0.1776
-    H121 sem_SYN_VAL      21 -0.3354      0.0006    NaN     NaN     NaN     NaN -0.5096 -0.1730
-          H120 sem_X      30 -0.3748      0.0002    NaN     NaN     NaN     NaN -0.5408 -0.2058
-          H121 sem_X      30 -0.3449      0.0035    NaN     NaN     NaN     NaN -0.5709 -0.0898
+ H120 RP@P21-S33@P21      51 -0.3295      0.0000 0.0000  0.0001 -0.4670 -0.1957     NaN     NaN
+H122 RPt@P21-S33@P21      51 -0.3059      0.0000 0.0000  0.0001 -0.4235 -0.1788     NaN     NaN
+ H127 RP@P12-S33@P12      51  0.0149      0.5085 0.7694  0.7806 -0.1166  0.1405     NaN     NaN
+        H121 DiD@P21      51 -0.3410      0.0000 0.0001  0.0001     NaN     NaN     NaN     NaN
+    H120 sem_SYN_VAL      21 -0.2648      0.0000    NaN     NaN     NaN     NaN -0.3594 -0.1771
+    H121 sem_SYN_VAL      21 -0.3354      0.0006    NaN     NaN     NaN     NaN -0.5082 -0.1743
+          H120 sem_X      30 -0.3748      0.0002    NaN     NaN     NaN     NaN -0.5394 -0.2072
+          H121 sem_X      30 -0.3449      0.0035    NaN     NaN     NaN     NaN -0.5746 -0.0867
 
 === hipoteses (pre-registro, Entrada 136) ===
   CONFIRMADA  H120 RP - S33 em P21 significativamente negativo (primario, Holm m=2)
@@ -79,7 +103,10 @@ H122 RPt@P21-S33@P21      51 -0.3059      0.0000 0.0000  0.0001 -0.4274 -0.1805 
   CONFIRMADA  H124 RP - U em P21 significativamente negativo (Holm m=5)
   REFUTADA    H125 S33 - U em P21 significativamente negativo (Holm m=5)
   REFUTADA    H126 HG - U em P21 significativamente negativo (Holm m=5)
-  confirmadas: 5 de 7 (esperado no pre-registro: 4,5 de 10; analise parcial: H127-H129 pendentes)
+  REFUTADA    H127 RP - S33 em P12 significativamente negativo (Holm m=3)
+  REFUTADA    H128 RPt - S33 em P12 significativamente negativo (Holm m=3)
+  REFUTADA    H129 diferenca-em-diferencas P12 vs P7 de (RP - S33) significativamente negativa (Holm m=3)
+  confirmadas: 5 de 10 (esperado no pre-registro: 4,5)
 
 === exploratorio: uso medio de operadores (fracao de iteracoes), destruicoes | reparos ===
   P7   RP   d [0.22, 0.09, 0.104, 0.586]  r [0.218, 0.516, 0.265]
@@ -87,6 +114,9 @@ H122 RPt@P21-S33@P21      51 -0.3059      0.0000 0.0000  0.0001 -0.4274 -0.1805 
   P7   S65  d [0.284, 0.185, 0.057, 0.474]  r [0.059, 0.744, 0.196]
   P7   RPt  d [0.218, 0.091, 0.105, 0.586]  r [0.226, 0.505, 0.269]
   P7   HG   d [0.296, 0.234, 0.24, 0.23]  r [0.288, 0.422, 0.29]
+  P12  RP   d [0.173, 0.067, 0.078, 0.43, 0.048, 0.046, 0.157]  r [0.114, 0.308, 0.136, 0.269, 0.173]
+  P12  S33  d [0.262, 0.387, 0.095, 0.041, 0.122, 0.046, 0.047]  r [0.136, 0.441, 0.182, 0.092, 0.149]
+  P12  RPt  d [0.165, 0.079, 0.09, 0.385, 0.064, 0.061, 0.156]  r [0.125, 0.294, 0.141, 0.267, 0.173]
   P21  RP   d [0.068, 0.024, 0.029, 0.159, 0.016, 0.016, 0.063, 0.181, 0.018, 0.112, 0.013, 0.302]  r [0.081, 0.152, 0.089, 0.14, 0.102, 0.129, 0.134, 0.074, 0.099]
   P21  S33  d [0.087, 0.204, 0.087, 0.035, 0.073, 0.046, 0.034, 0.125, 0.058, 0.09, 0.094, 0.067]  r [0.053, 0.081, 0.092, 0.139, 0.272, 0.074, 0.079, 0.16, 0.051]
   P21  S65  d [0.053, 0.186, 0.113, 0.024, 0.04, 0.06, 0.025, 0.11, 0.055, 0.148, 0.082, 0.105]  r [0.029, 0.125, 0.077, 0.131, 0.202, 0.106, 0.081, 0.213, 0.037]
@@ -95,12 +125,21 @@ H122 RPt@P21-S33@P21      51 -0.3059      0.0000 0.0000  0.0001 -0.4274 -0.1805 
 concordancia entre o uso de RP e os pesos da mistura S33:
 pool  K  spearman_RP_S33     p  dist_variacao_total_d  dist_variacao_total_r
   P7  7            0.643 0.119                  0.190                  0.261
+ P12 12            0.042 0.897                  0.501                  0.201
  P21 21            0.051 0.827                  0.466                  0.259
 
 === exploratorio: validacao (instancias de ajuste, seeds 3003-3005) e curva de aprendizado do ajuste ===
+  P12: validacao {'s21_P12_RPt': 0.6794, 's21_P12_U': 0.7286, 'val21_P12_gen02': 0.7462, 's21_P12_RP': 0.7616, 'val21_P12_gen00': 0.7743, 's21_P12_S33': 0.7894, 'val21_P12_gen04': 0.8195, 'val21_P12_gen08': 0.8195, 'val21_P12_gen12': 0.8295, 'val21_P12_gen16': 0.8295}
+     escolhidas: RPt mudou=True {'rho': 0.07106, 'segmento': 200} (gap de ajuste 0.5936, padrao 0.6298); S65 mudou=True (gap de ajuste 0.6287 -> 0.5208)
   P21: validacao {'s21_P21_RP': 0.7687, 's21_P21_S65': 0.8078, 's21_P21_HG': 0.8425, 'val21_P21_gen12': 0.8476, 'val21_P21_gen00': 0.8518, 's21_P21_RPt': 0.8519, 'val21_P21_gen16': 0.8538, 'val21_P21_gen08': 0.9099, 'val21_P21_gen04': 0.9099, 'val21_P21_gen02': 0.9223, 's21_P21_S33': 0.9784, 's21_P21_U': 0.9835}
      escolhidas: RPt mudou=True {'rho': 0.07993, 'segmento': 25} (gap de ajuste 0.7028, padrao 0.7959); S65 mudou=True (gap de ajuste 0.7825 -> 0.7050)
 pool  geracao  n_avaliacoes  gap_ajuste  gap_validacao  gap_validacao_RP  gap_validacao_U
+ P12        0             1      0.8431         0.7743            0.7616           0.7286
+ P12        2             9      0.6466         0.7462            0.7616           0.7286
+ P12        4            17      0.6287         0.8195            0.7616           0.7286
+ P12        8            33      0.6287         0.8195            0.7616           0.7286
+ P12       12            49      0.5208         0.8295            0.7616           0.7286
+ P12       16            65      0.5208         0.8295            0.7616           0.7286
  P21        0             1      0.8112         0.8518            0.7687           0.9835
  P21        2             9      0.7999         0.9223            0.7687           0.9835
  P21        4            17      0.7825         0.9099            0.7687           0.9835
