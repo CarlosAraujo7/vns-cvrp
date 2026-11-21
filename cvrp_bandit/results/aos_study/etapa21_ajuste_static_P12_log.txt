@@ -6,3 +6,16 @@ P12/static gen 4: melhor filho 0.6440  atual 0.6287  sigma 0.450
 P12/static gen 5: melhor filho 0.7032  atual 0.6287  sigma 0.405
 /usr/lib/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-mhmer2od', '/mp-38djpuih', '/mp-y3ch02ck', '/mp-o1uvcpvx', '/mp-23r7w7nl', '/mp-j52qanhv'}
   warnings.warn(
+P12/static gen 6: melhor filho 0.6996  atual 0.6287  sigma 0.365
+P12/static gen 7: melhor filho 0.6726  atual 0.6287  sigma 0.328
+P12/static gen 8: melhor filho 0.6648  atual 0.6287  sigma 0.295
+busca ES (P12/static) concluida
+P12/static gen 9: melhor filho 0.5208  atual 0.5208  sigma 0.295
+P12/static gen 10: melhor filho 0.7346  atual 0.5208  sigma 0.266
+P12/static gen 11: melhor filho 0.6571  atual 0.5208  sigma 0.239
+P12/static gen 12: melhor filho 0.6572  atual 0.5208  sigma 0.215
+P12/static gen 13: melhor filho 0.7195  atual 0.5208  sigma 0.194
+P12/static gen 14: melhor filho 0.6219  atual 0.5208  sigma 0.174
+P12/static gen 15: melhor filho 0.6631  atual 0.5208  sigma 0.157
+P12/static gen 16: melhor filho 0.6924  atual 0.5208  sigma 0.141
+busca ES (P12/static) concluida
