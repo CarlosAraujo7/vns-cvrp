@@ -23,3 +23,7 @@ ajuste P12/RP: 2376 execucoes
     2200/2376  70.9 min
     2300/2376  73.8 min
 ajuste P12/RP concluido
+ajuste P12/RP: 2376 execucoes
+ajuste P12/RP concluido
+ajuste P12/RP: 2376 execucoes
+ajuste P12/RP concluido

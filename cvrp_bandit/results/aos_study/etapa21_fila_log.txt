@@ -17,3 +17,19 @@
 [01:07:18] avaliacao P21
 [01:07:39] P21 CONCLUIDO
 [01:07:39] ajuste P12/static
+[18:29:22] FILA 21r (P12) INICIADA
+[18:29:22] ajuste P12/static
+[19:49:07] ajuste P12/RP
+[21:06:04] validacao P12
+[23:55:58] FILA 21r (P12) INICIADA
+[23:55:58] ajuste P12/static
+[23:56:35] ajuste P12/RP
+[23:57:22] validacao P12
+[00:13:35] avaliacao P12
+[18:07:36] FILA 21r (P12) INICIADA
+[18:07:36] ajuste P12/static
+[18:08:39] ajuste P12/RP
+[18:12:55] validacao P12
+[18:13:34] avaliacao P12
+[18:38:04] P12 CONCLUIDO
+FILA 21r CONCLUIDA

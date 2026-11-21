@@ -1,0 +1,17 @@
+eval Estudo 21 P12: 1440 execucoes (s21_P12_U, s21_P12_RP, s21_P12_S33, s21_P12_RPt)
+    100/1440  25.1 min
+    200/1440  47.8 min
+    300/1440  58.7 min
+    400/1440  65.7 min
+    500/1440  73.4 min
+    600/1440  80.5 min
+    700/1440  86.1 min
+    800/1440  90.0 min
+    900/1440  94.4 min
+eval Estudo 21 P12: 1440 execucoes (s21_P12_U, s21_P12_RP, s21_P12_S33, s21_P12_RPt)
+    100/540  5.4 min
+    200/540  9.9 min
+    300/540  13.9 min
+    400/540  17.8 min
+    500/540  22.1 min
+eval Estudo 21 P12 concluido

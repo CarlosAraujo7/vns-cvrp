@@ -19,3 +19,5 @@ P12/static gen 14: melhor filho 0.6219  atual 0.5208  sigma 0.174
 P12/static gen 15: melhor filho 0.6631  atual 0.5208  sigma 0.157
 P12/static gen 16: melhor filho 0.6924  atual 0.5208  sigma 0.141
 busca ES (P12/static) concluida
+busca ES (P12/static) concluida
+busca ES (P12/static) concluida

@@ -1,0 +1,32 @@
+validacao P12 (instancias de ajuste, seeds novas): 720 execucoes
+validacao P12 (instancias de ajuste, seeds novas): 720 execucoes
+    100/720  2.4 min
+    200/720  4.3 min
+    300/720  6.7 min
+    400/720  8.7 min
+    500/720  10.5 min
+    600/720  13.4 min
+    700/720  15.7 min
+braco
+s21_P12_RPt        0.6794
+s21_P12_U          0.7286
+val21_P12_gen02    0.7462
+s21_P12_RP         0.7616
+val21_P12_gen00    0.7743
+s21_P12_S33        0.7894
+val21_P12_gen04    0.8195
+val21_P12_gen08    0.8195
+val21_P12_gen12    0.8295
+val21_P12_gen16    0.8295
+validacao P12 (instancias de ajuste, seeds novas): 720 execucoes
+braco
+s21_P12_RPt        0.6794
+s21_P12_U          0.7286
+val21_P12_gen02    0.7462
+s21_P12_RP         0.7616
+val21_P12_gen00    0.7743
+s21_P12_S33        0.7894
+val21_P12_gen04    0.8195
+val21_P12_gen08    0.8195
+val21_P12_gen12    0.8295
+val21_P12_gen16    0.8295
