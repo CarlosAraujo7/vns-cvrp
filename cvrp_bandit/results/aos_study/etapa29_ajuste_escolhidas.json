@@ -1,0 +1,108 @@
+{
+ "RP": {
+  "mudou": true,
+  "params": {
+   "rho": 0.04312,
+   "segmento": 50
+  },
+  "gap_ajuste": 0.6987993520039283,
+  "gap_padrao": 0.8185302237026836,
+  "config_id": "r13",
+  "n_configs": 33,
+  "melhores": [
+   {
+    "config_id": "r13",
+    "params": {
+     "rho": 0.04312,
+     "segmento": 50
+    },
+    "gap_ajuste": 0.6987993520039283
+   },
+   {
+    "config_id": "r21",
+    "params": {
+     "rho": 0.09893,
+     "segmento": 400
+    },
+    "gap_ajuste": 0.7393347113907253
+   },
+   {
+    "config_id": "r04",
+    "params": {
+     "rho": 0.1542,
+     "segmento": 50
+    },
+    "gap_ajuste": 0.7650847050577263
+   },
+   {
+    "config_id": "r28",
+    "params": {
+     "rho": 0.3213,
+     "segmento": 400
+    },
+    "gap_ajuste": 0.7764809207265944
+   },
+   {
+    "config_id": "r16",
+    "params": {
+     "rho": 0.101,
+     "segmento": 400
+    },
+    "gap_ajuste": 0.7996212300277021
+   }
+  ]
+ },
+ "HG": {
+  "mudou": false,
+  "params": {
+   "C": 2.0,
+   "alpha": 0.5
+  },
+  "gap_ajuste": 0.7676168214598655,
+  "gap_padrao": 0.7676168214598655,
+  "config_id": "r00",
+  "n_configs": 33,
+  "melhores": [
+   {
+    "config_id": "r00",
+    "params": {
+     "C": 2.0,
+     "alpha": 0.5
+    },
+    "gap_ajuste": 0.7676168214598655
+   },
+   {
+    "config_id": "r19",
+    "params": {
+     "C": 2.727,
+     "alpha": 0.1798
+    },
+    "gap_ajuste": 0.7836225542082812
+   },
+   {
+    "config_id": "r24",
+    "params": {
+     "C": 0.3704,
+     "alpha": 0.6231
+    },
+    "gap_ajuste": 0.7975759149367879
+   },
+   {
+    "config_id": "r30",
+    "params": {
+     "C": 0.6241,
+     "alpha": 0.7669
+    },
+    "gap_ajuste": 0.8279653301622703
+   },
+   {
+    "config_id": "r12",
+    "params": {
+     "C": 0.585,
+     "alpha": 0.1037
+    },
+    "gap_ajuste": 0.8298392789672889
+   }
+  ]
+ }
+}

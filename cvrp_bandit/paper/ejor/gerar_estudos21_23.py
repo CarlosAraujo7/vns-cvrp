@@ -722,9 +722,74 @@ def estudo28():
         "tab:s28f", r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
 
 
+def estudo29():
+    if not (RES / "analise_etapa29.csv").exists():
+        print("estudo29: sem analise_etapa29.csv, nada gerado")
+        return
+    import analisar_etapa29 as a29
+    esc = json.loads((RES / "etapa29_ajuste_escolhidas.json").read_text())
+    d = a29.ler29(esc)
+    t = piv(d)
+    f_ev = RES / "etapa29_eval.csv"
+    NUM["s29_nruns"] = milhar(len(pd.read_csv(f_ev))) if f_ev.exists() else "0"
+    NUM["s29_n_inst"] = str(len(t))
+    for a in t.columns:
+        arm, pool = a.split("@")
+        NUM[f"s29_gap_{pool}_{arm}"], NUM[f"s29_g2_{pool}_{arm}"] = f"{t[a].mean():.3f}", gt.f2(t[a].mean())
+    aa = pd.read_csv(RES / "analise_etapa29.csv")
+    macros_linhas("s29", aa)
+    flags_hipoteses("s29", RES / "analise_etapa29_hipoteses.csv", 199)
+    for fam in ("RP", "HG"):
+        e = esc[fam]
+        NUM[f"s29_{fam}_mudou"] = "yes" if e["mudou"] else "no"
+        NUM[f"s29_{fam}_gap_pad"], NUM[f"s29_{fam}_gap_esc"] = f"{e['gap_padrao']:.3f}", f"{e['gap_ajuste']:.3f}"
+        NUM[f"s29_{fam}_cfg"] = e["config_id"]
+        for k, v in e["params"].items():
+            NUM[f"s29_{fam}_{k}"] = f"{v:g}"
+    for _, r in pd.read_csv(RES / "analise_etapa29_dispersao_ajuste.csv").iterrows():
+        for col, nome in (("padrao", "pad"), ("minimo", "min"), ("mediana", "med"), ("maximo", "max"), ("dp", "dp")):
+            NUM[f"s29_disp_{r.metodo}_{nome}"] = f"{r[col]:.3f}"
+    for _, r in pd.read_csv(RES / "analise_etapa29_validacao.csv").iterrows():
+        NUM[f"s29_val_{r.braco}"] = f"{r.gap_validacao:.3f}"
+    for _, r in pd.read_csv(RES / "analise_etapa29_classes.csv").iterrows():
+        c = r.classe
+        NUM[f"s29_cl_gapU_{c}"] = f"{r.gap_U:.2f}"
+        for col in ("RPt_U", "HGt_U", "S33_U", "RPt_S33", "HGt_S33"):
+            NUM[f"s29_cl_{col}_{c}"] = gt.sgn(r[col])
+    uso = pd.read_csv(RES / "analise_etapa29_uso.csv").set_index("braco")
+    for b in uso.index:
+        NUM[f"s29_it_{b}"] = milhar(int(round(uso.loc[b, "iteracoes"])))
+        NUM[f"s29_ent_d_{b}"], NUM[f"s29_ent_r_{b}"] = f"{uso.loc[b, 'entropia_d']:.3f}", f"{uso.loc[b, 'entropia_r']:.3f}"
+    for b in ("RPt", "HGt", "RP", "S33"):
+        NUM[f"s29_it_ratio_{b}"] = f"{uso.loc[b, 'iteracoes'] / uso.loc['U', 'iteracoes']:.2f}"
+    nomes = [("U", "Uniform selection"), ("RP", "Adaptive weights, default"), ("RPt", "Adaptive weights, tuned"), ("HG", "HG-UCB, configured for seven operators"), ("HGt", "HG-UCB, tuned"),
+             ("S33", "Static mixture, 33 evaluations"), ("S65", "Static mixture, 65 evaluations")]
+    lin = []
+    for a, nome in nomes:
+        c = f"{a}@P21"
+        if c not in t.columns:
+            continue
+        dU, dS = t[c] - t["U@P21"], t[c] - t["S33@P21"]
+        lin.append(" & ".join([nome, f"{t[c].mean():.2f}", "---" if a == "U" else gt.sgn(dU.mean()), "---" if a == "U" else f"{int((dU < -1e-9).sum())}/{int((dU > 1e-9).sum())}",
+                               "---" if a == "S33" else gt.sgn(dS.mean())]))
+    gt.escreve("tab_s29a.tex", gt.tabela(
+        "Study 29: mean gap (\\%) on the 56 Solomon instances in the pool of 21 operators of the ALNS of the CVRPTW; difference from uniform selection (pp, descriptive) with wins/losses, and difference from the "
+        "mixture tuned with 33 evaluations. The adaptive weights and HG-UCB tuned with the same effort as the mixture are marked 'tuned'.", "tab:s29a",
+        r"Arm & Gap (\%) & $\Delta$ vs.\ uniform & W/L & $\Delta$ vs.\ S33", lin, "lcccc"))
+    rot = [("H199", "Primary", "RPt $-$ S33"), ("H200", "Primary", "RPt $-$ U"), ("H201", "Primary", "RPt $-$ RP"),
+           ("H202", "Secondary", "HGt $-$ U"), ("H203", "Secondary", "HGt $-$ S33"), ("H204", "Secondary", "HGt $-$ HG")]
+    lin = []
+    for cid, g, nome in rot:
+        r = aa[aa.id.str.startswith(cid + " ")].iloc[0]
+        lin.append(" & ".join([g, nome, f"{gt.sgn(r.dif_pp)} [{gt.sgn(r.ic_lo)}, {gt.sgn(r.ic_hi)}]", gt.padj(r.p_holm), f"{int(r.vit_a)}/{int(r.der_a)}", f"{r.mde_pp:.2f}"]))
+    gt.escreve("tab_s29f.tex", gt.tabela(
+        "Study 29: confirmatory tests (mean paired difference in pp [95\\% CI]; Holm-adjusted $p$ over three for each family; wins/losses of the first-named arm; MDE: minimum detectable effect at 80\\% power).",
+        "tab:s29f", r"Test & Contrast & $\Delta$ [CI] & $p$ & W/L & MDE", lin, "llcccc"))
+
+
 def main():
     fd = RES / "etapa22_rrt_delta0.json"
     if fd.exists():
         NUM["s22_delta0"] = f"{json.loads(fd.read_text())['delta0']:g}"
-    for f in (estudo21, estudo22, estudo23, estudo24, estudo25, estudo26, estudo27, estudo28):
+    for f in (estudo21, estudo22, estudo23, estudo24, estudo25, estudo26, estudo27, estudo28, estudo29):
         f()

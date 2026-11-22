@@ -1,0 +1,2 @@
+RP: padrao 0.8185  escolhida 0.6988 (config r13, {'rho': 0.04312, 'segmento': 50}; MUDOU)  pior config 1.0653
+HG: padrao 0.7676  escolhida 0.7676 (config r00, {'C': 2.0, 'alpha': 0.5}; padrao)  pior config 2.1299

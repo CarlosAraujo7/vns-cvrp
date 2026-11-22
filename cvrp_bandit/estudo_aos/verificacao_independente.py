@@ -1196,6 +1196,65 @@ def verifica_s25_28(num):
     return nm, nc
 
 
+def verifica_s29(num):
+    """Estudo 29: recomputa, so com a biblioteca padrao, as medias dos macros `s29_gap_P21_*` e a diferenca media, as vitorias, as derrotas e n de todos os contrastes de analise_etapa29.csv, direto dos CSV brutos
+    (media das seeds viaveis por instancia). Bracos: U, RP, HG, S33 e S65 do Estudo 28 (reutilizados) e RPt e HGt do Estudo 29; se a configuracao padrao venceu o ajuste de uma familia, a coluna e copia de RP ou HG."""
+    nm = nc = 0
+    an = RES / "analise_etapa29.csv"
+    if not an.exists():
+        return nm, nc
+    esc = json.loads((RES / "etapa29_ajuste_escolhidas.json").read_text())
+    por, cj = defaultdict(list), {}
+    _le_gaps("etapa28_eval.csv", lambda b: True, lambda b: f"{b[len('s28_'):]}@P21", por, cj)
+    _le_gaps("etapa29_eval.csv", lambda b: True, lambda b: f"{b[len('s29_'):]}@P21", por, cj)
+    med = {k: statistics.fmean(v) for k, v in por.items()}
+    rots = {rot for (rot, _i) in med}
+    if "S65@P21" not in rots and "S33@P21" in rots:
+        for (rot, i), m in list(med.items()):
+            if rot == "S33@P21":
+                med[("S65@P21", i)] = m
+        rots.add("S65@P21")
+    for fam, nome, base in (("RP", "RPt", "RP"), ("HG", "HGt", "HG")):
+        if not esc[fam]["mudou"]:
+            for (rot, i), m in list(med.items()):
+                if rot == f"{base}@P21":
+                    med[(f"{nome}@P21", i)] = m
+            rots.add(f"{nome}@P21")
+    por_r = defaultdict(set)
+    for (rot, i) in med:
+        por_r[rot].add(i)
+    uni = sorted(set.intersection(*(por_r[r] for r in rots)))
+    for r in csv.DictReader(open(an, encoding="utf-8")):
+        id_ = re.sub(r"^H\d+ ", "", r["id"])
+        mc = re.fullmatch(r"(\w+)-(\w+)@P21 (R1|R2|RC1|RC2)", id_)
+        if mc:
+            a, b, cl = mc.groups()
+            ins = [i for i in uni if re.match(r"^" + cl + r"\d", i) and not (cl in ("R1", "R2") and i.startswith("RC"))]
+            dif = [med[(f"{a}@P21", i)] - med[(f"{b}@P21", i)] for i in ins]
+            dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+            _confere_linha("analise_etapa29.csv", r, len(ins), dif, problemas)
+            nc += 1
+            continue
+        ex = _expr_contraste(r["id"], "29")
+        if ex is None:
+            problemas.append(f"analise_etapa29.csv: identificador nao reconhecido {r['id']}")
+            continue
+        pos, neg, _conj = ex
+        if any(rot not in rots for rot, _s in pos + neg):
+            problemas.append(f"analise_etapa29.csv {r['id']}: braco ausente nos dados brutos")
+            continue
+        dif = [sum(med[(rot, i)] for rot, _s in pos) - sum(med[(rot, i)] for rot, _s in neg) for i in uni]
+        dif = [0.0 if abs(x) < 1e-9 else x for x in dif]
+        _confere_linha("analise_etapa29.csv", r, len(uni), dif, problemas)
+        nc += 1
+    for chave, valor in num.items():
+        if chave.startswith("s29_gap_P21_"):
+            arm = chave[len("s29_gap_P21_"):]
+            if f"{arm}@P21" in rots:
+                nm += confere(chave, valor, statistics.fmean([med[(f"{arm}@P21", i)] for i in uni]), 3)
+    return nm, nc
+
+
 def verifica_gaps(eval_csv, analise_csv, num, prefixo, braco_de_chave, extra_csvs=()):
     """Estudos 8-10: recomputa, so com a biblioteca padrao, a media de gap de cada braco (macros `<prefixo>_gap_*`) e a
     diferenca media, vitorias e derrotas de todos os contrastes do CSV de analise, direto do CSV bruto (media das seeds por
@@ -1416,6 +1475,11 @@ def main():
     cont += n2528c
     if n2528m or n2528c:
         print(f"(2c) Estudos 25 a 28 (deslocamentos em instancias com folga, replica em instancias novas, numero de rotas, CVRPTW): {n2528m} medias e {n2528c} contrastes conferidos")
+    n29m, n29c = verifica_s29(num)
+    outros += n29m
+    cont += n29c
+    if n29m or n29c:
+        print(f"(2c) Estudo 29 (os bracos adaptativos ajustados no CVRPTW com 21 operadores): {n29m} medias e {n29c} contrastes conferidos")
     print(f"(2) contrastes: {cont} conferidos (diferenca media, vitorias, derrotas)")
     print(f"execucoes lidas no total: {tot}")
     (RES / "verificacao_independente.json").write_text(json.dumps(
