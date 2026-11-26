@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Study 29: mean gap (\%) on the 56 Solomon instances in the pool of 21 operators of the ALNS of the CVRPTW; difference from uniform selection (pp, descriptive) with wins/losses, and difference from the mixture tuned with 33 evaluations. The adaptive weights and HG-UCB tuned with the same effort as the mixture are marked 'tuned'.}\label{tab:s29a}
+\centering
+\small
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+Arm & Gap (\%) & $\Delta$ vs.\ uniform & W/L & $\Delta$ vs.\ S33 \\
+\midrule
+Uniform selection & 1.74 & --- & --- & $+$0.65 \\
+Adaptive weights, default & 1.56 & $-$0.18 & 23/16 & $+$0.47 \\
+Adaptive weights, tuned & 1.64 & $-$0.10 & 23/17 & $+$0.55 \\
+HG-UCB, configured for seven operators & 1.73 & $-$0.01 & 24/16 & $+$0.64 \\
+HG-UCB, tuned & 1.73 & $-$0.01 & 24/16 & $+$0.64 \\
+Static mixture, 33 evaluations & 1.09 & $-$0.65 & 33/8 & --- \\
+Static mixture, 65 evaluations & 1.23 & $-$0.51 & 33/6 & $+$0.14 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

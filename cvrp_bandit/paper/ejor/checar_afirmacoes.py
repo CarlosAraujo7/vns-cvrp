@@ -297,6 +297,16 @@ def main():
         print(f"U17 (Estudo 28): no CVRPTW com 21 operadores a mistura ajustada vence os pesos adaptativos (H193, H196) e estes e o HG-UCB nao vencem a uniforme (H195, H197): {ok17}")
         if not ok17:
             falhas.append("U17")
+    d29 = ler("analise_etapa29.csv")
+    if d29 is not None:
+        # U21 (Estudo 29, CVRPTW com 21 operadores, mesmo esforco de ajuste): a mistura ajustada vence os pesos adaptativos ajustados (H199: dif > 0 e p ajustado < 0,05) e o HG-UCB (H203), e
+        # nenhum dos dois e significativamente melhor que a uniforme (H200, H202)
+        h = lambda i: d29[d29.id.str.startswith(i + " ")].iloc[0]  # noqa: E731
+        ok21 = bool(h("H199").dif_pp > 0 and h("H199").p_holm < 0.05 and h("H203").dif_pp > 0 and h("H203").p_holm < 0.05
+                    and not (h("H200").dif_pp < 0 and h("H200").p_holm < 0.05) and not (h("H202").dif_pp < 0 and h("H202").p_holm < 0.05))
+        print(f"U21 (Estudo 29): no CVRPTW com 21 operadores a mistura ajustada vence os pesos adaptativos ajustados (H199) e o HG-UCB (H203), e nenhum dos dois vence a uniforme (H200, H202): {ok21}")
+        if not ok21:
+            falhas.append("U21")
     d22 = ler("analise_etapa22.csv")
     if d22 is not None:
         # U14 (Estudo 22, implantacao do conjunto de 21 operadores): nenhum dos dez contrastes primarios e secundarios (RP - U e RP - S* em cinco regimes) e significativamente negativo
