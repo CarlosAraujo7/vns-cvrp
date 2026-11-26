@@ -1,0 +1,6 @@
+[00:24:50] FILA 29 INICIADA
+[00:25:15] ajuste RP
+[01:19:30] ajuste HG
+[02:36:27] validacao
+[02:38:54] avaliacao
+FILA 29 CONCLUIDA

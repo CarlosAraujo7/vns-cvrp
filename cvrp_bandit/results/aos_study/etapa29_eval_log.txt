@@ -1,0 +1,4 @@
+eval Estudo 29 (P21 do CVRPTW): 280 execucoes (s29_RPt)
+    100/280  1.5 min
+    200/280  2.8 min
+eval Estudo 29 concluido

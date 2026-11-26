@@ -1,0 +1,5 @@
+validacao (instancias de ajuste, seeds novas): 144 execucoes
+    100/144  1.6 min
+braco
+s29_RPt    0.8346
+s29_HGt    0.9307
