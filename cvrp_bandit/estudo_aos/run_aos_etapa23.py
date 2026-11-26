@@ -74,6 +74,8 @@ def tabelas(braco):
     if braco == "Upr":
         jd, jr = podado()
         return [D21[j] for j in jd], [R21[j] for j in jr]
+    if str(braco).startswith("P7C21"):                                  # Estudo 31: o conjunto de 7 operadores com cada operador triplicado (copias identicas)
+        return D7 * 3, R7 * 3
     return D21, R21
 
 
